@@ -90,8 +90,6 @@ class RappModule extends AdminbaseModule {
             show_warning($data['msg']);
             return;
         }
-        vdump($data);
-        exit;
         $retval = $data['retval'];
         $this->assign('app_list', $retval['app_list']);
         $this->assign('page_info', $retval['page_info']);

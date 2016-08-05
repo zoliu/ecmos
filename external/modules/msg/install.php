@@ -2,7 +2,7 @@
 $filename = ROOT_PATH . '/data/datacall.inc.php';
 file_put_contents($filename, "<?php return array(); ?>");
 $db=&db();
-
+$db->query("DROP TABLE ".DB_PREFIX."msg;");
 $db->query("CREATE TABLE ".DB_PREFIX."msg (
 
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -15,7 +15,7 @@ $db->query("CREATE TABLE ".DB_PREFIX."msg (
   PRIMARY KEY (id)
 ) 
  ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;");
- 
+$db->query("DROP TABLE ".DB_PREFIX."msglog;");
 $db->query("CREATE TABLE ".DB_PREFIX."msglog (
 
   id int(10) unsigned NOT NULL AUTO_INCREMENT,

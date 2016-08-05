@@ -1,15 +1,7 @@
 {include file="header.html"}
 <script language="javascript">
 $(function(){
-    $.getJSON('{$spt}&jsoncallback=?',function(){});
-    $.getJSON('http://ecmall.shopex.cn/system/notice2.php?charset={$cur_lang}&uniqueid={$uniqueid}&jsoncallback=?',function(data){
-        var message='';
-        $.each(data,function(i){
-            message += '<li>' + data[i] + '</li>';
-        });
-        $('#news').html(message);
-    }
-);
+
 });
 <!--{if $dangerous_apps}-->
 var dangerous_apps = '';
