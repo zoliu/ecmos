@@ -82,7 +82,7 @@ class RappModule extends AdminbaseModule {
         $data = Methods::curl($url, 'post', $param);
         if(!$data)
         {
-            show_warning('App Server unvaliable!');
+            show_warning('应用中心服务器连接失败!');
             return;
         }
         if(isset($data['done']) && !$data['done'])
@@ -117,7 +117,7 @@ class RappModule extends AdminbaseModule {
         $data = Methods::curl($url, 'post', $param);
         if(!$data)
         {
-            show_warning('App Server unvaliable!');
+            show_warning('应用中心服务器连接失败!');
             return;
         }
         if(isset($data['done']) && !$data['done'])

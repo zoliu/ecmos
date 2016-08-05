@@ -38,14 +38,14 @@ SESSION_MEMCACHED : 存储session数据的memcached服务器(服务器地址1:�
 */
 
 return array (
-  'SITE_URL' => 'http://ecm.t.360cd.cn',
-  'DB_CONFIG' => 'mysql://root:root@localhost:3306/ecm_360cd',
+  'SITE_URL' => 'http://ecmos.t.360cd.cn',
+  'DB_CONFIG' => 'mysql://root:root@localhost:3306/ecmos',
   'DB_PREFIX' => 'ecm_',
   'LANG' => 'sc-utf-8',
   'COOKIE_DOMAIN' => '',
   'COOKIE_PATH' => '/',
-  'ECM_KEY' => 'a7f2ea4b737ffce021bb5fbade38b3d6',
-  'MALL_SITE_ID' => 'EMPBMHbmd69juTUM',
+  'ECM_KEY' => '9798a6e44fa5f1999d7a2dd604e23424',
+  'MALL_SITE_ID' => 'EMQIFPZKd6RPi2Xd',
   'ENABLED_GZIP' => 0,
   'DEBUG_MODE' => 0,
   'CACHE_SERVER' => 'default',
@@ -53,8 +53,8 @@ return array (
   'ENABLED_SUBDOMAIN' => 0,
   'SUBDOMAIN_SUFFIX' => '',
   'SESSION_TYPE' => 'mysql',
-  'SESSION_MEMCACHED' => '127.0.0.1:11211',
-  'CACHE_MEMCACHED' => '127.0.0.1:11211',
+  'SESSION_MEMCACHED' => 'localhost:11211',
+  'CACHE_MEMCACHED' => 'localhost:11211',
 );
 
 ?>
