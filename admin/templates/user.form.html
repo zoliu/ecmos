@@ -1,0 +1,188 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function(){
+    $('#user_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('right').text('OK!');
+        },
+        onkeyup    : false,
+        rules : {
+            user_name : {
+                required : true,
+                byteRange: [3,15,'{$charset}'],
+                remote   : {
+                    url :'index.php?app=user&act=check_user',
+                    type:'get',
+                    data:{
+                        user_name : function(){
+                            return $('#user_name').val();
+                        },
+                        id : '{$user.user_id}'
+                    }
+                }
+            },
+            password: {
+                <!--{if $smarty.get.act eq 'add'}-->
+                required : true,
+                <!--{/if}-->
+                maxlength: 20,
+                minlength: 6
+            },
+            email   : {
+                required : true,
+                email : true
+            }
+            {if !$set_avatar}
+            ,
+            portrait : {
+                accept : 'png|gif|jpe?g'
+            }
+            {/if}
+        },
+        messages : {
+            user_name : {
+                required : '{$lang.user_not_empty}',
+                byteRange: '{$lang.user_length_limit}',
+                remote   : '{$lang.name_exist}'
+            },
+            password : {
+                <!--{if $smarty.get.act eq 'add'}-->
+                required : '{$lang.password_empty}',
+                <!--{/if}-->
+                maxlength: '{$lang.password_limit}',
+                minlength: '{$lang.password_limit}'
+            },
+            email  : {
+                required : '{$lang.email_not_empty}',
+                email   : '{$lang.currect_email}'
+            }
+            {if !$set_avatar}
+            ,
+            portrait : {
+                accept : '{$lang.note_portrait}'
+            }
+            {/if}
+        }
+    });
+});
+</script>
+<div id="rightTop">
+  <p>{$lang.user}</p>
+  <ul class="subnav">
+    <li><a class="btn1" href="index.php?app=user">{$lang.manage}</a></li>
+    <li>
+      <!-- {if $user.user_id} -->
+      <a class="btn1" href="index.php?app=user&amp;act=add">{$lang.add}</a>
+      <!-- {else} -->
+      <span>{$lang.add}</span>
+      <!-- {/if} -->
+    </li>
+  </ul>
+</div>
+<div class="info">
+  <form method="post" enctype="multipart/form-data" id="user_form">
+    <table class="infoTable">
+      <tr>
+        <th class="paddingT15"> {$lang.user_name}:</th>
+        <td class="paddingT15 wordSpacing5"><!-- {if $user.user_id} -->
+          {$user.user_name|escape}
+          <!-- {else} -->
+          <input class="infoTableInput2" id="user_name" type="text" name="user_name" value="{$user.user_name|escape}" />
+          <label class="field_notice">{$lang.user_name}</label>
+          <!-- {/if} -->        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> {$lang.password}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="password" type="text" id="password" />
+          <!--{if $user.user_id} -->
+          <span class="grey">{$lang.note_password}</span>
+          <!-- {/if} -->        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> {$lang.email}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="email" type="text" id="email" value="{$user.email|escape}" />
+            <label class="field_notice">{$lang.email}</label>        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> 用户等级:</th>
+        <td class="paddingT15 wordSpacing5">
+            <select name="grade_id">
+            {html_options options=$grade_options selected=$user.grade_id}
+            </select>
+        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> 直接上级:</th>
+        <td class="paddingT15 wordSpacing5">
+            <input class="infoTableInput2" name="parent_name" type="text" value="{$user.parent_name}" {if $user.parent_name} readonly="readonly" {/if} />
+        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> {$lang.real_name}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="real_name" type="text" id="real_name" value="{$user.real_name|escape}" />        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> {$lang.gender}:</th>
+        <td class="paddingT15 wordSpacing5"><p>
+            <label>
+            <input name="gender" type="radio" value="0" {if $user.gender eq 0}checked="checked"{/if} />
+            {$lang.unknown}</label>
+            <label>
+            <input type="radio" name="gender" value="1" {if $user.gender eq 1}checked="checked"{/if} />
+            {$lang.male}</label>
+            <label>
+            <input type="radio" name="gender" value="2" {if $user.gender eq 2}checked="checked"{/if} />
+            {$lang.female}</label>
+          </p></td>
+      </tr>
+      <!--<tr>
+        <th class="paddingT15"> <label for="phone_tel">{$lang.phone_tel}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input name="phone_tel[]" id="phone_tel" type="text" size="4" value="{$phone_tel.0}" />
+          -
+          <input class="infoTableInput2" name="phone_tel[]" type="text" value="{$phone_tel.1}" />
+          -
+          <input name="phone_tel[]" type="text" size="4" value="{$phone_tel.2}" />
+        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> {$lang.phone_mob}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="phone_mob" type="text" id="phone_mob" value="{$user.phone_mob|escape}" />
+        </td>
+      </tr>-->
+      <tr>
+        <th class="paddingT15"> {$lang.im_qq}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="im_qq" type="text" id="im_qq" value="{$user.im_qq|escape}" />        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> {$lang.im_msn}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="im_msn" type="text" id="im_msn" value="{$user.im_msn|escape}" />        </td>
+      </tr>
+
+     {if !$set_avatar}
+      <tr>
+        <th class="paddingT15">{$lang.portrait}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableFile2" type="file" name="portrait" id="portrait" />
+          <label class="field_notice">{$lang.note_portrait}</label>
+          {if $user.portrait}<br /><img src="../{$user.portrait}" alt="" width="100" height="100" />{/if}           </td>
+      </tr>
+     {else}
+        <!--{if $smarty.get.act eq 'edit'}-->
+      <tr>
+        <th class="paddingT15">{$lang.portrait}:</th>
+        <td class="paddingT15 wordSpacing5">{$set_avatar}</td>
+      </tr>
+        <!--{/if}-->
+     {/if}
+      <tr>
+        <th></th>
+        <td class="ptb20"><input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+          <input class="formbtn" type="reset" name="Reset" value="{$lang.reset}" />        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+{include file="footer.html"}

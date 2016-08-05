@@ -1,0 +1,72 @@
+<style type="text/css">
+.eject_con .adds li h4 { float: left; width: 90px; color: #646665; font-weight: normal; font-size: 13px; line-height: 26px; }
+.grey {color:#666;}
+.mt6 {margin-top:6px;}
+.grey a{color:#9719a0;}
+</style>
+<ul class="tab">
+    <li class="active">{$lang.import}</li>
+</ul>
+<!--<div class="content1">
+<form method="post" action="index.php?app=seller_order&amp;act=cancel_order&amp;order_id={$order_id}" target="seller_order">
+ <p id="warning">
+   <span id="warning_info"></span>
+ </p>
+    <dl>
+        <dt>{$lang.select_file}:<input type="file" name="csv" id="csv" /></dt>
+        <dd>
+            <div class="li"><input type="radio" name="charset" value="utf-8" checked="checked" id="d1" />
+                <label for="d1">utf-8 </label></div>
+            <div class="li"><input type="radio" name="charset" value="gbk" id="d2" />
+                 <label for="d2">gbk</label></div>
+            <div class="li"><input type="radio" name="charset" value="big5" id="d3"/> <label for="d3">big5</label></div>
+        </dd>
+    </dl>
+    <div class="btn">
+        <input type="submit" id="confirm_button" class="btn1" value="{$lang.confirm}" />
+        <input type="button" id="cancel_button" class="btn2" value="{$lang.cancel}" />
+    </div>
+</form>
+</div>-->
+<div class="eject_con">
+    <div class="adds">
+        <form  target="pop_warning" method="post" action="index.php?app=my_category&act=import" enctype="multipart/form-data">
+        <div id="warning"></div>
+        <ul>
+            <li>
+                 <h3 class="width">{$lang.select_file}: </h3>
+                 <p> <input type="file" name="csv" id="csv" /></p>
+            </li>
+            <li>
+                <h4>{$lang.select_charset}:</h4>
+                <p>
+                <label>
+                <input type="radio" name="charset" value="utf-8" checked="checked" class="mt6" />
+                <span>utf-8</span></label>
+                <label>
+                <input type="radio" name="charset" value="gbk" />
+                <span>gbk</span></label>
+                <label>
+                <input type="radio" name="charset" value="big5" />
+                <span>big5</span></label></p><br />
+            </li>
+            <li> <p class="space1">{$note_for_import}</p></li>
+            <li>
+                <h3>{$lang.file_format}:</h3>
+                <p class="grey mt6">{$lang.file_format_limit}</p>
+            </li>
+            {if $smarty.get.app eq 'my_category'}
+            <li>
+                <h3>{$lang.csv_simple}:</h3>
+                <p class="grey mt6">
+                    <a href="index.php?app=my_category&act=csv_sample&charset=utf-8">utf-8</a>
+                    <a href="index.php?app=my_category&act=csv_sample&charset=gbk">gbk</a>
+                    <a href="index.php?app=my_category&act=csv_sample&charset=big5">big5</a>
+                </p>
+            </li>
+            {/if}
+        </ul>
+        <div class="submit"><input type="submit" class="btn" value="{$lang.confirm}" /></div>
+        </form>
+    </div>
+</div>

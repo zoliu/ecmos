@@ -1,0 +1,36 @@
+<script type="text/javascript">
+var _d = DialogManager.get('config_dialog');
+_d.setWidth(350);
+_d.setPosition('center');
+
+$("select[name='img_recom_id']").change(function(){
+    switchRecommend(this.value, 'img_cate_id');
+});
+
+switchRecommend($("select[name='img_recom_id']").val(), 'img_cate_id');
+
+function switchRecommend(recomId, selectName)
+{
+    if (recomId >= 0)
+    {
+        $("select[name='" + selectName + "']").hide();
+    }
+    else
+    {
+        $("select[name='" + selectName + "']").show();
+    }
+}
+</script>
+<div class="field_item">
+    <label>推荐类型:</label>
+    <p><select name="img_recom_id" onchange="switchRecommend(this.value)">
+        <option value="0">请选择...</option>
+        <!-- {foreach from=$recommends key=recom_id item=recom_name} -->
+        <option value="{$recom_id}"{if $options.img_recom_id eq $recom_id} selected="selected"{/if}>{$recom_name|escape}</option>
+        <!-- {/foreach} -->
+    </select>
+    <select name="img_cate_id">
+        <option value="0">请选择分类...</option>
+        <!-- {html_options options=$gcategories selected=$options.img_cate_id} -->
+    </select></p>
+</div>

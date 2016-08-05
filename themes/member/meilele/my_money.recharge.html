@@ -1,0 +1,87 @@
+
+<!-- www.360cd.cn  Mosquito -->
+
+{if $payform.online}
+<form action="{$payform.gateway}" id="payform" method="{$payform.method}" style="display: none">
+    {foreach from=$payform.params item=value key=_k}
+    <input type="hidden" name="{$_k}" value="{$value}" />
+    {/foreach}
+</form>
+<script type="text/javascript">
+    document.getElementById('payform').submit();
+</script>
+{else}
+
+{include file=member.header.html}
+
+<script type="text/javascript" src="{lib file=jquery.plugins/jquery.validate.js}"></script>
+
+<script type="text/javascript">
+
+$(function() {
+    
+    $('#_form_').validate({
+        errorPlacement : function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success : function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        rules : {
+            money : {
+                required : true,
+                number : true,
+                min : 0.01
+            }
+        },
+        messages : {
+            money : {
+                required : '金额不能为空',
+                number : '必须输入合法的数字',
+                min : '输入值不能小于0.01'
+            }
+        }
+    });
+    
+});
+
+</script>
+
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <form id="_form_" method="post">
+                <p>充值金额：<input type="text" name="money" /> </p>
+                <div style="margin: 0.5em 0;">
+                    <p>充值方式：</p>
+                    {foreach from=$pay_list item=data}
+                    <p style="margin: 0.5em 2em 0.5em 0; display: inline-block;" onclick="$('#pay_{$data.payment_id}').attr('checked','checked')">
+                        <input type="radio" id="pay_{$data.payment_id}" name="pay_id" title="{$data.payment_name}" value="{$data.payment_id}" />
+                        <img src="{$site_url}/includes/payments/{$data.payment_code}/logo.gif" style="vertical-align: middle; height: 2.5em;" />
+                    </p>
+                    {/foreach}
+                </div>
+                <input type="submit" value="提交" style="margin-left: 2em;" />
+            </form>
+        </div>
+        
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<div class="clear"></div>
+
+<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
+
+{include file=footer.html}
+
+{/if}

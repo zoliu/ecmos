@@ -1,0 +1,212 @@
+{include file=member.header.html}
+<style>
+.borline td { padding:10px 0px; }
+.ware_list th { text-align:left; }
+</style>
+<script type="text/javascript">
+
+$(function(){
+    $('#profile_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        rules : {
+            birthday : {
+                dateISO:true
+            },
+            im_qq      : {
+                digits:true
+            },
+            im_msn      : {
+                email:true
+            },
+            phone_tel      : {
+                checkTel     : true
+            },
+            portrait : {
+                accept   : 'gif|jpe?g|png'
+            }
+        },
+        messages : {
+            birthday  : {
+                dateISO   : '{$lang.test_birthday}'
+            },
+            im_qq      : {
+                digits:'{$lang.verify_qq}'
+            },
+            im_msn      : {
+                email:'{$lang.verify_msn}'
+            },
+            phone_tel      : {
+                checkTel   : '{$lang.verify_tel}'
+            },
+            portrait  : {
+                accept   : '{$lang.avatar}'
+            }
+        }
+    });
+
+   
+
+});
+
+jQuery.validator.addMethod("phone_mob", function(value, element) {
+
+    var length = value.length;
+
+    var mobile =  /^[1][3-9][0-9]{9}$/
+
+    return this.optional(element) || (length == 11 && mobile.test(value));
+
+}, "手机号码格式错误");
+</script>
+<script type="text/javascript">
+
+
+      //图片上传预览    IE是用了滤镜。
+        function previewImage(file)
+        {
+          var MAXWIDTH  = 260; 
+          var MAXHEIGHT = 180;
+          var div = $('.photo p');
+          if (file.files && file.files[0])
+          {
+
+              var img = document.getElementById('my_avatar');
+              img.onload = function(){
+                var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                img.width  =  rect.width;
+                img.height =  rect.height;
+//                 img.style.marginLeft = rect.left+'px';
+                //img.style.marginTop = rect.top+'px';
+              }
+              var reader = new FileReader();
+              reader.onload = function(evt){img.src = evt.target.result;}
+              reader.readAsDataURL(file.files[0]);
+          }
+          else //兼容IE
+          {
+            var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+            file.select();
+            var src = document.selection.createRange().text;
+            var img = document.getElementById('my_avatar');
+            img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+            div.html("<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;"+sFilter+src+"\"'></div>");
+          }
+        }
+        function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+            var param = {top:0, left:0, width:width, height:height};
+            if( width>maxWidth || height>maxHeight )
+            {
+                rateWidth = width / maxWidth;
+                rateHeight = height / maxHeight;
+                
+                if( rateWidth > rateHeight )
+                {
+                    param.width =  maxWidth;
+                    param.height = Math.round(height / rateWidth);
+                }else
+                {
+                    param.width = Math.round(width / rateHeight);
+                    param.height = maxHeight;
+                }
+            }
+            
+            param.left = Math.round((maxWidth - param.width) / 2);
+            param.top = Math.round((maxHeight - param.height) / 2);
+            return param;
+        }
+</script> 
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+    		{include file=member.curlocal.html}
+            {include file=member.submenu.html}
+            <div class="wrap">
+                <div class="public">
+                <form method="post" enctype="multipart/form-data" id="profile_form">
+                    <div class="information">
+                        <!--{if !$edit_avatar}-->
+                        <div class="photo width13">
+                            <p><img src="<!--{if $profile.portrait}-->{$profile.portrait}?{$random_number}<!--{else}-->{$site_url}/data/system/default_user_portrait.gif<!--{/if}-->" width="120" height="120" alt="" ectype="avatar" id="my_avatar"/></p>
+                           <a class="detlink float_right" href="{url app=member_photo&act=add_photo}">修改头像</a>
+                        </div>
+                        <!--{/if}-->
+                        <div class="info individual">
+                            <table>
+                                <tr>
+                                    <th class="width4">{$lang.user_name}: </th>
+                                    <td>{$profile.user_name|escape}</td>
+                                </tr>
+                                <tr>
+                                    <th>{$lang.email}:</th>
+                                    <td>{$profile.email}</td>
+                                </tr>
+                                <tr>
+                                    <th>{$lang.phone_mob}:</th>
+                                    <td>{$profile.phone_mob}</td>
+                                </tr>
+                                <tr>
+                                    <th>{$lang.real_name}:</th>
+                                    <td><input type="text" class="text width_normal" name="real_name" value="{$profile.real_name|escape}" /></td>
+                                </tr>
+                                <tr>
+                                    <th>{$lang.gender}: </th>
+                                    <td class="label">
+                                        <label><input type="radio" name="gender" value="0" {if $profile.gender eq 0}checked="checked"{/if} />{$lang.unknown} </label>
+                                        <label><input type="radio" name="gender" value="1" {if $profile.gender eq 1}checked="checked"{/if} />{$lang.male} </label>
+                                        <label><input type="radio" name="gender" value="2" {if $profile.gender eq 2}checked="checked"{/if} />{$lang.female} </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{$lang.birthday}: </th>
+                                    <td>
+                                        <input type="text" class="text width_normal" name="birthday" id="birthday" value="{$profile.birthday|escape}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{$lang.im_qq}:</th>
+                                    <td> <input type="text" class="text width_normal" name="im_qq" id="im_qq" value="{$profile.im_qq|escape}" /></td>
+                                </tr>
+                                <tr>
+                                    <th>{$lang.im_msn}:</th>
+                                    <td><input type="text"  class="text width_normal"name="im_msn" id="im_msn" value="{$profile.im_msn|escape}" /></td>
+                                </tr>
+                                 <tr>
+                                    <th>{$lang.phone_tel}:</th>
+                                    <td><input type="text"  class="text width_normal"name="phone_tel" id="phone_tel" value="{$profile.phone_tel|escape}" /></td>
+                                </tr>
+                                <!--{if $edit_avatar}-->
+                                <tr>
+                                    <th>{$lang.portrait}:</th>
+                                    <td>{$edit_avatar}</td>
+                                </tr>
+                                <!--{/if}-->
+                                <tr>
+                                    <th></th>
+                                    <td><input type="submit" class="btn" value="{$lang.save_edit}" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+                </div>
+                <div class="wrap_bottom"></div>
+            </div>
+
+            <div class="clear"></div>
+            <div class="adorn_right1"></div>
+            <div class="adorn_right2"></div>
+            <div class="adorn_right3"></div>
+            <div class="adorn_right4"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+{include file=footer.html}

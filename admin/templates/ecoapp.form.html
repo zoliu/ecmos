@@ -1,0 +1,55 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function(){
+    $('#ecoapp_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('right').text('OK!');
+        },
+        onkeyup    : false,
+        rules : {
+            sort_order : {
+                number   : true
+            }
+        },
+        messages : {
+            
+            sort_order  : {
+                number   : '{$lang.number_only}'
+            }
+        }
+    });
+});
+</script>
+<div id="rightTop">
+    <p>{$lang.ecoapp}</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?app=ecoapp">{$lang.manage}</a></li>
+        {if $ecoapp.id}
+        <li><a class="btn1" href="index.php?app=ecoapp&amp;act=add">{$lang.add}</a></li>
+        {else}
+        <li><span>{$lang.add}</span></li>
+        {/if}
+    </ul>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data" id="ecoapp_form">
+        <table class="infoTable">
+                         
+
+            <tr>
+            <th></th>
+            <td class="ptb20">
+                <input class="formbtn" type="submit" name="Submit"style="cursor: pointer;" value="{$lang.submit}" />
+                <input class="formbtn" type="reset" name="Submit2"style="cursor: pointer;" value="{$lang.reset}" />
+            </td>
+        </tr>
+        </table>
+    </form>
+</div>
+
+{include file="footer.html"}

@@ -1,0 +1,84 @@
+<div class="mll2015_floor7 clearfix">
+
+    <div class="channel_jiancai_groupbuy">
+        <div class="mt">
+            <span class="name">{$widget_data.model_name}</span>
+            <a class="more" href="{$widget_data.more}" target="_blank">更多>></a>
+        </div>    
+        <div class="p_img">
+            <a href="{$widget_data.ad1_link_url}" target="_blank">
+                <img class="lazyload" initial-url="{$widget_data.ad1_image_url}" width="180" height="120">
+            </a>
+        </div>
+        <p class="title">
+            <a href="{$widget_data.ad1_link_url}">{$widget_data.ad1_title}</a>
+        </p>
+        <p class="gpg">
+            <strong class="price">￥{$widget_data.ad1_price}</strong>
+            <a href="{$widget_data.ad1_link_url}">去看看</a>
+        </p>
+        <p class="price1">
+            原价
+            <del class="yen">￥{$widget_data.ad1_toprice}</del>
+            &emsp;折扣：
+            <strong class="num">{$widget_data.ad1_dis}</strong>折
+        </p>
+    </div>
+    <div class="channel_jiancai_right w clearfix tab_{$widget_data.model_id}">
+        <div class="mt">
+            <ul class="ks-switchable-nav">
+                <li class="ks-active">
+                    {$widget_data.model_subtitle}
+                </li>
+                <li class>
+                    {$widget_data.model_subtitle1}
+                </li>
+            </ul>
+            <span class="more">
+                <a class="more" href="{$widget_data.more1}" target="_blank">更多>></a>
+            </span>
+        </div>
+        <div class="ks-switchable-content">
+            <div class="ks-active">
+                <!-- {foreach from=$widget_data.goods_list_1 item=goods name=fe_goods} -->
+                <a href="{url app=goods&id=$goods.goods_id}" target="_blank">
+                    <img class="lazyload" initial-url="{$goods.default_image}" width="150" height="150">
+                    <div class="p_info">
+                        <div class="title">{$goods.goods_name|escape}</div>
+                        <div class="price">
+                            促销价：
+                            <strong><span>￥</span>{$goods.price|price}</strong>
+                        </div>
+                    </div>
+                </a>
+                <!-- {/foreach} -->
+            </div>
+            <div class="ks-active" style="display:none;">
+                <!-- {foreach from=$widget_data.goods_list_1 item=goods name=fe_goods} -->
+                <a href="{url app=goods&id=$goods.goods_id}" target="_blank">
+                    <img class="lazyload" initial-url="{$goods.default_image}" width="150" height="150">
+                    <div class="p_info">
+                        <div class="title">{$goods.goods_name|escape}</div>
+                        <div class="price">
+                            促销价：
+                            <strong><span>￥</span>{$goods.price|price}</strong>
+                        </div>
+                    </div>
+                </a>
+                <!-- {/foreach} -->
+            </div>
+        </div>
+
+        <script>
+            KISSY.ready(function(S) {
+                var tabs = new S.Tabs('.tab_{$widget_data.model_id}', {
+                    aria: false
+                });
+            });
+        </script>
+
+    </div>
+
+
+
+</div>

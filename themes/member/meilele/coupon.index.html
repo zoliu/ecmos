@@ -1,0 +1,79 @@
+{include file=member.header.html}
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right"> {include file=member.curlocal.html}
+{include file=member.submenu.html}
+        <div class="wrap">
+            <div class="public table">
+                <table>
+                    <div class="eject_btn_two eject_pos1" title="{$lang.add}"><b class="ico3" ectype="dialog" dialog_title="{$lang.add}" dialog_id="coupon_add" dialog_width="480" uri="index.php?app=coupon&amp;act=add">{$lang.add_coupon}</b></div>
+                    <!-- {if $coupons} -->
+                    <tr class="line_bold" >
+                        <th class="width1"><input id="all" type="checkbox" class="checkall" /></th>
+                        <th class="align1" colspan="6">
+                           <label for="all"> <span class="all">{$lang.checkall}</span> </label>
+                            <a href="javascript:void(0);" class="delete" ectype="batchbutton" uri="index.php?app=coupon&act=drop" name="id" presubmit="confirm('{$lang.drop_confirm}')">{$lang.drop}</a>
+                        </th>
+                    </tr>
+                    
+                    <tr class="gray">
+                        <th></th>
+                        <th>{$lang.coupon_name}</th>
+                        <th>{$lang.coupon_value}</th>
+                        <th>{$lang.use_times}</th>
+                        <th>{$lang.time_limit}</th>
+                        <th>{$lang.min_amount}</th>
+                        <th>{$lang.handle}</th>
+                    </tr>
+                     <!-- {/if} -->
+                <!-- {if $coupons} -->
+                <tbody>
+                <!-- {/if} -->
+                <!-- {foreach from=$coupons item=coupon name=v} -->
+                <tr class="line<!--{if $smarty.foreach.v.last}--> last_line<!--{/if}-->">
+                    <td class="align2"><input type="checkbox" class="checkitem" value="{$coupon.coupon_id}" <!--{if $coupon.if_issue && $coupon.end_time gt $time}-->disabled="disabled"<!--{/if}--> /></td>
+                    <td>{$coupon.coupon_name}</td>
+                    <td class="align4"><!--{if $coupon.coupon_value}-->{$coupon.coupon_value}<!--{else}-->{$lang.no_limit}<!--{/if}--></td>
+                    <td class="align4"><!--{if $coupon.use_times}-->{$coupon.use_times}<!--{else}-->{$lang.no_limit}<!--{/if}--></td>
+                    <td>{$coupon.start_time|date} {$lang.to} <!--{if $coupon.end_time}-->{$coupon.end_time|date}<!--{else}-->{$lang.no_limit}<!--{/if}--></td>
+                    <td><!--{if $coupon.min_amount}-->{sprintf lang=limit_desc var1=coupon.min_amount}<!--{else}-->{$lang.no_limit}<!--{/if}--></td>
+                    <td class="align2">
+                        <!--{if $coupon.if_issue && $coupon.end_time gt $time}--><a href="javascript:void(0);" class="export" uri="index.php?app=coupon&act=export&id={$coupon.coupon_id}" dialog_id="coupon_export" dialog_title="{$lang.export}" dialog_width="320" ectype="dialog">{$lang.export}</a>  <a href="javascript:void(0);" class="extend" uri="index.php?app=coupon&act=extend&id={$coupon.coupon_id}" dialog_id="coupon_extend" dialog_title="{$lang.extend}" dialog_width="320" ectype="dialog">{$lang.extend}</a><!--{elseif $coupon.if_issue && $coupon.end_time lte $time}--><a class="delete" href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=coupon&act=drop&id={$coupon.coupon_id}');">{$lang.drop}</a><!--{else}--><a class="start" href="javascript:drop_confirm('{$lang.issue_desc}', 'index.php?app=coupon&act=issue&id={$coupon.coupon_id}');">{$lang.if_issue}</a> <a href="javascript:void(0);" class="edit1" uri="index.php?app=coupon&amp;act=edit&id={$coupon.coupon_id}" dialog_id="coupon_edit" dialog_title="{$lang.edit}" dialog_width="460" ectype="dialog">{$lang.edit}</a> <a class="delete" href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=coupon&act=drop&id={$coupon.coupon_id}');">{$lang.drop}</a><!--{/if}-->
+                    </td>
+                </tr>
+                <!-- {foreachelse} -->
+                <tr>
+                    <td colspan="8" class="member_no_records padding6">{$lang.no_records}</td>
+                </tr>
+                <!--{/foreach}-->
+                <!-- {if $coupons} -->
+                </tbody>
+                <!-- {/if} -->
+                <!-- {if $coupons} -->
+                <tr class="line_bold line_bold_bottom">
+                    <td colspan="8">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th><input id="all2" type="checkbox" class="checkall" /></th>
+                    <th colspan="7"><p class="position1"><label for="all2"><span class="all">{$lang.checkall}</span></label>
+                     <a href="javascript:void(0);" ectype="batchbutton" class="delete" uri="index.php?app=coupon&act=drop" name="id" presubmit="confirm('{$lang.drop_confirm}')">{$lang.drop}</a></p>
+                     <p class="position2">
+                       {include file=member.page.bottom.html}
+                     </p>
+                     </th>  
+                 </tr>
+                <!-- {/if} -->
+                </table>
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+        <iframe name="coupon" style="display:none;"></iframe>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

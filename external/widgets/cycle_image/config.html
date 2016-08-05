@@ -1,0 +1,43 @@
+<script type="text/javascript">
+var _d = DialogManager.get('config_dialog');
+_d.setWidth(350);
+_d.setPosition('center');
+$('#_config_widget_form_').submit(function(){
+    stopScroll();
+});
+$('#add_image').click(function(){
+    $(this).before('<div class="field_item">' +
+        '<label>上传图片:(<span>支持 gif|jpg|jpeg|png 格式</span>)</label>' +
+        '<p><input type="file" name="ad_image_file[]" /></p>'+
+        '<label>链接地址:</label>' +
+        '<p style="overflow:hidden;"><input type="text" name="ad_link_url[]" value="{$image.ad_link_url}" />' +
+        '<input type="button" value="删除图片" onclick="drop_image(this)" /></p></div>');
+});
+function drop_image(btnObj)
+{
+    $(btnObj).parents('.field_item').remove();
+}
+</script>
+<!-- {if $options} -->
+<!-- {foreach from=$options item=image} -->
+<div class="field_item">
+    <label>上传图片:(<span>支持 gif|jpg|jpeg|png 格式</span>)</label>
+    <p><input type="file" name="ad_image_file[]" />
+        <input type="hidden" name="ad_image_url[]" value="{$image.ad_image_url}" />
+    <img src="{$image.ad_image_url}" height="15" /></p>
+    <label>链接地址:</label>
+    <p style="overflow:hidden;"><input type="text" name="ad_link_url[]" value="{$image.ad_link_url}" />
+    <input  type="button" value="删除图片" onclick="drop_image(this)" /></p>
+</div>
+<!-- {/foreach} -->
+<!-- {else} -->
+<div class="field_item">
+    <label>上传图片:(<span>支持 gif|jpg|jpeg|png 格式</span>)</label>
+    <p><input type="file" name="ad_image_file[]" /></p>
+    <label>链接地址:</label>
+    <p style="overflow:hidden;"><input type="text" name="ad_link_url[]" value="{$image.ad_link_url}" />
+    <input type="button" value="删除图片" onclick="drop_image(this)" /></p>
+</div>
+<!-- {/if} -->
+<input type="button" id="add_image" value="新增图片" />
+

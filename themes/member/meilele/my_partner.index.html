@@ -1,0 +1,79 @@
+{include file=member.header.html}
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+{include file=member.submenu.html}
+        <script type="text/javascript" src="{lib file=jquery.plugins/jquery.validate.js}" charset="{$charset}"></script>
+        <div class="wrap">
+            <div class="eject_btn_two eject_pos1" ><b class="ico4" ectype="dialog" dialog_id="my_partner_add" dialog_width="460" dialog_title="{$lang.add_partner}" uri="index.php?app=my_partner&amp;act=add">{$lang.add_partner}</b></div>
+            <div class="public table">
+                <table class="table_head_line">
+                    <!--{if $partners}-->
+                    <tr class="line_bold">
+                        <th class="width1"><input id="all" type="checkbox" class="checkall" /></th>
+                        <th class="align1" colspan="5">
+                            <span class="all"><label for="all">{$lang.checkall}</label></span>
+                            <a href="javascript:void(0);" class="delete" uri="index.php?app=my_partner&act=drop" name="id" presubmit="confirm('{$lang.drop_confirm}')" ectype="batchbutton">{$lang.drop}</a>
+                        </th>
+                    </tr>
+                    <tr class="gray">
+                        <th></th>
+                        <th>{$lang.title}</th>
+                        <th>{$lang.link}</th>
+                        <th>{$lang.logo}</th>
+                        <th>{$lang.sort_order}</th>
+                        <th>{$lang.handle}</th>
+                    </tr>
+                    <!--{/if}-->
+                    <!-- {foreach from=$partners item=partner name=v} -->
+                    <!--{if $smarty.foreach.v.last}--><tr class="line line_bold"><!--{else}--><tr class="line"><!--{/if}-->
+                        <td class="align2"><input type="checkbox" class="checkitem" value="{$partner.partner_id}" /></td>
+                        <td>{$partner.title|escape}</td>
+                        <td class="color1">{$partner.link}</td>
+                        <td class="align2">
+                        <!--{if $partner.logo}-->
+                        <img src="{$partner.logo}" height="30"/>
+                        <!--{/if}-->
+                        </td>
+                        <td class="align2"><span>{$partner.sort_order}</span></td>
+                        <td class="width13">
+                        <div class="">
+                            <a href="javascript:void(0);" uri="index.php?app=my_partner&amp;act=edit&partner_id={$partner.partner_id}" dialog_id="my_partner_edit" dialog_title="{$lang.edit}" dialog_width="460" ectype="dialog" class="edit1">{$lang.edit}</a><a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=my_partner&amp;act=drop&id={$partner.partner_id}');" class="delete">{$lang.drop}</a>
+                        </div>
+                        </td>
+                    </tr>
+                    <!-- {foreachelse} -->
+                    <tr>
+                        <td colspan="6" class="member_no_records padding6">{$lang.no_records}</td>
+                    </tr>
+                    <!--{/foreach}-->
+                    <!--{if $partners}-->
+                    <tr>
+                        <th><input id="all2" type="checkbox" class="checkall" /></th>
+                        <th colspan="5">
+                        <p class="position1">
+                            <span class="all"><label for="all2">{$lang.checkall}</label></span>
+                            <a href="javascript:void(0);" class="delete" uri="index.php?app=my_partner&act=drop" name="id" presubmit="confirm('{$lang.drop_confirm}')" ectype="batchbutton">{$lang.drop}</a>
+
+                        </p>
+                        <p class="position2">
+                            {include file=member.page.bottom.html}
+                        </p>
+                        </th>
+                    </tr>
+                    <!--{/if}-->
+                </table>
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+        <iframe name="my_partner" style="display:none"></iframe>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

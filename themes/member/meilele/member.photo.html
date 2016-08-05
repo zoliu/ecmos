@@ -1,0 +1,120 @@
+{include file=member.header.html}
+<style type="text/css" media="screen">
+  html, body { height:100%; background-color: #ffffff;}
+  #flashContent { width:100%; height:100%; }
+</style>
+
+<script type="text/javascript" src="{res file=avatar/swfobject.js}"></script>
+<script type="text/javascript">
+
+      function uploadevent(status){
+           status += '';
+         switch(status){
+
+          case '1': //上传完后的操作。
+            alert('保存成功');           
+          break;
+
+          case '2': //这里是js调用提示参数,如果不需要提示，直接 return 1即可
+            if(confirm('是否确认保存?')){
+              return 1;
+            }else{
+              return 0;
+            }
+          break;
+
+          case '-1':
+            alert('cancel!');
+            window.location.href = "index.php?app=member&act=profile";
+          break;
+          case '-2':
+            alert('upload failed!');
+            window.location.href = "index.php?app=member&act=profile";
+          break;
+
+          default:
+            alert(typeof(status) + ' ' + status);
+        } 
+      }
+
+      var flashvars = {
+        "jsfunc":"uploadevent",
+        "imgUrl":"{$site_url}/{$members.portrait}",
+        "pid":"75642723",
+        "uploadSrc":true,
+        "showBrow":true, //关闭上传按钮
+        "showCame":true, //关闭摄像头
+        "uploadUrl":"./?app=member_photo"
+        //"pSize":"250|250|150|150|80|80|50|50" 这里可以改尺寸
+      };
+
+      var params = {
+        menu: "false",
+        scale: "noScale",
+        allowFullscreen: "true",
+        allowScriptAccess: "always",
+        wmode:"transparent",
+        bgcolor: "#FFFFFF"
+      };
+
+      var attributes = {
+        id:"FaustCplus"
+      };
+
+      swfobject.embedSWF("{res file=avatar/FaustCplus.swf}", "altContent", "650", "460", "9.0.0", "expressInstall.swf", flashvars, params, attributes);
+
+    </script>
+<style>
+  .btn{
+    border: 0;
+    width: 120px;
+    height: 32px;
+    background: url({res file=images/member/btn.gif}) no-repeat 0 -253px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #3f3d3e;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 18px;
+  }
+  .eject_con .add {
+  padding: 0px;
+  width: 100%;
+}
+
+</style>
+
+<div class="content">
+  {include file=member.menu.html}
+  <div id="right">
+
+    {include file=member.curlocal.html}
+    {include file=member.submenu.html}
+    <div class="wrap">
+      <div class="eject_con bgwhite">
+        <div class="add">
+          <div id="altContent" class=""></div>
+          <br>
+          <input type="button" class='btn' onclick="swfobject.getObjectById('FaustCplus').jscall_updateAvatar();" value="保存图片"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap_bottom"></div>
+
+  </div>
+
+  <div class="clear"></div>
+
+  <div class="adorn_right1"></div>
+
+  <div class="adorn_right2"></div>
+
+  <div class="adorn_right3"></div>
+
+  <div class="adorn_right4"></div>
+
+</div>
+
+<div class="clear"></div>
+{include file="footer.html"}

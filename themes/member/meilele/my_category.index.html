@@ -1,0 +1,93 @@
+{include file=member.header.html}
+<script type="text/javascript">
+//<!CDATA[
+$(function()
+{
+    var map = {$map};
+    var path = "{res file=images/}";
+    if (map.length > 0)
+    {
+        var option = {openImg: path + "treetable/tv-collapsable.gif", shutImg: path + "treetable/tv-expandable.gif", leafImg: path + "treetable/tv-item.gif", lastOpenImg: path + "treetable/tv-collapsable-last.gif", lastShutImg: path + "treetable/tv-expandable-last.gif", lastLeafImg: path + "treetable/tv-item-last.gif", vertLineImg: path + "treetable/vertline.gif", blankImg: path + "treetable/blank.gif", collapse: false, column: 1, striped: false, highlight: false, state:false};
+        $("#treet1").jqTreeTable(map, option);
+    }
+    var t = new EditableTable($('#my_category'));
+});
+//]]>
+</script>
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right"> {include file=member.curlocal.html}
+{include file=member.submenu.html}
+        <div class="wrap">
+            <div class="eject_btn_two eject_pos3" title="{$lang.gcategory_add}"><b class="ico3" ectype="dialog" dialog_title="{$lang.gcategory_add}" dialog_id="my_category_add" dialog_width="480" uri="index.php?app=my_category&amp;act=add">{$lang.gcategory_add}</b></div>
+            <div class="eject_btn_three eject_pos1" title="{$lang.import}"><b class="ico3"  ectype="dialog" dialog_title="{$lang.import}" dialog_id="my_category_import" dialog_width="480" uri="index.php?app=my_category&amp;act=import">{$lang.import}</b></div>
+            <div class="eject_btn_three eject_pos4" title="{$lang.export}"><b class="ico4" <!--{if $charset eq 'utf-8'}-->ectype="dialog" dialog_title="{$lang.export}" dialog_id="my_category_export" dialog_width="480" uri="index.php?app=my_category&amp;act=export" <!--{else}-->onclick="window.location.href='index.php?app=my_category&amp;act=export'"<!--{/if}-->>{$lang.export}</b></div>
+            <div class="public table">
+                <table id="my_category" server="{$site_url}/index.php?app=my_category&act=ajax_col">
+                    <!-- {if $gcategories} -->
+                    <tr class="line_bold" >
+                        <th class="width1"><input id="all" type="checkbox" class="checkall" /></th>
+                        <th class="align1" colspan="4">
+                           <label for="all"> <span class="all">{$lang.checkall}</span> </label>
+                            <a href="javascript:void(0);" class="delete" ectype="batchbutton" uri="index.php?app=my_category&act=drop" name="id" presubmit="confirm('{$lang.drop_confirm}')">{$lang.drop}</a>
+                        </th>
+                    </tr>
+                    <tr class="gray" ectype="table_header">
+                        <th></th>
+                        <th class="align1" coltype="editable" column="cate_name" checker="check_required" inputwidth="50%">{$lang.cate_name}</th>
+                        <th class="width15" coltype="editable" column="sort_order" checker="check_max" inputwidth="30px">{$lang.sort_order}</th>
+                        <th class="width15" coltype="switchable" column="if_show" checker="" onclass="right_ico" offclass="wrong_ico">{$lang.if_show}</th>
+                        <th class="width3">{$lang.handle}</th>
+                    </tr>
+                     <!-- {/if} -->
+                 <!-- {if $gcategories} -->
+                <tbody id="treet1">
+                <!-- {/if} -->
+                <!-- {foreach from=$gcategories item=gcategory name=v} -->
+                <tr class="line<!--{if $smarty.foreach.v.last}--> last_line<!--{/if}-->" ectype="table_item" idvalue="{$gcategory.cate_id}">
+                    <td class="align2"><input type="checkbox" class="checkitem" value="{$gcategory.cate_id}" /></td>
+                    <td class="width7">&nbsp;&nbsp;<span ectype="editobj">{$gcategory.cate_name|escape}</span></td>
+                    <td class="align2"><span ectype="editobj">{$gcategory.sort_order}</span></td>
+                    <td>
+                        <p class="padding2"><span <!--{if $gcategory.if_show}-->class="right_ico" status="on"<!--{else}-->class="wrong_ico" status="off"<!--{/if}-->ectype="editobj"></span></p>
+                        </td>
+                    <td class="padding5">
+                        <!-- {if $gcategory.layer lt 2} -->
+                         <a href="javascript:void(0);" ectype="dialog" dialog_width="480" dialog_title="{$lang.add_child}" dialog_id="my_category_add" uri="index.php?app=my_category&amp;act=add&amp;pid={$gcategory.cate_id}" class="add1_ico">{$lang.add_child}</a>
+                        <!-- {/if} -->
+                        <a href="javascript:void(0);" ectype="dialog" dialog_width="480" dialog_title="{$lang.edit}" dialog_id="my_category_edit" uri="index.php?app=my_category&amp;act=edit&amp;id={$gcategory.cate_id}" class="edit1">{$lang.edit}</a>  <a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=my_category&amp;act=drop&id={$gcategory.cate_id}');" class="delete">{$lang.drop}</a>
+
+                        </td>
+                </tr>
+                <!-- {foreachelse} -->
+                <tr>
+                    <td colspan="5" class="member_no_records padding6">{$lang.no_records}</td>
+                </tr>
+                <!--{/foreach}-->
+                <!-- {if $gcategories} -->
+                </tbody>
+                <!-- {/if} -->
+                <!-- {if $gcategories} -->
+                <tr class="line_bold line_bold_bottom">
+                    <td colspan="5">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th><input id="all2" type="checkbox" class="checkall" /></td>
+                    <th colspan="4"><p class="position1"><label for="all2"><span class="all">{$lang.checkall}</span></label>
+                     <a href="javascript:void(0);" ectype="batchbutton" class="delete" uri="index.php?app=my_category&act=drop" name="id" presubmit="confirm('{$lang.drop_confirm}')">{$lang.drop}</a></p></td>
+                </tr>
+                <!-- {/if} -->
+                </table>
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+        <iframe name="pop_warning" style="display:none"></iframe>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

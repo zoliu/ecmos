@@ -1,0 +1,92 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>{$lang.brand}</p>
+    <ul class="subnav">
+        <li><!--{if $wait_verify}--><a class="btn1" href="index.php?app=brand">{$lang.manage}</a><!--{else}--><span>{$lang.manage}</span><!--{/if}--></li>
+        <li><a class="btn1" href="index.php?app=brand&amp;act=add">{$lang.add}</a></li>
+        <li><!--{if $wait_verify}--><span>{$lang.wait_verify}</span><!--{else}--><a class="btn1" href="index.php?app=brand&amp;wait_verify=1">{$lang.wait_verify}</a><!--{/if}--></li>
+    </ul>
+</div>
+<div class="mrightTop">
+    <div class="fontl">
+        <form method="get">
+            <div class="left">
+                <input type="hidden" name="app" value="brand" />
+                <input type="hidden" name="act" value="index" />
+                <input type="hidden" name="wait_verify" value="{$wait_verify}">
+                {$lang.brand_name}:
+                <input class="queryInput" type="text" name="brand_name" value="{$query.brand_name|escape}" />
+                {$lang.tag}:
+                <input class="queryInput" type="text" name="tag" value="{$query.tag|escape}">
+                <input type="submit" class="formbtn" value="{$lang.query}" />
+            </div>
+            <!--{if $filtered}-->
+            <a class="left formbtn1" href="index.php?app=brand&wait_verify={$wait_verify}">{$lang.cancel_query}</a>
+            <!--{/if}-->
+      <span>
+              </span></form>
+    </div>
+    <div class="fontr">
+        {if $brands}{include file=page.top.html}{/if}
+    </div>
+</div>
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!--{if $brands}-->
+        <tr class="tatr1">
+            <td width="20" class="firstCell"><input type="checkbox" class="checkall" /></td>
+            <td align="left"><span ectype="order_by" fieldname="brand_name">{$lang.brand_name}</span></td>
+            <td align="left"><span ectype="order_by" fieldname="tag">{$lang.tag}</span></td>
+            <td align="left" class="table-center">{$lang.logo}</td>
+            <!--{if !$wait_verify}-->
+             <td class="table-center"><span ectype="order_by" fieldname="sort_order">{$lang.sort_order}</span></td>
+            <td class="table-center"><span ectype="order_by" fieldname="recommended">{$lang.recommended}</span></td>
+            <!--{/if}-->
+            <td class="handler">{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$brands item=brand}-->
+        <tr class="tatr2">
+            <td class="firstCell"><input value="{$brand.brand_id}" class='checkitem' type="checkbox" /></td>
+            <td align="left"><span ectype="inline_edit" fieldname="brand_name" fieldid="{$brand.brand_id}" required="1" class="editable" title="{$lang.editable}">{$brand.brand_name|escape}</span></td>
+            <td align="left"><span ectype="inline_edit" fieldname="tag" fieldid="{$brand.brand_id}" required="1" class="editable" title="{$lang.editable}">{$brand.tag|escape}<span></td>
+            <td align="left" class="table-center">{if $brand.brand_logo}<img src="{$brand.brand_logo}" height="30"/>{/if}</td>
+            <!--{if !$wait_verify}-->
+            <td class="table-center"><span ectype="inline_edit" fieldname="sort_order" fieldid="{$brand.brand_id}" datatype="pint" maxvalue="255" class="editable" title="{$lang.editable}">{$brand.sort_order}</span></td>  
+            <td class="table-center"><!--{if $brand.if_show}--><!--{if $brand.recommended}--><img src="templates/style/images/positive_enabled.gif" ectype="inline_edit" fieldname="recommended" fieldid="{$brand.brand_id}" fieldvalue="1" title="{$lang.editable}"/><!--{else}--><img src="templates/style/images/positive_disabled.gif" ectype="inline_edit" fieldname="recommended" fieldid="{$brand.brand_id}" fieldvalue="0" title="{$lang.editable}"/><!--{/if}--><!--{/if}--></td>
+            <!--{/if}-->
+            <td class="handler">
+            <!--{if $brand.if_show eq 1}-->
+            <a href="index.php?app=brand&amp;act=edit&amp;id={$brand.brand_id}">{$lang.edit}</a>  |  <a name="drop" href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=brand&amp;act=drop&amp;id={$brand.brand_id}');">{$lang.drop}</a>
+            <!--{else}-->
+            <a href="index.php?app=brand&amp;act=pass&amp;id={$brand.brand_id}">{$lang.pass}</a>  |  <a href="index.php?app=brand&amp;act=refuse&amp;id={$brand.brand_id}">{$lang.refuse}</a>       
+            <!--{/if}-->
+            </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="7">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <!--{if $brands}-->
+    <div id="dataFuncs">
+        <div id="batchAction" class="left paddingT15">
+            <!--{if $wait_verify}-->
+            &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.pass}" name="id" uri="index.php?app=brand&act=pass" />
+             &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.refuse}" name="id" uri="index.php?app=brand&act=refuse" />
+            <!--{else}-->
+            &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="index.php?app=brand&act=drop" presubmit="confirm('{$lang.drop_confirm}');" />
+            <!--{/if}-->
+        </div>
+        <div class="pageLinks">
+            {if $brands}{include file=page.bottom.html}{/if}
+        </div>
+    </div>
+    <!--{/if}-->
+    <div class="clear"></div>
+</div>
+{include file="footer.html"}

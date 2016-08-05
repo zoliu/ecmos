@@ -1,0 +1,78 @@
+<!-- www.360cd.cn  Mosquito -->
+
+{include file="header.html"}
+
+<style>
+.cz_info>p {
+    margin: 1em 0;
+}
+.cz_info>p>span {
+    display: inline-block;
+    width: 6em;
+}
+</style>
+
+<script type="text/javascript" src="{lib file=jquery.plugins/jquery.validate.js}"></script>
+
+<script type="text/javascript">
+
+$(function() {
+    
+    $('#_form_').validate({
+        errorPlacement : function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success : function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        rules : {
+            money : {
+                required : true,
+                number : true,
+                min : 0.01
+            }
+        },
+        messages : {
+            money : {
+                required : '提现金额不能为空',
+                number : '必须输入合法的数字',
+                min : '最小金额不能小于0.01'
+            }
+        }
+    });
+    
+});
+
+</script>
+
+<div id="rightTop">
+    <p>钱包中心</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="{url app=money}">管理</a></li>
+        <li><a class="btn1" href="{url app=money&act=log}">记录</a></li>
+        <li><span>充值</span></li>
+    </ul>
+</div>
+
+<div class="info" style="padding-left: 2em;">
+    
+    <form method="post" id="_form_">
+        <div class="cz_info">
+            <p>
+                <span>充值账户：</span>
+                <input type="text" value="{$money_info.user_name}" readonly="readonly" />
+            </p>
+            <p>
+                <span>充值金额：</span>
+                <input name="money" type="text" value="0" />
+            </p>
+            
+            <p><span></span><input type="submit" value="提交" /></p>
+        </div>
+    </form>
+
+    <div class="demand"></div>
+</div>
+
+{include file="footer.html"}

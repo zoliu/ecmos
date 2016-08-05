@@ -1,0 +1,50 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function(){
+    $('#brand_refuse').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('right').text('OK!');
+        },
+        rules : {    
+            content: {
+                required : true
+            } 
+        },
+        messages : {
+            content: {
+                required : '{$lang.content_empty}'
+            } 
+        }
+    });
+
+});
+
+</script>
+<div id="rightTop">
+  <p>{$lang.brand}</p>
+  <ul class="subnav">
+    <li><a class="btn1" href="index.php?app=brand">{$lang.manage}</a></li>
+    <li><a class="btn1" href="index.php?app=brand&amp;act=add">{$lang.add}</a></li>
+    <li><span>{$lang.brand_refuse}</span></li>
+  </ul>
+</div>
+<div class="info">
+<form method="POST" id="brand_refuse">
+<table class="infoTable">
+    <tr>
+        <th class="paddingT15">{$lang.content}:</td>
+        <td class="paddingT15 wordSpacing5"><textarea name="content"></textarea></td>
+    <tr>
+    <tr>
+        <th class="paddingT15"> </th>
+        <td class="ptb20"><input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+          <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" /></td>
+    </tr>
+</table>
+</form>
+</div>
+{include file="footer.html"}

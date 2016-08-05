@@ -1,0 +1,211 @@
+@charset "utf-8";
+/*
+ ECMall 管理页面 刘伟[leo]制作 2008-12-22
+*/
+
+/*初始化*/
+
+h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dt, dd, li, body, form, input, button, img, cite, strong, em, table, td, th { padding:0; margin:0;}
+h1, h2, h3, h4, h5, h6 { font-size:14px;}
+img, table, td, th { border:0;}
+ul, ol { list-style-type:none;}
+body { font:12px Arial, "宋体", Verdana, sans-serif;background: url(images/content.gif) repeat-y;}
+html,body {padding: 0;margin: 0; overflow-x:hidden; overflow-y:auto;}
+
+/* 字体颜色 */
+.red {color:red;}
+.bold {font-weight: bold; color: #545454}
+
+.back_nav { width: 400px; height: 350px; position: absolute; top: 40px; right: 20px; z-index: 100; display: none;}
+    .back_nav_list { width: 366px; height: 336px; padding: 30px 0 0 30px; position: absolute; top: 0px; left: 0px; z-index: 2; background: #f5fbef; border: 1px solid #a9d671;}
+    .shadow { width: 398px; height: 318px; position: absolute; bottom: 0px; right: 0px; z-index: 1; background: #afb1b3; -moz-opacity: 0.5; opacity:.5; filter: alpha(opacity=50);}
+        .back_nav_list dl { float: left; width: 85px; height: 160px;}
+            .back_nav_list dt {font-size: 14px; font-weight: bold; color: #0c4887; margin-bottom: 10px;}
+            .back_nav_list dd {line-height: 20px;}
+            .back_nav_list a {font-weight: bold; color: #454543; text-decoration: none;}
+            .back_nav_list a:hover {color: red; text-decoration: underline;}
+    .close_float { position: absolute; bottom: 7px; right: 7px; z-index: 3;}
+
+#head {height: 100px; background: url(images/head.gif); position: relative;}
+    #logo {width: 98px; height: 68px; position: absolute; top: 16px; left: 30px; z-index: 2;}
+    #menu {position: absolute; top: 14px; right: 22px; z-index: 2; word-spacing: 5px; color: #234f8d;}
+        #menu span {position: relative; bottom: -3px; display: block; float: left; margin-right: 5px;}
+        #menu a {color: #234f8d; text-decoration: none;}
+        #menu a:hover {text-decoration: underline;}
+        .menu_btn1 {display: block; float: left; width: 60px; height: 23px; background: url(images/menu_btn1.gif); border: 0; margin-right: 5px; text-decoration: none; line-height: 19px; +line-height: 22px; text-align: center;}
+.menu_btn2 {display: block; float: left; width: 70px; height: 23px; background: url(images/menu_btn2.gif); border: 0;  margin-right: 5px;  text-decoration: none; line-height: 19px; +line-height: 22px; text-align: center;}
+    #headBg {width: 830px; height: 50px; background: url(images/head_bg.gif); position: absolute; top: 0; left: 0; z-index: 1;}
+    #nav {position: absolute; bottom: 3px; left: 170px; z-index: 2;}
+        #nav li {float: left;}
+            .link {display: block; color: #369; font-size: 14px; font-weight: bold; padding: 6px 20px 10px; text-decoration: none; background: url(images/nav_li.gif) no-repeat right 5px;}
+            .link:hover {color: #ff783d}
+            .actived {display: block; font-size: 14px; font-weight: bold; padding: 8px 0 0 50px; width: 67px; height: 25px; background: url(images/actived.gif); color: #fff; text-decoration: none; }
+            .actived:hover { color:#fff; }
+
+#content {width: 100%; /*height: 84.5%; background: #ecf5ff;*/}
+    #left {/*width: 12%;*/width: 170px; border-bottom: 3px solid #d3e9f8; float: left; margin-right: 2px;}
+        #leftMenu {}
+            #leftMenu li {background: url(images/left_menu.gif); border-left: 1px solid #fff;}
+                #leftMenu li a {color: #333; text-decoration: none; display: block; line-height: 30px; height: 30px; background: url(images/left_li.gif) no-repeat 10px 10px; padding-left: 30px;}
+                #leftMenu li a:hover {padding-left: 32px; font-weight: bold; background: url(images/left_li.gif) no-repeat 12px 10px;}
+                #leftMenu strong {color: red;}
+        #leftMenus {}
+            #leftMenus dt {background: url(images/left_menu.gif); border-left: 1px solid #fff; position: relative;}
+                #leftMenus dt a {color: #333; text-decoration: none; display: block; line-height: 30px; height: 30px; padding-left: 30px;}
+                #leftMenus dt a:hover {padding-left: 32px; font-weight: bold;}
+                    .ico1 {background: url(images/left_menus1.gif) no-repeat 10px 10px;}
+                    .ico2 {background: url(images/left_li.gif) no-repeat 10px 10px;}
+                .spread {position: absolute; top: 5px; right: 5px;}
+            #leftMenus dd {position: relative; line-height: 25px; height: 25px; border-bottom: 1px solid #d8ecff; padding-left: 28px; background-color: #f4f9ff; background-image: url(images/menus_dd.gif); background-repeat: no-repeat; background-position: 15px 10px;}
+            .close {position: absolute; top: 6px; right: 10px;}
+                #leftMenus dd a {color: #3d6bac; text-decoration: none; }
+                #leftMenus dd a:hover {color: #264d84; font-weight: bold;}
+                #leftMenus dd a.selected {color: #264d84; font-weight: bold;}
+    #right {/*width: 88%;background: url(images/right.gif) repeat-y;*/float: left; }
+        #rightTop {border-top: 2px solid #fff; border-bottom: 1px solid #fff; height: 50px; background: #f0f7ff; margin-left: 2px; padding: 0 20px;}
+            #rightTop p {line-height: 22px; float: left; color: #444; padding-top:15px;}
+                #rightTop p strong {margin-left:20px; margin-right:10px;}
+                .tidings {color: #06c; text-decoration: none; padding-left: 13px; background: url(images/right_p.gif) no-repeat 0 1px;}
+                .tidings:hover {text-decoration: underline}
+                .num {color: #f60; text-decoration: none;}
+                .num:hover {text-decoration: underline}
+            .btn {float: right; margin-top: 10px;}
+        #rightCon {border-top: 1px solid #b0d3ee; padding: 10px 10px 60px; background: #fbfdff; margin-left: 2px; overflow: hidden;}
+            #rightCon dt {line-height: 30px; font-size: 14px; color: #09f; font-weight: bold; padding: 10px 40px 0;}
+            #rightCon dd {border-bottom: 1px solid #b0d3ee; line-height: 25px; padding: 0 40px 20px;}
+                #rightCon dd th {text-align: left; width: 120px; color: #444;}
+                    .td {width: 200px; padding-left: 20px;}
+#page_footer {color: #999; border-top: 1px solid #cbe4f5; text-align: center; padding: 20px 0px;}
+.info {border-top: 1px solid #c1dff3; overflow: hidden; padding-left: 2px;}
+/*.mrightTop {line-height: 32px; background: url(images/top_bj.gif) repeat-x; height: 32px; margin-left: 2px; padding: 0 20px;}*/
+.mrightTop { background: url(images/top_bj.gif) repeat-x; height: 32px; margin-left: 2px; padding: 0 20px;}
+.mrightTop1 { border-bottom: 1px solid #eee; height: 60px; margin-left: 2px; padding: 0 20px;}
+.fontl {float: left; height: 20px; line-height: 20px; padding-top: 5px;}
+.fontr {float: right; height: 20px; padding-top: 5px;}
+#select {height: 20px; width: 100px; margin: 0 5px; line-height: 20px; float: left;}
+.button1 {line-height: 21px; color: #234f8d; background: url(images/button2.gif); text-align: center; display: block; height: 21px; width: 60px; float: left; text-decoration: none;}
+.txt {float: left; height: 20px; line-height: 20px;}
+
+.tatr1 {line-height: 34px; height: 34px; font-weight: bold; color: #444; text-align: center;}
+.tatr1 td {border-bottom: 1px solid #bbdbf1;}
+.sort_asc {background: url(images/sort_asc.gif) no-repeat right 2px; padding-right: 10px;}
+.sort_desc {background: url(images/sort_desc.gif) no-repeat right 2px; padding-right: 10px;}
+.editable {background: url(images/editable.gif) no-repeat right 2px; padding-right: 14px;}
+
+.tatr2 {color: #444; /*height: 34px;*/ text-align: center;}
+.tatr2 td {border-bottom: 1px dotted #bbdbf1; empty-cells:show;}
+.padding1 { padding-right: 15px; }
+.tdare{margin-left: 2px; padding: 0 5px 60px 5px; background: #fbfdff;}
+.tdare td {padding: 10px 0;}
+.tdare th a, .tdare td a {color: #234f8d;}
+.tdare th a:hover, .tdare td a:hover {color: #12325f;}
+.seledr { font-size:12px; }
+tr td.handler, th.handler{ width: 80px; text-align: center;}
+tr td.handler span { display:block; width: 140px; text-align:left; margin: 0 auto;}
+tr.no_data td{color: #444444; padding-top: 60px; text-align:center; font-weight: bold; font-size:14px;}
+
+/*
+.page {color: #FFF; background: #bbdbf1; padding: 3px 10px; float: right; margin: 20px 20px 0 0;}
+*/
+
+.flip_over {float: left; line-height: 20px; margin-right: 10px;}
+.page {float: right;}
+.mtr10 { margin: 10px 20px 0 0; display: inline;}
+    .formerNull, .downNull, .former, .page_link, .page_hover, .down, nonce {margin-left: 3px;}
+    .formerNull {background-image: url(images/up.gif);background-color: #e0e0e0; background-repeat: no-repeat; background-position: center center; border: 1px solid #c7c7c7; display: block; float: left; width: 15px; height: 19px; +height: 18px;}
+    .former {background-image: url(images/up.gif); background-color: #7ec0f2;background-repeat: no-repeat; background-position: center center; border: 1px solid #4f99e8; display: block; float: left; width: 15px; height: 19px; +height: 18px;}
+    .former:hover {border: 1px solid #888;}
+    .page_link {color: #666;}
+    .page_hover {color: #ff6000;}
+    .page_link, .page_hover {font-weight: bold; display: block; float: left; text-decoration: none; padding: 2px 5px 0; font-size: 16px;}
+    .page_link:hover, .page_hover:hover {text-decoration: underline;}
+    .down {padding: 2px 15px 2px 8px; background-image: url(images/down.gif); background-position: 50px center; border: 1px solid #4f99e8; text-decoration: none; display: block; float: left; background-color: #7ec0f2; background-repeat: no-repeat; color: #fff;}
+    .downNull {padding: 2px 15px 2px 8px; background: #e2e2e2 url(images/down.gif) no-repeat 50px center; border: 1px solid #c7c7c7; color: #fff; text-decoration: none; display: block; float: left; }
+    .down:hover {border: 1px solid #2578d0;}
+    .page .nonce { border: 1px solid #ddd; display: block; float: left; height: 17px; text-decoration: none; color: #a3a3a3; line-height: 17px; padding: 0 5px; }
+    .stat { float: left; height: 20px; line-height: 20px; color: #a3a3a3; text-decoration: none; }
+
+.subnav {float: left; margin-left: 20px;}
+    .subnav li {float: left; margin-right: 8px;margin-top: 15px;}
+        .subnav li span {font-weight: bold; color: #444; position: relative; top: 3px; +top: 5px;}
+        .btn1 {width: 69px; height: 20px; background: url(images/btn1.gif); display: block; width: 69px; height: 20px; line-height: 20px; color: #fff; text-align: center; text-decoration: none}
+        .btn2 {width: 69px; height: 20px; background: url(images/btn2.gif); display: block; width: 54px; height: 20px; line-height: 20px; color: #fff; text-align: center; text-decoration: none}
+        .btn3 {width: 94px; height: 20px; background: url(images/btn3.gif); display: block; width: 81px; height: 20px; line-height: 20px; color: #fff; text-align: center; text-decoration: none}
+        .btn4 {width: 69px; height: 20px; background: url(images/btn4.gif); display: block; width: 94px; height: 20px; line-height: 20px; color: #fff; text-align: center; text-decoration: none}
+
+
+.paddingT15 {padding-top: 10px;}
+.ptb20 {padding: 20px 0;}
+    .infoTable {width: 100%; background: #fbfdff; color: #444;}
+    .infoTableInput, .infoTableInput2, .infoTableFile, .infoTableFile2{height:17px; line-height:17px;}
+    .infoTableInput {width:255px;}
+    .infoTableFile {width:331px; height:20px;}
+    .infoTableInput2 {width:125px;}
+    .infoTableFile2 {width:201px; height:20px;}
+    .infoTable textarea {width:255px; height:100px; font-size:12px}
+    .infoTable select {font-size:12px}
+    .info th {text-align: left; padding-left: 40px; width: 140px;/* height: 35px;*/}
+    .select {width: 370px; color: #444; font-size: 13px;}
+    .wordSpacing5 {word-spacing: 5px;}
+    .gray {color: #a1a1a1; padding-left: 20px;}
+    .text250 {width: 238px; color: #444; font-size: 13px; padding-left: 18px}
+    .normal {font-weight: normal;}
+    .file {width: 330px;}
+    .formbtn {width: 60px; height: 21px; color: #234f8d; border: 0; background: url(images/button2.gif);}
+    .formbtn1 {width: 77px; height: 21px; color: #234f8d; border: 0; background: url(images/button3.gif); text-decoration:none; text-align:center; margin:0px 2px 0px 8px!important;margin:1px 2px 0px 8px; }
+    .recommend_to {width: 100%;}
+    .recommend_to li {width: 48%; float: left;}
+    .floatleft {float:left;padding-left:15px;}
+.clear {clear: both;}
+.queryCtrl { float:left; margin-right:5px; color:#888; }
+.queryInput, .queryInput2 {height:17px; line-height:17px; margin: 0px 8px 0px 1px;}
+.queryInput{ width:100px; }
+.queryInput2 { width:50px; }
+.querySelect {margin: 0px 8px 0px 1px; font-size:12px}
+.dataTable {border-collapse:collapse;}
+    .dataTable td { text-align:left; }
+    .dataTable .firstCell { padding-left:25px; }
+.pageLinks { float: right; color:#444; }
+    .pageLinks ul { list-style:none; }
+    .pageLinks li { float:left; margin:0 5px; }
+    .pageLinks .curr-page { font-weight:bold; }
+    .pageLinks .pg_total {  }
+
+.left {float: left}
+.right {float: right}
+.mt10 {margin-top: 10px;}
+.sort_order{width:50px; height:17px; line-height:17px; text-align:center}
+td.table-center, tr.table-center, th.table-center {text-align: center; }
+
+
+
+/* 订单详情 */
+.demand {height: 26px; background: url(images/demand.gif); padding: 5px 0 0 18px;}
+.w130 {width: 130px;}
+.order_form {margin: 0 6px; padding: 15px 12px; border-bottom: solid 1px #bbdbf1; color: #444;}
+.order_form h1 {font-size: 14px; color: #009de6; margin-bottom: 10px;}
+.order_form h2 {font-size: 14px; color: #8c8c8c; margin-bottom: 10px;}
+.order_form ul {}
+.order_form li {width: 50%; float: left; line-height: 22px;}
+.order_form a {color: #06c;}
+.order_form a:hover {color: red;}
+.order_info {}
+.order_info_pic {width: 50px; height: 50px; border: solid 1px #bdbdbd; display: block; overflow: hidden; float: left;}
+.order_info_pic:hover {border: solid 1px #333;}
+.order_info_text {float: left; width: 130px; height: 53px; overflow: hidden; margin: 0 15px; line-height: 18px;}
+.order_info_text a {color: #444; text-decoration: none;}
+.order_info_text a:hover {text-decoration: underline;}
+.order_info p {float: left; margin: 18px 25px 0 0;}
+.red_common {font-weight: bold; color: #ff5400;}
+.red_big {font-weight: bold; color: #ff5400; font-size: 16px;}
+.up_style {position: relative; top: -3px;}
+.order_bottom {line-height: 22px;}
+.line_none {border: 0;}
+/* 订单详情结束 */
+
+/* 表单验证的相关样式 */
+form .field_notice { color:#9C9C9C; margin-left:5px; }
+form label.error { color:red; font-style:normal; margin-left:5px; }
+form input.error { border:red 1px dotted; }
+form label.checking { padding-left:18px; background:transparent url(images/checking.gif) no-repeat; margin-left:5px; font-style:italic; color:#9C9C9C; display:none; }
+form label.right { padding-left:12px; background:transparent url(images/right.gif) no-repeat; margin-left:5px; font-style:italic; color:green; float:none; }

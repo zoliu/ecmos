@@ -1,0 +1,150 @@
+{$build_editor}
+{$editor_upload}
+<style type="text/css">
+.editor { margin:0px 22px 0px 125px; }
+.info_table_wrap .submit { width:720px; }
+.info_table { width:720px; }
+.info_table li { width:720px; }
+</style>
+<script type="text/javascript">
+$(function(){
+    trigger_uploader();
+    $('#navigation_form').validate({
+        errorLabelContainer: $('#warning'),
+        invalidHandler: function(form, validator) {
+           var errors = validator.numberOfInvalids();
+           if(errors)
+           {
+               $('#warning').show();
+           }
+           else
+           {
+               $('#warning').hide();
+           }
+        },
+        rules : {
+            title : {
+                required   : true
+            },
+            sort_order : {
+                number     : true
+            }
+        },
+        messages : {
+            title  : {
+                required   : '{$lang.title_empty}'
+            },
+            sort_order : {
+                number    : '{$lang.number_only}'
+            }
+        }
+    });
+});
+function add_uploadedfile(file_data)
+{
+   $('#desc_images').append('<li file_name="'+ file_data.file_name +'" file_path="'+ file_data.file_path +'" ectype="handle_pic" file_id="'+ file_data.file_id +'"><input type="hidden" name="file_id[]" value="'+ file_data.file_id +'"><div class="pic" style="z-index: 2;"><img src="{$site_url}/'+ file_data.file_path +'" width="50" height="50" alt="'+ file_data.file_name +'" /></div><div ectype="handler" class="bg" style="z-index: 3;display:none"><img src="{$site_url}/'+ file_data.file_path +'" width="50" height="50" alt="'+ file_data.file_name +'" /><p class="operation"><a href="javascript:void(0);" class="cut_in" ectype="insert_editor" ecm_title="{$lang.insert_editor}"></a><span class="delete" ectype="drop_image" ecm_title="{$lang.drop}"></span></p><p class="name">'+ file_data.file_name +'</p></div></li>');
+   trigger_uploader();
+        if(EDITOR_SWFU.getStats().files_queued == 0){
+            window.setTimeout(function(){
+                $('#editor_uploader').hide();
+            },5000);
+        }
+}
+function drop_image(file_id)
+{
+    if (confirm(lang.uploadedfile_drop_confirm))
+        {
+            var url = SITE_URL + '/index.php?app=my_navigation&act=drop_uploadedfile';
+            $.getJSON(url, {'file_id':file_id}, function(data){
+                if (data.done)
+                {
+                    $('*[file_id="' + file_id + '"]').remove();
+                }
+                else
+                {
+                    alert(data.msg);
+                }
+            });
+        }
+}
+
+</script>
+<style type="text/css">
+.padding2{padding-left:25px;}
+</style>
+<div class="eject_con">
+    <div class="info_table_wrap">
+
+        <form method="post" action="index.php?app=my_navigation&amp;act={$smarty.get.act}&amp;nav_id={$id}" target="my_navigation" name="navigation_form" id="navigation_form" enctype="multipart/form-data">
+        <div id="warning"></div>
+        <ul class="info_table">
+            <li>
+                <h4>{$lang.title}:</h4>
+                <p><input type="text" class="text width_normal" name="title" value="{$navigation.title|escape}" /></p>
+            </li>
+            <li>
+                <h4>{$lang.if_show}:</h4>
+                <p>{html_radios options=$yes_or_no checked=$navigation.if_show name=if_show}</p>
+            </li>
+             <li>
+                <h4>{$lang.sort_order}:</h4>
+                <p><input type="text" class="text width_short" name="sort_order" value="{$navigation.sort_order}"/></p>
+            </li>
+
+            <li>
+                <h4>{$lang.content}:</h4>
+                <div style="float:left;"><textarea  name="nav_content" id="nav_content" style="width:570px; height:250px;">{$navigation.content|escape}</textarea></div>
+            </li>
+        </ul>
+        <div class="editor">
+            <div style="position: relative; top: 10px; z-index: 5;">
+                <a class="btn3" id="open_editor_uploader">{$lang.uploadedfile}</a>
+                   <div class="upload_con" id="editor_uploader" style="display:none">
+                    <div class="upload_con_top"></div>
+                    <div class="upload_wrap">
+                     <ul>
+                        <li>
+                            <div id="divSwfuploadContainer">
+                                <div id="divButtonContainer">
+                                    <span id="editor_upload_button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li><iframe src="index.php?app=comupload&act=view_iframe&id={$id}&belong={$belong}&instance=desc_image" width="86" height="30" scrolling="no" frameborder="0"></iframe></li>
+                        <li id="open_editor_remote" class="btn2">{$lang.rem_upload}</li>
+                    </ul>
+                    <div id="editor_remote" class="upload_file" style="display:none">
+                    <iframe src="index.php?app=comupload&act=view_remote&id={$id}&belong={$belong}&instance=desc_image" width="272" height="39" scrolling="no" frameborder="0"></iframe>
+                    </div>
+                    <div id="editor_upload_progress"></div>
+                    <div class="upload_txt">
+                        <span>{$lang.note_for_upload}</span>
+                    </div>
+
+                </div>
+                <div class="upload_con_bottom"></div>
+            </div>
+        </div>
+         <ul id="desc_images" class="preview">
+            <!--{foreach from=$files_belong_article item=file}-->
+            <li ectype="handle_pic" file_name="{$file.file_name|escape}" file_path="{$file.file_path}" file_id="{$file.file_id}">
+            <input type="hidden" name="file_id[]" value="{$file.file_id}">
+                <div class="pic">
+                <img src="{$site_url}/{$file.file_path}" width="50" height="50" alt="{$file.file_name|escape}" title="{$file.file_name|escape}" /></div>
+                <div ectype="handler" class="bg">
+                <img src="{$site_url}/{$file.file_path}" width="50" height="50" alt="{$file.file_name|escape}" title="{$file.file_name|escape}" />
+                    <p class="operation">
+                        <a href="javascript:void(0);" class="cut_in" ectype="insert_editor" ecm_title="{$lang.insert_editor}"></a>
+                        <span class="delete" ectype="drop_image" ecm_title="{$lang.drop}"></span>
+                    </p>
+                    <p title="{$file.file_name|escape}" class="name">{$file.file_name|escape}</p>
+                </div>
+            </li>
+            <!--{/foreach}-->
+        </ul>
+        <div class="clear"></div>
+        </div>
+        <div class="submit"><input type="submit" class="btn" value="{$lang.submit}" /></div>
+        </form>
+    </div>
+</div>

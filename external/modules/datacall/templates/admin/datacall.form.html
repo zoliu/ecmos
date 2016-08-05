@@ -1,0 +1,208 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function(){
+    $('#datacall_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('right').text('OK!');
+        },
+        rules : {
+            description : {
+                required : true
+            },
+            max_price : {
+                number : true
+            },
+            cache_time : {
+                digits : true
+            },
+            amount : {
+                digits : true
+            },
+            name_length : {
+                digits : true
+            },
+            template_header : {
+                required : true
+            },
+            template_body : {
+                required : true
+            },
+            template_footer : {
+                required : true
+            }
+
+        },
+        messages : {
+            description : {
+                required : '{$lang.description_not_empty}'
+            },
+            max_price : {
+                number : '{$lang.limit_price}'
+            },
+            cache_time : {
+                digits : '{$lang.only_digits}'
+            },
+            amount : {
+                digits : '{$lang.only_digits}'
+            },
+            name_length : {
+                digits : '{$lang.only_digits}'
+            },
+            template_header : {
+                required : '{$lang.not_empty}'
+            },
+            template_body : {
+                required : '{$lang.not_empty}'
+            },
+            template_footer : {
+                required : '{$lang.not_empty}'
+            }
+        }
+    });
+    gcategoryInit("gcategory");
+});
+</script>
+<style type="text/css">
+.field_notice {
+    color:#9C9C9C;
+    font-weight:normal;
+}
+.datacall_div {
+    border-bottom:1px solid #C1DFF3;
+    padding:10px 0px;
+}
+.datacall_div .span_left {
+    width:180px;
+    text-align:left;
+    padding-left:40px;
+    font-weight:bolder;
+    color:#444444;
+}
+.datacall_div .span_right {
+    width:140px;
+    text-align:left;
+    padding-left:65px;
+}
+</style>
+<div id="rightTop">
+    <p>{$lang.data_call}</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?module=datacall">{$lang.manage_data}</a></li>
+        <li><!-- {if $data_call.call_id} --><span>{$lang.edit_goods}</span><!-- {else} --><span>{$lang.add_goods}</span><!-- {/if} --></li>
+    </ul>
+</div>
+
+<div class="info">
+<!--{if $data_call.call_id}-->
+        <table class="infoTable" style="border-bottom:1px solid #C1DFF3;padding-bottom:10px;">
+        <tr>
+            <th class="paddingT15">{$lang.dialog_title}</th>
+            <td class="paddingT15" width="30%"><textarea style="width:400px;height:80px;"><script type="text/javascript" src="{$site_url}/index.php?module=datacall&id={$data_call.call_id}"></script></textarea></td>
+            <td class="wordSpacing5"><span class="field_notice">{$lang.dialog_title_desc}</span></td>
+        </tr>
+        </table>
+<!--{/if}-->
+    <form method="post" enctype="multipart/form-data" id="datacall_form">
+        <div class="datacall_div">
+            <span class="span_left">{$lang.description}</span><span class="span_right"><input class="infoTableInput2" id="description" type="text" name="description" value="{$data_call.description|escape}" /></span>
+        </div>
+        <table class="infoTable" style="border-bottom:1px solid #C1DFF3;padding-bottom:20px;margin-bottom:20px;">
+            
+            <tr>
+                <th rowspan="6" class="paddingT15">{$lang.search_conditions}</th>
+                <td class="paddingT15">
+                    <label for="parent_id">{$lang.parent_id}</label></td>
+                <td class="paddingT15 wordSpacing5" colspan="2">
+                <div id="gcategory">
+                <input type="hidden" name="cate_id" value="{$datacall.spe_data.cate_id}" class="mls_id" />
+                <input type="hidden" name="cate_name" value="{$datacall.spe_data.cate_name|escape}" class="mls_names" />
+                <!-- {if $data_call.call_id} -->
+                <span>{$data_call.spe_data.cate_name|escape}</span>
+                <input type="button" value="{$lang.edit}" class="edit_gcategory" />
+                <select style="display:none">
+                  <option>{$lang.select_pls}</option>
+                    {html_options options=$mgcategories}
+                </select>
+                <!-- {else} -->
+                <select>
+                  <option>{$lang.select_pls}</option>
+                  {html_options options=$mgcategories}
+                </select>
+                <!-- {/if} -->
+              </div>                </td>
+            </tr>
+<!--            <tr>
+                <th class="paddingT15">{$lang.brand_name}:</th>
+                <td class="paddingT15 wordSpacing5" colspan="2"><input class="infoTableInput2" type="text" name="brand_name" value="{$data_call.spe_data.brand_name}"></td>
+            </tr>-->
+            <tr>
+                <td class="paddingT15">{$lang.price_range}</td>
+                <td colspan="2"><input type="text" name="min_price" size="5" value="{$data_call.spe_data.min_price}">&nbsp;-&nbsp;<input type="text" name="max_price" size="5" value="{$data_call.spe_data.max_price}"><span class="field_notice">{$lang.price_desc}</span></td>
+            </tr>
+            <tr>
+                <td class="paddingT15">{$lang.keywords}</td>
+                <td class="paddingT15 wordSpacingT15" colspan="2"><input class="infoTableInput2" type="text" name="keywords" value="{$data_call.spe_data.keywords}"><span class="field_notice">{$lang.keywords_desc}</span></td>
+            </tr>
+
+            <tr>
+                <td class="paddingT15">
+                    {$lang.sort_order}</td>
+                <td class="paddingT15 wordSpacingT15" colspan="2">
+                    <select name="sort_order">{html_options options=$search selected=$data_call.spe_data.sort_order}</select>
+                    {$lang.sort_order_by}<select name="asc_desc">{html_options options=$sort_order_by selected=$data_call.spe_data.asc_desc}</select>                </td>
+            </tr>
+<!--            <tr>
+                <th class="paddingT15">{$lang.recommend}:</th>
+                <td class="paddingT15 wordSpacingT15" colspan="2"><input type="checkbox" id="recommend" value="1" <!--{if $data_call.spe_data.recommend}-->checked<!--{/if}--> name="recommend"><label for="recommend">{$lang.recommend}</label><span class="field_notice">{$lang.recommend_desc}</span></td>
+            </tr>-->
+        </table>
+            <table class="infoTable">
+            <tr>
+                <th class="paddingT15">{$lang.cache_time}</th>
+                <td colspan="2">
+                    <input class="infoTableInput2" type="text" name="cache_time" value="<!--{if $data_call.cache_time}-->{$data_call.cache_time}<!--{else}-->86400<!--{/if}-->"><span class="field_notice">{$lang.cache_time_desc}</span></td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.content_charset}</th>
+                <td class="paddingT15 wordSpacingT15" colspan="2"><select name="content_charset">{html_options options=$content_charset selected=$data_call.content_charset}</select></td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.amount}</th>
+                <td class="paddingT15 wordSpacingT15" colspan="2">
+                <input class="infoTableInput2" type="text" name="amount" value="<!--{if $data_call.amount}-->{$data_call.amount}<!--{else}-->10<!--{/if}-->">
+                <span class="field_notice">{$lang.amount_desc}</span></td>
+            <tr>
+                <th class="paddingT15">{$lang.name_length}</th>
+                <td class="paddingT15 wordSpacingT15" colspan="2"><input class="infoTableInput2" type="text" name="name_length" value="{$data_call.name_length}"><span class="field_notice">{$lang.name_length_desc}</span></td>
+            </tr>
+
+            <tr>
+                <th class="paddingT15">{$lang.template_header}</th>
+                <td class="paddingT15 wordSpacingT15" colspan="2">
+                <textarea name="template_header" style="width:300px;height:50px;"><!--{if $data_call.header}-->{$data_call.header|escape}<!--{else}--><ul><!--{/if}--></textarea></td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.template_body}</th>
+                <td width="30%">
+                <textarea name="template_body" style="width:300px;"><!--{if $data_call.body}-->{$data_call.body|escape}<!--{else}--><li><img src="{goods_image_url}" /><a href="{goods_url}" target="_blank" title="{goods_full_name}">{goods_name}</a><span>{goods_price}</span></li><!--{/if}--></textarea>                </td>
+                <td><span class="field_notice">{$lang.template_body_desc}</span></td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.template_footer}</th>
+                <td class="paddingT15 wordSpacingT15" colspan="2">
+                <textarea name="template_footer" style="width:300px;height:50px"><!--{if $data_call.footer}-->{$data_call.footer|escape}<!--{else}--></ul><!--{/if}--></textarea></td>
+            </tr>
+        <tr>
+            <th></th>
+            <th class="ptb20" colspan="2">
+                <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                <input class="formbtn" type="reset" name="reset" value="{$lang.reset}" /></th>
+        </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

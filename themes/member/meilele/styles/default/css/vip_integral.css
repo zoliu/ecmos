@@ -1,0 +1,23 @@
+/*class*/
+.class{width:963px;height:26px;border:1px solid #ccc;border-bottom:0px;background:url(../images/class.jpg) repeat-x;overflow:hidden;padding:7px 0 0 15px;margin-bottom:10px}
+.class p,.class ul,.class li{float:left}
+.class p{padding-top:3px;color:#333}
+.class li{height:18px;line-height:18px;*line-height:19px;border:1px solid #CBCBC9;padding:0 10px;overflow:hidden;}
+.class .class_A{border:1px solid #FCBC99;color:#B74916;background:url(../images/class2.jpg) repeat-x;}
+.class .class_A a{color:#B74916}
+/*jfqing*/
+.jfqing,.jfqing ul{width:980px;overflow:hidden}
+.jfqing li{float:left;width:216px;padding:8px;border:1px solid #E6E6E6;margin:0 10px 10px 0}
+.jfqing .jfqing_I{margin-right:0px;margin-left:1px;}
+.jfqing p{width:212px;overflow:hidden}
+.jfqing .jfqing_A{width:216px;margin-bottom:6px;}
+.jfqing_A img{border:1px solid #CCCCCA;padding:1px;}
+.jfqing_B,.jfqing_C{margin-bottom:12px;}
+.jfqing_B span,.jfqing_B a{display:block;float:left;height:17px;line-height:18px;*line-height:19px;overflow:hidden;}
+.jfqing_B span{color:#fff;background:#cc6666;width:28px;text-align:center;margin-right:10px;}
+.jfqing_B a{width:174px;color:#333}
+.jfqing .jfqing_D{width:200px;padding:4px 6px;height:36px;line-height:1.6;background:#f2f2f2;margin-bottom:10px;}
+.jfqing_E{margin-bottom:15px;}
+.jfqing_E span{float:left;}
+.jfqing_F{color:#cc0000;font-size:14px;font-weight:bold;}
+.jfqing_E .jfqing_G{float:right}

@@ -1,0 +1,37 @@
+{include file="header.html"}
+<div id="rightTop">
+  <p>{$lang.gcategory}</p>
+  <ul class="subnav">
+    <li><a class="btn1" href="index.php?app=gcategory">{$lang.manage}</a></li>
+    <li><a class="btn1" href="index.php?app=gcategory&amp;act=add">{$lang.add}</a></li>
+    <li><span>{$lang.batch_edit}</span></li>
+  </ul>
+</div>
+<div class="info">
+  <form method="post" enctype="multipart/form-data">
+    <table class="infoTable">
+      <tr>
+        <th class="paddingT15">{$lang.if_show}:</th>
+        <td class="paddingT15 wordSpacing5"><p>
+            <label>
+            <input type="radio" name="if_show" value="-1" checked="checked" />
+            {$lang.no_change}</label>
+            <label>
+            <input type="radio" name="if_show" value="1" />
+            {$lang.yes}</label>
+            <label>
+            <input type="radio" name="if_show" value="0" />
+            {$lang.no}</label>
+          </p></td>
+      </tr>
+      <tr>
+        <th></th>
+        <td class="ptb20"><input type="hidden" name="id" value="{$smarty.get.id}" />
+          <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+          <input class="formbtn" type="reset" name="reset" value="{$lang.reset}" />
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+{include file="footer.html"} 

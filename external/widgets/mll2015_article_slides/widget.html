@@ -1,0 +1,52 @@
+<style>
+    .mll2015_article_slides{ width: 980px;z-index: 1;}
+    .mll2015_article_slides .ks-switchable-nav{width: 980px;height: 30px;overflow: hidden;position: absolute;margin-top: -30px;} 
+    .mll2015_article_slides .ks-switchable-nav li {color:white;width:196px; height: 30px;line-height: 30px;text-align:center;float: left;background: #203023;cursor:pointer;}
+    .mll2015_article_slides .ks-switchable-nav .ks-active{ background:#b14a59;}
+</style>
+
+<div class="mll2015_article_slides clearfix tab_1272345399">
+    <div class="ks-switchable-content">
+        <a href="{$widget_data.ad1_link_url}" target="_blank">
+            <img class="lazyload" initial-url="{$widget_data.ad1_image_url}" width="980" height="410">
+        </a>
+        <a href="{$widget_data.ad2_link_url}" target="_blank" style="display:none">
+            <img class="lazyload" initial-url="{$widget_data.ad2_image_url}" width="980" height="410">
+        </a>
+        <a href="{$widget_data.ad3_link_url}" target="_blank"  style="display:none">
+            <img class="lazyload" initial-url="{$widget_data.ad3_image_url}" width="980" height="410">
+        </a>
+        <a href="{$widget_data.ad4_link_url}" target="_blank"  style="display:none">
+            <img class="lazyload" initial-url="{$widget_data.ad4_image_url}" width="980" height="410">
+        </a>
+        <a href="{$widget_data.ad5_link_url}" target="_blank"  style="display:none">
+            <img class="lazyload" initial-url="{$widget_data.ad5_image_url}" width="980" height="410">
+        </a>
+    </div>
+    <ul class="ks-switchable-nav">
+        <li class="ks-active">
+            {$widget_data.model_name1}
+        </li>
+        <li>
+            {$widget_data.model_name2}
+        </li>
+        <li class>
+            {$widget_data.model_name3}
+        </li>
+        <li class>
+            {$widget_data.model_name4}
+        </li>
+        <li class>
+            {$widget_data.model_name5}
+        </li>
+    </ul>
+</div>
+<script>
+    KISSY.ready(function(S) {
+        var tabs = new S.Tabs('.tab_1272345399', {
+            aria: false
+        });
+    });
+</script>
+
+

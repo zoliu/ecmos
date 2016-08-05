@@ -1,0 +1,206 @@
+{include file="header.html"}
+<script type="text/javascript" src="index.php?act=jslang"></script>
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    regionInit("region");
+
+    $("#tr_close_reason").hide();
+<!--{if $smarty.get.act eq "edit"}-->
+    $(":radio[name='state']").click(function(){
+        if (this.value == 2)
+        {
+            $("#tr_close_reason").show();
+        }
+        else
+        {
+            $("#tr_close_reason").hide();
+        }
+    });
+    $(":radio[name='state']:checked").click();
+<!--{/if}-->
+
+    $('#store_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('right').text('OK!');
+        },
+        onkeyup    : false,
+        rules : {
+            owner_name: {
+                required: true
+            },
+            store_name: {
+                required : true,
+                remote : {
+                    url  : 'index.php?app=store&act=check_name',
+                    type : 'get',
+                    data : {
+                        store_name : function(){
+                            return $('#store_name').val();
+                        },
+                        id : '{$store.store_id}'
+                    }
+                }
+            },
+            end_time : {
+                dateISO : true
+            }
+        },
+        messages : {
+            owner_name: {
+                required: '{$lang.owner_name_required}'
+            },
+            store_name: {
+                required: '{$lang.store_name_required}',
+                remote: '{$lang.name_exist}'
+            },
+            end_time : {
+                dateISO : '{$lang.note_for_end_time}'
+            }
+        }
+    });
+});
+//]]>
+</script>
+<div id="rightTop">
+  <p>{$lang.store}</p>
+  <ul class="subnav">
+    <li><a class="btn1" href="index.php?app=store">{$lang.manage}</a></li>
+    <!-- {if $store.store_id} -->
+    <li><a class="btn1" href="index.php?app=store&amp;act=test">{$lang.add}</a></li>
+    <!-- {else} -->
+    <li><span>{$lang.add}</span></li>
+    <!-- {/if} -->
+    <li><a class="btn1" href="index.php?app=store&amp;wait_verify=1">{$lang.wait_verify}</a></li>
+  </ul>
+</div>
+<div class="info">
+  <form method="post" enctype="multipart/form-data" id="store_form">
+    <table class="infoTable">
+      {if $smarty.get.act eq "add"}
+      <tr>
+        <th class="paddingT15">{$lang.owner_user_name}:</th>
+        <td class="paddingT15 wordSpacing5">{$user.user_name}</td>
+      </tr>
+      {/if}
+      <tr>
+        <th class="paddingT15">{$lang.owner_real_name}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="owner_name" type="text" id="owner_name" value="{$store.owner_name|escape}" /></td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.owner_card}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="owner_card" type="text" id="owner_card" value="{$store.owner_card|escape}" /></td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> {$lang.store_name}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput" name="store_name" type="text" id="store_name" value="{$store.store_name|escape}"/>        </td>
+      </tr>
+      {if $enabled_subdomain}
+      <tr>
+        <th class="paddingT15"> {$lang.subdomain}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput" name="domain" type="text" id="domain" value="{$store.domain|escape}"/></td>
+      </tr>
+      {/if}
+      <tr>
+        <th class="paddingT15">{$lang.scategory}:</th>
+        <td class="paddingT15 wordSpacing5" ><select name="cate_id">
+          <option value="0">{$lang.select_pls}</option>
+                {html_options options=$scategories selected=$scates.0.cate_id}
+        </select></td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> {$lang.region}:</th>
+        <td class="paddingT15 wordSpacing5" ><div id="region">
+            <input type="hidden" name="region_id" value="{$store.region_id}" class="mls_id" />
+            <input type="hidden" name="region_name" value="{$store.region_name|escape}" class="mls_names" />
+            <!-- {if $store.store_id} -->
+            <span>{$store.region_name|escape}</span>
+            <input type="button" value="{$lang.edit}" class="edit_region" />
+            <select style="display:none">
+              <option>{$lang.select_pls}</option>
+              {html_options options=$regions}
+            </select>
+            <!-- {else} -->
+            <select>
+              <option>{$lang.select_pls}</option>
+              {html_options options=$regions}
+            </select>
+            <!-- {/if} -->
+          </div></td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.address}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput" name="address" type="text" id="address" value="{$store.address|escape}"/></td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.zipcode}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="zipcode" type="text" id="zipcode" value="{$store.zipcode|escape}" /></td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.tel}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="tel" type="text" id="tel" value="{$store.tel|escape}" /></td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> <label for="sgrade"> {$lang.sgrade}: </label>        </th>
+        <td class="paddingT15 wordSpacing5"><select name="sgrade" id="sgrade">
+          {html_options options=$sgrades selected=$store.sgrade}
+          </select>        </td>
+      </tr>
+      <tr>
+          <th class="paddingT15">{$lang.end_time}:</th>
+          <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="end_time" type="text" id="end_time" value="{$store.end_time|date}" /> <label class="field_notice">{$lang.note_for_end_time}</label></td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> <label for="state">{$lang.state}:</label></th>
+        <td class="paddingT15 wordSpacing5">{html_radios name="state" options=$states checked=$store.state}</td>
+      </tr>
+      <tr id="tr_close_reason">
+          <th class="paddingT15" valign="top">{$lang.close_reason}:</th>
+          <td class="paddingT15 wordSpacing5"><label for="close_reason"></label>
+              <textarea name="close_reason" id="close_reason"></textarea></td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> {$lang.certification}:</th>
+        <td class="paddingT15 wordSpacing5"><label for="autonym">
+          <input name="autonym" type="checkbox" id="autonym" value="1" {if $store.cert_autonym}checked="checked"{/if} />
+          {$lang.autonym}</label>
+          <label for="material">
+          <input type="checkbox" name="material" value="1" id="material" {if $store.cert_material}checked="checked"{/if} />
+          {$lang.material}</label></td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.recommend}:</th>
+        <td class="paddingT15 wordSpacing5">{html_radios name="recommended" options=$recommended_options  checked=$store.recommended}</td>
+      </tr>
+      <tr><!--360cd.cn -->
+        <th class="paddingT15"> <label for="state">{$lang.open_pay}:</label></th>
+        <td class="paddingT15 wordSpacing5">{html_radios name="is_open_pay" options=$open_pay_states checked=$store.is_open_pay}</td>
+      </tr><!--360cd.cn-->
+
+     
+      <tr>
+        <th class="paddingT15">{$lang.sort_order}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="sort_order" name="sort_order" type="text" id="sort_order" value="{$store.sort_order}" /></td>
+      </tr>
+      <!--{if $store.store_id}-->
+      <tr>
+        <th class="paddingT15">{$lang.uploaded_image}:</th>
+        <td class="paddingT15 wordSpacing5">
+          {if $store.image_1}<a href="{$site_url}/{$store.image_1}" target="_blank">{$lang.view}</a>{/if}
+          {if $store.image_2}<a href="{$site_url}/{$store.image_2}" target="_blank">{$lang.view}</a>{/if}
+          {if $store.image_3}<a href="{$site_url}/{$store.image_3}" target="_blank">{$lang.view}</a>{/if}        </td>
+      </tr>
+      <!--{/if}-->
+      <tr>
+        <th></th>
+        <td class="ptb20"><input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+          <input class="formbtn" type="reset" name="Reset" value="{$lang.reset}" /></td>
+      </tr>
+    </table>
+  </form>
+</div>
+{include file="footer.html"}

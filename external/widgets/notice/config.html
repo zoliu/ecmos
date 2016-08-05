@@ -1,0 +1,14 @@
+<script type="text/javascript">
+var _d = DialogManager.get('config_dialog');
+_d.setWidth(350);
+_d.setPosition('center');
+</script>
+<div class="field_item">
+    <label>上传广告图片:(<span>图片尺寸：180*60，支持 gif|jpg|jpeg|png 格式</span>)</label>
+    <p><input type="file" name="ad_image_file" /><input type="hidden" name="ad_image_url" value="{$options.ad_image_url}" /></p>
+    <!-- {if $options.ad_image_url} --><p><img src="{$options.ad_image_url}" height="20" /></p><!-- {/if} -->
+</div>
+<div class="field_item">
+    <label>广告链接地址:</label>
+    <p><input type="text" name="ad_link_url" value="{$options.ad_link_url}" /></p>
+</div>

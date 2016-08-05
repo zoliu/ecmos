@@ -1,0 +1,26 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p><strong>{$lang.widget_edit_file}</strong></p>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">
+                    <label for="widget_contents">{$lang.widget_file_contents}:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    <textarea id="widget_contents" style="width:500px; height:300px" name="code">{$code}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td class="ptb20">
+                    <input class="formbtn" type="submit" value="{$lang.submit}" />
+                    <input class="formbtn" type="button" onclick="window.history.go(-1)" value="{$lang.return}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

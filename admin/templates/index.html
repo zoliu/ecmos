@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- Use IE7 mode -->
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset={$charset}" />
+<meta http-equiv="Content-Type" content="text/html;charset={$charset}" />
+<title>{$lang.ecmall_admin} -- Powered by ECMall</title>
+<link href="templates/style/admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+
+<script type="text/javascript">
+var menu = {$menu_json};
+</script>
+
+<script type="text/javascript" src="{res file=js/index.js}" charset="utf-8"></script>
+</head>
+<body>
+<div class="back_nav">
+    <div class="back_nav_list">
+    <!--{foreach from=$back_nav key=key item=menu}-->
+        <dl>
+            <dt>{$menu.text}</dt>
+            <!--{foreach from=$menu.children key=sub_key item=sub_menu}-->
+            <dd><a href="javascript:;" onclick="openItem('{$sub_key}','{$key}');none_fn();">{$sub_menu.text}</a></dd>
+            <!--{/foreach}-->
+        </dl>
+    <!--{/foreach}-->
+    </div>
+    <div class="shadow"></div>
+    <div class="close_float"><img src="templates/style/images/close2.gif" /></div>
+</div>
+<div id="head">
+    <div id="logo"><a href="index.php"><img src="templates/style/images/logo.gif" alt="ECMall" /></a></div>
+    <div id="menu"><span>{$lang.hello}<strong>{$visitor.user_name}</strong> <a href="index.php?act=logout">[{$lang.logout}]</a> <a href="{$site_url}/index.php" target="_blank">[{$lang.ecmall_index}]</a></span>
+    <a href="javascript:;" class="menu_btn1" id="iframe_refresh">{$lang.refresh}</a>
+    <a href="javascript:;" class="menu_btn2" id="clear_cache">{$lang.clear_cache}</a>
+    <a href="#" id="back_btn"><img src="templates/style/images/tiring_room_nav.gif" /></a>
+    </div>
+    <ul id="nav">
+    </ul>
+    <div id="headBg"></div>
+</div>
+<div id="content">
+    <div id="left">
+        <div id="leftMenus">
+            <dl id="submenu">
+                <dt><a class="ico1" id="submenuTitle" href="javascript:;"></a></dt>
+            </dl>
+            <dl id="history" class="history">
+                <dt>
+                    <a class="ico2" id="historyText" href="#">{$lang.action_history}</a>
+                </dt>
+            </dl>
+         </div>
+    </div>
+    <div id="right">
+        <iframe frameborder="0" style="display:none;" width="100%" id="workspace"></iframe>
+    </div>
+</div>
+</body>
+</html>

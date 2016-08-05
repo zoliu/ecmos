@@ -1,0 +1,119 @@
+{include file="header.html"}
+<script language="javascript">
+$(function(){
+    $.getJSON('{$spt}&jsoncallback=?',function(){});
+    $.getJSON('http://ecmall.shopex.cn/system/notice2.php?charset={$cur_lang}&uniqueid={$uniqueid}&jsoncallback=?',function(data){
+        var message='';
+        $.each(data,function(i){
+            message += '<li>' + data[i] + '</li>';
+        });
+        $('#news').html(message);
+    }
+);
+});
+<!--{if $dangerous_apps}-->
+var dangerous_apps = '';
+<!--{foreach from=$dangerous_apps item=da}-->
+dangerous_apps += "{$da}\r\n";
+<!--{/foreach}-->
+alert(dangerous_apps);
+<!--{/if}-->
+</script>
+<div id="rightTop">
+<p>
+    {$lang.hello}<b>{$admin.user_name}</b>{$lang.welcome_to_ecmall}
+    <!--[ <a target="_blank" href="{$site_url}/index.php?app=message&amp;act=inbox" class="tidings">{$lang.new_pm}</a>: {$new.total} ]
+-->    {$lang.last_login} {$admin.last_login|date:complete} {$lang.last_ip} {$admin.last_ip}
+</p>
+</div>
+<dl id="rightCon">
+<!--{if $dangerous_apps}-->
+<dt>{$lang.warning}</dt>
+<dd>
+    <ul style="color:red; font-weight:bold;">
+        <!--{foreach from=$dangerous_apps item=da}-->
+        <li>{$da}</li>
+        <!--{/foreach}-->
+    </ul>
+</dd>
+<!--{/if}-->
+<dt>{$lang.ecmall_news}</dt>
+<dd>
+    <ul id="news">
+    </ul>
+</dd>
+<!--{if $remind_info}-->
+<dt>{$lang.remind_info}</dt>
+<dd>
+    <ul>
+        <!--{foreach from=$remind_info item=remind}-->
+        <li>{$remind}</li>
+        <!--{/foreach}-->
+    </ul>
+</dd>
+<!--{/if}-->
+<dt>{$lang.news_in_a_week}</dt>
+<dd>
+    <table>
+        <tr>
+            <th>{$lang.new_user_qty}:</th>
+            <td class="td">{$news_in_a_week.new_user_qty}</td>
+            <th>{$lang.new_store_qty}:</th>
+            <td class="td">{$news_in_a_week.new_store_qty}/{$news_in_a_week.new_apply_qty}</td>
+        </tr>
+        <tr>
+            <th>{$lang.new_goods_qty}:</th>
+            <td class="td">{$news_in_a_week.new_goods_qty}</td>
+            <th>{$lang.new_order_qty}:</th>
+            <td class="td">{$news_in_a_week.new_order_qty}</td>
+        </tr>
+    </table>
+</dd>
+<dt>{$lang.stats}</dt>
+<dd>
+    <table>
+        <tr>
+            <th>{$lang.user_qty}:</th>
+            <td class="td">{$stats.user_qty}</td>
+            <th>{$lang.store_qty}:</th>
+            <td class="td">{$stats.store_qty}/{$stats.apply_qty}</td>
+        </tr>
+        <tr>
+            <th>{$lang.goods_qty}:</th>
+            <td class="td">{$stats.goods_qty}</td>
+            <th>{$lang.order_qty}:</th>
+            <td class="td">{$stats.order_qty}</td>
+        </tr>
+        <tr>
+            <th>{$lang.order_amount}:</th>
+            <td class="td">{$stats.order_amount|price}</td>
+            <th></th>
+            <td class="td"></td>
+        </tr>
+    </table>
+</dd>
+<dt>{$lang.sys_info}</dt>
+<dd>
+    <table>
+        <tr>
+            <th>{$lang.server_os}:</th>
+            <td class="td">{$sys_info.server_os}</td>
+            <th>{$lang.web_server}:</th>
+            <td class="td">{$sys_info.web_server}</td>
+        </tr>
+        <tr>
+            <th>{$lang.php_version}:</th>
+            <td class="td">{$sys_info.php_version}</td>
+            <th>{$lang.mysql_version}:</th>
+            <td class="td">{$sys_info.mysql_version}</td>
+        </tr>
+        <tr>
+            <th>{$lang.ecmall_version}:</th>
+            <td class="td">{$sys_info.ecmall_version}</td>
+            <th>{$lang.install_date}:</th>
+            <td class="td">{$sys_info.install_date}</td>
+        </tr>
+    </table>
+</dd>
+</dl>
+{include file="footer.html"}

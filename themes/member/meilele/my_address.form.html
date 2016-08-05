@@ -1,0 +1,150 @@
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    regionInit("region");
+    $('#address_form').validate({
+        /*errorPlacement: function(error, element){
+            var _message_box = $(element).parent().find('.field_message');
+            _message_box.find('.field_notice').hide();
+            _message_box.append(error);
+        },
+        success       : function(label){
+            label.addClass('validate_right').text('OK!');
+        },*/
+        errorLabelContainer: $('#warning'),
+        invalidHandler: function(form, validator) {
+           var errors = validator.numberOfInvalids();
+           if(errors)
+           {
+               $('#warning').show();
+           }
+           else
+           {
+               $('#warning').hide();
+           }
+        },
+        onkeyup : false,
+        rules : {
+            consignee : {
+                required : true
+            },
+            region_id : {
+                required : true,
+                min   : 1
+            },
+            address   : {
+                required : true
+            },
+            phone_tel : {
+                required : check_phone,
+                minlength:7,
+                checkTel:true
+            },
+            zipcode : {
+                required    : check_phone,
+                minlength   : 6,
+                maxlength   : 6
+            },
+            phone_mob : {
+                required : check_phone,
+                minlength:11,
+                digits : true
+            }
+        },
+        messages : {
+            consignee : {
+                required : '{$lang.consignee_required}. '
+            },
+            region_id : {
+                required : '{$lang.region_required}. ',
+                min  : '{$lang.region_required}. '
+            },
+            address   : {
+                required : '{$lang.address_required}. '
+            },
+            phone_tel : {
+                required : '{$lang.phone_required}. ',
+                minlength: '{$lang.phone_tel_error}. ',
+                checkTel: '{$lang.phone_tel_error}. '
+            },
+            zipcode : {
+                required : '{$lang.no_zipcode}. ',
+                minlength: '{$lang.phone_zipcode}. ',
+                maxlength: '{$lang.phone_zipcode}. ',
+            },
+            phone_mob : {
+                required : '{$lang.phone_required}. ',
+                minlength: '{$lang.phone_mob_error}. ',
+                digits : '{$lang.phone_mob_error}. '
+            }
+        },
+        groups:{
+            phone:'phone_tel phone_mob'
+        }
+    });
+});
+function check_phone(){
+    return ($('[name="phone_tel"]').val() == '' && $('[name="phone_mob"]').val() == '');
+}
+function hide_error(){
+    $('#region').find('.error').hide();
+}
+//]]>
+</script>
+<div class="eject_con">
+<div class="add">
+    <div id="warning"></div>
+    <form method="post" action="index.php?app=my_address&act={$act}&addr_id={$address.addr_id}" id="address_form" target="iframe_post">
+    <ul>
+        <li>
+            <h3>{$lang.consignee}: </h3>
+            <p><input type="text" class="text width_normal" name="consignee" value="{$address.consignee|escape}"/><label class="field_message"><span class="field_notice">{$lang.consignee_desc}</span></label></p>
+        </li>
+        <li>
+            <h3>{$lang.region}: </h3>
+            <p><div id="region">
+                        <input type="hidden" name="region_id" value="{$address.region_id}" id="region_id" class="mls_id" />
+                        <input type="hidden" name="region_name" value="{$address.region_name|escape}" class="mls_names" />
+                    <!-- {if $address.region_id} -->
+                        <span>{$address.region_name|escape}</span>
+                        <input type="button" value="{$lang.edit}" class="edit_region" />
+                        <select style="display:none" onchange="hide_error();">
+                          <option>{$lang.select_pls}</option>
+                          {html_options options=$regions}
+                        </select>
+                    <!-- {else} -->
+                        <select onchange="hide_error();">
+                          <option>{$lang.select_pls}</option>
+                          {html_options options=$regions}
+                        </select>
+                    <!-- {/if} -->
+                        <b class="field_message" style="font-weight:normal;"><label class="field_notice"></label></b>
+                </div>
+            </p>
+        </li>
+        <li>
+            <h3>{$lang.address}: </h3>
+            <p><input type="text" class="text width_normal" name="address" value="{$address.address|escape}"/><label class="field_message"><span class="field_notice">{$lang.address_desc}</span></label></p>
+        </li>
+        <li>
+            <h3>{$lang.zipcode}: </h3>
+            <p><input type="text" class="text width_normal" name="zipcode" name="zipcode" value="{$address.zipcode|escape}" /><label class="field_message"><span class="field_notice"></span></label></p>
+        </li>
+        <li>
+            <h3>{$lang.phone_tel}:</h3>
+            <p><input type="text" class="text width_normal"  name="phone_tel" value="{$address.phone_tel}"/><label class="field_message"><span class="field_notice">{$lang.phone_format}</span></label></p>
+        </li>
+        <li>
+            <h3>{$lang.phone_mob}:</h3>
+            <p><input type="text" class="text width_normal" name="phone_mob" value="{$address.phone_mob}"/><label class="field_message"><span class="field_notice">{$lang.phone_mob}</span></label></p>
+        </li>
+        <li>
+            <h3>{$lang.set_default}:</h3>
+            <p><input type="checkbox" name="set_default" value="1" 
+                            {if $address.set_default eq 1}checked{/if} /><label class="field_message"><span class="field_notice">{$lang.set_default_desc}</span></label></p>
+        </li>
+    </ul>
+    <div class="submit"><input type="submit" class="btn" value="<!--{if $address.addr_id}-->{$lang.edit_address}<!--{else}-->{$lang.add_address}<!--{/if}-->" /></div>
+    </form>
+</div>
+</div>

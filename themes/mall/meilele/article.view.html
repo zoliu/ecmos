@@ -1,0 +1,54 @@
+{include file=header.html}
+<style type="text/css">
+   .col-sub{width:200px;border: 1px solid #e5e5e5;padding: 10px;margin-top: 10px;line-height: 20px;float:left;}
+   .col-sub .title{border-bottom: 1px solid #e5e5e5;font-weight: bold;padding: 5px;background-color: #f5f5f5;}
+   .col-sub li{line-height: 30px;}
+   .col-main{border: 1px solid #e5e5e5;float: right;width: 950px;margin: 10px 0 0 10px;}
+   .col-main .title{height: 30px;line-height: 30px;border-bottom: 1px solid #e5e5e5;font-weight: bold;padding: 5px;background-color: #f5f5f5;}
+   .article-info{ text-align:center}
+   .acontent{margin: 10px;line-height: 20px;padding: 5px 10px;}
+   .col-main h1{font-size:16px;color:#666;font-weight: bold;line-height: 30px;}
+   .col-main h2{color:#999;font-weight:normal;}
+    h3{line-height: 30px;font-weight:bold;}
+</style>
+<div id="main" class="w-full">
+<div id="page-article" class="mt10 w clearfix mb20" style="margin-top: 10px;">
+   <div class="col-sub">
+	  <div class="title">{$lang.acategory}</div>
+	  <ul class="mb10">
+	     <!-- {foreach from=$acategories item=acategory} -->
+         <li><a href="{url app=article&cate_id=$acategory.cate_id}">{$acategory.cate_name|escape}</a></li>
+         <!-- {/foreach} -->
+	  </ul>
+	  <div class="title">{$lang.new_article}</div>
+	  <ul>
+	      <!-- {foreach from=$new_articles item=new_article} -->
+          <li><a {if $new_article.link}target="_blank"{/if} href="{url app=article&act=view&article_id=$new_article.article_id}">{$new_article.title|truncate:20}</a></li>
+		  <!-- {foreachelse} -->
+		  <li>{$lang.no_new_article}</li>
+          <!-- {/foreach} -->
+	  </ul>
+   </div>
+   <div class="col-main">
+      <div class="title">{include file=curlocal.html}</div>
+      <div class="acontent">
+	     <div class="article-info">
+	        <h1>{$article.title|escape}</h1>
+            <h2>{$article.add_time|date:Y-m-d H:i}</h2>
+         </div>
+		 <div class="article-detail">
+            <!-- {if $article.store_id} -->
+            {$article.content|escape:editor}
+            <!-- {else} -->
+            {$article.content}
+            <!-- {/if} -->
+		 </div>
+         <div class="more-article mt20">
+            <h3>{$lang.pre_article}{$lang.colon}<!--{if $pre_article}--><a target="{$pre_article.target}" href="{url app=article&act=view&article_id=$pre_article.article_id}">{$pre_article.title|escape}</a> <span>{$pre_article.add_time|date:Y-m-d H:i}</span><!--{else}-->{$lang.no_records}<!--{/if}--></h3>
+            <h3>{$lang.next_article}{$lang.colon}<!--{if $next_article}--><a target="{$next_article.target}" href="{url app=article&act=view&article_id=$next_article.article_id}">{$next_article.title|escape}</a> <span>{$next_article.add_time|date:Y-m-d H:i}</span><!--{else}-->{$lang.no_records}<!--{/if}--></h3>
+         </div>
+	  </div>
+   </div>
+</div>
+</div>
+{include file=footer.html}

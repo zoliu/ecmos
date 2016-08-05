@@ -1,0 +1,36 @@
+<div class="category-c-1">
+   <div class="content">
+      <!-- {foreach from=$widget_data.gcategories item=category name=fe_gcate} -->
+      <!--{if $smarty.foreach.fe_gcate.iteration le 11}-->
+      <div class="item">
+          <div class="inner">
+          	<strong><a target="_blank" href="{url app=search&cate_id=$category.cate_id}"><i></i>{$category.cate_name|escape}</a></strong>
+            <span>
+            	<!-- {foreach from=$category.child item=child name=fe_children} -->
+                <!--{if $smarty.foreach.fe_children.iteration le 2}-->
+                <a  target="_blank" href="{url app=search&cate_id=$child.cate_id}" title="{$child.cate_name|escape}">{$child.cate_name|escape}</a>
+                <!--{/if}-->
+                <!--{/foreach}-->
+            </span>
+          </div>
+          <div class="pop">
+          	<div class="pop-inner">
+                  <ul class="sub-c-list clearfix">
+                    <!-- {foreach from=$category.child item=child name=fe_children} -->
+                    <li><a   title="{$child.cate_name|escape}" target="_blank" href="{url app=search&cate_id=$child.cate_id}">{$child.cate_name|escape}</a></li>
+                    <!--{/foreach}-->
+                 </ul>
+                 <!--{if $category.brand}-->
+                 <ul class="brand-list">
+                     <!-- {foreach from=$category.brand item=brand name=fe_brand} -->
+                     <li><a style="display:inline-block;color:#ffb016 ;padding:10px 10px 0px 0px;" href="{url app=search&brand=$brand.brand_name|escape}" title="{$brand.brand_name}"><img width="90" height="30"  class="lazyload" initial-url="{$brand.brand_logo}" /></a></li>
+                     <!--{/foreach}-->
+                 </ul>
+                 <!--{/if}-->
+             </div>
+          </div>
+      </div>
+      <!--{/if}-->
+      <!--{/foreach}-->
+    </div>
+</div>

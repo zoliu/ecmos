@@ -1,0 +1,35 @@
+{include file="header.html"}
+<div id="rightTop">
+  <p>{$lang.export_data}</p>
+  <ul class="subnav">
+  </ul>
+</div>
+<div class="info">
+  <form method="post">
+    <table class="infoTable">
+      <tr>
+        <td class="paddingT15 wordSpacing5" width="40"></td>
+        <td class="paddingT15 wordSpacing5">{$note_for_export}</td>
+      </tr>
+      <tr>
+        <td class="paddingT15 wordSpacing5" width="40"></td>
+        <td class="paddingT15 wordSpacing5"><p>
+            <label>
+            <input type="radio" name="if_convert" value="1" checked="checked" />
+            {$lang.yes}</label>
+            <label>
+            <input type="radio" name="if_convert" value="0" />
+            {$lang.no}</label>
+          </p><br />
+          <span class="grey">{$lang.reason_for_convert}</span></td>
+      </tr>
+      <tr>
+        <td class="ptb20" width="40"></td>
+        <td class="ptb20"><input class="formbtn" type="submit" name="Submit" value="{$lang.export}" />
+          <input class="formbtn" type="button" onclick="history.go(-1)" value="{$lang.back}" />
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+{include file="footer.html"} 

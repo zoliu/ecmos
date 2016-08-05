@@ -1,0 +1,103 @@
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    $('input[ectype="logo"]').change(function(){
+            var src = getFullPath($(this)[0]);
+            $('img[ectype="logo1"]').attr('src' , src);
+            $(this).removeAttr('name');
+            $(this).attr('name' , 'logo');
+    });
+    $(".ok").mouseover(function(){
+        $(this).next("div").show();
+    });
+    $(".ok").mouseout(function(){
+        $(this).next("div").hide();
+    });
+    $('#partner_form').validate({
+         errorLabelContainer: $('#warning'),
+        invalidHandler: function(form, validator) {
+           var errors = validator.numberOfInvalids();
+           if(errors)
+           {
+               $('#warning').show();
+           }
+           else
+           {
+               $('#warning').hide();
+           }
+        },
+        rules : {
+            title : {
+                required : true,
+                byteRange: ['',100,'{$charset}']
+            },
+            link  : {
+                required : true,
+                url      : true
+            },
+            logo  : {
+                accept : 'png|jpe?g|gif'
+            },
+            sort_order : {
+                number   : true
+            }
+        },
+        messages : {
+            title : {
+                required : '{$lang.title_required}. ',
+                byteRange: '{$lang.title_maxlength_error}. '
+            },
+            link  : {
+                required : '{$lang.link_required}. ',
+                url      : '{$lang.link_error}. '
+            },
+            logo  : {
+                accept   : '{$lang.logo_accept_error}. '
+            },
+            sort_order  : {
+                number   : '{$lang.number_only}. '
+            }
+        }
+    });
+});
+//]]>
+</script>
+<div class="eject_con">
+    <div class="adds">
+        <div id="warning"></div>
+        <form method="post" action="index.php?app=my_partner&amp;act={$smarty.get.act}<!--{if $smarty.get.partner_id neq ''}-->&amp;partner_id={$smarty.get.partner_id}<!--{/if}-->" target="my_partner" enctype="multipart/form-data" id="partner_form">
+        <ul>
+            <li>
+                <h3>{$lang.title}:</h3>
+                <p><input type="text" class="text width14" name="title" value="{$partner.title|escape}"/><b class="strong">*</b></p>
+            </li>
+            <li>
+                <h3>{$lang.link}:</h3>
+                <p><input type="text" class="text width14" name="link" value="{$partner.link}" /><b class="strong">*</b></p>
+            </li>
+            <li>
+                <h3>{$lang.sort_order}:</h3>
+                <p><input type="text" class="text width1" name="sort_order" value="{$partner.sort_order}" /><span>{$lang.sort_order_desc}</span></p>
+            </li>
+            <li>
+                <h3>{$lang.logo}:</h3>
+                <div class="sign_box">
+                    <div class="sign_con">
+                        <div class="sign"><img src="<!--{if $partner.logo}-->{$partner.logo}<!--{else}-->data/system/no_pic.gif<!--{/if}-->" width="150" height="50" alt="" ectype="logo1"/></div>
+                        <div class="upload_pic">
+                            <span class="file1"><input type="file" size="1" maxlength="0" hidefocus="true" ectype="logo"/></span>
+                            <span class="file2"><input type="file" size="1" maxlength="0" hidefocus="true" ectype="logo"/></span>
+                            <div class="txt">{$lang.upload_types}</div>
+                        </div>
+                    </div>
+                    <div class="sign_con">
+                        <span class="color5"></span><br />
+                        <span class="color7"></span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="submit"><input type="submit" class="btn" value="{$lang.submit}" /></div>
+        </form>
+    </div>
+</div>

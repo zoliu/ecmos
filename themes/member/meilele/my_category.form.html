@@ -1,0 +1,93 @@
+<script type="text/javascript">
+$(function(){
+    $('#category_form').validate({
+/*        errorPlacement: function(error, element){
+            var _message_box = $(element).parent().parent().parent().parent().find('#warning');
+            _message_box.find('#warning_info').hide();
+            _message_box.append(error);
+        },
+        success       : function(label){
+            label.addClass('validate_right').text('OK!');
+        },*/
+        errorLabelContainer: $('#warning'),
+        invalidHandler: function(form, validator) {
+           /*var errors = validator.numberOfInvalids();
+           if(errors)
+           {*/
+               $('#warning').show();
+           /*}
+           else
+           {
+               $('#warning').hide();
+           }*/
+        },
+        onfocusout : false,
+        onkeyup    : false,
+        rules : {
+            cate_name : {
+                required : true,
+                remote   : {
+                url :'index.php?app=my_category&act=check_category',
+                type:'get',
+                data:{
+                    cate_name : function(){
+                        return $('#cate_name').val();
+                    },
+                    parent_id : function() {
+                        return $('#parent_id').val();
+                    },
+                    id : '{$gcategory.cate_id}'
+                  }
+                }
+            },
+            sort_order : {
+                number   : true
+            }
+        },
+        messages : {
+            cate_name : {
+                remote   : '{$lang.name_exist}',
+                required : '{$lang.cate_name_empty}'
+
+            },
+            sort_order  : {
+                number   : '{$lang.number_only}'
+            }
+        }
+    });
+});
+</script>
+<div class="eject_con">
+ <div class="adds">
+        <div id="warning"></div>
+        <form id="category_form" method="post" target="pop_warning" action="index.php?app=my_category&amp;act={$smarty.get.act}<!--{if $smarty.get.id}-->&amp;id={$smarty.get.id}<!--{/if}-->">
+        <ul>
+            <li>
+                <h3>{$lang.cate_name}:</h3>
+                <p><input class="text width_normal" type="text" name="cate_name" id="cate_name" value="{$gcategory.cate_name|escape}" /><label class="field_notice"></label></p>
+            </li>
+            <li>
+                <h3>{$lang.parent_id}:</h3>
+                <p><select name="parent_id" id="parent_id">
+                <option>{$lang.select_pls}</option>
+                {html_options options=$parents selected=$gcategory.parent_id}
+                </select></p>
+            </li>
+            <li>
+                <h3>{$lang.sort_order}:</h3>
+                <p><input type="text" name="sort_order" value="{$gcategory.sort_order}"  class="text width_short"/></p>
+            </li>
+            <li>
+                <h3>{$lang.if_show}:</h3>
+                <p><label>
+                 <input type="radio" name="if_show" value="1" {if $gcategory.if_show}checked="checked"{/if} />
+                {$lang.yes}</label>
+                <label>
+                <input type="radio" name="if_show" value="0" {if !$gcategory.if_show}checked="checked"{/if} />
+                {$lang.no}</label></p>
+            </li>
+        </ul>
+        <div class="submit"><input type="submit" class="btn" value="{$lang.submit}" /></div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+<script type="text/javascript">
+var tId;
+startScroll();
+$(function(){
+    $('.ad_cycle li').each(function(){
+        $(this).click(function(){
+            slideHere($(this));
+        }).mouseover(function(){
+            stopHere($(this));
+        }).mouseout(function(){
+            startScroll();
+        });
+    });
+});
+function startScroll(){
+    tId = setInterval(function(){
+        var nextImg = $('.nonce').next('.initial');
+        if(nextImg.length==0){
+            nextImg = $($('.ad_cycle li')[0]);
+        }
+        slideHere($(nextImg));
+    }, 3000);
+}
+function stopScroll(){
+    clearInterval(tId);
+}
+function slideHere(imgObj){
+    $('.ad_cycle li').removeClass('nonce');
+    $('.ad_cycle li').addClass('initial');
+    imgObj.removeClass('initial');
+    imgObj.addClass('nonce');
+    if($('.ad_cycle img').length)
+    {
+        $('.ad_cycle img')
+            .attr('src', imgObj.attr('target_src'))
+            .css('display', 'none')
+            .fadeIn('normal')
+            .parent().attr('href', imgObj.attr('target_link'))
+            .attr('target', '_blank');
+   }
+}
+function stopHere(imgObj){
+    slideHere(imgObj);
+    stopScroll();
+}
+</script>
+<div class="ad_cycle">
+    <div class="line"></div>
+    <!--{if !$widget_data}-->
+    <div style="padding:10px; text-align:center;">请配置</div>
+    <!--{/if}-->
+    <div class="number">
+        <ul>
+            <!-- {foreach from=$widget_data item=image name=fe_image} -->
+            <!-- {if $smarty.foreach.fe_image.first} -->
+            <li class="nonce" target_src="{$image.ad_image_url}" target_link="{$image.ad_link_url}" alt="1">1</li>
+            <!-- {else} -->
+            <li class="initial" target_src="{$image.ad_image_url}" target_link="{$image.ad_link_url}" alt="{$smarty.foreach.fe_image.iteration}">{$smarty.foreach.fe_image.iteration}</li>
+            <!-- {/if} -->
+            <!-- {/foreach} -->
+        </ul>
+    </div>
+    <div class="number_bg"></div>
+    <!--{if $widget_data}-->
+    <a href="{$widget_data.0.ad_link_url}"><img src="{$widget_data.0.ad_image_url}" /></a>
+    <!--{/if}-->
+</div>

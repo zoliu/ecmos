@@ -1,0 +1,51 @@
+{include file=member.header.html}
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+{include file=member.submenu.html}
+        <script type="text/javascript" src="{lib file=jquery.plugins/jquery.validate.js}" charset="{$charset}"></script>
+        <div class="wrap">
+            <div class="eject_btn"><b class="ico5" ectype="dialog" uri="index.php?app=my_shipping&amp;act=add" ectype="dialog" dialog_id="my_shipping_add" dialog_width="600" dialog_title="{$lang.add_shipping}">{$lang.add_shipping}</b></div>
+            <div class="public table">
+            <table class="table_head_line">
+                <!--{if $shippings}-->
+                <tr class="line_bold">
+                    <th class="" colspan="6">
+                    </th>
+                </tr>
+                
+                <tr class="gray">
+                    <th class="width13">{$lang.shipping_name}</th>
+                    <th>{$lang.shipping_desc}</th>
+                    <th class="width4">{$lang.first_price}</th>
+                    <th class="width4">{$lang.step_price}</th>
+                    <th class="width4">{$lang.enabled}</th>
+                    <th class="width13">{$lang.handle}</th>
+                </tr>
+                <!--{/if}-->
+                <!-- {foreach from=$shippings item=shipping name=v} -->
+                <tr <!--{if $smarty.foreach.v.last}-->class="line_bold"<!--{else}-->class="line"<!--{/if}-->>
+                    <td><span class="padding1">{$options_shipping[$shipping.shipping_name]|escape}</span></td>
+                    <td>{$shipping.shipping_desc|escape}</td>
+                    <td class="align2">{$shipping.first_price}</td>
+                    <td class="align2">{$shipping.step_price}</td>
+                    <td class="align2"><!--{if $shipping.enabled}-->{$lang.yes}<!--{else}-->{$lang.no}<!--{/if}--></td>
+                    <td>
+                        <div class="padding1">
+                            <a href="javascript:void(0);" uri="index.php?app=my_shipping&amp;act=edit&shipping_id={$shipping.shipping_id}" ectype="dialog" dialog_id="my_shipping_edit" dialog_width="600" dialog_title="{$lang.edit}" class="edit1">{$lang.edit}</a><a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=my_shipping&amp;act=drop&shipping_id={$shipping.shipping_id}');" class="delete">{$lang.drop}</a>
+                        </div>
+                    </td>
+                </tr>
+                <!-- {foreachelse} -->
+                <tr>
+                    <td colspan="6" class="member_no_records padding6">{$lang.no_records}</td>
+                </tr>
+                <!--{/foreach}-->
+                <iframe name="my_shipping" style="display:none" ></iframe>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+{include file=footer.html}

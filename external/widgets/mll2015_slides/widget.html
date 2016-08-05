@@ -1,0 +1,39 @@
+<div class="mll2015_slides s{$widget_data.model_id}  mb10 clearfix">
+    <!--{if !$widget_data.ads}-->
+    <div class="padding10 center">请配置</div>
+    <!--{else}-->
+    <div class="scroller">
+        <ul class="ks-content ks-switchable-content clearfix">
+            <!--{foreach from=$widget_data.ads item=ad}-->
+            <li>
+                <a href="{$ad.ad_link_url}"  target="_blank" style="display:block;width:100%;height:400px;background:url({$ad.ad_image_url}) center;background-size:100% 100%;"></a>
+            </li>
+            <!--{/foreach}-->
+        </ul>
+    </div>
+    <div class="title">
+        <div class="ks-switchable-nav clearfix">
+            <!--{foreach from=$widget_data.ads item=ad name=fe_ad }-->
+            <a {if $smarty.foreach.fe_ad.first}class="ks-active"{/if}>•</a>
+            <!--{/foreach}-->
+        </div>
+        
+    </div>
+    <script>
+        $(document).ready(function () {
+            var width = document.body.clientWidth-18;
+            
+            $('.s{$widget_data.model_id}').attr('style', 'height:400px;width:' + width + 'px;overflow:hidden;');
+            $('.s{$widget_data.model_id} .scroller ul li').attr('style', 'height:400px;width:' + width + 'px');
+        })
+        KISSY.ready(function (S) {
+            var carousel = new S.Carousel('.s{$widget_data.model_id}', {
+                effect: 'fade',
+                autoplay: true,
+                prevBtnCls: 'prev',
+                nextBtnCls: 'next'
+            });
+        });
+    </script>
+    <!--{/if}-->
+</div>

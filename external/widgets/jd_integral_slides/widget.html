@@ -1,0 +1,30 @@
+ <!--{if $widget_data.images}-->
+<div class="integral_slides add-s{$widget_data.model_id}">
+    <ul class="ks-switchable-content">
+        <!-- {foreach from=$widget_data.images item=image name=fe_image} -->
+        <li>
+            <a href="{$image.ad_link_url}" target="_blank" target="_blank"><img class="lazyload" initial-url="{$image.ad_image_url}" src="static/images/empty.gif" /></a>
+        </li>
+        <!-- {/foreach} -->
+    </ul>
+    <div class="ks-switchable-nav">
+       <!-- {foreach from=$widget_data.images item=image name=fe_image} -->
+       <a {if $smarty.foreach.fe_image.first}class="ks-active"{/if} href="javascript:;"><b></b><span>{$image.ad_title_url}</span></a>
+       <!-- {/foreach} -->
+    </div>
+</div>
+<script>
+KISSY.use("switchable", function(S) {
+	var tiny_slide = new S.Carousel('.add-s{$widget_data.model_id}', {
+	steps:1,
+	effect: 'fade',
+	easing: 'easeOutWeak',
+	circular: true,
+	aria:false,
+	autoplay:true
+	});
+});
+</script>
+<!--{else}-->
+<center style="padding:10px;">请配置</center>
+<!--{/if}-->

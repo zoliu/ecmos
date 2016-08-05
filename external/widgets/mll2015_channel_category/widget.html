@@ -1,0 +1,49 @@
+<div class="mll2015_channel_category">
+    <div class="mt">
+        {$widget_data.model_name}
+    </div>
+    <div class="mc clearfix">
+        <!--{foreach from=$widget_data.gcategories item=category name=fe_category}-->
+        <div class="item {if $smarty.foreach.fe_category.iteration % 2 eq '0'}cat_bg{/if}">
+            <div class="pborder">
+                <dl>
+                    <dt>
+                    <h2>{$category.value|escape}</h2><em class="icon-mei"></em>
+                    </dt>
+                    <dd>
+                        <!--{foreach from=$category.children item=child name=fe_child}--> 
+                        <a class="facial"  href="{url app=search&cate_id=$child.id}">{$child.value|escape}</a>
+                        <!--{/foreach}-->
+                    </dd>
+                </dl>
+            </div>
+            <div class="pop" {if $category.top} style="top:{$category.top}"{/if}>
+                 <div class="catlist float-left">
+                    <!--{foreach from=$category.children item=child name=fe_child}--> 
+                    <p class="clearfix" {if $smarty.foreach.fe_child.last} style="border-bottom:0"{/if}>
+                        <a href="{url app=search&cate_id=$child.id}">{$child.value|escape}</a>
+                    </p>
+                    <!--{/foreach}-->
+                </div>
+            </div>
+        </div>
+        <!--{/foreach}-->
+    </div>
+</div>
+<script>
+    $(function() {
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 200) {
+                if ($(".mll2015_channel_category").hasClass("mll2015_channel_category_fix")) {
+                } else {
+                    $(".mll2015_channel_category").addClass('mll2015_channel_category_fix');
+                    var width = document.body.clientWidth;
+            var prev_postion = (width-1200)/2;
+            $('.mll2015_channel_category').css('left',prev_postion+'px');
+                }
+            } else {
+                $(".mll2015_channel_category").removeClass('mll2015_channel_category_fix');
+            }
+        });
+    })
+</script>

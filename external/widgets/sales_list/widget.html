@@ -1,0 +1,12 @@
+<div class="module_common">
+    <h2><b class="top10" title="TOP10销售排行"></b></h2>
+    <div class="wrap">
+        <div class="wrap_child">
+            <ol class="list_text">
+                <!-- {foreach from=$widget_data item=goods name=fe_sales_list} -->
+                <li class="top_{$smarty.foreach.fe_sales_list.iteration}"><a href="{url app=goods&id=$goods.goods_id}" target="_blank" title="{$goods.goods_name|escape}">{$goods.goods_name|escape}</a></li>
+                <!-- {/foreach} -->
+            </ol>
+        </div>
+    </div>
+</div>

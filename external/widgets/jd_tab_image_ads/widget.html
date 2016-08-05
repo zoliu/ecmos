@@ -1,0 +1,13 @@
+<div class="tab-image-ads mb10 tabSwitcher">
+	<ul class="title tabList">
+    	<!--{foreach from=$widget_data.ads item=ad name=fe_ad}-->
+    	<li class="{if $smarty.foreach.fe_ad.first}active{/if} t-name t-style2 tabOne" {if $smarty.foreach.fe_ad.iteration le 2}style="margin-right:1px;"{/if}>{$ad.ad_title_url}</li>
+        <!--{/foreach}-->   
+    </ul>
+    <p class="arrow"><b></b></p>
+	<ul class="content">
+    	<!--{foreach from=$widget_data.ads item=ad name=fe_ad}-->
+    	<li class="tabContent" {if $smarty.foreach.fe_ad.first}style="display:block;"{/if}><a href="{$ad.ad_link_url}" target="_blank"><img src="{$ad.ad_image_url}" width="246" height="125" /></a></li>
+        <!--{/foreach}-->
+    </ul>
+</div>

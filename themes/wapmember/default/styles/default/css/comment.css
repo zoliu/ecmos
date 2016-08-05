@@ -1,0 +1,17 @@
+@charset "utf-8";
+/* CSS Document */
+/* 评价 */
+.comment{ margin-top:45px; padding:10px;}
+.goods_info,.comment_box{box-shadow:rgba(0,0,0,0.4) 0 0 4px;border-radius:5px; padding:10px; overflow:hidden; margin-bottom:10px;}
+.goods_info img{ width:150px; height:150px; float:left; margin-right:10px;}
+.goods_info p{ font-size:14px; line-height:30px; color:#666;}
+.goods_info .title{ color:#333;}
+
+.comment_box p{ padding:5px 0;}
+.comment_box .com_text{ width:100%; border:#ccc solid 1px; height:120px;}
+.comment_box input[type="radio"]{ width:20px; height:20px; border:#ccc solid 1px; margin-right:5px;vertical-align:bottom; }
+.comment_box label{ margin-right:10px;font-size:14px;}
+.comment_box i{ background:url(../images/pj.png) no-repeat 0 -34px; width:19px; height:17px; display:inline-block; vertical-align:-2px;}
+.comment_box i.mid{ background-position:0 -17px;}
+.comment_box i.bad{ background-position:0 0;}
+.comment .submit_btn{ margin:0;}

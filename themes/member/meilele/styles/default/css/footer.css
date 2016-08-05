@@ -1,0 +1,22 @@
+#footer-server{}
+#footer-server dl {float: left;line-height: 25px;margin: 10px 127px 0 0;}
+#footer-server dt {font-size: 14px;font-weight: 700;}
+#footer-server .h-service {float: left;line-height: 25px;margin: 10px 0 0;width: 105px;}
+#footer-server .h-weixin {border-left: 1px solid #f4f4f4;float: left;font-weight: 700;height: 130px;margin: 10px 0 10px;text-align: center;width: 131px;}
+
+#footer-ico{background-color: #F0F0F0;clear: both;height: 63px;margin-bottom: 10px;}
+#footer-ico .ico{margin: 8px 46px 7px;height: 43px;width: 144px;background: url(../images/common.png) 0 0 no-repeat;display: inline-block;float: left}
+#footer-ico .ico1{background-position: 0 -843px;}
+#footer-ico .ico2{background-position: 0 -1316px;}
+#footer-ico .ico3{background-position: 0 -1409px;}
+#footer-ico .ico4{background-position: 0 -1502px;}
+#footer-ico .ico5{background-position: 0 -1455px;}
+
+
+#footer{}
+#footer p{text-align: center;line-height: 22px;}
+#footer p s {border-right: 1px solid #676767;padding-left: 10px;margin-right: 10px;}
+#footer .credible {text-align: center;margin-top:10px}
+#footer .credible img{display: inline-block;width: 127px;height: 47px;margin: 0 5px;}
+
+

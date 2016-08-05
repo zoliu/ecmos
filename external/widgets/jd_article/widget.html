@@ -1,0 +1,13 @@
+<div class="article mb10 mt10">
+	<div class="title clearfix">
+    	<h2 class="t-name float-left">{$widget_data.model_name|escape}</h2>
+        <div class="more">
+        	<a href="{url app=article}" target="_blank">更多></a>
+        </div>
+    </div>
+	<ul class="content clearfix">
+    	<!--{foreach from=$widget_data.article item=article name=fe_article}-->
+        <li {if $smarty.foreach.fe_article.iteration % 2 eq 0}style="border:0px;"{/if}><a href="{url app=article&act=view&article_id=$article.article_id}" title="{$article.title|escape}">{$article.title|escape}</a></li>
+        <!--{/foreach}-->
+    </ul>
+</div>

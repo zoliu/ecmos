@@ -1,0 +1,22 @@
+<div class="module_common">
+    <h2><b class="group_buy" title="GROUP BUY 推荐团购活动"></b><a href="{url app=search&act=groupbuy}">更多团购活动>></a></h2>
+    <div class="wrap">
+        <div class="wrap_child">
+
+            <div class="group_recommend">
+
+                <ul class="list_pic">
+                    <!--{foreach from=$widget_data item=groupbuy}-->
+                    <li>
+                        <p><a href="{url app=groupbuy&id=$groupbuy.group_id}" target="_blank"><img src="{$groupbuy.default_image}" width="100" height="100" /></a></p>
+                        <h3><a href="{url app=groupbuy&id=$groupbuy.group_id}" target="_blank" title="{$groupbuy.group_name|escape}">{$groupbuy.group_name|escape}</a><span class="prix">{$groupbuy.price|price}</span></h3>
+                        <div>剩余: <span class="time">{$groupbuy.lefttime}</span></div>
+                    </li>
+                    <!--{/foreach}-->
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+</div>

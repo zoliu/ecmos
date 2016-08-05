@@ -1,0 +1,322 @@
+{include file=header.html}
+<script type="text/javascript" src="{lib file=search_store.js}" charset="utf-8"></script>
+<script type="text/javascript">
+var upimg   = '{res file=images/up.gif}';
+var downimg = '{res file=images/down.gif}';
+imgUping = new Image();
+imgUping.src = upimg;
+
+$(function (){
+
+    var order = '{$smarty.get.order}';
+    var css = '';
+    
+    <!--{if $smarty.get.order}-->
+    order_arr = order.split(' ');
+    
+    switch (order_arr[1]){
+        case 'desc' : 
+            css = 'con-on  con';
+        break;
+        case 'asc' :
+            css = 'con-on  con-up';
+        break;
+        default : 
+            css = 'con';
+    }
+    $('.condition-bar a[id ='+order_arr[0]+']').attr('class','con '+css);
+    <!--{/if}-->
+    
+    $(".condition-bar a").click(function(){
+        if(this.id==''){
+            dropParam('order');// default order
+            return false;
+        }
+        else
+        {
+            dd = " desc";
+            if(order != '') {
+                order_arr = order.split(' ');
+                if(order_arr[0]==this.id && order_arr[1]=="desc")
+                    dd = " asc";
+                else dd = " desc";
+            }
+            replaceParam('order', this.id+dd);
+            return false;
+        }
+    });
+    $('.list-fields li .row_3 a').click(function(){
+        var cl=$(this).attr('class');
+        if(cl=='expand'){
+            $(this).attr('class','fold');   
+            $(this).html('{$lang.pull_goods}');
+        }else{
+            $(this).attr('class','expand'); 
+            $(this).html('{$lang.expand_goods}');
+        }
+        $(this).parent().parent().parent('.store-info').next('.store-goods').toggle();
+    });
+    $('.scate .show-more').click(function(){
+        $(this).parent().find('.toggle').toggle();
+        if($(this).find('span').html()=='{$lang.expand}'){
+            $(this).find('span').html('{$lang.fold}');
+            $(this).children().children('i').css('background-position','0 -1488px');
+        } else {
+            $(this).find('span').html('{$lang.expand}');
+            $(this).children().children('i').css('background-position','0 -1497px');
+        }
+    });
+});
+</script>
+<style type="text/css">
+.allcate{ display:none;}
+.hidden{display:none;}
+</style>
+<!--主体-->
+<div class="jim-main">
+    <div class="w1200 clearfix">
+      <!--左侧-->
+        <div class="left" style="width: 1200px;">
+            <div class="navbar fontsimsun mt20 clearfix">
+              {include file=curlocal.html}
+            </div>
+
+            <div class="mt10"></div>
+          <div class="select">
+              <strong>按条件筛选</strong>
+              <ul class="condition">
+                <!--{foreach from=$scategorys item=scategory name=fe_scategory}-->
+                  <li class="scate">
+                    <div style="width:86%;display: inline-block;">
+                        <b><a href="{url app=search&act=store&cate_id=$scategory.id}" style="color: #666;background: #fff;">{$scategory.value|escape}</a></b>
+                    
+                        <!--{foreach from=$scategory.children item=child name=fe_scategory}-->
+                        <a href="{url app=search&act=store&cate_id=$child.id}" id="{$child.id}" class="{if $smarty.foreach.fe_scategory.iteration gt 6}toggle hidden{/if}" style="">{$child.value|escape}</a>
+                        <!--{/foreach}-->
+                    </div>
+                    <!-- {if $scategory gt 6} -->
+                    <div class="show-more float-left" style="padding-top:8px;float:right;margin-right: 8px;"><h3 class="pointer clearfix"><i></i><span>展开</span>分类</h3></div>
+                    <!-- {/if} -->
+                  </li>
+                <!--{/foreach}-->
+                  <li class="scate"><b><a href="javascript:;" style="color: #666;background: #fff;">{$lang.region_name}</a></b>
+                    <!--{foreach from=$regions item=region key=key name=fe_region}-->
+                    <a href="javascript:void(0);" ectype="region" id="{$key}" title="{$region|escape}" class="{if $smarty.foreach.fe_region.iteration gt 6}toggle hidden{/if}">{$region|escape}</a>
+                    <!--{/foreach}-->
+                    <!-- {if $regions gt 6} -->
+                    <div class="show-more float-left" style="padding-top:8px;float:right;margin-right: 8px;"><h3 class="pointer clearfix"><i></i><span>展开</span>分类</h3></div>
+                    <!-- {/if} -->
+                  </li>
+              </ul>
+          </div>
+            <div class="search-type mt10 clearfix">
+                <div class="float-left btn-type" style="margin-bottom: 0px;">
+                    <a href="{url app=search}">搜索商品</a>
+                    <a href="{url app=search&act=store}" class="current">搜索店铺</a>
+                    <a href="{url app=search&act=groupbuy}">搜索团购</a>
+                </div>
+            </div>
+          <div class="condition-bar">
+            <a class="con con-on" id="" href="javascript:;">{$lang.default_order}</a>
+            <a class="con" id="credit_value" href="javascript:;">{$lang.credit_grade}<b></b></a>
+            <a class="con" id="add_time" href="javascript:;">{$lang.add_time}<b></b></a>
+            <a class="con" id="praise_rate" href="javascript:;">{$lang.praise_rate}<b></b></a>
+            <a class="con" id="region_name" href="javascript:;">{$lang.region_name}<b></b></a>
+<style>
+.condition-bar .clearfix{ position:relative; z-index:9; height:25px;margin-top: 3px;}
+.condition-bar .select-param{float:left;margin-right:10px;display:block;padding:0px 32px 0px 15px;height:22px;line-height:22px;position:relative;background: -moz-linear-gradient(50% 0,white,#F1F1F1);border:1px solid #CCC;background: -webkit-gradient(linear,0 0,0 100%,from(white),to(#F1F1F1));background: -moz-linear-gradient(50% 0,white,#F1F1F1);}
+.condition-bar .select-param span{position:absolute;display:block;right: 0;top: 0px;height:22px;width: 15px;border-left: 1px solid #ddd;}
+.condition-bar .select-param span i{width: 0;height: 0;line-height: 0;position: absolute;left: 49%;margin-left: -4px;top: 50%;margin-top: -1px;border-color: #A6A6A6 #F3F3F3 white #F3F3F3;border-width: 4px 4px 0 4px;border-style: solid;}
+.condition-bar .select-param .tan{border: 1px solid #CCC;border-top:0px;position:absolute;top:23px;left:-1px;width:100%;background: #F8F8F8;display:none;}
+.condition-bar .select-param:hover .tan{display:block;}
+.condition-bar .select-param .tan li {width:100%;line-height:23px;text-indent:15px; cursor:pointer}
+.condition-bar .select-param:hover .tan li{color:#333;}
+.condition-bar .select-param .tan li:hover{background:#E4E4E4;}
+</style>
+               <div class="clearfix float-right">
+                    <a class="select-param"  href="javascript:;">
+                        {$lang.credit_grade}
+                        <span><i></i></span>
+                        <ul class="tan" ectype="credit_value">
+                            <li v="4">{$lang.goldens}</li>
+                            <li v="3">{$lang.crowns}</li>
+                            <li v="2">{$lang.diamonds}</li>
+                            <li v="1">{$lang.hearts}</li>
+                            <li v="">{$lang.no_limit}</li>
+                        </ul>
+                    </a>
+                    <a class="select-param"  href="javascript:;">
+                        {$lang.recommended}
+                        <span><i></i></span>
+                        <ul class="tan" ectype="recommended">
+                            <li v="1">{$lang.yes}</li>
+                            <li v="0">{$lang.no}</li>
+                            <li v="">{$lang.no_limit}</li>
+                        </ul>
+                    </a>
+                    <a class="select-param"  href="javascript:;">
+                        {$lang.praise_rate}
+                        <span><i></i></span>
+                        <ul class="tan" ectype="praise_rate">
+                            <li v="90">{$lang.gt90}</li>
+                            <li v="80">{$lang.gt80}</li>
+                            <li v="70">{$lang.gt70}</li>
+                            <li v="60">{$lang.gt60}</li>
+                            <li v="50">{$lang.gt50}</li>
+                            <li v="">{$lang.no_limit}</li>
+                        </ul>
+                    </a>
+                    <a class="select-param"  href="javascript:;">
+                        {$lang.sgrade}
+                        <span><i></i></span>
+                        <ul class="tan" ectype="sgrade">
+                            <!--{foreach from=$sgrades item=sgrade key=key}-->
+                            <li v="{$key}">{$sgrade}</li>
+                            <!--{/foreach}-->
+                            <li v="">{$lang.no_limit}</li>
+                        </ul>
+                    </a>
+                </div>
+          </div>
+          <!--店铺列表-->
+            <div class="list-fields w mb10">
+                <ul>
+                    <!--{foreach from=$stores item=store}-->
+                    <li class="pb5 pt5">
+                        <div class="store-info clearfix">
+                            <div class="row_1 float-left" style="margin-right: 20px;"><a href="{url app=store&id=$store.store_id}"><img src="{$store.store_logo}" width="80" height="80" /></a></div>
+                            <div class="row_2 float-left">
+                                <h2><a href="{url app=store&id=$store.store_id}">{$store.store_name|escape}</a></h2>
+                                <div class="mainbussiness">
+                                    <span>{$lang.mainbussiness}{$lang.colon}</span><a href="{url app=store&id=$store.store_id}">{$store.business_scope}</a>
+                                </div>
+                                <div class="owner_info">
+                                    <span>{$lang.owner}{$lang.colon}</span>
+                                    <a href="{url app=store&id=$store.store_id}">{$store.user_name|escape}</a>
+                                    <!--{if $store.im_qq}-->
+                                    <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={$store.im_qq}&site=qq&menu=yes"><img width="65" border="0" src="http://wpa.qq.com/pa?p=2:{$store.im_qq}:1" align="absMiddle"></a>             
+                                    <!--{/if}-->
+                                    <!--{if $store.im_ww}-->
+                                    <a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&touid={$store.im_ww}&siteid=cntaobao&status=1&charset=utf-8"><img border="0" src="http://amos.alicdn.com/realonline.aw?v=2&uid={$store.im_ww}&site=cntaobao&s=1&charset=utf-8" align="absMiddle"/></a>
+                                    <!--{/if}-->
+                                </div>
+                            </div>
+                            <div class="row_3 float-left">
+                                <p>{$lang.gong}<b>{$store.goods_count}</b>{$lang.count_of_goods}</p>
+                                <p>{$lang.store_all_sold}<b>{$store.store_sold}</b>{$lang.count_of_goods}</p>
+                                <p><a class="fold" href="javascript:;">{$lang.pull_goods}</a></p>
+                            </div>
+                            <div class="row_4 float-left">{$store.region_name|escape}</div>
+                            <div class="row_5 float-right">
+                                <p>
+                                    <!--{if $store.credit_value ge 0}-->
+                                    <img src="{res file}{$store.credit_image}" />
+                                    <!--{else}-->
+                                    {$store.credit_value}
+                                    <!--{/if}-->
+                                </p>
+                                <p>{$store.sgrade_name}</p>
+                                <p>{$lang.praise_rate}:{$store.praise_rate}%</p>
+                            </div>
+                        </div>
+                        <!--{if $store.goods_list}-->
+                        <div class="store-goods mt5 mb5 carousel-{$store.store_id}">
+                            <b></b>
+                            <a class="prev" href="javascript:;"></a>
+                            <a class="next" href="javascript:;"></a> 
+                            <div class="clr"></div><!--for ie -->
+                            <div class="scroller">
+                                <div class="ks-switchable-content">
+                                    <!--{foreach from=$store.goods_list item=list} -->
+                                    <div class="each clearfix">
+                                    <!--{foreach from=$list item=goods} -->
+                                    <dl>
+                                        <dt><a href="{url app=goods&id=$goods.goods_id}" target="_blank"><img width="160" height="160" src="{$goods.default_image}" /></a></dt>
+                                        <dd>
+                                            <div class="desc"><a href="{url app=goods&id=$goods.goods_id}" target="_blank">{$goods.goods_name}</a></div>
+                                            <div class="price"><span>{$goods.price|price}</span></div>
+                                        </dd>
+                                    </dl>
+                                    <!-- {/foreach} -->
+                                    </div>
+                                    <!-- {/foreach} -->
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                        KISSY.use("switchable", function(S) {
+                        var tiny_slide = new S.Carousel('.carousel-{$store.store_id}', {
+                            //steps:5,
+                            effect: 'scrollx',
+                            circular: true,
+                            prevBtnCls: 'prev',
+                            nextBtnCls: 'next',
+                            autoplay:true
+                            });
+                        });
+                    </script>
+                        <!--{/if}-->
+                    </li>   
+                    <!-- {foreachelse} -->
+                    <div class="store-empty padding10 mb10" style="text-align:center;font-size: 14px;margin: 10px;">{$lang.no_store}</div>
+                    <!--{/foreach}-->
+                </ul>
+            </div>
+          <!--店铺列表 END-->
+          <!--分页-->
+          {include file=page.bottom.html}
+          <!--分页 END-->
+        </div>
+      <!--左侧 END-->
+
+
+      <!--推荐商品-->
+      <!--{if $search_rec_goods}-->
+      <ul class="ohterproduct mt30 clearfix">
+        <!--{foreach from=$search_rec_goods item=goods name=fe_goods}-->
+           <!--{if $smarty.foreach.fe_goods.index lt 4}-->
+          <li><a href="{url app=goods&id=$goods.goods_id}" target="_blank"><img src="{$goods.default_image}" width="200" height="200" alt=""><p>{$goods.goods_name|escape|truncate:58}</p></a></li>
+          <!--{/if}-->
+        <!--{/foreach}-->
+      </ul>
+      <!--{/if}-->
+      <!--推荐商品 END-->
+    </div>
+</div>
+<!--主体 END-->
+<!--底部-->
+{include file=footer.html}
+<!--底部 END-->
+</body>
+
+<script src="{lib file=jquery-1.9.1.min.js}"></script>
+<script src="{lib file=jim-focus.js}"></script>
+<script src="{lib file=jq_scroll.js}"></script>
+<script src="{lib file=jquery.SuperSlide.js}"></script>
+<script type="text/javascript">
+jQuery(".leftLoop2").slide({ mainCell:".bd ul",effect:"leftLoop",vis:3,scroll:3,autoPlay:false});
+</script>
+</html>
+<script type="text/javascript">
+//<!CDATA[
+$(function (){
+    var order = '{$smarty.get.order}';
+    var arrow = '';
+
+    switch (order){
+        case 'credit_value desc' : order = '';
+        arrow = '{$lang.down_arrow}';
+        break;
+        default : order = 'credit_value desc';
+    }
+    $('#credit_grade').html('{$lang.credit_grade}' + arrow);
+    $('#credit_grade').click(function(){query('order', order);return false;});
+}
+);
+function query(name, value){
+    $("input[name='"+name+"']").val(value);
+    $('#search').submit();
+}
+
+//]]>
+</script>

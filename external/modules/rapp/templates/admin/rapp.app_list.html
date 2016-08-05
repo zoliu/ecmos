@@ -1,0 +1,75 @@
+
+<!-- www.360cd.cn  Mosquito -->
+
+{include file='header.html'}
+
+<div id="rightTop">
+	<ul class="subnav">
+		<li><span>应用列表</span></li>
+        <li><a class="btn1" href="{url module=rapp&act=user_center}">个人中心</a></li>
+	</ul>
+</div>
+
+<div class="mrightTop">
+	<div class="fontl">
+		<form method="get">
+			<div class="left">
+				<input type="hidden" name="module" value="rapp" />
+				<input type="hidden" name="act" value="app_list" />
+				
+				<span>应用名称：</span>
+				<input class="queryInput" name="app_name" value="{$query.app_name}" type="text" />
+				
+                <span>应用作者：</span>
+                <input class="queryInput" name="author" value="{$query.author}" type="text" />
+				
+				<input type="submit" class="formbtn" value="查询" />
+			</div>
+			{if $filter}
+			<a class="left formbtn1" href="{url module=rapp&act=app_list}">取消检索</a>
+			{/if}
+		</form>
+	</div>
+	<div class="fontr">{include file=page.top.html}</div>
+</div>
+
+<div class="tdare">
+	<table width="100%" cellspacing="0" class="dataTable">
+		{if $app_list}
+		<tr class="tatr1">
+			<td>应用名称</td>
+			<td>应用价格</td>
+			<td>应用状态</td>
+			<td>应用作者</td>
+			<td>更新时间</td>
+			<td>操作</td>
+		</tr>
+		{/if}
+		{foreach from=$app_list item=app_info}
+		<tr class="tatr2">
+			<td>
+				<img alt="{$app_info.app_name}" src="{$s_url}/{$app_info.app_logo}" style="width: 64px; height: 64px; vertical-align: middle;">
+				{$app_info.app_name}
+			</td>
+			<td>{$app_info.price|price}</td>
+            <td>{$app_status_options[$app_info.status]}</td>
+			<td>{$app_info.author}</td>
+			<td>{$app_info.update_time|date}</td>
+			<td>
+				<a href="{url module=rapp&act=app_view&app_id=$app_info.id}">查看详情</a>
+			</td>
+		</tr>
+		{foreachelse}
+		<tr class="no_data">
+			<td colspan="10">没有符合条件的记录</td>
+		</tr>
+		{/foreach}
+	</table>
+	
+	<div id="dataFuncs">
+		<div class="pageLinks">{include file='page.bottom.html'}</div>
+		<div class="clear"></div>
+	</div>
+</div>
+
+{include file='footer.html'}

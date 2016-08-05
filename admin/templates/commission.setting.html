@@ -1,0 +1,88 @@
+
+<!-- www.360cd.cn  mosquito -->
+
+{include file="header.html"}
+
+<style>
+.in-div {
+    width: 24em;
+    height: 12em;
+    border: 1px solid;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+.in-div>p {
+    margin: 0.5em 0.5em;
+}
+.in-div>p>span {
+    display: inline-block;
+    width: 8em;
+    font-weight: bold;
+}
+</style>
+
+<script type="text/javascript">
+    $(function() {
+        $('#_form_').validate({
+            rules : {
+            },
+            messages : {
+            }
+        });
+
+    });
+</script>
+
+<div id="rightTop">
+    <p>佣金管理</p>
+    <ul class="subnav">
+        <li><span>设置</span></li>
+    </ul>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data" id="_form_">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">商城默认提成 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" type="text" name="mall_c_rate" value="{$config.mall_c_rate}" />
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">提成层级 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" type="text" name="tc_layer" value="{$config.tc_layer}" />
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">商品分类提成 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <div class="in-div" >
+                        {foreach from=$gcate_options key=cate_id item=cate_name}
+                        <p><span>{$cate_name}: </span><input class="infoTableInput2" type="text" name="gcate[{$cate_id}]" value="{$config.gcate.$cate_id}" /></p>
+                        {/foreach}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">店铺等级提成抵扣 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <div class="in-div" >
+                        {foreach from=$sgrade_options key=grade_id item=grade_name}
+                        <p><span>{$grade_name}: </span><input class="infoTableInput2" type="text" name="sgrade[{$grade_id}]" value="{$config.sgrade.$grade_id}" /></p>
+                        {/foreach}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td class="ptb20">
+                    <input class="formbtn" type="submit" name="Submit" value="提交" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+{include file="footer.html"}

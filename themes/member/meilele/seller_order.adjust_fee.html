@@ -1,0 +1,49 @@
+<script type="text/javascript">
+var _orig_goods_amount = {$order.goods_amount},
+    _orig_shipping_fee = {$shipping.shipping_fee},
+    _orig_order_amount = {$order.order_amount};
+$(function(){
+    $('#goods_amount_input').keyup(function(){
+        recount_order_amount();
+    });
+    $('#shipping_fee_input').keyup(function(){
+        recount_order_amount();
+    });
+    $('#cancel_button').click(function(){
+        DialogManager.close('seller_order_adjust_fee');
+    });
+});
+function recount_order_amount(){
+    var order_amount = 0;
+    order_amount = Number($('#goods_amount_input').val()) + Number($('#shipping_fee_input').val());
+    $('#order_amount').html(price_format(order_amount));
+}
+</script>
+<style type="text/css">
+.ajax_form_block { border-bottom:#dadada 1px dotted; padding-bottom:15px; padding-top:15px; }
+</style>
+<div class="eject_con">
+    <form  method="post" target="seller_order" action="index.php?app=seller_order&act=adjust_fee&order_id={$order.order_id}&ajax">
+    <div class="content_line">
+    <div id="warning"></div>
+    {$lang.buyer_name}:&nbsp;&nbsp;{$order.buyer_name|escape}<br />{$lang.order_sn}&nbsp;&nbsp;:<strong class="color8">{$order.order_sn}</strong></div>
+    <div class="content_line">
+        <ul class="foll_in">
+            <li>
+                <h3>{$lang.goods_amount}:<strong class="color8">{$order.goods_amount|price}</strong></h3>
+                <p><input type="text" id="goods_amount_input" class="text width13" name="goods_amount" value="{$order.goods_amount}"/></p>
+            </li>
+            <li>
+                <h3>{$lang.shipping_fee}:<strong class="color8">{$shipping.shipping_fee|price}</strong></h3>
+                <p><input type="text" id="shipping_fee_input" class="text width13" name="shipping_fee" value="{$shipping.shipping_fee}" /></p>
+            </li>
+        </ul>
+        <p class="explain">{$lang.adjust_fee_notice}</p>
+    </div>
+    <div class="total_value"><h3>{$lang.order_amount}:<strong class="color8" id="order_amount">{$order.order_amount|price}</strong></h3></div>
+    <div class="wrap_btn">
+        <input type="submit" id="confirm_button" class="btn1" value="{$lang.confirm}" />
+        <input type="button" id="cancel_button" class="btn2" value="{$lang.cancel}" />
+    </div>
+    </form>
+</div>

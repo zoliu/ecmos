@@ -1,0 +1,18 @@
+h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dt, dd, li, body, form, input, button, img, cite, strong, em, table, td, th { padding:0; margin:0;}
+h1, h2, h3, h4, h5, h6 { font-size:14px;}
+img, table, td, th { border:0;}
+ul, ol { list-style-type:none;}
+body {color: black;font-size: 14px;font-family: "Microsoft Yahei",Verdana,Arial,Helvetica,sans-serif;}
+html,body {padding: 0;margin: 0; overflow-x:hidden; overflow-y:auto;}
+.Public-content {background-image: url(../images/banner.jpg);background-repeat: repeat-y;display: block;background-size: 100% 100%;-ms-background-size: 100% 100%;width: 100%;}
+.content {margin: 0 auto;text-align: left;width: 707px;}
+.document{background: #f5f6f7;box-shadow: 0px 1px 3px #ccc;}
+.normalTitle {border-bottom: 1px solid #d7dde6;border-radius: 10px 10px 0 0;padding: 20px 40px;text-shadow: 0 1px 1px #fff;}
+.normalTitle h2{font-size: 20px;font-weight: bold;}
+.collapsible {background: none repeat scroll 0 0 #FFFFFF;padding: 20px;}
+.lastSection {border: none;margin-bottom: 0px;}
+.section {padding: 0 0 20px 0;margin: 0 0 20px 0;border-bottom: 1px solid #eee;overflow: hidden;}
+.CollapsiblePanel {margin-bottom: 10px;width: 870px;}
+.CollapsiblePanelTab {border: 1px solid #DEDEDE;border-radius: 3px 3px 3px 3px;color: #626B8A;cursor: pointer;font-size: 18px;padding: 20px 40px 20px 20px;text-shadow: 0 1px 0 white;}
+.CollapsiblePanelTab.clicked {background:820px 20px #D7DDE6;border: 1px solid #C1C9D4;}
+.normalContent {background: #fff;border-radius: 0 0 10px 10px;padding: 40px;}

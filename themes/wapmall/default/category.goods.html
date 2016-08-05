@@ -1,0 +1,37 @@
+{include file='header2.html'}
+<style>
+  .pro-classify dt:hover, .pro-classify .current a, .pro-classify dt:hover a{
+		color: #fff;
+	}
+</style>
+
+<section id="wraper">
+		{include file="header.top_nav.html"}
+		<dl class="pro-classify" id="proClassify">
+			<!--{foreach from=$gcategorys item=gcategory}-->		
+			<dt>
+				<a href='#'>{$gcategory.value|escape}</a>
+			</dt>
+			<dd>
+			<!--{foreach from=$gcategory.children item=child}-->
+				<a href="{url app=search&cate_id=$child.id}">{$child.value|escape}</a>
+			<!--{/foreach}-->
+			</dd>
+			<!--{foreachelse}-->
+			<dd>暂无分类</dd>
+			<!--{/foreach}-->		
+		
+
+		</dl>
+{include file='footer2.html'}		
+	</section>
+
+
+
+</div>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,71 @@
+{include file="header.html"}
+<div id="rightTop">
+  <p>{$lang.sgrade}</p>
+  <ul class="subnav">
+    <li><span>{$lang.manage}</span></li>
+    <li><a class="btn1" href="index.php?app=sgrade&amp;act=add">{$lang.add}</a></li>
+  </ul>
+</div>
+<div class="mrightTop">
+  <div class="fontl">
+    <form method="get">
+      <div class="left">
+          <input type="hidden" name="app" value="sgrade" />
+          <input type="hidden" name="act" value="index" />
+          {$lang.grade_name}:
+          <input class="queryInput" type="text" name="grade_name" value="{$smarty.get.grade_name|escape}" />
+          <input type="submit" class="formbtn" value="{$lang.query}" />
+      </div>
+      <!--{if $filtered}-->
+      <a class="left formbtn1" href="index.php?app=sgrade">{$lang.cancel_query}</a>
+      <!--{/if}-->
+    </form>
+  </div>
+  <div class="fontr">{include file=page.top.html}</div>
+</div>
+<div class="tdare">
+  <table width="100%" cellspacing="0" class="dataTable">
+    <!--{if $sgrades}-->
+    <tr class="tatr1">
+      <td width="20" class="firstCell"><input type="checkbox" class="checkall" /></td>
+      <td>{$lang.grade_name}</td>
+      <td>{$lang.goods_limit}</td>
+      <td>{$lang.space_limit}</td>
+      <td>{$lang.skin_limit}</td>
+      <td>{$lang.charge}</td>
+      <td class="table-center">{$lang.need_confirm}</td>
+      <td class="handler" style="width: 250px">{$lang.handler}</td>
+    </tr>
+    <!--{/if}-->
+    <!--{foreach from=$sgrades item=sgrade}-->
+    <tr class="tatr2">
+      <td class="firstCell"><!--{if $sgrade.grade_id neq 1}--><input type="checkbox" class="checkitem" value="{$sgrade.grade_id}" /><!--{/if}--></td>
+      <td>{$sgrade.grade_name|escape}</td>
+      <td>{$sgrade.goods_limit}</td>
+      <td>{$sgrade.space_limit}</td>
+      <td>{$sgrade.skin_limit}</td>
+      <td>{$sgrade.charge}</td>
+      <td class="table-center"><!--{if $sgrade.need_confirm}-->{$lang.yes}<!--{else}-->{$lang.no}<!--{/if}--></td>
+      <td class="handler" style="width: 250px">
+      <span style="width: 230px">
+      <a href="index.php?app=sgrade&amp;act=edit&amp;id={$sgrade.grade_id}">{$lang.edit}</a> | <!--{if $sgrade.grade_id eq 1}-->{$lang.default}<!--{else}--><a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=sgrade&amp;act=drop&amp;id={$sgrade.grade_id}');">{$lang.drop}</a><!--{/if}--> | <a href="index.php?app=sgrade&amp;act=set_skins&amp;id={$sgrade.grade_id}">{$lang.set_skins}</a>
+      </span>
+      </td>
+    </tr>
+    <!--{foreachelse}-->
+    <tr class="no_data">
+      <td colspan="10">{$lang.no_data}</td>
+    </tr>
+    <!--{/foreach}-->
+  </table>
+  <!--{if $sgrade}-->
+  <div id="dataFuncs">
+    <div id="batchAction" class="left paddingT15"> &nbsp;&nbsp;
+      <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="index.php?app=sgrade&act=drop" presubmit="confirm('{$lang.drop_confirm}');" />
+    </div>
+    <div class="pageLinks">{include file=page.bottom.html}</div>
+  </div>
+  <div class="clear"></div>
+  <!--{/if}-->
+</div>
+{include file="footer.html"} 

@@ -1,0 +1,86 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>{$lang.groupbuy}</p>
+    <ul class="subnav">
+        <li><span>{$lang.manage}</span></li>
+    </ul>
+</div>
+<div class="mrightTop">
+    <div class="fontl">
+        <form method="get">
+            <div class="left">
+                <input type="hidden" name="app" value="groupbuy" />
+                <input type="hidden" name="act" value="index" />
+                {$lang.groupbuy_name}:
+                <input class="queryInput" type="text" name="group_name" value="{$query.group_name|escape}" />
+                {$lang.state}:
+                <select name="type">
+                    {html_options options=$types selected=$type}
+                </select>
+                <input type="submit" class="formbtn" value="{$lang.query}" />
+            </div>
+            <!--{if $filtered}-->
+            <a class="left formbtn1" href="index.php?app=groupbuy">{$lang.cancel_query}</a>
+            <!--{/if}-->
+            <span> </span>
+        </form>
+    </div>
+    <div class="fontr"> {if $groupbuys}{include file=page.top.html}{/if} </div>
+</div>
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!--{if $groupbuys}-->
+        <tr class="tatr1">
+            <td width="20" class="firstCell"><input type="checkbox" class="checkall" /></td>
+            <td align="left">{$lang.groupbuy_name}</td>
+            <td align="left">{$lang.store_name}</td>
+            <td align="left">{$lang.state}</td>
+            <td align="left" class="table-center">{$lang.groupbuy_time}</td>
+            <td class="table-center">{$lang.join}</td>
+            <td class="handler">{$lang.views}</td>
+            <td class="table-center">{$lang.recommended}</td>
+            <td class="handler">{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$groupbuys item=groupbuy}-->
+        <tr class="tatr2">
+            <td class="firstCell"><input value="{$groupbuy.group_id}" class='checkitem' type="checkbox" /></td>
+            <td align="left"><a href="{$site_url}/index.php?app=groupbuy&amp;id={$groupbuy.group_id}" target="_blank">{$groupbuy.group_name|escape}</a></td>
+            <td align="left"><a href="{$site_url}/index.php?app=store&amp;id={$groupbuy.store_id}" target="_blank">{$groupbuy.store_name|escape}</a></td>
+            <td align="left">{$groupbuy.state|modifier:group_state}</td>
+            <td align="left" class="table-center"> {$groupbuy.start_time|date} {$lang.to} {$groupbuy.end_time|date} </td>
+            <td class="table-center">{$groupbuy.count}/{$groupbuy.min_quantity}</td>
+            <td class="handler">{$groupbuy.views}</td>
+            <td class="table-center">
+             <!--{if $groupbuy.state eq 1}-->
+                <!--{if $groupbuy.recommended}-->
+                    <img src="templates/style/images/positive_enabled.gif" ectype="inline_edit" fieldname="recommended" fieldid="{$groupbuy.group_id}" fieldvalue="1" title="{$lang.editable}"/>
+                    <!--{else}-->
+                    <img src="templates/style/images/positive_disabled.gif" ectype="inline_edit" fieldname="recommended" fieldid="{$groupbuy.group_id}" fieldvalue="0" title="{$lang.editable}"/>
+                    <!--{/if}-->
+            <!--{else}-->
+                -
+            <!--{/if}-->
+            </td>
+            <td class="handler"><a href="{$site_url}/index.php?app=groupbuy&amp;id={$groupbuy.group_id}" target="_blank">{$lang.view}</a> | <a name="drop" href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=groupbuy&amp;act=drop&amp;id={$groupbuy.group_id}');">{$lang.drop}</a> </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="10">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <!--{if $groupbuys}-->
+    <div id="dataFuncs">
+        <div id="batchAction" class="left paddingT15"> &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="index.php?app=groupbuy&act=drop" presubmit="confirm('{$lang.drop_confirm}');" />
+            &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.recommended}" name="id" uri="index.php?app=groupbuy&act=recommended"  presubmit="confirm('{$lang.recommend_notice}')" />
+            &nbsp;&nbsp; </div>
+
+    </div>
+    <!--{/if}-->
+    <div class="pageLinks">{if $groupbuys} {include file=page.bottom.html} {/if} </div>
+    <div class="clear"></div>
+</div>
+{include file="footer.html"}

@@ -1,0 +1,78 @@
+{include file=member.header.html}
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right"> 
+    	{include file=member.curlocal.html}
+    	{include file=member.submenu.html}
+        <div class="wrap">
+            <div class="eject_btn_two eject_pos1" title="{$lang.brand_apply}" style="top:15px"><b class="ico3" ectype="dialog" dialog_title="{$lang.brand_apply}" dialog_id="my_goods_brand_apply" dialog_width="480" uri="index.php?app=my_goods&act=brand_apply">{$lang.brand_apply}</b></div>
+            <div class="public table">
+                <table>
+                    
+                    <tr class="line_bold">
+                        <th colspan="4">
+                            <div class="select_div clearfix" style="padding-top:0;margin-bottom:20px;">
+                            <form method="get" class="fleft">
+                            <input type="hidden" name="app" value="my_goods">
+                            <input type="hidden" name="act" value="brand_list">
+                            {$lang.brand_name}:
+                            <input type="text" class="text_normal" name="brand_name" value="{$smarty.get.brand_name|escape}"/>
+                            <select class="select1" name='store'>
+                                {html_options options=$lang.all_me selected=$smarty.get.store}
+                            </select>
+                            <input type="submit" class="btn" value="{$lang.soso}" />
+                            </form>
+                            <!--{if $filtered}-->
+                            <a class="detlink" href="{url app=my_goods&act=brand_list}">{$lang.cancel_query}</a>
+                            <!--{/if}-->
+                            </div>
+                        </th>
+                    </tr>
+                    <!-- {if $brands} -->
+                    <tr class="gray">
+                        <th class="width11 cursor_pointer" column="brand_name" title="{$lang.sort_order}"><span ectype="order_by">{$lang.brand_name}</span></th>
+                        <th>{$lang.brand_logo}</th>
+                        <th class="width11 cursor_pointer" column='tag' title="{$lang.sort_order}"><span ectype="order_by">{$lang.tag}</span></th>
+                        <th class="width13">{$lang.handle}</th>
+                    </tr>
+                   <!-- {/if} -->
+                <!-- {foreach from=$brands item=brand name=v} -->
+                <tr class="line<!--{if $smarty.foreach.v.last}--> last_line<!--{/if}-->">
+                    <td class="padding2 first">{$brand.brand_name}</td>
+                    <td class="padding2"><img src="{$brand.brand_logo}" height="30" /></td>
+                    <td class="padding2">{$brand.tag}</td>
+                    <td class="align2"><!--{if !$brand.if_show}--><a class="edit1" href="javascript:void(0);" ectype="dialog" dialog_title="{$lang.brand_edit}" dialog_id="my_goods_brand_edit" dialog_width="480" uri="index.php?app=my_goods&act=brand_edit&id={$brand.brand_id}">{$lang.edit}</a> <a class="delete" href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=my_goods&act=brand_drop&id={$brand.brand_id}');">{$lang.drop}</a><!--{/if}--></td>
+                </tr>
+                <!-- {foreachelse} -->
+                <tr>
+                    <td colspan="4" class="member_no_records padding6">{$lang.no_records}</td>
+                </tr>
+                <!--{/foreach}-->
+                <!-- {if $brands} -->
+                <tr class="line_bold line_bold_bottom">
+                    <td colspan="4">&nbsp;
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <p class="position2">
+                                    {include file=member.page.bottom.html}
+                        </p>
+                    </td>
+                <tr>
+                <!-- {/if} -->
+                </table>
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+        <iframe name="my_goods" style="display:none"></iframe>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

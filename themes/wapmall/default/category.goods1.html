@@ -1,0 +1,26 @@
+{include file='header.html'}
+
+
+<!--{foreach from=$gcategorys item=gcategory}-->
+<div class="radius">
+    <h3><a href='{url app=search&cate_id=$gcategory.id}'>{$gcategory.value|escape}</a></h3>
+    <!--{foreach from=$gcategory.children item=child}-->
+    <a href='{url app=search&cate_id=$child.id}' style="display: inline-table;width: 30%;padding: 10px 0;text-align: center;color: #546280;font-size: .75em;">{$child.value|escape}</a> 
+    <!--{/foreach}-->
+</div>
+<!--{foreachelse}-->
+<div class="radius">
+    暂无分类
+</div>
+<!--{/foreach}-->
+
+
+{include file='footer.html'}
+
+</div>
+</body>
+</html>
+
+
+
+

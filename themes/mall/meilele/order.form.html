@@ -1,0 +1,116 @@
+{include file=header1.html}
+<!--头部-->
+<div class="header">
+    <div class="w1200 clearfix">
+        <h1 class="logo fl mt15" title="{$site_title}"><a href="index.php"><img src="{$site_logo}" width="236" height="70" alt="{$site_title}"></a></h1>
+        <ul class="steps fr clearfix mt30">
+            <li class="step-off"><span>1</span><p class="step-off-txt">{$lang.curlocal_my_cart}</p></li>
+            <li class="step-on"><span class="fontbold">2</span><p class="step-on-txt">{$lang.curlocal_do_order}</p></li>
+            <li><span>3</span><p>{$lang.curlocal_payment}</p></li>
+            <li><span>4</span><p>{$lang.curlocal_order_confirm}</p></li>
+            <li><span>5</span><p>{$lang.curlocal_my_evaluate}</p></li>
+        </ul>
+    </div>
+    
+    <div class="clr"></div>
+</div>
+<!--头部 END-->
+            <script type="text/javascript" src="{lib file=jquery.plugins/jquery.validate.js}" charset="utf-8"></script>
+                <script type="text/javascript">
+                    $('#order_form').validate({
+                        invalidHandler:function(e, validator){
+                         var err_count = validator.numberOfInvalids();
+                         var msg_tpl = '{$lang.order_have_error}';
+                         var d = DialogManager.create('show_error');
+                         d.setWidth(400);
+                         d.setTitle(lang.error);
+                         d.setContents('message', {type:'warning', text:$.format(msg_tpl, err_count)});
+                         d.show('center');
+                        },
+                        errorPlacement: function(error, element){
+                            var _message_box = $(element).parent().find('.field_message');
+                            _message_box.find('.field_notice').hide();
+                            _message_box.append(error);
+                        },
+                        success       : function(label){
+                            label.addClass('validate_right').text('OK!');
+                        },
+                        rules : {
+                            consignee : {
+                                required : true
+                            },
+                            region_id : {
+                                required : true,
+                                min   : 1
+                            },
+                            address   : {
+                                required : true
+                            },
+                            phone_tel : {
+                                required : check_phone,
+                                minlength:6,
+                                checkTel : true
+                            },
+                            phone_mob : {
+                                required : check_phone,
+                                minlength:6,
+                                digits : true
+                            }
+                        },
+                        messages : {
+                            consignee : {
+                                required : '{$lang.consignee_required}'
+                            },
+                            region_id : {
+                                required : '{$lang.region_required}',
+                                min  : '{$lang.region_required}'
+                            },
+                            address   : {
+                                required : '{$lang.address_required}'
+                            },
+                            phone_tel : {
+                                required : '{$lang.phone_required}',
+                                minlength: '{$lang.phone_tel_error}',
+                                checkTel : '{$lang.phone_tel_error}'
+                            },
+                            phone_mob : {
+                                required : '{$lang.phone_required}',
+                                minlength: '{$lang.phone_mob_error}',
+                                digits : '{$lang.phone_mob_error}'
+                            }
+                        }
+                    });
+                function check_phone(){
+                    return ($('#phone_tel').val() == '' && $('#phone_mob').val() == '');
+                }
+                </script>
+<!--主体-->
+<div class="jim-main">
+  <form method="post" id="order_form">
+    <div class="w1200 clearfix">
+		<!--确认收货地址-->    
+      {include file=order.address.html}
+		<!--确认收货地址 END-->
+
+		<!--确认订单信息-->
+		<div class="cart mt40">
+			{include file=order.goods.html}
+       
+      {include file=order.amount.html}
+	  </div>
+		<!--确认订单信息 END-->
+
+    </div>    
+</form>
+</div>
+<!--主体 END-->
+
+<!--底部-->
+{include file=footer.html}
+<!--底部 END-->
+</div>
+</body>
+<script src="{lib file=jquery-1.9.1.min.js}" type="text/javascript" charset="utf-8"></script>
+<script src="{lib file=allcate.js}" type="text/javascript" charset="utf-8"></script>
+
+</html>

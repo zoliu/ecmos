@@ -1,0 +1,68 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>{$lang.manage}</p>
+    <ul class="subnav">
+        
+    </ul>
+</div>
+
+<div class="tdare">
+
+     <link href="{res file=weixin/css/dingcan/css2.css}" rel="stylesheet" type="text/css" />
+            <div class="public_index table1">
+                <div class="main_right">
+                    <a href="javascript:" class="addreply"><img src="{res file=weixin/images/dingcan/keywords_03.jpg}" /></a>
+                    <div class="list" id="add_zsc" style="display:none;"></div>
+                    <!---------回复列表-------------->
+                    <!-- {foreach from=$keyinfo item=item} -->
+                    <div class="list" style="position:relative">
+                        <h3>规则：{$item.kename}<a href="javascript:" id="zsc_btninfo{$item.kid}" class="add" onclick="zsc_show('{$item.kid}')"></a><a href="javascript:" class="del" id="zsc_del_{$item.kid}" onclick="zscdel('{$item.kid}')"></a></h3>
+                        <div id="zsc_content_{$item.kid}">
+                            <p>关键字：{$item.kyword}</p>
+                            <!-- {if $item.type eq 1} --><p>回复：文本消息 </p><!-- {else} --><p>回复：图文消息 </p><!-- {/if} -->
+                        </div>
+                    </div>
+                    <!-- {/foreach} --> 
+                    <div id="localImag"><img id="preview" width=-1 height=-1 style="diplay:none" /></div>
+                </div>
+                <div class="showimg" style="display:none">
+                    <div class="stit">
+                        <span>上传图片</span>
+                        <a href="javascript:zsc_close();"><img src="{res file=weixin/images/dingcan/addpageup_06.jpg}" /></a>
+                    </div>
+                    <div class="sup">
+                        <input type="button" value="上传图片" class="uploadbtn"/>
+                        <form action="{url app=my_wxkeyword&act=ajaxupload}" method="post" id="zsc_myform" enctype="multipart/form-data" target="yframe"><!-- target="yframe"--><!--target="yframe"-->
+                            <input type="file" value="上传图片" class="uploadbtn" style="position:absolute; top:75px; left:20px; filter:alpha(pacity=0);opacity:0; z-index:999;" onchange="zsc_upload()" name="image" />大小不超过1M ，仅限png,jpeg,jpg
+                            <input type="hidden" name="sub" value="submit" /> 
+                        </form>
+                        <iframe name="yframe" src="{url app=my_wxkeyword&act=ajaxupload}" style="border:none; display:none;"></iframe>
+                    </div>
+                    <div class="imgbox">
+
+                    </div>
+                    <div class="sbottom"><input type="button" class="submit" id="zsc_surebtn" /></div>
+                    <!-----正在提交------>
+                    <span class="loadsubmit">正在上传...</span>
+                </div>
+                <div class="zhe" style="display:none"></div>
+            </div>
+			<script type="text/javascript" src="{res file=weixin/js/dingcan/jquery-1.8.3.min.js}"  charset="utf-8"></script>
+         
+            <script type="text/javascript" src="{res file=weixin/js/dingcan/addkeyword2.js}"  charset="utf-8"></script>
+            
+			<iframe name="pop_warning" style="display:none;"></iframe>
+        <div class="pageLinks">
+            {include file=page.bottom.html}
+        </div>
+        <div id="batchAction" class="left paddingT15">
+            &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="index.php?app=article&act=drop" presubmit="confirm('{$lang.drop_confirm}');" />
+            &nbsp;&nbsp;
+            <!--<input class="formbtn batchButton" type="button" value="lang.update_order" name="id" presubmit="updateOrder(this);" />-->
+        </div>
+    </div>
+    <div class="clear"></div>
+
+</div>
+{include file="footer.html"}

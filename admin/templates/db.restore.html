@@ -1,0 +1,82 @@
+{include file="header.html"}
+<script language="javascript">
+$(function(){
+    $("img[backup_name]").click(function(){
+        if($(this).attr('expanded')=="true"){
+            $(this).attr('src', 'templates/style/images/treetable/tv-expandable.gif');
+            $("tr[parent='"+$(this).attr('backup_name')+"']").hide();
+            $(this).attr('expanded', "false");
+        }
+        else{
+            $(this).attr('src', 'templates/style/images/treetable/tv-collapsable.gif');
+            $("tr[parent='"+$(this).attr('backup_name')+"']").show();
+            $(this).attr('expanded', "true");
+        }
+    });
+});
+</script>
+<div id="rightTop">
+    <p>{$lang.db}</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?app=db&amp;act=backup">{$lang.backup}</a></li>
+        <li><span>{$lang.restore}</span></li>
+    </ul>
+</div>
+<div class="tdare info">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!--{if $backups}-->
+        <tr class="tatr1">
+            <td width="20" class="firstCell"><input type="checkbox" class="checkall" /></td>
+            <td align="left" width="350">{$lang.backup_name}</td>
+            <td>{$lang.add_time}</td>
+            <td>{$lang.size}</td>
+            <td>{$lang.total}</td>
+            <td class="handler">{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$backups item=backup}-->
+        <tr class="tatr2">
+            <td class="firstCell"><input value="{$backup.name}" class='checkitem' type="checkbox" /></td>
+            <td align="left" width="350"><img style="cursor:pointer" backup_name="{$backup.name}" src="templates/style/images/treetable/tv-expandable.gif" /> {$backup.name|escape}</td>
+            <td>{$backup.date|date:complete}</td>
+            <td>{$backup.total_size}kb</td>
+            <td>{$backup.total}</td>
+            <td class="handler">
+            <span>
+            <a name="drop" href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=db&amp;act=drop&amp;backup_name={$backup.name}');">
+            {$lang.drop}</a>&nbsp;
+            |
+            <a href="javascript:drop_confirm('{$lang.db_operate_confirm}', 'index.php?app=db&amp;act=import&amp;backup_name={$backup.name}&amp;new=1');">{$lang.import}</a>
+            </span>
+            </td>
+        </tr>
+            <!--{foreach from=$backup.vols item=vol}-->
+            <tr class="tatr2" style="display:none" parent="{$backup.name}">
+                <td class="firstCell"></td>
+                <td align="left" width="350"><img style="margin-left:20px" src="templates/style/images/treetable/tv-item.gif" /> {$vol.file|escape}</td>
+                <td>{$vol.date}</td>
+                <td>{$vol.size}kb</td>
+                <td></td>
+                <td class="handler">
+                <span>
+                <a name="drop" href="index.php?app=db&amp;act=download&amp;backup_name={$backup.name}&amp;file={$vol.file}">{$lang.download}</a>
+                </span>
+                </td>
+            </tr>
+            <!--{/foreach}-->
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="6">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <!--{if $backups}-->
+    <div id="dataFuncs">
+        <div id="batchAction" class="left paddingT15">&nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="backup_name" uri="index.php?app=db&act=drop" presubmit="confirm('{$lang.drop_confirm}');" />
+        </div>
+        <div class="clear"></div>
+    </div>
+    <!--{/if}-->
+</div>
+{include file="footer.html"}

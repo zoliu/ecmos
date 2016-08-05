@@ -1,0 +1,146 @@
+
+/************** global.css - No need to modify ***************************************************/
+
+body{font-size:12px;margin:0;padding:0;font-family: microsoft yahei;color: #666}
+em,p,ul,dl,dt,dd,ins,h1,h2,h3,h4,form,h1,h2,h3,h4,ins{margin:0;padding:0;font-size:12px}
+ins{text-decoration:none;}
+em{font-style:normal;}
+ul,ol{ list-style:none;}
+input,select{ vertical-align:middle;}
+input,button,select,textarea{outline:none} 
+textarea{resize:none}
+img{border:0;}
+a{text-decoration:none;blr:expression(this.onFocus=this.blur());outline:none;}
+
+.w-full{width:100%;}
+.w-mall,.w,.w-shop,.w-user{margin:0 auto;}
+.w1200{width: 1200px;margin:0 auto;}
+.col-sub,.col-main{float:left;}
+.col-bottom{ clear:both}
+.clearfix:after{ content:'\20'; display:block; overflow:hidden; height:0; clear:both;}
+.clear,.clr{clear:both; overflow:hidden;width:0;margin:0;padding:0; height:0; line-height:0; font-size:0;}
+.clearboth{ clear:both;}
+.hidden{ display:none}
+.overflowHidden{ overflow:hidden;}
+.float-left{float:left;}
+.float-right{float:right;}
+.relative{position:relative;}
+.absolute{position:absolute;}
+.inline-block{ display:inline-block;}
+.block{ display:block}
+.pointer{ cursor:pointer}
+
+/* margin,padding */
+.margin5{margin:5px;}
+.margin10{margin:10px;}
+.mt5{margin-top:5px;}
+.mr5{margin-right:5px;}
+.mb5{margin-bottom:5px;}
+.ml5{margin-left:5px;}
+.mt10{margin-top:10px;}
+.mr10{margin-right:10px;}
+.mb10{margin-bottom:10px;}
+.ml10{margin-left:10px;}
+.mt20{margin-top:20px;}
+.mr20{margin-right:20px;}
+.mb20{margin-bottom:20px;}
+.ml20{margin-left:20px;}
+.pt5{padding-top:5px;}
+.pr5{padding-right:5px;}
+.pb5{padding-bottom:5px;}
+.pl5{padding-left:5px;}
+.pt10{padding-top:10px;}
+.pr10{padding-right:10px;}
+.pb10{padding-bottom:10px;}
+.pl10{padding-left:10px;}
+.pt20{margin-top:20px;}
+.pr20{margin-right:20px;}
+.pb20{margin-bottom:20px;}
+.pl20{margin-left:20px;}
+.padding5{padding:5px;}
+.padding10{padding:10px;}
+
+/* text,color */
+.fff{color:#fff;}
+.f60{color:#ff6600;}
+.f66{color:#666;}
+.ddd{color:#ddd;}
+
+.fs18{font-size:18px}
+.fs16{font-size:16px}
+.fs14{font-size:14px}
+.fs12{ font-size:12px;}
+
+.strong{font-weight:bold;}
+.center{ text-align:center}
+
+/* border */
+.border{border:1px #ddd solid}
+.border-t-0{border-top:0;}
+
+/**************  global end  ***************************************************/
+
+
+
+
+
+/************** common.css - Modified according to the situation ***************************************************/
+
+a{color: #666;}
+a:hover{color: #000; text-decoration:none}
+
+.w-mall,.w{width:1200px;}
+.w-shop{}
+.w-user{}
+
+/* pageinfo */
+
+.page { float: right; text-align:left; background:#fff;}
+.page a,.page .down_no,.page .former_no,.page b{float:left;display:inline-block;width:35px; height:25px;margin-left:5px; text-align:center; line-height:25px}
+.page .down_no,.page .down,.page .down:hover{width:60px;}
+.page .down_no,.page .down,.page .former,.page .former_no{ background:url(../images/m_008.png) no-repeat -99999em -99999em;}
+.page .former,.page .former_no,.page .page_link,.page .down,.page .down_no{border:1px #ccc solid}
+.page .former:hover,.page .page_link:hover,.page .down:hover{border:1px solid #EE3000; }
+.page .page_link:hover,.page .page_hover:hover{ text-decoration:underline}
+
+.page .stat{float:left;margin-left:5px;color:#666; line-height:25px;font-size:14px}
+.page b{font-weight:normal;font-size:13px;color:#404040;width:100px; text-align:right;color:#999; line-height:20px;}
+.page .former { background-position: -60px -213px;}
+.page .former_no { background-position: 12px -213px; }
+.page .page_link{color:#333}
+.page .page_hover {color: #EE3000; }
+.page .page_link:hover{ background:#FFEDE1; color: #EE3000;}
+.page .page_hover:visited{color:#EE3000;border:0;}
+.page .down{ background-position: -176px -213px;color:#333;}
+.page .down_no{ background-position: -100px -213px; color:#999;}
+.page .down:hover{ background-position: -176px -213px; color:#EE3000;}
+
+/* pageinfo top */
+.page-top .down,.page-top .down_no,.page-top .former_no,.page-top .former,.page-top .down:hover,.page-top .former:hover{width:20px; height:20px; line-height:20px; background:none; font-family:"song"}
+.page-top .down_no,.page-top .former_no{ background:#EAEAEA;}
+.page-top .down:hover,.page-top .former:hover{background:#FFEDE1;}
+
+
+/* buyer_order.evaluate.html and cart.index.html ... use it */
+.step{width:100%;background:url(../images/step.png) 0 0; height:23px; line-height:23px;color:#666; overflow:hidden;margin:20px 0;}
+.step2{ background-position:0 -23px}
+.step3{ background-position:0 -47px;}
+.step4{ background-position:0 -69px;}
+.step5{ background-position:0 -95px;}
+.step span{float:left;width:20%; text-align:center; display:inline-block;}
+
+
+/* site-nav */
+
+#site-nav{ background: #f5f5f5;border-bottom: 1px solid #e4e4e4;line-height:32px;height: 32px;}
+#site-nav .shoptop{position:relative; z-index:999;}
+
+
+#site-nav .ind-nav-l li  , #site-nav .ind-nav-r li{float: left;display: inline-block;*display: inline;*zoom: 1;}
+#site-nav .ind-nav-l{float: left;}
+#site-nav .ind-nav-l li{margin-right: 31px;}
+#site-nav .ind-nav-r {float: right;}
+#site-nav .ind-nav-r li{margin-right: 13px;  }
+#site-nav .ind-nav-r span a {color: #e02024;}
+#site-nav .ind-nav-r span a:hover{color: red;}
+/************** common end ***************************************************/

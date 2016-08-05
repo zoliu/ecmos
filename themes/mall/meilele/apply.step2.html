@@ -1,0 +1,259 @@
+{include file=header.html}
+<script src="{lib file=mlselection.js}" charset="utf-8"></script>
+<script src="{lib file=jquery.plugins/jquery.validate.js}" charset="utf-8"></script>
+<style type="text/css">
+.d_inline{display:inline;}
+
+</style>
+<div class="content">
+<script type="text/javascript">
+//<!CDATA[
+var SITE_URL = "{$site_url}";
+var REAL_SITE_URL = "{$real_site_url}";
+
+$.validator.addMethod("owner_card", function(value, element) {
+
+    var chrnum = /^\d{17}(\d|x)$/;
+
+    return this.optional(element) || (chrnum.test(value));
+
+}, "{$lang.note_for_owner_card}");
+
+$(function(){
+    regionInit("region");
+
+    $("#apply_form").validate({
+        errorPlacement: function(error, element){
+            var error_td = element.parents('td').next('td');
+            error_td.find('.field_notice').hide();
+            error_td.find('.fontColor3').hide();
+            error_td.append(error);
+        },
+        success: function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        onkeyup: false,
+        rules: {
+            owner_name: {
+                required: true
+            },
+            owner_card: {
+                required: true,
+                minlength: 18,
+                maxlength: 18
+            },
+            store_name: {
+                required: true,
+                remote : {
+                    url  : 'index.php?app=apply&act=check_name&ajax=1',
+                    type : 'get',
+                    data : {
+                        store_name : function(){
+                            return $('#store_name').val();
+                        },
+                        store_id : '{$store.store_id}'
+                    }
+                },
+                maxlength: 20
+            },
+            cate_id:{
+                min: 1
+
+            },
+            region_id: {
+                required: true,
+            },
+            business_scope:{
+                required: true,
+
+            },
+            tel: {
+                required: true,
+                minlength:6,
+                checkTel:true
+            },
+            address: {
+                required : true
+            },
+            zipcode: {
+                required : true,
+                minlength:6,
+                maxlength:6
+            },
+            image_1: {
+                required : true,
+                accept: "jpg|jpeg|png|gif"
+            },
+            image_2: {
+                required : true,
+                accept: "jpg|jpeg|png|gif"
+            },
+            notice: {
+                required : true
+            }
+        },
+        messages: {
+            owner_name: {
+                required: '{$lang.input_owner_name}'
+            },
+            owner_card: {
+                required: '{$lang.input_card}',
+                minlength: '{$lang.note_for_owner_card}',
+                maxlength: '{$lang.note_for_owner_card}'
+            },
+            store_name: {
+                required: '{$lang.input_store_name}',
+                remote: '{$lang.name_exist}',
+                maxlength: '{$lang.note_for_store_name}'
+            },
+            cate_id:{
+                min: '{$lang.check_status}'
+
+            },
+            region_id: {
+                required: '{$lang.input_region_id}'
+            },
+            business_scope:{
+                required: '{$lang.business_scope_required}',
+
+            },
+            tel: {
+                required: '{$lang.input_tel}',
+                minlength: '{$lang.phone_tel_error}',
+                checkTel: '{$lang.phone_tel_error}'
+            },
+            address: {
+                required : '{$lang.check_address}'
+            },
+            zipcode: {
+                required : '{$lang.check_zipcode}',
+                minlength: '{$lang.check_zipcode}',
+                maxlength: '{$lang.check_zipcode}'
+            },
+            image_1: {
+                required : '{$lang.image_1_required}',
+                accept: '{$lang.select_valid_image}'
+            },
+            image_2: {
+                required : '{$lang.image_2_required}',
+                accept: '{$lang.select_valid_image}'
+            },
+            notice: {
+                required: '{$lang.check_notice}'
+            }
+        }
+    });
+});
+//]]>
+</script>
+<div id="main" class="w-full">
+<div id="page-apply" class="apply-w mt10 mb20 pt10">
+   <div class="title border padding5 fontsize14 strong">
+      {$lang.i_want_open_store}
+   </div>
+   <div class="border border-t-0 padding10 apply2">
+      <form method="post" enctype="multipart/form-data" id="apply_form">
+         <table>
+           <tr>
+              <th>{$lang.owner_name}{$lang.colon}</th>
+              <td class="width7"><input type="text" class="input250" name="owner_name" value="{$store.owner_name|escape}"/></td>
+              <td class="padding3"><span class="fontColor3">*</span> <span class="field_notice">{$lang.note_for_owner_name}</span></td>
+           </tr>
+           <tr>
+              <th>{$lang.owner_card}{$lang.colon}</th>
+              <td class="width7"><input type="text" class="input250" name="owner_card" value="{$store.owner_card|escape}" /></td>
+              <td class="padding3"> <span class="field_notice">{$lang.note_for_owner_card}</span></td>
+           </tr>
+           <tr>
+              <th>{$lang.store_name}{$lang.colon}</th>
+              <td class="width7"><input type="text" class="input250" name="store_name" id="store_name" value="{$store.store_name|escape}"/></td>
+              <td class="padding3"><span class="fontColor3">*</span> <span class="field_notice">{$lang.note_for_store_name}</span></td>
+           </tr>
+           <tr>
+              <th>{$lang.store_category}{$lang.colon}</th>
+              <td class="width7">
+                 <div class="select_add">
+                    <select name="cate_id" style="width: 245px;">
+                       <option value="0">{$lang.select_pls}</option>
+                       {html_options options=$scategories selected=$scategory.cate_id}
+                    </select>
+                 </div>
+              </td>
+              <td class="padding3"><span class="fontColor3">*</span> <span class="field_notice">{$lang.check_status}</span></td>
+           </tr>
+            <!--主营业务 360cd.cn  seema-->
+            <tr>
+                <th>{$lang.business_scope}: </th>
+                <td><input type="text" class="input250" name="business_scope" id="business_scope" value="{$store.business_scope|escape}"/></td>
+                <td class="padding3"><span class="fontColor3">*</span> <span class="field_notice">{$lang.note_for_business_scope}</span></td>
+            </tr>
+           <tr>
+              <th>{$lang.region}{$lang.colon}</th>
+              <td class="width7">
+                  <div class="select_add" id="region" style="width:500px;">
+                      <input type="hidden" name="region_id" value="{$store.region_id}" class="mls_id" />
+                      <input type="hidden" name="region_name" value="{$store.region_name}" class="mls_names" />
+                      {if $store.region_name}
+                      <span>{$store.region_name|escape}</span>
+                      <input type="button" value="{$lang.edit}" class="edit_region" />
+                      {/if}
+                      <select class="d_inline"{if $store.region_name} style="display:none;"{/if}>
+                         <option value="0">{$lang.select_pls}</option>
+                         {html_options options=$regions}
+                      </select>
+                   </div>
+               </td>
+               <td class="padding3"><span class="fontColor3">*</span> <span class="field_notice">{$lang.select_region}</span></td>
+            </tr>
+            <tr>
+                <th>{$lang.address}{$lang.colon}</th>
+                <td class="width7"><input type="text" class="input250" name="address" value="{$store.address|escape}"/></td>
+                <td class="padding3"><span class="fontColor3">*</span> <span class="field_notice">{$lang.check_address}</span></td>
+            </tr>
+            <tr>
+                <th>{$lang.zipcode}{$lang.colon}</th>
+                <td class="width7"><input type="text" class="input250" name="zipcode" value="{$store.zipcode|escape}"/></td>
+                <td class="padding3"><span class="fontColor3">*</span> <span class="field_notice">{$lang.input_zipcode}</span></td>
+             </tr>
+             <tr>
+                 <th>{$lang.tel}{$lang.colon}</th>
+                 <td class="width7">
+                     <input type="text" class="input250" name="tel"  value="{$store.tel|escape}"/>
+                 </td>
+                <td class="padding3"><span class="fontColor3">*</span> <span class="field_notice">{$lang.input_tel}</span></td>
+              </tr>
+              <tr>
+                 <th>{$lang.upload_image}{$lang.colon}</th>
+                 <td class="width7"><input type="file" name="image_1" class="border-0" />
+                       {if $store.image_1}<p class="d_inline"><a href="{$site_url}/{$store.image_1}" target="_blank">{$lang.view}</a></p>{/if}
+                 </td>
+                 <td>
+                  <img src="/data/system/default_user_portrait.gif" width="120" height="120" alt="" ectype="avatar" id="my_avatar"/>
+                  <span class="field_notice">{$lang.note_for_image}</span>
+                </td>
+              </tr>
+              <tr>
+                 <th>{$lang.upload_permit}{$lang.colon}</th>
+                 <td class="width7"><input type="file" name="image_2" class="border-0" />
+                     {if $store.image_2}<p class="d_inline"><a href="{$site_url}/{$store.image_2}" target="_blank">{$lang.view}</a></p>{/if}
+                 </td>
+                 <td>
+                  <img src="/data/system/default_store_logo.gif" width="120" height="120" alt="" ectype="avatar" id="my_avatar"/>
+                  <span class="field_notice">{$lang.note_for_image}</span>
+                </td>
+              </tr>
+              <tr>
+                 <td colspan="2" class="warning"><p><input type="checkbox"{if $store} checked="checked"{/if} name="notice" value="1" id="warning" /> <label for="warning">{$lang.notice}</label></p></td>
+                 <td class="padding3"></td>
+              </tr>
+              <tr>
+                  <td colspan="3"><input class="btn-apply border0 fs14 strong fff pointer" type="submit" value="{$lang.submit}" /></td>
+              </tr>
+           </table>
+       </form>
+    </div>
+</div>
+</div>
+</div>
+{include file=server.html}
+{include file=footer.html}

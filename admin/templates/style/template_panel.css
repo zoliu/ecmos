@@ -1,0 +1,65 @@
+@charset "utf-8";
+/* 挂件区域 */
+.empty_widget_area { padding:20px; background:#eee; text-align:center; }
+
+/* 挂件样式 */
+.widget .widget_icons { position:absolute; top:0px; right:0px; cursor:move; height:25px; z-index:999; }
+.widget .widget_icons span { position:absolute; top:5px; cursor:pointer; width:15px; height:15px; text-indent:-99999px; }
+.widget .widget_icons .delete_widget { background:transparent url(images/delete.gif) no-repeat center center; right:5px; }
+.widget .widget_icons .config_widget { background:transparent url(images/config.gif) no-repeat center center; right:25px; }
+
+/* 配置对话框样式 */
+.widget_config_form { margin:15px 0px 5px 0px; }
+.widget_config_form_body { padding:0px 10px; }
+.widget_config_form_body .field_item { border-bottom:#ddd 1px dotted; padding:5px; }
+.widget_config_form_body .field_item label { padding:5px 0px;display:block; font-weight:bold; color:#888; }
+.widget_config_form_body .field_item label span { font-weight:normal; color:#888; font-style:italic; }
+
+/* 面板的样式 */
+.handle {background: #cde4f6 url(images/handle.gif) repeat-x; padding-bottom: 10px; position: relative; width: 100%;}
+.handle_top {margin: 0 7px; position: relative; height: 30px; z-index: 2;}
+.handle_logo {position: absolute; top: 5px; left: 2px;}
+.handle_top ul {position: relative; top: 2px; margin: 1px 0 0 100px; height: 31px; _top: 3px;}
+.handle_top ul li {float: left;}
+
+.handle_link {background: url(images/handle_hover_span.gif) no-repeat left top; padding-left: 2px; display: block; font-size: 14px; font-weight: bold; text-decoration: none; color:#3e6caa; }
+/*.handle_link:hover {background: url(images/handle_hover_span.gif) no-repeat left bottom;}*/
+.handle_link span {background: url(images/handle_hover_a.gif) no-repeat right -2px; padding: 7px 20px 7px 18px; display: block;}
+/*.handle_link:hover span {background: url(images/handle_hover_a.gif) no-repeat right bottom;}*/
+.handle_hover {background: url(images/handle_hover_span.gif) no-repeat left bottom; padding-left: 2px; display: block; font-size: 14px; font-weight: bold; text-decoration: none; color:#3e6caa; }
+.handle_hover span {background: url(images/handle_hover_a.gif) no-repeat right bottom; padding: 7px 20px 7px 18px; display: block;}
+
+.handle_hide {display: block; background: url(images/handle_hide.gif); width: 33px; height: 19px; padding: 2px 0 0 25px; position: absolute; top: 5px; right: 0; text-decoration: none; color: #22508e}
+.handle_bot {margin: 0 7px;}
+.handle_con {border: 1px solid #fff; position: relative; z-index: 1; width: 100%;}
+.handle_con_box {border: 1px solid #b2d7f1; background: #f7faff; width: 100%; padding-bottom: 15px;}
+.handle_btn { margin: 0 15px; padding-top: 15px; border-top: 1px solid #c9e5fa; }
+.handle_btn1 {display: block; width: 77px; height: 23px; background: url(images/handle_btn1.gif); float: left; text-align: center; text-decoration: none; color: #476821; line-height: 20px; margin-right: 5px;}
+.handle_btn2 {display: block; width: 77px; height: 23px; background: url(images/handle_btn2.gif); float: left; text-align: center; text-decoration: none; color: #254e8e; line-height: 20px; margin-right: 5px;}
+.handle_line {border-top: 1px solid #fff; border-bottom: 1px solid #92c2e8; height: 0; overflow: hidden; width: 100%; position: absolute; left: 0; bottom: 2px;}
+
+.widget_list { height:70px; overflow:auto; }
+.widget_list ul { list-style:none; margin:0px 5px; overflow: hidden;}
+.widget_list ul li { float:left; }
+.widget_list ul li { width:100px; height:50px; overflow:hidden; text-align:center; line-height:50px; margin:10px 5px; background:#eee; border:#ddd 1px solid; }
+.widget_list ul li .add_widget_note { color:#aaa; font-size:12px; position:absolute; top:0px; right:0px; line-height:12px; }
+
+/* 对话框样式 */
+.dialog_wrapper { background: #555; padding-bottom:0px; }
+.dialog_wrapper .dialog_body { background: #fff; bottom: 3px; right: 3px; padding: 10px; border: 4px solid #dadada; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #666;}
+.dialog_wrapper .dialog_head {background: url(images/dialog/login_h1.gif); height: 30px;}
+ .dialog_wrapper .dialog_title {color: #666; font-size: 16px; font-weight: bold; background: #fff url(images/dialog/linebox_h1_span.gif) no-repeat left 3px; padding: 4px 10px 5px 15px; display: block; float: left; }
+.dialog_wrapper .dialog_close_button {position: absolute; top: 10px; _top:14px; right: 10px; background: #fff url(images/dialog/dialog_close_button.gif) no-repeat right bottom; width: 21px; height: 21px; padding-right: 10px; overflow: hidden; cursor: pointer;}
+.dialog_wrapper .dialog_close_button:hover {background: #fff url(images/dialog/dialog_close_button.gif) no-repeat right top;}
+.dialog_wrapper .dialog_content {}
+.dialog_wrapper .dialog_loading { text-align:center; }
+.dialog_wrapper .dialog_loading_text { padding:0px;padding-top:20px;padding-left:10px;width:220px;font-style:italic;margin:15px auto 5px auto; text-align:left; font-size:15px;background:transparent url(images/dialog/loading.gif) no-repeat center top; }
+.dialog_wrapper .dialog_message_body { margin:15px 5px 5px 5px; }
+.dialog_wrapper .dialog_message_contents { margin:0px 10px; padding-left:45px; padding-top:5px; padding-bottom:20px; }
+.dialog_wrapper .dialog_message_notice { background:transparent url(images/dialog/message_notice.gif) no-repeat left top; }
+.dialog_wrapper .dialog_message_warning { background:transparent url(images/dialog/message_warning.gif) no-repeat left top; }
+.dialog_wrapper .dialog_message_confirm { background:transparent url(images/dialog/message_confirm.gif) no-repeat left top; }
+.dialog_wrapper .dialog_buttons_bar { text-align:center;margin-top:5px; }
+.dialog_wrapper .dialog_buttons_bar input { margin:0px 5px; }
+.dialog_wrapper .dialog_buttons_bar .btn1 {width: 75px; height: 29px; border: 0; background: url(images/dialog/btn1.gif); color: #c73702; font-weight: bold; font-size: 14px;}
+.dialog_wrapper .dialog_buttons_bar .btn2 {width: 75px; height: 29px; border: 0; background: url(images/dialog/btn2.gif); color: #4e4e4e; font-weight: bold; font-size: 14px;}

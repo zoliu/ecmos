@@ -1,0 +1,118 @@
+{include file=header1.html}
+<!--头部-->
+<div class="header">
+  <div class="w1200 clearfix">
+      <h1 class="logo fl mt15" title="{$site_title}"><a href="index.php"><img src="{$site_logo}" width="236" height="70" alt="{$site_title}"></a></h1>
+      <form method="GET" action="{url app=search}">
+
+        <div class="soso fl mt30 clearfix">
+        <div class="search-type clearfix">
+            <div class="float-left btn-type" style="margin-bottom: 0px;border-bottom: 0px;">
+                <a href="javascript:;" class="current-soso" id="index">{$lang.search_goods}</a>
+                <a href="javascript:;" id="store">{$lang.search_store}</a>
+                <a href="javascript:;" id="groupbuy">{$lang.search_groupbuy}</a>
+            </div>
+            
+            <input type="hidden" name="app" value="search" />
+            <input type="hidden"  id="act"name="act" value="index" />
+        </div>
+            <input type="text" class="soso-input fl  fontsize14" value="请输入关键词" onfocus="if(this.value=='请输入关键词'){ this.value=''; }"  onblur="if(this.value==''){ this.value='请输入关键词'; }" name="keyword">
+            <input type="submit" class="soso-btn fontyahei fl" value="搜索">
+        </div>
+      </form>
+        <div class="tel fr mt25"><img src="data/files/mall/template/tel.jpg" width="225" height="59" alt="">
+        </div>
+  </div>
+  <div class="clr"></div>
+    
+    <div class="global-nav mt15">
+        <div class="w1200" style=" position:relative;">
+            <a href="{url app=category}" style="color: #fff;" target="_blank"><div class="tiao fontpyahei fontsize14 fl"><strong>所有商品分类</strong></div></a>
+            <div class="w-nav fontpyahei fontsize14 fl">
+                <ul>{foreach from=$image_4 item=nav name=image_nav}
+                    <li><a href="{$nav.url}" title="" target="_blank">{$nav.name}</a></li>
+                    {/foreach}
+                </ul>
+            </div>
+            <!--菜单-->
+              <!-- {if $index eq 1}
+                <div class="allcate">
+                    <ul>
+                      {foreach from=$header_gcategories.gcategories item=category name=fe_category}
+                      {if $smarty.foreach.fe_category.iteration<=12}
+                        <li {if $smarty.foreach.fe_category.iteration%2==0}class="li1"{/if}>
+                          
+                          <a href="{url index.php?app=search&cate_id=$category.id}" title="{$gcate_list.cate_name}" target="_blank"><span><img alt="" src="{$category.logo}" ></span>{$category.value}<b class="jt"> > </b></a>
+                            <div class="sub-allcate">
+                                <div class="detail-menu ml15 mr15">
+                                    {foreach from=$category.children item=child name=fe_child} 
+                                    <p><strong><a href="{url app=search&cate_id=$child.id}" target="_blank">{$child.value|escape}</a></strong>
+                                      {foreach from=$child.children item=child2 name=fe_child2}<a href="{url app=search&cate_id=$child2.id}" target="_blank">{$child2.value|escape}</a>{if $smarty.foreach.fe_child2.last}
+                                      {else}|{/if}
+                                      {/foreach}
+                                    </p>
+                                    {/foreach}
+                                </div>
+                                
+                                <div class="detail-img mt15">
+                                    {foreach from=$category.recom_logo item=recom_logo name=fe_gcategory}
+                                    {if $recom_logo.logo}
+                                    <div class="adv"><a href="{$recom_logo.url}"><img src="{$recom_logo.logo}" width="194" height="70" alt="{$recom_logo.name|escape}" target="_blank"></a></div>
+                                    {/if}
+                                    {/foreach}
+                                </div>
+                            </div>
+                        </li>
+                        {/if}
+                        {/foreach}
+                    </ul>
+                </div>
+              {/if} -->
+            <!--菜单 END-->
+        </div>
+    </div>
+</div>
+<!--头部 END-->
+
+<!-- 主体 -->
+<link rel="icon" href="favicon.gif" type="image/x-icon" />
+<link type="text/css" href="{res file=css/header.css}" rel="stylesheet" />
+<link type="text/css" href="{res file=css/main.css}" rel="stylesheet"  />
+
+<script type="text/javascript" src="{lib file=kissy/build/kissy.js}"></script>
+<script type="text/javascript" src="{lib file=kissy/build/switchable/switchable-pkg.js}"></script>
+<script type="text/javascript" src="{lib file=jquery.plugins/jquery.lazyload.js}"></script>
+<script type="text/javascript" src="{res file=js/main.js}" charset="utf-8"></script>
+
+<div class="top-ads w" area="top-ads" widget_type="area"> 
+	<!--{widgets page=index area=top-ads}--> 
+</div>
+
+<div id="main" class="w-full">
+    <div id="page-home">
+        <div class="col-1 relative w">
+            <div class="left" area="col-1-left" widget_type="area">
+                <!--{widgets page=index area=col-1-left}-->
+            </div>
+            <div class="right" area="col-1-right" widget_type="area">
+                <!--{widgets page=index area=col-1-right}-->
+            </div>
+        </div>
+        <div class="col-2" area="col-2" widget_type="area">
+            <!--{widgets page=index area=col-2}-->
+        </div>
+        <div class="col-3 w" area="col-3" widget_type="area">
+            <!--{widgets page=index area=col-3}-->
+        </div>
+    </div>
+</div>
+<!-- 主体END -->
+
+<!--底部-->
+{include file=footer.html}
+<!--底部 END-->
+
+</body>
+
+</html>
+

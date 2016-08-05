@@ -1,0 +1,60 @@
+<div class="mll2015_floor4">
+    <div class="mt">
+        <strong class="cn">{$widget_data.model_name}<span>{$widget_data.model_subtitle}</span></strong>
+        <a class="more" href="{$widget_data.more}" target="_blank">更多>></a>
+    </div>
+    <div class="border"></div>
+    <div class="mc tab_{$widget_data.model_id}">
+        <ul class="ks-switchable-content">
+            <li>
+                <a href="{$widget_data.ad1_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad1_image_url}" width="690" height="332"></a>
+                <strong>TOP1</strong>
+            </li>
+            <li>
+                <a href="{$widget_data.ad2_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad2_image_url}" width="690" height="332"></a>
+                <strong>TOP2</strong>
+            </li>
+            <li>
+                <a href="{$widget_data.ad3_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad3_image_url}" width="690" height="332"></a>
+                <strong>TOP3</strong>
+            </li>
+            <li>
+                <a href="{$widget_data.ad4_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad4_image_url}" width="690" height="332"></a>
+                <strong>TOP4</strong>
+            </li>
+        </ul>
+        <ul class="ks-switchable-nav">
+            <li class="">
+                <span class="t">TOP1</span>
+                <div class="img"><a href="{$widget_data.ad5_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad5_image_url}" width="110" height="73"></a></div>
+                <p class="price">¥{$widget_data.ad1_price}</p>
+                <p class="desc"><a href="{$widget_data.ad5_link_url}" target="_blank">{$widget_data.ad1_title}</a></p>
+            </li>
+            <li class="">
+                <span class="t">TOP2</span>
+                <div class="img"><a href="{$widget_data.ad6_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad6_image_url}" width="110" height="73"></a></div>
+                <p class="price">¥{$widget_data.ad2_price}</p>
+                <p class="desc"><a href="{$widget_data.ad6_link_url}" target="_blank">{$widget_data.ad2_title}</a></p>
+            </li>
+            <li class="bt">
+                <span class="t">TOP3</span>
+                <div class="img"><a href="{$widget_data.ad7_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad7_image_url}" width="110" height="73"></a></div>
+                <p class="price">¥{$widget_data.ad3_price}</p>
+                <p class="desc"><a href="{$widget_data.ad7_link_url}" target="_blank">{$widget_data.ad3_title}</a></p>
+            </li>
+            <li class="bt">
+                <span class="t">TOP4</span>
+                <div class="img"><a href="{$widget_data.ad8_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad8_image_url}" width="110" height="73"></a></div>
+                <p class="price">¥{$widget_data.ad4_price}</p>
+                <p class="desc"><a href="{$widget_data.ad8_link_url}" target="_blank">{$widget_data.ad4_title}</a></p>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+    KISSY.ready(function(S) {
+        var tabs = new S.Tabs('.tab_{$widget_data.model_id}', {
+            aria: false
+        });
+    });
+</script>

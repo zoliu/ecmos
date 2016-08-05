@@ -1,0 +1,88 @@
+
+<!-- www.360cd.cn  Mosquito -->
+
+{include file=member.header.html}
+
+<style>
+._info>p {
+    margin-top: 1em;
+}
+</style>
+
+<script type="text/javascript" src="{lib file=jquery.plugins/jquery.validate.js}"></script>
+
+<script type="text/javascript">
+
+$(function() {
+    
+    $('#_form_').validate({
+        errorPlacement : function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success : function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        rules : {
+            user_name : {
+                required : true
+            },
+            money : {
+                required : true,
+                number : true,
+                range : [0, {$money_info.money}]
+            },
+            password : {
+                required : true
+            }
+        },
+        messages : {
+            user_name : {
+                required : '目标用户不能为空'
+            },
+            money : {
+                required : '转出金额不能为空',
+                number : '必须输入合法的数字',
+                range : '有效金额范围[0, {$money_info.money}]'
+            },
+            password : {
+                required : '支付密码不能为空'
+            }
+        }
+    });
+    
+});
+
+</script>
+
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <form id="_form_" method="post">
+            <div class="_info">
+                <p>可用余额：{$money_info.money}</p>
+                <p>目标用户：<input name="user_name" id="user_name" type="text" /></p>
+                <p>转出金额：<input name="money" type="text" /></p>
+                <p>支付密码：<input name="password" type="password" /></p>
+                <p><input type="submit" value="提交" style="margin-left: 2em;" /></p>
+            </div>
+            </form>
+        </div>
+        
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<div class="clear"></div>
+
+<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
+
+{include file=footer.html}

@@ -1,0 +1,51 @@
+<!--{if $payform.online}-->
+  <h3>{$lang.connecting_pay_gateway}</h3>
+  <form action="{$payform.gateway}" id="payform" method="{$payform.method}" style="display:none">
+  <!-- {foreach from=$payform.params item=value key=_k} -->
+    <input type="hidden" name="{$_k}" value="{$value}" />
+  <!-- {/foreach} -->
+  </form>
+  <script type="text/javascript">
+      document.getElementById('payform').submit();
+  </script>
+{else}
+{include file="header.html"}
+<style type="text/css">
+.payment_desc { margin:10px 10px 10px 0px; background:#eee; padding:5px;padding-bottom:15px; }
+.payment_desc h3 { margin:5px; border-bottom:#ddd 1px dotted; padding-bottom:5px; }
+.payment_desc .detail { text-indent:2em; }
+.backindex{margin:20px 0;padding-bottom: 20px;}
+.backindex .submit{width: 20px;height: 30px;}
+</style>
+<!--主体-->
+<div class="jim-main">
+    <div class="w1200 clearfix">
+      <div class="navbar fontsimsun mt20 clearfix">
+        {include file="curlocal.html"}
+      </div>
+        <div class="payreturn mt10">
+            <div class="detail">
+                <div class="payment_desc">
+                    <h3>{$lang.payment_desc}</h3>
+                    <div class="detail">
+                    {$payform.desc}
+                    </div>
+                </div>
+            </div>
+            <form id="pay_message_form" action="index.php?app=cashier&act=offline_pay&order_id={$order.order_id}" method="POST">
+            <ul class="payment">
+                <li>
+                    <p class="radio" style="line-height:30px;">{$lang.input_pay_message}<span class="desc">({$lang.input_pay_message_notice})</span></p>
+                    <p class="explain"><textarea name="pay_message" cols="80" rows="5" style="line-height: 20px;">{$order.pay_message|escape}</textarea></p>
+                </li>
+            </ul>
+            <div class="backindex">
+              <input type="submit"  calss="submit"style="float:left;margin-bottom: 20px;width: 100px;height: 30px;border: 0;" value="{$lang.submit}&nbsp;&raquo;" />
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+<!--主体 END-->
+{include file="footer.html"}
+<!--{/if}-->

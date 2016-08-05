@@ -1,0 +1,74 @@
+
+<!-- www.360cd.cn  mosquito -->
+
+{include file="header.html"}
+
+<div id="rightTop">
+    <p>会员等级</p>
+    <ul class="subnav">
+        <li><span>等级列表</span></li>
+        <li><a class="btn1" href="{url app=user_grade&act=edit}">新增等级</a>
+        </li>
+    </ul>
+</div>
+
+<div class="mrightTop">
+    <div class="fontr">{include file=page.top.html}</div>
+</div>
+
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        {if $grade_list}
+        <tr class="tatr1">
+            <td width="20" class="firstCell" style="width: 4em;">
+                <input type="checkbox" class="checkall" />
+                <span>编号</span>
+            </td>
+            <td>等级名称</td>
+            <td>优先级</td>
+            <td>升级需求</td>
+            <td>其他相关</td>
+            <td>操作</td>
+        </tr>
+        {/if}
+        
+        {foreach from=$grade_list item=data}
+        <tr class="tatr2">
+            <td class="firstCell">
+                <input type="checkbox" class="checkitem" value="{$data.id}" />
+                <span>{$data.id}</span>
+            </td>
+            <td>{$data.grade_name}</td>
+            <td>{$data.priority}</td>
+            <td>
+                <p><span>推荐会员累计购物：</span><span>{$data.upgrade.buy|price}</span></p>
+            </td>
+            <td>
+                <p><span>推荐会员购物提成：</span><span>{$data.other.buy_tc}</span></p>
+                <p><span>推荐商家销售提成：</span><span>{$data.other.sell_tc}</span></p>
+            </td>
+            <td>
+                <a href="{url app=user_grade&act=edit&id=$data.id}">编辑</a>
+                <a href="javascript:drop_confirm('是否确认删除', '{url app=user_grade&act=drop&id=$data.id}');">删除</a>
+            </td>
+        </tr>
+        {foreachelse}
+        <tr class="no_data">
+            <td colspan="10">没有符合条件的数据</td>
+        </tr>
+        {/foreach}
+    </table>
+
+    {if $grade_list}
+    <div id="dataFuncs">
+        <div id="batchAction" class="left paddingT15">
+            &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="删除" name="id" uri="{url app=user_grade&act=drop}" presubmit="confirm('是否确认删除');" />
+        </div>
+        <div class="pageLinks">{include file=page.bottom.html}</div>
+        <div class="clear"></div>
+    </div>
+    {/if}
+</div>
+
+{include file="footer.html"}

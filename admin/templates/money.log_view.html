@@ -1,0 +1,69 @@
+<!-- www.360cd.cn  Mosquito -->
+
+{include file="header.html"}
+
+<style>
+.log_info {
+    font-size: 1.2em;
+    margin: 2em 0;
+}
+.log_info>p {
+    margin: 1em 0;
+}
+.log_info>p>span:first-child {
+    display: inline-block;
+    width: 12em;
+    font-weight: bold;
+}
+</style>
+
+<div id="rightTop">
+    <p>钱包中心</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="{url app=money}">管理</a></li>
+        <li><a class="btn1" href="{url app=money&act=log}">记录</a></li>
+        <li><span>记录详情</span></li>
+    </ul>
+</div>
+
+<div class="info" style="padding-left: 2em;">
+    
+    <div class="log_info">
+        <p><span>用户名：</span><span>{$money_log_info.user_name}</span></p>
+        <p><span>交易对方：</span><span>{$money_log_info.party_name}</span></p>
+        <p><span>资金：</span><span>{$flow_options[$money_log_info.flow]} {$money_log_info.money|price}</span></p>
+        <p><span>状态：</span><span>{$money_log_status_options[$money_log_info.status]}</span></p>
+        <p><span>类型：</span><span>{$money_log_type_options[$money_log_info.type]}</span></p>
+        <p><span>创建时间：</span><span>{$money_log_info.add_time|date:complete}</span></p>
+    </div>
+    
+    {if $money_log_info.order_id}
+    <div  class="log_info"></div>
+    {/if}
+    
+    {if $money_log_info.bank_id}
+    <div  class="log_info">
+        <p><span>卡号 / 账户：</span><span>{$money_log_info.card_number}</span></p>
+        <p><span>持卡人 / 姓名：</span><span>{$money_log_info.cardholder}</span></p>
+        <p><span>开户行 / 账户类型：</span><span>{$money_log_info.bank_name}</span></p>
+        <p><span>开户行地址：</span><span>{$money_log_info.bank_address}</span></p>
+    </div>
+    {/if}
+    
+    {if $money_log_info.pay_id}
+    <div  class="log_info">
+        <p><span>支付方式：</span><span>{$money_log_info.payment_name}</span></p>
+    </div>
+    {/if}
+    
+    <div>
+        {if $money_log_info.status eq $smarty.const.MONEY_L_S_AUDIT}
+        <p><span></span><a href="{url app=money&act=audit&id=$money_log_info.id}">待审核</a></p>
+        {/if}
+    </div>
+    
+    <div class="demand"></div>
+    <div class="demand"></div>
+</div>
+
+{include file="footer.html"}

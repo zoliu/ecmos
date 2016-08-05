@@ -1,0 +1,65 @@
+@charset "utf-8";
+* {padding: 0; margin: 0;}
+body {background: #e4ebf3; font-family: Arial, Helvetica, sans-serif; font-size: 13px; margin: 10px;}
+
+#box {width: 920px; margin: 0 auto; background: url(../images/box.gif);}
+.box_top {width: 920px; height: 20px; background: url(../images/box_top.gif);}
+.box_bottom {width: 920px; height: 20px; background: url(../images/box_bottom.gif);}
+.clear {clear: both;}
+
+.main {width: 898px; margin: 0 auto;}
+
+.top {width: 898px; height: 82px; background: url(../images/top.gif); position: relative;}
+.top h1 {position: absolute; top: 20px; left: 26px; width: 180px; height: 50px;}
+.top h1 a {display: block; width: 180px; height: 50px;}
+.top p {position: absolute; bottom: 20px; right: 20px; color: #234f8d;}
+
+h2 {text-align: center; font-weight: normal; margin: 35px 0 25px;}
+.num {font-size: 35px; color: #ff8428;}
+.title {font-size: 28px; color: #234f8d; font-family: "微软雅黑"; position: relative; top: -2px;}
+.title_intro {font-size: 13px; color: #a7b6c7; font-family: "微软雅黑";}
+
+.step1, .step2, .step3, .step4 {width: 771px; height: 21px; margin: 0 auto;}
+.step1 {background: url(../images/step1.gif);}
+.step2 {background: url(../images/step2.gif);}
+.step3 {background: url(../images/step3.gif);}
+.step4 {background: url(../images/step4.gif);}
+
+.agreement {width: 615px; height: 460px; border: 1px solid #b0d3ee; margin: 25px auto 0;}
+.edition {height: 40px; background: #f3f8ff; border-bottom: 1px solid #fff; color: #444; padding: 20px 0 0 20px;}
+.text {height: 325px; border-top: 1px solid #b0d3ee; border-bottom: 1px solid #b0d3ee; overflow-y: scroll; padding: 20px;color: #234f8d; line-height: 20px;}
+.text h3 {text-align: center; font-size: 14px; color: #444; margin-bottom: 20px;}
+.text p {}
+.accede {color: #444; padding: 5px 0 0 20px;}
+
+.agreement2 {width: 615px; border: 1px solid #b0d3ee; margin: 25px auto 0;}
+.accede2 {color: #444; padding: 20px; background: #f3f8ff;}
+.text2 {height: 270px; border-bottom: 1px solid #b0d3ee; overflow-y: scroll; padding: 20px; color: #234f8d; line-height: 20px;}
+
+.btn {text-align: center; margin: 25px 0;}
+.button {width: 83px; height: 28px; background: url(../images/btn.gif); border: 0; color: #234f8d; font-weight: bold;}
+.mr10 {margin-right: 10px;}
+
+.foot {color: #6d90ba; font-weight: bold; height: 35px; text-align: center; line-height: 35px; border-top: 1px solid #cbe0f0; background: #f7faff;}
+.foot span {color: #5b883a;}
+.foot a { text-decoration:none; }
+
+.main_table {width: 630px; margin: 0 auto; color: #444;}
+.main_table h3 {font-size: 14px; line-height: 50px;}
+.main_table table {border-collapse: collapse; width: 100%; margin-bottom: 20px;}
+.main_table th {text-align: left; color: #234f8d; height: 25px; color: #234f8d;}
+.main_table td {height: 25px;}
+.ico {padding-left: 18px; background: url(../images/ico.gif) no-repeat left;}
+
+.main_form {width: 630px; margin: 0 auto;color: #444;}
+.main_form h3 {color: #234f8d; font-size: 14px; line-height: 60px;}
+.main_form th {text-align: left; height: 30px; width: 130px;}
+.main_form td {height: 25px;}
+.input_text {padding: 1px 5px; width: 245px; margin-right: 10px; font-family: Arial, Helvetica, sans-serif; color: #444;}
+.color92a {color: #92a4b9;}
+.mtb20 {margin: 20px 0 40px;}
+
+
+.messages { width:630px; margin:20px auto 5px auto; background:#F48F8F; border:red 1px solid; padding:5px; list-style:none; }
+.messages li { margin:2px; padding:3px; }
+.main_table .failed { background: url(../images/failed.gif) no-repeat left; color:red; font-weight:bold; }

@@ -1,0 +1,175 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function(){
+    $('#article_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('right').text('OK!');
+        },
+        rules : {    
+            title : {
+                required : true
+            },
+            cate_id :{
+                required : true
+            },
+            link    :{
+                url     : true
+            },
+            sort_order:{
+               number   : true
+            }
+        },
+        messages : {
+            title : {
+                required : '{$lang.title_empty}'
+            },
+            cate_id : {
+                required : '{$lang.cate_empty}'
+            },
+            link    : {
+                url     : '{$lang.link_limit}'
+            },
+            sort_order  : {
+                number   : '{$lang.number_only}'
+            }
+        }
+    });
+});
+
+function add_uploadedfile(file_data)
+{
+    var newImg = '<tr id="' + file_data.file_id + '" class="tatr2"><input type="hidden" name="file_id[]" value="' + file_data.file_id + '" /><td><img width="40px" height="40px" src="' + SITE_URL + '/' + file_data.file_path + '" /></td><td>' + file_data.file_name + '</td><td><a href="javascript:insert_editor(\'' + file_data.file_name + '\', \'' + file_data.file_path + '\');">{$lang.insert_editor}</a> | <a href="javascript:drop_uploadedfile(' + file_data.file_id + ');">{$lang.drop}</a></td></tr>';
+    $('#thumbnails').prepend(newImg);
+}
+function insert_editor(file_name, file_path){
+    tinyMCE.execCommand('mceInsertContent', false, '<img src="'+ SITE_URL +'/' + file_path + '" alt="'+ file_name + '">');
+}
+function drop_uploadedfile(file_id)
+{
+    if(!window.confirm(lang.uploadedfile_drop_confirm)){
+        return;
+    }
+    $.getJSON('index.php?app=article&act=drop_uploadedfile&file_id=' + file_id, function(result){
+        if(result.done){
+            $('#' + file_id).remove();
+        }else{
+            alert('drop_error');
+        }
+    });
+}
+</script>
+{$build_editor}
+{$build_upload}
+<div id="rightTop">
+    <p>{$lang.article}</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?app=article">{$lang.manage}</a></li>
+        {if $article.article_id}
+        <li><a class="btn1" href="index.php?app=article&amp;act=add">{$lang.add}</a></li>
+        {else}
+        <li><span>{$lang.add}</span></li>
+        {/if}
+    </ul>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data" id="article_form">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">
+                    {$lang.title}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput" id="title" type="text" name="title" value="{$article.title|escape}" />
+                </td>
+            </tr>
+            <!--{if !$article.code}-->
+            <tr>
+                <th class="paddingT15">
+                    <label for="cate_id">{$lang.category}:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    <select id="cate_id" name="cate_id"><option value="">{$lang.select_pls}</option>{html_options options=$parents selected=$article.cate_id}</select>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.link}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput" id="link" type="text" name="link" value="{$article.link|escape}" />
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    <label for="if_show">{$lang.if_show}:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    <input id="yes" type="radio" name="if_show" value="1" {if $article.if_show eq 1} checked="checked"{/if} />
+                    <label for="yes">{$lang.yes}</label>
+                    <input id="no" type="radio" name="if_show" value="0" {if $article.if_show eq 0} checked="checked"{/if} />
+                    <label for="no">{$lang.no}</label>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.sort_order}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="sort_order" id="sort_order" type="text" name="sort_order" value="{$article.sort_order}" />
+                </td>
+            </tr>
+            <!--{/if}-->
+            <tr>
+                <th class="paddingT15">
+                    <label for="article">{$lang.content}:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    <textarea id="article" name="content" style="width:650px;height:400px;">{$article.content|escape}</textarea>
+                </td>
+            </tr>
+            <tr>
+            <th>{$lang.upload_types}:</th>
+            <td height="100" valign="top">
+            <div id="divUploadTypeContainer">
+                <input name="upload_types" id="bat_upload" type="radio" value="bat_upload" checked="checked" /> <label for="bat_upload">{$lang.bat_upload}</label>
+                <input name="upload_types" id="com_upload" type="radio" value="com_upload" /> <label for="com_upload">{$lang.com_upload}</label>
+            </div>
+            <div id="divSwfuploadContainer">
+                <div id="divButtonContainer">
+                    <span id="spanButtonPlaceholder"></span>
+                </div>
+                <div id="divFileProgressContainer"></div>
+            </div>
+            <iframe id="divComUploadContainer" style="display:none;" src="index.php?app=comupload&act=view_iframe&id={$id}&belong={$belong}" width="500" height="46" scrolling="no" frameborder="0">
+            </iframe>
+            </td>
+            </tr>
+            <tr>
+            <th>{$lang.uploaded_files}:</th>
+            <td>                
+            <div class="tdare">
+    <table  width="600px" cellspacing="0" class="dataTable">
+        <tbody id="thumbnails">
+        <!-- {foreach from=$files_belong_article item=file} -->
+        <tr class="tatr2" id="{$file.file_id}">
+        <input type="hidden" name="file_id[]" value="{$file.file_id}" />
+        <td><img alt="{$file.file_name}" src="{$site_url}/{$file.file_path}" width="40px" height="40px" /></td>
+        <td>{$file.file_name}</td>
+        <td><a href="javascript:insert_editor('{$file.file_name}', '{$file.file_path}');">{$lang.insert_editor}</a> | <a href="javascript:drop_uploadedfile({$file.file_id});">{$lang.drop}</a></td>
+        </tr>
+        <!-- {/foreach} -->
+        </tbody>
+    </table>
+</div>
+            </td>
+            </tr>
+        <tr>
+            <th></th>
+            <td class="ptb20">
+                <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />
+            </td>
+        </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

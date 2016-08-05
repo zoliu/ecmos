@@ -1,0 +1,70 @@
+{include file="header.html"}
+<!--/*<script language="javascript">
+$(function(){
+    $('#time').datepicker({dateFormat: 'yy-mm-dd'});
+});
+</script>*/-->
+<div class="mrightTop">
+	<div class="fontl">{$lang.welcome}</div>
+</div>
+<div id="rightTop">
+    <ul class="subnav" style="margin-left:0px;">
+        <li><a class="btn1" href="index.php?module=msg">{$lang.msglog}</a></li>
+        <li><span>{$lang.msguplog}</span></li>
+        <li><a class="btn1" href="index.php?module=msg&act=user">{$lang.user}</a></li>
+        <li><a class="btn1" href="index.php?module=msg&act=add">{$lang.addmsg}</a></li>
+        <li><a class="btn1" href="index.php?module=msg&act=send">{$lang.sendmsg}</a></li>
+        <li><a class="btn1" href="index.php?module=msg&act=setting">{$lang.setting}</a></li>        
+    </ul>
+</div>
+
+<div class="mrightTop">
+    <div class="fontl">
+       <form method="get">
+            <div class="left">
+              <input name="module" type="hidden" value="msg" />
+              <input name="act" type="hidden" value="up" />
+              发送手机:
+              <input class="queryInput" type="text" name="to_mobile" value="{$query.to_mobile|escape}" />
+			  <!--发送时间:
+              <input name="time" type="text" id="time" value="" size="10" maxlength="10" />-->
+              <input type="submit" class="formbtn" value="{$lang.query}" />
+            </div>
+      </form>
+    </div>
+    <div class="fontr">
+		{include file=page.top.html}
+    </div>
+</div>
+
+<div class="tdare">
+    <table width="100%" cellspacing="0">
+
+        <tr class="tatr1">
+            <td width="140">发送手机</td>
+            <td>回复内容</td>
+			<td width="120">时间</td>
+            <td width="120">管理操作</td>
+        </tr>
+
+        <!--{foreach from=$index item=val key=key}-->
+        <tr class="tatr2">
+            <td><b>{$val.to_mobile}</b></td>
+            <td>{$val.content}</td>
+            <td>{$val.time|date:y-m-d H:i:s}</td>
+            <td><a href="index.php?module=my_money&act=sms_money_log">扣 款</a></td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="3">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <!--{if $index}-->
+<div id="dataFuncs">
+    <div class="pageLinks">{include file=page.bottom.html}</div>
+    <div class="clear"></div>
+  </div>
+  <!--{/if}-->
+</div>
+{include file="footer.html"}

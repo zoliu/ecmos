@@ -1,0 +1,107 @@
+{include file="header.html"}
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    // multi-select mall_gcategory
+    $('#gcategory').length>0 && gcategoryInit("gcategory");
+});
+//]]>
+</script>
+<div id="rightTop">
+  <p>{$lang.goods}</p>
+  <ul class="subnav">
+    <li><!--{if $smarty.get.closed}--><a class="btn1" href="index.php?app=goods">{$lang.all_goods}</a><!--{else}--><span>{$lang.all_goods}</span><!--{/if}--></li>
+    <li><!--{if $smarty.get.closed}--><span>{$lang.closed}</span><!--{else}--><a class="btn1" href="index.php?app=goods&amp;closed=1">{$lang.closed}</a><!--{/if}--></li>
+  </ul>
+</div>
+<div class="mrightTop1 info">
+  <div class="fontl">
+    <form method="get">
+      <input type="hidden" name="app" value="goods" />
+      <!--{if $smarty.get.closed}-->
+      <input type="hidden" name="closed" value="1" />
+      <!--{/if}--> {$lang.goods_name}:
+      <input class="queryInput" type="text" name="goods_name" value="{$smarty.get.goods_name|escape}" />
+      {$lang.store_name}:
+      <input class="queryInput" type="text" name="store_name" value="{$smarty.get.store_name|escape}" />
+      {$lang.brand}:
+      <input class="queryInput" type="text" name="brand" value="{$smarty.get.brand|escape}" /><br />
+      <span style="position: relative; top: 5px;">
+      <div class="left">
+          {$lang.gcategory}:
+          <div id="gcategory" style="display:inline;">
+            <input type="hidden" name="cate_id" value="0" class="mls_id" />
+            <select class="querySelect">
+              <option>{$lang.select_pls}</option>
+              {html_options options=$gcategories}
+            </select>
+          </div>
+          <input type="submit" class="formbtn" value="{$lang.query}" />
+      </div>
+      <!--{if $smarty.get.cate_id or $query.goods_name or $query.store_name or $query.brand}-->
+      <a class="left formbtn1" href="index.php?app=goods<!--{if $query.closed}-->&amp;closed={$query.closed}<!--{/if}-->">{$lang.cancel_query}</a>
+      <!--{/if}-->
+      </span>
+    </form>
+  </div>
+  <div class="fontr">{include file=page.top.html}</div>
+</div>
+<div class="tdare">
+  <table width="100%" cellspacing="0" class="dataTable">
+    <!--{if $goods_list}-->
+    <tr class="tatr1">
+      <td width="10%" class="firstCell"><input type="checkbox" class="checkall" /></td>
+	  {if $enable_radar}<td width="10%">{$lang.enable_radar}</td>{/if}
+      <td width="30%"><span ectype="order_by" fieldname="goods_name">{$lang.goods_name}</span></td>
+      <td width="10%"><span ectype="order_by" fieldname="store_name">{$lang.store_name}</span></td>
+      <td><span ectype="order_by" fieldname="brand">{$lang.brand}</span></td>
+      <td><span ectype="order_by" fieldname="cate_id">{$lang.gcategory}</span></td>
+      <td class="table-center"><span ectype="order_by" fieldname="if_show">{$lang.if_show}</span></td>
+      <td class="table-center"><span ectype="order_by" fieldname="closed">{$lang.close}</span></td>
+      <td><span ectype="order_by" fieldname="views">{$lang.views}</span></td>
+      <td>{$lang.handler}</td>
+    </tr>
+    <!--{/if}-->
+    <!--{foreach from=$goods_list item=goods}-->
+    <tr class="tatr2">
+      <td class="firstCell"><input type="checkbox" class="checkitem" value="{$goods.goods_id}"/></td>
+    {if $enable_radar}
+    <td><span id="r{$goods.goods_id}"class="radar_product_point" radar_price="{$goods.shop_price}" radar_product_id='{$goods.goods_id}' radar_brand="{$goods.brand_name}"  radar_catname="{$goods.cat_name}" radar_sn="{$goods.goods_sn}" radar_keyword="" radar_name="{$goods.goods_name|escape:html}"></span></td>
+    {/if}
+      <td><span ectype="inline_edit" fieldname="goods_name" fieldid="{$goods.goods_id}" required="1" class="editable" title="{$lang.editable}">{$goods.goods_name|escape}</span></td>
+      <td>{$goods.store_name|escape}</td>
+      <td>{$goods.brand|escape}</td>
+      <td>{$goods.cate_name|nl2br}</td>
+      <td class="table-center"><!-- {if $goods.if_show} --><img src="{res file=style/images/positive_enabled.gif}" /><!--{else}--><img src="{res file=style/images/positive_disabled.gif}" /><!-- {/if} --></td>
+      <td class="table-center"><!-- {if $goods.closed} --><img src="{res file=style/images/negative_enabled.gif}" ectype="inline_edit" fieldname="closed" fieldid="{$goods.goods_id}" fieldvalue="1" title="{$lang.editable}"/><!--{else}--><img src="{res file=style/images/negative_disabled.gif}" ectype="inline_edit" fieldname="closed" fieldid="{$goods.goods_id}" fieldvalue="0" title="{$lang.editable}"/><!-- {/if} --></td>
+      <td>{$goods.views|default:0}</td>
+      <td><a target="_blank" href="{$site_url}/index.php?app=goods&amp;id={$goods.goods_id}">{$lang.view}</a></td>
+    </tr>
+    <!--{foreachelse}-->
+    <tr class="no_data info">
+      <td colspan="8">{$lang.no_data}</td>
+    </tr>
+    <!--{/foreach}-->
+  </table>
+  <!--{if $goods_list}-->
+  <div id="dataFuncs">
+    <div id="batchAction" class="left paddingT15"> <!--{if !$smarty.get.closed}-->
+      <input class="formbtn batchButton" type="button" value="{$lang.recommend}" name="id" uri="index.php?app=goods&act=recommend&ret_page={$page_info.curr_page}" />
+          &nbsp;&nbsp;<!--{/if}-->
+      <input class="formbtn batchButton" type="button" value="{$lang.edit}" name="id" uri="index.php?app=goods&act=edit&ret_page={$page_info.curr_page}" />&nbsp;&nbsp;
+      <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="index.php?app=goods&act=drop&ret_page={$page_info.curr_page}" presubmit="confirm('{$lang.drop_confirm}')" />
+    </div>
+    <div class="pageLinks">{include file=page.bottom.html}</div>
+   <!--{/if}-->
+  </div>
+  <div class="clear"></div>
+</div>
+{include file="footer.html"}{if $enable_radar}
+<input type="hidden" id="radar_lincense_id" value="" />
+<input type="hidden" id="radar_product_key" value="ecmall" />
+<input type="hidden" id="radar_sign_key" value="" />
+<script type="text/javascript" src="http://js.sradar.cn/radarForGoodsList.js"></script>
+<script>
+radar_point_extract();
+</script>
+{/if}

@@ -1,0 +1,16 @@
+<script type="text/javascript">
+var _d = DialogManager.get('config_dialog');
+_d.setWidth(350);
+_d.setPosition('center');
+</script>
+<div class="field_item">
+    <label>分类名称：</label>
+	<p><input type="text" name="model_name" value="{$options.model_name}" /></p>   
+</div>
+<div class="field_item">
+    <label>选择一级分类:</label>
+    <select name="cate_id">
+        <option value="0">请选择分类...</option>
+        <!-- {html_options options=$gcategories selected=$options.cate_id} -->
+    </select>
+</div>

@@ -1,0 +1,74 @@
+{include file=member.header.html}
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+{include file=member.submenu.html}
+        <div class="wrap">
+            <div class="public_index table1">
+                <table>
+                    <!--{if $my_qa_data}-->
+                    <tr>
+                        <td colspan="3" class="line_head">&nbsp;</td>
+                    </tr>
+                    <!--{/if}-->
+                    <!--{foreach from=$my_qa_data item=my_qa_list name=v}-->
+                    <tr class="bgcolor line_normal">
+                        <td class="align2 width1"></td>
+                        <td><a href="<!--{if $my_qa_list.type eq 'goods'}-->{url app=$my_qa_list.type&id=$my_qa_list.item_id&act=qa}<!--{else}-->{url app=$my_qa_list.type&id=$my_qa_list.item_id}<!--{/if}-->" target="_blank" class="link3">{$my_qa_list.item_name|escape}</a> &nbsp;&nbsp;[{$lang.$my_qa_list.type}]</td>
+                        <td class="width8">
+                            <span class="table_user"><!--{if $my_qa_list.user_name neq ''}-->{$my_qa_list.user_name|escape}<!--{else}-->{$lang.guest}<!--{/if}--></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <h3>{$lang.question_content}:&nbsp;</h3>
+                            <p>{$my_qa_list.question_content|escape|nl2br}</p>
+                        </td>
+                        <td><span class="time">{$my_qa_list.time_post|date:complete}</span></td>
+                    </tr>
+                    <!--{if $my_qa_list.reply_content neq ''}-->
+                    <tr <!--{if $smarty.foreach.v.last}-->class="line_bold"<!--{/if}-->>
+                        <td></td>
+                        <td>
+                            <h3><span class="color8">{$lang.store_reply}:&nbsp;</span></h3>
+                            <p><span class="color3">{$my_qa_list.reply_content|escape}</span></p>
+                        </td>
+                        <td><span class="time">{$my_qa_list.time_reply|date:complete}</span> </td>
+                    </tr>
+                    <!-- {else} -->
+                    <tr <!--{if $smarty.foreach.v.last}-->class="line_bold"<!--{/if}-->>
+                        <td colspan="3">&nbsp;</td>
+                    </tr>
+                    <!--{/if}-->
+                    <!--{foreachelse}-->
+                    <tr char="bgcolor">
+                        <td colspan="3" class="member_no_records">{$lang.$smarty.get.act}{$lang.no_records}</td>
+                    </tr>
+
+                    <!--{/foreach}-->
+                    <!--{if $my_qa_data}-->
+                    <tr>
+                        <th></th>
+                        <th colspan="3">
+                            <p class="position2">
+                            {include file=member.page.bottom.html}
+                            </p>
+                        </th>
+                    </tr>
+                    <!--{/if}-->
+                </table>
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

@@ -1,0 +1,53 @@
+<div class="mll2015_floor8 w clearfix tab_{$widget_data.model_id}">
+    <div class="mt">
+        <ul class="ks-switchable-nav">
+            <li class="ks-active">
+                {$widget_data.model_name} 
+            </li>
+            <li class="">
+                {$widget_data.model_name1}
+            </li>
+        </ul>
+    </div>
+    <div class="ks-switchable-content">
+        <ul style="display:block;">
+            <!-- {foreach from=$widget_data.goods_list_1 item=goods name=fe_goods} -->
+            <li>
+                <a href="{url app=goods&id=$goods.goods_id}" target="_blank">
+                    <img class="lazyload" initial-url="{$goods.default_image}" width="156" height="156">
+                    <div class="price1">
+                        <span class="c_1">￥</span>
+                        <span class="c_2">{$goods.price}&nbsp;&nbsp;</span>
+                        <span class="c_3">已售&nbsp;</span>
+                        <span class="c_4">{$goods.sales}</span>
+                        <span>件</span>
+                    </div>
+                    <div class="title">{$goods.goods_name|escape}</div>
+                </a>
+            </li>
+            <!-- {/foreach} -->
+        </ul>
+        <ul style="display:none;">
+            <!-- {foreach from=$widget_data.goods_list_1 item=goods name=fe_goods} -->
+            <li>
+                <a href="{url app=goods&id=$goods.goods_id}" target="_blank">
+                    <img class="lazyload" initial-url="{$goods.default_image}" width="156" height="156">
+                    <div class="price">
+                        <strong><span>￥</span>{$goods.price}</strong>
+                    </div>
+                    <div class="title">{$goods.goods_name|escape}</div>
+                </a>
+            </li>
+            <!-- {/foreach} -->
+        </ul>
+    </div>
+
+    <script>
+        KISSY.ready(function(S) {
+            var tabs = new S.Tabs('.tab_{$widget_data.model_id}', {
+                aria: false
+            });
+        });
+    </script>
+
+</div>

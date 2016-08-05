@@ -1,0 +1,27 @@
+<div class="tesegou mb10 w clearfix">
+	<div class="title">{if $widget_data.model_name}{$widget_data.model_name}{else}商城特色购{/if}</div>
+	<ul class="clearfix">
+		<li><a href="{$widget_data.ad1_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad1_image_url}" src="static/images/empty.gif"/></a></li>
+		<li class="big"><a href="{$widget_data.ad2_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad2_image_url}" src="static/images/empty.gif"/></a></li>
+		<li><a href="{$widget_data.ad3_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad3_image_url}" src="static/images/empty.gif"/></a></li>
+		<li><a href="{$widget_data.ad4_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad4_image_url}" src="static/images/empty.gif"/></a></li>
+		<li class="last"><a href="{$widget_data.ad5_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad5_image_url}" src="static/images/empty.gif"/></a></li>
+		<li><a href="{$widget_data.ad6_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad6_image_url}" src="static/images/empty.gif"/></a></li>
+		<li><a href="{$widget_data.ad7_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad7_image_url}" src="static/images/empty.gif"/></a></li>
+		<li class="brand clearfix">
+			<!-- {foreach from=$widget_data.rec_brands item=brand name=fe_brand} -->
+            <a href="{url app=search&brand=$brand.brand_name|escape:url}" title="{$brand.brand_name}" target="_blank" style="{if $smarty.foreach.fe_brand.iteration%2 eq 0}border-right:0;{/if} {if $smarty.foreach.fe_brand.iteration eq 1 or $smarty.foreach.fe_brand.iteration eq 2}border-top:0;{/if}"><img src="{$brand.brand_logo}"/></a>
+            <!-- {/foreach} -->
+		</li>
+		<li><a href="{$widget_data.ad8_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad8_image_url}" src="static/images/empty.gif"/></a></li>
+		<li><a href="{$widget_data.ad9_link_url}" target="_blank"><img class="lazyload" initial-url="{$widget_data.ad9_image_url}" src="static/images/empty.gif"/></a></li>
+		<li class="more last">
+			<dl>
+			<dt>更多栏目</dt>	
+			<!--{foreach from=$widget_data.more item=mo name=fe_mo}-->
+			<dd><a target="_blank" href="{$mo.link}">{$mo.name|escape}</a></dd>
+			<!--{/foreach}-->
+			</dl>
+		</li>
+	</ul>
+</div>

@@ -1,0 +1,102 @@
+{include file="header.html"}
+<link href="{res file=css/login.css}" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+$(function(){
+    $('#login_form').validate({
+        errorPlacement: function(error, element){
+            $(element).parent('em').append(error); 
+        },
+        success       : function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        onkeyup : false,
+        rules : {
+            user_name : {
+                required : true
+            },
+            password : {
+                required : true
+            },
+            captcha : {
+                required : true,
+                remote   : {
+                    url : 'index.php?app=captcha&act=check_captcha',
+                    type: 'get',
+                    data:{
+                        captcha : function(){
+                            return $('#captcha1').val();
+                        }
+                    }
+                }
+            }
+        },
+        messages : {
+            user_name : {
+                required : '{$lang.user_name_required}'
+            },
+            password  : {
+                required : '{$lang.password_required}'
+            },
+            captcha : {
+                required : '{$lang.captcha_required}',
+                remote   : '{$lang.captcha_error}'
+            }
+        }
+    });
+});
+</script>
+<style>
+
+</style>
+<div class="loginbg">
+    <div class="loginptb">
+        <div class="logleft">
+            <form method="post" id="login_form">
+                <div class="login">
+                    <h1>{$lang.user_login}</h1>
+                    <ul>
+                        <li><u>{$lang.user_name}: </u>
+                            <em><input type="text" name="user_name" placeholder="{$lang.user_name}" /></em>
+                        </li>
+                    
+                        <li><u>{$lang.password}:  </u>
+                            <em><input type="password" name="password" placeholder="{$lang.user_password}" /></em>
+                        </li>
+                        <!--{if $captcha}-->
+                        <li><u>{$lang.captcha}:</u>
+                            <em>
+                                <input type="text" name="captcha" id="captcha1" />
+                                <span><a href="javascript:change_captcha($('#captcha'));" class="renewedly"><img id="captcha" src="index.php?app=captcha&amp;{$random_number}" /></a></span>
+                            </em>
+                        </li>
+                        <!--{/if}-->
+                        <li class="logintip">
+                            <span class="valid_success"></span>
+                            <font></font>
+                        </li>
+                        <ol class="a2">
+                            <input type="submit" name="Submit" value="{$lang.user_login}" class="Submit" />
+                            <a href="{url app=find_password}" class="clew">{$lang.forget_password}</a>
+                        </ol>
+                        <ol class="a2">
+                            
+                            <div class="noregister">{$lang.not_member}</div>
+                            <div class="register"><div class="registera">
+                                <a href="{url app=member&act=register&ret_url=$ret_url}">{$lang.register_form}</a></div>
+                            </div>
+                        </ol>
+                    </ul>
+                </div>
+                <input type="hidden" name="ret_url" value="{$ret_url}" />
+            </form>
+        </div>
+
+        <div class="logright">
+            <a href="#">
+                <img src="data/files/mall/template/201309050141133314.jpg" />
+            </a>
+        </div>
+    </div>
+</div>
+
+{include file="footer.html"}

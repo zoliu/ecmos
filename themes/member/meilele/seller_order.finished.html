@@ -1,0 +1,25 @@
+<script type="text/javascript">
+$(function(){
+    $('#cancel_button').click(function(){
+        DialogManager.close('seller_order_finished');
+    });
+});
+</script>
+<div class="content1">
+<div id="warning"></div>
+<form method="post" action="index.php?app=seller_order&amp;act=finished&amp;order_id={$order.order_id}" target="seller_order">
+    <h1>{$lang.received_pay_confirm}</h1>
+    <p>{$lang.order_sn}&nbsp;&nbsp;&nbsp;&nbsp;:<span>{$order.order_sn}</span></p>
+    <div class="clue_on">
+        {$lang.notice}&nbsp;:&nbsp;{$lang.finish_order_notice}
+    </div>
+    <dl>
+        <dt>{$lang.operate_reason}:</dt>
+        <dd><textarea class="text" id="remark_input" style="width:200px;" name="remark"></textarea></dd>
+    </dl>
+    <div class="btn">
+        <input type="submit" id="confirm_button" class="btn1" value="{$lang.confirm}" />
+        <input type="button" id="cancel_button" class="btn2" value="{$lang.cancel}" />
+    </div>
+</form>
+</div>

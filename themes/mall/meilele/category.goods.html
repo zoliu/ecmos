@@ -1,0 +1,52 @@
+{include file=header.html}
+<!--主体-->
+<div class="jim-main">
+    <div class="w1200 clearfix">
+      <!--左侧-->
+        <div class="left" style="width: 1200px;">
+            <div class="navbar fontsimsun mt20 clearfix">
+              {include file=curlocal.html}
+            </div>
+            <div class="search-type mb10 clearfix">
+                <div class="float-left btn-type">
+                    <a href="{url app=category}" class="current">{$lang.gcategory}</a>
+                    <a href="{url app=category&act=store}">{$lang.scategory}</a>
+                </div>
+            </div>
+
+          <!--分类列表-->
+
+          <!-- {if $gcategorys} -->
+            <!--{foreach from=$gcategorys item=gcategory}-->
+          <div class="condition-bar mt10">
+            <h1 style="line-height: 30px;margin-left: 20px;"><a href="{url app=search&cate_id=$gcategory.id}"><strong>{$gcategory.value|escape}</strong></a></h1>
+          </div>
+
+          <div class="grid clearfix" style="margin-left: 0px;">
+                <!--{foreach from=$gcategory.children item=child}-->
+              <a href="{url app=search&cate_id=$child.id}" style="float: left;padding: 5px;margin-left: 10px;font-family:microsoft yahei;">
+                  <h2>{$child.value|escape}</h2>
+              </a>
+              <!--{/foreach}-->
+          </div>
+              <!--{/foreach}-->
+          <!-- {/if} -->
+          <!--分类列表 END-->
+        </div>
+      <!--左侧 END-->
+      <div class="clr"></div>
+
+    </div>
+</div>
+<!--主体 END-->
+
+<!--底部-->
+  {include file=footer.html}
+<!--底部 END-->
+</body>
+
+<script src="{lib file=jquery-1.9.1.min.js}"></script>
+<script src="{lib file=jim-focus.js}"></script>
+<script src="{lib file=jq_scroll.js}"></script>
+<script src="{lib file=jquery.SuperSlide.js}"></script>
+</html>

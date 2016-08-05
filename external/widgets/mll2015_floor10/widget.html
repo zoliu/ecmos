@@ -1,0 +1,107 @@
+<div class="mll2015_floor10 clearfix">
+    <div class="mt {$widget_data.floor_id}">
+        <div class="title_left">
+            <span class="floor">{$options.model_name}</span>
+        </div>
+        <div class="title_right">
+            <!--{foreach from=$widget_data.keywords item=k}-->
+            <a href="{url app=search&keyword=$k|escape:url}" target="_blank">{$k}</a>|
+            <!--{/foreach}-->
+        </div>
+        <a class="more" href="{$widget_data.more}" target="_blank" style="position: absolute;right:0px; top:10px; color:#b3b3b3;">更多新品</a>
+    </div>
+    <div class="mc">
+        <div class="side  carousel-{$widget_data.model_id}">
+            <div class="ks-switchable-nav">
+                <a href="javascript:;" class=""></a>
+                <a href="javascript:;" class="ks-active"></a>
+            </div>
+            <ul class="ks-switchable-content" style="position: absolute; width: 400px; left: 0px;">
+                <li style="display: block; float: left;">
+                    <a href="{$options.ad1_link_url}" target="_blank">
+                        <img class="lazyload" initial-url="{$options.ad1_image_url}" width="206" height="302">
+                    </a>
+                </li>
+                <li style="display: block; float: left;">
+                    <a href="{$options.ad2_link_url}" target="_blank">
+                        <img class="lazyload" initial-url="{$options.ad2_image_url}" width="206" height="302">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="goods">
+            <div class="p_img">
+                <!-- {foreach from=$widget_data.goods_list_1 item=goods name=fe_goods} -->
+                <div class="in_li">
+                    <div class="img_left">
+                        <a href="{url app=goods&id=$goods.goods_id}" target="_blank">
+                            <img class="lazyload" initial-url="{$goods.default_image}" width="116" height="116">
+                        </a>
+                    </div>
+                    <div class="word_left">
+                        <a href="{url app=goods&id=$goods.goods_id}" target="_blank" style="font-size: 14px;">{$goods.goods_name|escape}</a>
+                        <br>
+                        <strong>{$goods.price|price}</strong>
+                    </div>
+                </div>
+                <!-- {/foreach} -->
+            </div>
+        </div>
+        <div class="best">
+            <div class="tip">{$widget_data.sub_title|escape}</div>
+            <!-- {foreach from=$widget_data.goods_list_2 item=goods name=fe_goods} -->
+            <div class="list1">
+                <div class="p_img">
+                    <div class="img">
+                        <a href="{url app=goods&id=$goods.goods_id}" target="_blank">
+                            <img class="lazyload" initial-url="{$goods.default_image}" width="65" height="65">
+                        </a>
+                    </div>
+                    <div class="word">
+                        <p class="price">
+                            {$goods.price|price}
+                        </p>
+                        <p class="title">
+                            <a href="{url app=goods&id=$goods.goods_id}" style="color:#999;" target="_blank">{$goods.goods_name|escape}</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- {/foreach} -->
+        </div>
+    </div>
+    <div class="mb">
+        <a href="{$options.ad3_link_url}" target="_blank">
+            <img class="lazyload" initial-url="{$options.ad3_image_url}" width="206" height="218">
+        </a>
+        <a href="{$options.ad4_link_url}" target="_blank">
+            <img class="lazyload" initial-url="{$options.ad4_image_url}" width="287" height="218">
+        </a>
+        <a href="{$options.ad5_link_url}" target="_blank">
+            <img class="lazyload" initial-url="{$options.ad5_image_url}" width="287" height="218">
+        </a>
+        <a href="{$options.ad6_link_url}" target="_blank">
+            <img class="lazyload" initial-url="{$options.ad6_image_url}" width="200" height="218">
+        </a>
+
+    </div>
+</div>
+
+
+<script>
+    KISSY.use("switchable", function(S) {
+        var tiny_slide = new S.Carousel('.carousel-{$widget_data.model_id}', {
+            steps: 1,
+            effect: 'scrollx',
+            easing: 'easeOutStrong',
+            circular: true,
+            prevBtnCls: 'prev',
+            nextBtnCls: 'next',
+            disableBtnCls: 'disable',
+            interval: 4,
+            aria: false,
+            autoplay: true,
+            lazyDataType: 'img-src' //延迟加载图片？
+        });
+    });
+</script>

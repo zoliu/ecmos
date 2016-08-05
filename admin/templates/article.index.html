@@ -1,0 +1,79 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>{$lang.article}</p>
+    <ul class="subnav">
+        <li><span>{$lang.manage}</span></li>
+        <li><a class="btn1" href="index.php?app=article&amp;act=add">{$lang.add}</a></li>
+    </ul>
+</div>
+<div class="mrightTop">
+    <div class="fontl">
+        <form method="get">
+            <div class="left">
+                <input type="hidden" name="app" value="article" />
+                <input type="hidden" name="act" value="index" />
+                {$lang.title}:
+                <input class="queryInput" type="text" name="title" value="{$query.title|escape}" />
+                {$lang.select_acategory}:
+                <select class="querySelect" id="cate_id" name="cate_id">
+                <option value="">{$lang.select_pls}</option>
+                {html_options options=$parents selected=$smarty.get.cate_id}
+                </select>
+                <input type="submit" class="formbtn" value="{$lang.query}" />
+            </div>
+            <!--{if $filtered}-->
+            <a class="left formbtn1" href="index.php?app=article">{$lang.cancel_query}</a>
+            <!--{/if}-->
+        </form>
+    </div>
+    <div class="fontr">
+        {include file=page.top.html}
+    </div>
+</div>
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!--{if $articles}-->
+        <tr class="tatr1">
+            <td width="20" class="firstCell"><input type="checkbox" class="checkall" /></td>
+            <td align="left">{$lang.title}</td>
+            <td>{$lang.category}</td>
+            <td align="left">{$lang.if_show}</td>
+            <td>{$lang.add_time}</td>
+            <td>{$lang.sort_order}</td>
+            <td>{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$articles item=article}-->
+        <tr class="tatr2">
+            <td class="firstCell"><!--{if !$article.code}--><input type="checkbox" class="checkitem" value="{$article.article_id}"/><!--{/if}--></td>
+            <td>{$article.title|escape}</td>
+            <td>{$article.cate_name|escape}</td>
+            <td>{$article.if_show}</td>
+            <td>{$article.add_time|date:complete}</td>
+            <td><!--{if !$article.code}--><span ectype="inline_edit" fieldname="sort_order" fieldid="{$article.article_id}" datatype="pint" maxvalue="255" class="editable">{$article.sort_order}</span><!--{/if}--></td>
+            <td><a href="index.php?app=article&amp;act=edit&amp;id={$article.article_id}">{$lang.edit}</a>
+                <!--{if !$article.code}-->|
+                <a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=article&amp;act=drop&amp;id={$article.article_id}');">{$lang.drop}</a><!--{/if}--></td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="7">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <!--{if $articles}-->
+    <div id="dataFuncs">
+        <div class="pageLinks">
+            {include file=page.bottom.html}
+        </div>
+        <div id="batchAction" class="left paddingT15">
+            &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="index.php?app=article&act=drop" presubmit="confirm('{$lang.drop_confirm}');" />
+            &nbsp;&nbsp;
+            <!--<input class="formbtn batchButton" type="button" value="lang.update_order" name="id" presubmit="updateOrder(this);" />-->
+        </div>
+    </div>
+    <div class="clear"></div>
+    <!--{/if}-->
+</div>
+{include file="footer.html"}

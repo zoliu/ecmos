@@ -1,0 +1,28 @@
+{include file="header.html"}
+<div id="rightTop">
+  <p>{$lang.sgrade}</p>
+  <ul class="subnav">
+    <li><a class="btn1" href="index.php?app=sgrade">{$lang.manage}</a></li>
+    <li> <a class="btn1" href="index.php?app=sgrade&amp;act=add">{$lang.add}</a> </li>
+  </ul>
+</div>
+<div class="info">
+  <form method="post" enctype="multipart/form-data">
+    <ul style="margin: 5px; width:100%">{foreach from=$skins item=skin}
+      <li style="float: left; text-align: center; margin: 5px;"><a href="{$site_url}/{$skin.screenshot}" target="_blank"><img style="border: 1px solid #ccc;" src="{$site_url}/{$skin.preview}" width="160" height="120" /></a><br />
+        <input type="checkbox" name="skins[]" value="{$skin.value}" {if $skin.checked}checked="checked"{/if} />
+      </li>
+      {/foreach}
+    </ul>
+    <div class="clear"></div>
+    <table class="infoTable">
+      <tr>
+        <th></th>
+        <td class="ptb20"><input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+          <input class="formbtn" type="reset" name="Reset" value="{$lang.reset}" />
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+{include file="footer.html"} 

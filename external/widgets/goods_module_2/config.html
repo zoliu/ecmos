@@ -1,0 +1,96 @@
+<script type="text/javascript">
+var _d = DialogManager.get('config_dialog');
+_d.setWidth(350);
+_d.setPosition('center');
+
+$("select[ectype='bgcolor_selector']").change(function(){
+    $("input[ectype='bgcolor']").val(this.value);
+});
+
+$("select[name='img_recom_id']").change(function(){
+    switchRecommend(this.value, 'img_cate_id');
+});
+
+$("select[name='txt_recom_id']").change(function(){
+    switchRecommend(this.value, 'txt_cate_id');
+});
+
+switchRecommend($("select[name='img_recom_id']").val(), 'img_cate_id');
+switchRecommend($("select[name='txt_recom_id']").val(), 'txt_cate_id');
+
+function switchRecommend(recomId, selectName)
+{
+    if (recomId >= 0)
+    {
+        $("select[name='" + selectName + "']").hide();
+    }
+    else
+    {
+        $("select[name='" + selectName + "']").show();
+    }
+}
+</script>
+<div class="field_item">
+    <label>模块名称:</label>
+    <p><input type="text" name="module_name" value="{$options.module_name}" /></p>
+</div>
+<div class="field_item">
+    <label>背景色:(<span>格式：#332211</span>)</label>
+    <p><input type="text" name="bgcolor" ectype="bgcolor" value="{$options.bgcolor}" />
+        <select ectype="bgcolor_selector" style="width:100px">
+            <option value="">请选择...</option>
+            <option value="#bbc5d6" style="background:#bbc5d6"></option>
+            <option value="#a7d8c8" style="background:#a7d8c8"></option>
+            <option value="#a3c9ee" style="background:#a3c9ee"></option>
+            <option value="#9fd9dd" style="background:#9fd9dd"></option>
+            <option value="#b9afd4" style="background:#b9afd4"></option>
+            <option value="#dcad7f" style="background:#dcad7f"></option>
+            <option value="#c4d568" style="background:#c4d568"></option>
+            <option value="#dcc972" style="background:#dcc972"></option>
+            <option value="#e8b5e5" style="background:#e8b5e5"></option>
+            <option value="#ecb8bc" style="background:#ecb8bc"></option>
+    </select></p>
+</div>
+<div class="field_item">
+    <label>热门关键字:(<span>多个关键字之间用空格隔开</span>)</label>
+    <p><input type="text" name="keyword_list" value="{$options.keyword_list}" /></p>
+</div>
+<div class="field_item">
+    <label>上传广告图片:(<span>图片尺寸：210*280，支持 gif|jpg|jpeg|png 格式</span>)</label>
+    <p><input type="file" name="ad_image_file" /><input type="hidden" name="ad_image_url" value="{$options.ad_image_url}" /></p>
+    <!-- {if $options.ad_image_url} --><p><img src="{$options.ad_image_url}" height="20" /></p><!-- {/if} -->
+</div>
+<div class="field_item">
+    <label>广告链接地址:</label>
+    <p><input type="text" name="ad_link_url" value="{$options.ad_link_url}" /></p>
+</div>
+<div class="field_item">
+    <label>图片推荐类型:</label>
+    <p><select name="img_recom_id">
+        <option value="0">请选择...</option>
+        <!-- {foreach from=$recommends key=recom_id item=recom_name} -->
+        <option value="{$recom_id}"{if $options.img_recom_id eq $recom_id} selected="selected"{/if}>{$recom_name|escape}</option>
+        <!-- {/foreach} -->
+    </select>
+    <select name="img_cate_id">
+        <option value="0">请选择分类...</option>
+        <!-- {html_options options=$gcategories selected=$options.img_cate_id} -->
+    </select></p>
+</div>
+<div class="field_item">
+    <label>文字推荐模块名称:</label>
+    <p><input type="text" name="sub_module_name" value="{$options.sub_module_name}" /></p>
+</div>
+<div class="field_item">
+    <label>文字推荐类型:</label>
+    <p><select name="txt_recom_id">
+        <option value="0">请选择...</option>
+        <!-- {foreach from=$recommends key=recom_id item=recom_name} -->
+        <option value="{$recom_id}"{if $options.txt_recom_id eq $recom_id} selected="selected"{/if}>{$recom_name|escape}</option>
+        <!-- {/foreach} -->
+    </select>
+    <select name="txt_cate_id">
+        <option value="0">请选择分类...</option>
+        <!-- {html_options options=$gcategories selected=$options.txt_cate_id} -->
+    </select></p>
+</div>

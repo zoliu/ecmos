@@ -1,0 +1,64 @@
+<div class="share w clearfix mb10">
+	<div class="goods goods_{$widget_data.model_id}">
+        <div class="title"><span>{$widget_data.model_name_1|escape}</span></div>
+        <div class="content clearfix">
+			<!--{foreach from=$widget_data.goods_list item=goods name=fe_goods}-->
+				<dl class="{if $smarty.foreach.fe_goods.first}first{/if} clearfix">
+					<dt>
+						<a href="{url app=goods&id=$goods.goods_id}" target="_blank">
+                		<img class="lazyload" initial-url="{$goods.default_image}" src="static/images/empty.gif"/>
+                        </a>
+                    </dt>
+					<dd class="name"><a href="{url app=goods&id=$goods.goods_id}" target="_blank">{$goods.goods_name|escape}</a></dd>
+					<dd class="price">{$goods.price|price}</dd>
+				</dl>
+			<!--{/foreach}-->
+        </div>
+    </div>
+    <div class="comment comment_{$widget_data.model_id}">
+        <div class="title"><span>{$widget_data.model_name_2|escape}</span></div>
+        <div class="content">
+			<div class="box">
+            <div class="ks-switchable-content">
+                <!--{foreach from=$widget_data.comments item=cg}-->
+                    <dl class="clearfix">
+                        <dt>
+                            <a href="{url app=goods&id=$cg.goods_id}" target="_blank">
+                                <img src="{$cg.goods_image}" width="85" height="85"/>
+                            </a>
+                        </dt>
+                        <dd class="name">
+                            <a href="{url app=goods&id=$cg.goods_id}" target="_blank" class="clearfix">{if $cg.portrait}<img src="{$cg.portrait}" width="28" height="28" />{/if}<span>{$cg.buyer_name|escape}</span></a> 
+                        </dd>
+						<dd class="com">
+							<span class="detail-arrow">◆</span>
+							<span class="icon-l">“</span>
+							<a href="{url app=goods&id=$cg.goods_id&act=comments}" target="_blank">{$cg.comment|escape|truncate:50}</a>
+							<span class="icon-r">”</span>
+						</dd>
+                    </dl>
+                <!--{/foreach}-->
+            </div>
+			</div>
+        </div>
+    </div>
+    
+</div>
+<script>
+	<!--{if $widget_data.comments}-->
+	KISSY.use("switchable", function(S) {
+		var tiny_slide = new S.Carousel('.comment_{$widget_data.model_id}', {
+		steps:1,
+		effect: 'scrolly',
+		easing: 'easeOutWeak',
+		circular: true,
+		prevBtnCls: 'prev',
+		nextBtnCls: 'next',
+		disableBtnCls: 'disable',
+		interval:4,
+		autoplay:true
+		});
+	});
+	<!--{/if}-->
+	
+</script>

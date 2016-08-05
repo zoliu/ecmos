@@ -1,0 +1,33 @@
+<div class="module_recommend" style="background: {$widget_data.bgcolor};">
+    <h2>
+        <b>{$widget_data.module_name|escape}</b>
+        <p>
+            <!-- {foreach from=$widget_data.keyword_list item=keyword name=fe_keyword_list} -->
+            <!-- {if $smarty.foreach.fe_keyword_list.first} -->
+            <a href="{url app=search&keyword=$keyword}">{$keyword}</a>
+            <!-- {else} -->
+            | <a href="{url app=search&keyword=$keyword}">{$keyword}</a>
+            <!-- {/if} -->
+            <!-- {/foreach} -->
+        </p>
+    </h2>
+    <div class="wrap">
+        <div class="pic"><a href="{$widget_data.ad_link_url}" target="_blank"><img src="{$widget_data.ad_image_url}" width="210" height="280" /></a></div>
+        <div class="diatropism">
+            <ul class="list_pic">
+                <!-- {foreach from=$widget_data.img_goods_list item=goods} -->
+                <li>
+                    <p><a href="{url app=goods&id=$goods.goods_id}" target="_blank"><img src="{$goods.default_image}" width="100" height="100" /></a></p>
+                    <h3><a href="{url app=goods&id=$goods.goods_id}" target="_blank" title="{$goods.goods_name|escape}">{$goods.goods_name|escape}</a><span>{$goods.price|price}</span></h3>
+                </li>
+                <!-- {/foreach} -->
+            </ul>
+
+            <ul class="list_text">
+                <!-- {foreach from=$widget_data.txt_goods_list item=goods} -->
+                <li><a href="{url app=goods&id=$goods.goods_id}" target="_blank" title="{$goods.goods_name|escape}">{$goods.goods_name|escape}</a></li>
+                <!-- {/foreach} -->
+            </ul>
+        </div>
+    </div>
+</div>

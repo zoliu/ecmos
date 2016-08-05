@@ -1,0 +1,96 @@
+{include file="header.html"}
+<div id="rightTop">
+  <p>{$lang.goods_batch}</p>
+  <ul class="subnav">
+  </ul>
+</div>
+<div class="info">
+  <form method="post">
+    <table class="infoTable">
+      <!-- {if $smarty.get.act eq "recommend"} -->
+      <tr>
+        <th class="paddingT15">{$lang.recommend_to}:</th>
+        <td class="paddingT15 wordSpacing5">
+            <ul class="recommend_to">
+                {foreach from=$recommends key=recom_id item=recom_name name=fe_recom}
+                <li><label><input type="radio" name="recom_id" value="{$recom_id}" /> {$recom_name}</label></li>
+                {/foreach}
+            </ul>
+        </td>
+      </tr>
+      <!-- {elseif $smarty.get.act eq "edit"} -->
+      <script type="text/javascript" src="index.php?act=jslang"></script>
+      <script type="text/javascript">
+//<!CDATA[
+$(function(){
+    // multi-select mall_gcategory
+    gcategoryInit("gcategory");
+
+    $(":radio[name='closed']").click(function(){
+        if (this.value == 1)
+        {
+            $("#close_reason").show();
+        }
+        else
+        {
+            $("#close_reason").hide();
+        }
+    });
+});
+//]]>
+</script>
+      <tr>
+        <th class="paddingT15">{$lang.gcategory}:</th>
+        <td class="paddingT15 wordSpacing5"><div id="gcategory">
+            <input type="hidden" name="cate_id" value="0" class="mls_id" />
+            <input type="hidden" name="cate_name" value="" class="mls_names" />
+            <select>
+              <option>{$lang.select_pls}</option>
+
+
+          {html_options options=$gcategories}
+
+
+            </select>
+            <span class="grey">{$lang.note_for_gcategory}</span> </div></td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.brand}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" type="text" name="brand" id="brand" />
+          <span class="grey">{$lang.note_for_brand}</span></td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.closed_status}:</th>
+        <td class="paddingT15 wordSpacing5"><p>
+            <label>
+            <input type="radio" name="closed" value="-1" checked="checked" />
+            {$lang.no_change}</label>
+            <label>
+            <input type="radio" name="closed" value="1" />
+            {$lang.close}</label>
+            <label>
+            <input type="radio" name="closed" value="0" />
+            {$lang.open}</label>
+          </p></td>
+      </tr>
+      <tr id="close_reason" style="display:none">
+        <th class="paddingT15"><label for="close_reason">{$lang.close_reason}:</label></th>
+        <td class="paddingT15 wordSpacing5"><textarea id="close_reason" name="close_reason" cols="60" rows="3"></textarea></td>
+      </tr>
+      <!-- {elseif $smarty.get.act eq "drop"} -->
+      <tr>
+        <th class="paddingT15"> <label for="drop_reason">{$lang.drop_reason}:</label></th>
+        <td class="paddingT15 wordSpacing5"><textarea id="drop_reason" name="drop_reason" cols="60" rows="3" /></textarea></td>
+      </tr>
+      <!-- {/if} -->
+      <tr>
+        <th></th>
+        <td class="ptb20"><input type="hidden" name="id" value="{$smarty.get.id}" />
+          <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+          <input class="formbtn" type="button" value="{$lang.back}" onclick="history.go(-1)" />
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+{include file="footer.html"}

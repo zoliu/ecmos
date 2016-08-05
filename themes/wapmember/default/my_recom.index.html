@@ -1,0 +1,30 @@
+{include file="member.header.html"}
+{$_head_tags}
+{assign var='curr_nav' value='客户管理'}
+    </div>
+
+        <!--会员页-->
+        <div class="u_order">            
+            <!-- {foreach from=$my_recom_list item=my_recom name=v} -->
+            <div class="orderbox">
+                <h2><span>{$my_recom.user_name}</span><b>{$lang.reg_time}：<font style="color:#b20005;">{$my_recom.reg_time|date:Y-m-d H:i:s}</font></b></h2>
+                <div class="detail">
+                    <p>{$lang.user_name}：<span>{$my_recom.user_name}</span></p>
+                    <p>​{$lang.level_name}：<span>{if $my_recom.level_name}{$my_recom.level_name}{else}{$lang.register_user}{/if}</span></p>​
+                    <p>{$lang.user_point}：<span>{$my_recom.user_point}</span></p>
+                </div>
+            </div>
+            <!--{foreachelse}-->
+            <div class="null" >
+                <p><img src="{res file=images/nothing.gif}" /></p>
+                <p>你没有客户管理信息~</p>
+            </div>
+            <!--{/foreach}-->
+        </div>
+        <div class="page">
+            {include file=member.page.bottom.html}
+        </div>
+
+        <iframe id='iframe_post' name="iframe_post" src="about:blank" frameborder="0" width="0" height="0"></iframe>
+    </div>
+    {include file="member.footer.html"}

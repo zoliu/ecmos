@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        {$page_seo}
+        <link type="text/css" rel="stylesheet" href="{res file=css/index.css}"/>
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/detail.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+        <script type="text/javascript" src="{res file=js/touchslider.dev.js}"></script>
+        <script type="text/javascript" src="{res file=js/iscroll.js}"></script>
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript">
+            //<!CDATA[
+            var SITE_URL = "{$site_url}";
+            var REAL_SITE_URL = "{$real_site_url}";
+            var PRICE_FORMAT = '{$price_format}';
+            //]]>
+            
+        </script>
+        <style>
+            table{width: 100%;border:1px solid #e5e5e5;}
+            td{border:1px solid #e5e5e5;padding: 4px;}
+        </style>
+        {$_head_tags}
+    </head>
+    <body>
+        {include file=header.html}
+        <!---------详情页-->
+        {include file=goodsinfo.html}
+
+        <div class="detail_con">
+            <ul class="tab">
+                <a href="{url app=goods&id=$goods.goods_id}#module"><li class="cur">{$lang.goods_detail}</li></a>
+                <a href="{url app=goods&act=comments&id=$goods.goods_id}#module"><li><span>{$comments}</span></li></a>
+            </ul>
+            <div class="tab_con" id="module">
+                {$goods.description|escape:editor}
+            </div>
+        </div>
+        <!----------tab切换-->
+        <script type="text/javascript">
+            /*jQuery(function(jq) {
+                function changeTab(lis, divs) {
+                    lis.each(function(i) {
+                        var els = jq(this);
+                        els.click(function() {
+                            lis.removeClass();
+                            divs.stop().hide().animate({'opacity': 0}, 0);
+                            jq(this).addClass("cur");
+                            divs.eq(i).show().animate({'opacity': 1}, 300);
+                        });
+                    });
+                }
+                var rrE = jq(".detail_con");
+                changeTab(rrE.find(".tab li"), rrE.find(".tab_con"));
+
+            });*/
+            
+        </script>
+        <!------底部-------->
+        {include file=footer.html}
+    </body>
+</html>

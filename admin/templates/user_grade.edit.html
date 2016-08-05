@@ -1,0 +1,90 @@
+
+<!-- www.360cd.cn  mosquito -->
+
+{include file="header.html"}
+
+<style>
+td>p {
+    margin: 1em 0em;
+}
+</style>
+
+<script type="text/javascript">
+    $(function() {
+
+        $('#_form_').validate({
+            rules : {
+                grade_name : {
+                    required : true
+                },
+                priority : {
+                    required : true
+                }
+            },
+            messages : {
+                grade_name : {
+                    required : '等级名称不能为空'
+                },
+                priority : {
+                    required : '优先级不能为空'
+                }
+            }
+        });
+
+    });
+</script>
+
+<div id="rightTop">
+    <p>会员等级</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="{url app=user_grade}">等级列表</a>
+        </li>
+        {if $grade_info}
+        <li><a class="btn1" href="{url app=user_grade&act=edit}">新增等级</a>
+        </li>
+        <li><span>编辑等级</span></li>
+        {else}
+        <li><span>新增等级</span></li>
+        {/if}
+    </ul>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data" id="_form_">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">等级名称 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" type="text" name="grade_name" value="{$grade_info.grade_name}" />
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">优先级 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" type="text" name="priority" value="{if $grade_info.priority}{$grade_info.priority}{else}{$priority}{/if}" />
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">升级需求 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <p><span>推荐会员累计购物：</span><input name="buy" value="{$grade_info.upgrade.buy}" type="text" class="infoTableInput2" /></p>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">其他相关 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <p><span>推荐会员购物提成：</span><input name="buy_tc" value="{$grade_info.other.buy_tc}" type="text" class="infoTableInput2" /></p>
+                    <p><span>推荐商家销售提成：</span><input name="sell_tc" value="{$grade_info.other.sell_tc}" type="text" class="infoTableInput2" /></p>
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td class="ptb20">
+                    <input class="formbtn" type="submit" name="Submit" value="提交" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+{include file="footer.html"}

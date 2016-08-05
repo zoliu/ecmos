@@ -1,0 +1,245 @@
+<script type="text/javascript">
+var _d = DialogManager.get('config_dialog');
+_d.setWidth(350);
+_d.setPosition('center');
+$(function(){
+		$("select.recom").each(function(index, element) {
+			switchRecommend($(this).val(), $(this));
+		});//load失效暂用
+		$("select.recom").live('load change',function(){
+			switchRecommend($(this).val(), $(this));
+		});
+});
+
+function switchRecommend(recomId, selectObj)
+{
+    if (recomId >= 0)
+    {
+		selectObj.siblings('select').hide();
+    }
+    else
+    {
+		selectObj.siblings('select').show();
+    }
+}
+
+$('#add_image').click(function(){
+    $(this).before('<div class="slide">' +
+        '<label>上传幻灯图片:(<span>支持 gif|jpg|jpeg|png 格式,尺寸:330px * 240px</span>)</label>' +
+        '<p><input type="file" name="ad_image_file[]" /></p>'+
+        '<label>链接地址:</label>' +
+        '<p style="overflow:hidden;"><input type="text" name="ad_link_url[]" value="{$image.ad_link_url}" />' +
+        '<input type="button" value="删除图片" onclick="drop_image(this)" /></p></div>');
+});
+$('#add_tab').click(function(){
+    $(this).before('<div class="field_item">'+
+		'<p><label>选项卡名称:</label><input type="text" name="tab_name[]" value="{$tab.tab_name}" /> <input  type="button" value="删除选项卡" onclick="drop_image(this)" /></p>'+
+        '<p><label>商品数据:</label>'+
+			'<select name="img_recom_id[]" class="recom">'+
+            '<option value="0">请选择...</option>'+
+            '<!-- {foreach from=$recommends key=recom_id item=recom_name} -->'+
+            '<option value="{$recom_id}"{if $tab.img_recom_id eq $recom_id} selected="selected"{/if}>{$recom_name|escape}</option>'+
+            '<!-- {/foreach} -->'+
+        '</select>'+
+        '<select name="img_cate_id[]">'+
+            '<option value="0">请选择分类...</option>'+
+            '<!-- {html_options options=$gcategories selected=$tab.img_cate_id} -->'+
+        '</select></p>'+
+		'<p><label>排序:</label>'+
+           '<select name="sort_by[]">'+
+                '<option value="" selected="selected">默认排序</option>'+
+                '<option value="sales">销量从多到少</option>'+
+                '<option value="views">点击量从多到少</option>'+
+                '<option value="add_time">上架时间从新到旧</option>'+
+                '<option value="comments">评论从多到少</option>'+
+                '<option value="collects">收藏量从多到少</option>'+
+            '</select></p></div>');
+});
+function drop_image(btnObj)
+{
+    $(btnObj).parents('.field_item').remove();
+}
+</script>
+<div style="overflow:scroll;height:500px;">
+	<div class="field_item">
+        <label>楼层号:</label>
+        <p><input type="text" name="model_num" value="{$options.model_num}" /></p>
+    </div>
+    <div class="field_item">
+        <label>楼层名称:</label>
+        <p><input type="text" name="model_name" value="{$options.model_name}" /></p>
+    </div>
+	<div class="field_item">
+        <label>左侧广告图(<span>图片尺寸:328*322，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad0_image_file" /><input type="hidden" name="ad0_image_url" value="{$options.ad0_image_url}" /></p>
+        <!-- {if $options.ad0_image_url} --><p><img src="{$options.ad0_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>左侧广告图链接地址:</label>
+        <p><input type="text" name="ad1_link_url" value="{$options.ad1_link_url}" /></p>
+    </div>
+	<div class="field_item">
+        <label>左侧关键字:</label>
+        <p><textarea name="words" style=" width:280px;">{$options.words}</textarea></p>
+    </div>
+	<div class="field_item">
+        <label>左侧分类:</label>
+        <p><select name="cate_id">
+            <option value="0">请选择分类...</option>
+            <!-- {html_options options=$gcategories selected=$options.cate_id} -->
+        </select></p>
+    </div>
+	<div class="field_item">
+        <label>右侧广告图1(<span>图片尺寸：220*240，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad1_image_file" /><input type="hidden" name="ad1_image_url" value="{$options.ad1_image_url}" /></p>
+        <!-- {if $options.ad1_image_url} --><p><img src="{$options.ad1_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>链接地址:</label>
+        <p><input type="text" name="ad1_link_url" value="{$options.ad1_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>右侧广告图2:(<span>图片尺寸：220*240，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad2_image_file" /><input type="hidden" name="ad2_image_url" value="{$options.ad2_image_url}" /></p>
+        <!-- {if $options.ad2_image_url} --><p><img src="{$options.ad2_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>链接地址:</label>
+        <p><input type="text" name="ad2_link_url" value="{$options.ad2_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>右侧广告图3:(<span>图片尺寸：220*240，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad3_image_file" /><input type="hidden" name="ad3_image_url" value="{$options.ad3_image_url}" /></p>
+        <!-- {if $options.ad3_image_url} --><p><img src="{$options.ad3_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>链接地址:</label>
+        <p><input type="text" name="ad3_link_url" value="{$options.ad3_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>右侧广告图4:(<span>图片尺寸：220*240，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad4_image_file" /><input type="hidden" name="ad4_image_url" value="{$options.ad4_image_url}" /></p>
+        <!-- {if $options.ad4_image_url} --><p><img src="{$options.ad4_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>链接地址:</label>
+        <p><input type="text" name="ad4_link_url" value="{$options.ad4_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>右侧广告图5:(<span>图片尺寸：220*240，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad5_image_file" /><input type="hidden" name="ad5_image_url" value="{$options.ad5_image_url}" /></p>
+        <!-- {if $options.ad5_image_url} --><p><img src="{$options.ad5_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>链接地址:</label>
+        <p><input type="text" name="ad5_link_url" value="{$options.ad5_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>右侧广告图6:(<span>图片尺寸：220*240，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad6_image_file" /><input type="hidden" name="ad6_image_url" value="{$options.ad6_image_url}" /></p>
+        <!-- {if $options.ad6_image_url} --><p><img src="{$options.ad6_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>链接地址:</label>
+        <p><input type="text" name="ad6_link_url" value="{$options.ad6_link_url}" /></p>
+    </div>
+	<div class="field_item">
+        <label>右侧广告图7:(<span>图片尺寸：220*240，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad7_image_file" /><input type="hidden" name="ad7_image_url" value="{$options.ad7_image_url}" /></p>
+        <!-- {if $options.ad7_image_url} --><p><img src="{$options.ad7_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>链接地址:</label>
+        <p><input type="text" name="ad7_link_url" value="{$options.ad7_link_url}" /></p>
+    </div>
+	<div class="field_item">
+        <label>右侧广告图8:(<span>图片尺寸：220*240，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad8_image_file" /><input type="hidden" name="ad8_image_url" value="{$options.ad8_image_url}" /></p>
+        <!-- {if $options.ad8_image_url} --><p><img src="{$options.ad8_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>链接地址:</label>
+        <p><input type="text" name="ad8_link_url" value="{$options.ad8_link_url}" /></p>
+    </div>
+	<div class="field_item">
+		<!-- {if $options.slides} -->
+		<!-- {foreach from=$options.slides item=image} -->
+		<div class="slide">
+			<label>上传幻灯图片:(<span>支持 gif|jpg|jpeg|png 格式,尺寸:330px * 240px</span>)</label>
+			<p><input type="file" name="ad_image_file[]" />
+				<input type="hidden" name="ad_image_url[]" value="{$image.ad_image_url}" />
+			<img src="{$image.ad_image_url}" height="15" /></p>
+			<label>链接地址:</label>
+			<p style="overflow:hidden;"><input type="text" name="ad_link_url[]" value="{$image.ad_link_url}" />
+			<input  type="button" value="删除图片" onclick="drop_image(this)" /></p>
+		</div>
+		<!-- {/foreach} -->
+		<!-- {else} -->
+		<div class="slide">
+			<label>上传幻灯图片:(<span>支持 gif|jpg|jpeg|png 格式,尺寸:330px * 240px</span>)</label>
+			<p><input type="file" name="ad_image_file[]" /></p>
+			<label>链接地址:</label>
+			<p style="overflow:hidden;"><input type="text" name="ad_link_url[]" value="{$image.ad_link_url}" />
+			<input type="button" value="删除图片" onclick="drop_image(this)" /></p>
+		</div>
+		<!-- {/if} -->
+		<input type="button" id="add_image" value="新增图片" />
+	</div>
+	<!-- {if $options.tabs} -->
+	<!-- {foreach from=$options.tabs item=tab} -->
+	<div class="field_item">
+		<p><label>选项卡名称:</label><input type="text" name="tab_name[]" value="{$tab.tab_name}" /> <input  type="button" value="删除选项卡" onclick="drop_image(this)" /></p>
+        <p><label>商品数据:</label>
+			<select name="img_recom_id[]" class="recom">
+            <option value="0">请选择...</option>
+            <!-- {foreach from=$recommends key=recom_id item=recom_name} -->
+            <option value="{$recom_id}"{if $tab.img_recom_id eq $recom_id} selected="selected"{/if}>{$recom_name|escape}</option>
+            <!-- {/foreach} -->
+        </select>
+        <select name="img_cate_id[]">
+            <option value="0">请选择分类...</option>
+            <!-- {html_options options=$gcategories selected=$tab.img_cate_id} -->
+        </select>
+		</p>
+		<p><label>排序:</label>
+            <select name="sort_by[]">
+                <option value="" {if $tab.sort_by eq ''} selected="selected"{/if}>默认排序</option>
+                <option value="sales" {if $tab.sort_by eq 'sales'} selected="selected"{/if}>销量从多到少</option>
+                <option value="views" {if $tab.sort_by eq 'views'} selected="selected"{/if}>点击量从多到少</option>
+                <option value="add_time" {if $tab.sort_by eq 'add_time'} selected="selected"{/if}>上架时间从新到旧</option>
+                <option value="comments" {if $tab.sort_by eq 'comments'} selected="selected"{/if}>评论从多到少</option>
+                <option value="collects" {if $tab.sort_by eq 'collects'} selected="selected"{/if}>收藏量从多到少</option>
+            </select>
+        </p>
+	</div>
+	<!-- {/foreach} -->
+	<!-- {else} -->
+	<div class="field_item">
+		<p><label>选项卡名称:</label><input type="text" name="tab_name[]" value="{$tab.tab_name}" /> <input  type="button" value="删除选项卡" onclick="drop_image(this)" /></p>
+        <p><label>商品数据:</label>
+			<select name="img_recom_id[]" class="recom">
+            <option value="0">请选择...</option>
+            <!-- {foreach from=$recommends key=recom_id item=recom_name} -->
+            <option value="{$recom_id}"{if $tab.img_recom_id eq $recom_id} selected="selected"{/if}>{$recom_name|escape}</option>
+            <!-- {/foreach} -->
+        </select>
+        <select name="img_cate_id[]">
+            <option value="0">请选择分类...</option>
+            <!-- {html_options options=$gcategories selected=$tab.img_cate_id} -->
+        </select>
+		</p>
+		<p><label>排序:</label>
+            <select name="sort_by[]">
+                <option value="" selected="selected">默认排序</option>
+                <option value="sales">销量从多到少</option>
+                <option value="views">点击量从多到少</option>
+                <option value="add_time">上架时间从新到旧</option>
+                <option value="comments">评论从多到少</option>
+                <option value="collects">收藏量从多到少</option>
+            </select>
+        </p>
+	</div>
+	<!-- {/if} -->
+	<input type="button" id="add_tab" value="新增选项卡" />
+    
+</div>

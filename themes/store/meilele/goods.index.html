@@ -1,0 +1,50 @@
+{include file=header.html}
+
+{include file=top.html}
+<div id="content">
+    <div id="left">
+        {include file=left.html}
+    </div>
+
+    <div id="right">
+        {include file=goodsinfo.html}
+
+        <a name="module"></a>
+        <ul class="user_menu">
+            <div class="ornament1"></div>
+            <div class="ornament2"></div>
+            <li><a class="active" href="{url app=goods&id=$goods.goods_id}#module"><span>{$lang.goods_detail}</span></a></li>
+            <li><a class="normal" href="{url app=goods&act=comments&id=$goods.goods_id}#module"><span>{$lang.goods_comment}</span></a></li>
+            <li><a class="normal" href="{url app=goods&act=saleslog&id=$goods.goods_id}#module"><span>{$lang.sales_log}</span></a></li>
+            <li><a class="normal" href="{url app=goods&act=qa&id=$goods.goods_id}#module"><span>{$lang.qa}</span></a></li>
+        </ul>
+
+        <div class="option_box">
+            <div class="default">{$goods.description|escape:editor}</div>
+        </div>
+        <!--{if $goods.related_info.count gt 0}-->
+        <div class="module_currency">
+            <h2 class="common_title veins1">
+                <div class="ornament1"></div>
+                <div class="ornament2"></div>
+                <span class="ico1"><span class="ico2">{$lang.related_info}</span></span>
+            </h2>
+            <dl class="related_list">
+                <!--{foreach from=$goods.related_info.list item=app_data}-->
+                <!--{if $app_data.data and $app_data.app_type neq 'ECMALL'}-->
+                <dt><a href="{$app_data.app_url}">{$app_data.app_name}</a></dt>
+                <!--{foreach from=$app_data.data item=item}-->
+                <dd>{$item}</dd>
+                <!--{/foreach}-->
+                <!--{/if}-->
+                <!--{/foreach}-->
+            </dl>
+        </div>
+        <!--{/if}-->
+        <div class="clear"></div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+
+{include file=footer.html}

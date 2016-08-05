@@ -1,0 +1,37 @@
+ <!--{if $widget_data.ads}-->
+<div class="add-slides add-s{$widget_data.model_id}">
+	<a href="javascript:;" class="btn prev prev{$widget_data.model_id}"><</a>
+    <ul class="ks-switchable-content">
+        <!-- {foreach from=$widget_data.ads item=image name=fe_image} -->
+        <li>
+            <a href="{$image.ad_link_url}" target="_blank" target="_blank"><img width="720" height="440" src="{$image.ad_image_url}" /></a>
+        </li>
+        <!-- {/foreach} -->
+    </ul>
+	<a href="javascript:;" class="btn next next{$widget_data.model_id}">></a>
+	<div class="nav-box">
+		<div class="ks-switchable-nav">
+		   <!-- {foreach from=$widget_data.ads item=image name=fe_image} -->
+		   <a {if $smarty.foreach.fe_image.first}class="ks-active"{/if} href="javascript:;">{$smarty.foreach.fe_image.iteration}</a>
+		   <!-- {/foreach} -->
+		</div>
+	</div>
+</div>
+ <script type="text/javascript">
+       KISSY.ready(function(S) {
+          var carousel = new S.Carousel('.add-s{$widget_data.model_id}', {
+              effect: '{$widget_data.effect}',
+              prevBtnCls: 'prev{$widget_data.model_id}',
+              nextBtnCls: 'next{$widget_data.model_id}',
+			  autoplay:{$widget_data.autoplay}
+           });
+	    });
+		$(".add-s{$widget_data.model_id}").hover(function(){
+			$(this).find(".btn").show();
+		},function(){
+			$(this).find(".btn").hide();
+		});
+    </script>
+<!--{else}-->
+<center style="padding:10px;">请配置</center>
+<!--{/if}-->

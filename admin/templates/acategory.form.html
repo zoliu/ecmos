@@ -1,0 +1,88 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function(){
+    $('#acategory_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('right').text('OK!');
+        },
+        onfocusout : false,
+        onkeyup    : false,
+        rules : {
+            cate_name : {
+                required : true,
+                remote   : {
+                url :'index.php?app=acategory&act=check_acategory',
+                type:'get',
+                data:{
+                    cate_name : function(){
+                        return $('#cate_name').val();
+                    },
+                    parent_id : function() {
+                        return $('#parent_id').val();
+                    },
+                    id : '{$acategory.cate_id}'
+                  }
+                }
+            },
+            sort_order : {
+                number   : true
+            }
+        },
+        messages : {
+            cate_name : {
+                required : '{$lang.cate_name_empty}',
+                remote   : '{$lang.name_exist}'
+            },
+            sort_order  : {
+                number   : '{$lang.number_only}'
+            }
+        }
+    });
+});
+</script>
+<div id="rightTop">
+    <p>{$lang.acategory}</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?app=acategory">{$lang.manage}</a></li>
+        <li><!-- {if $acategory.cate_id} --><a class="btn1" href="index.php?app=acategory&amp;act=add">{$lang.add}</a><!-- {else} --><span>{$lang.add}</span><!-- {/if} --></li>
+    </ul>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data" id="acategory_form">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">
+                    {$lang.cate_name}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" id="cate_name" type="text" name="cate_name" value="{$acategory.cate_name|escape}" />
+                    <label class="field_notice">{$lang.acate_name}</label>              </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    <label for="parent_id">{$lang.parent_id}:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    <select id="parent_id" name="parent_id"><option value="0">{$lang.select_pls}</option>{html_options options=$parents selected=$acategory.parent_id}</select>                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.sort_order}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="sort_order" id="sort_order" type="text" name="sort_order" value="{$acategory.sort_order}" />
+                    <label class="field_notice">{$lang.update_order}</label>             </td>
+            </tr>
+
+          <tr>
+            <th></th>
+            <td class="ptb20">
+                <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                <input class="formbtn" type="reset" name="reset" value="{$lang.reset}" />            </td>
+        </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

@@ -1,0 +1,73 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>{$lang.partner}</p>
+    <ul class="subnav">
+        <li><span>{$lang.manage}</span></li>
+        <li><a class="btn1" href="index.php?app=partner&amp;act=add">{$lang.add}</a></li>
+    </ul>
+</div>
+<div class="mrightTop">
+    <div class="fontl">
+        <form method="get">
+            <div class="left">
+                <input type="hidden" name="app" value="partner" />
+                <input type="hidden" name="act" value="index" />
+                {$lang.title}:
+                <input class="queryInput" type="text" name="title" value="{$query.title|escape}" />
+                <input type="submit" class="formbtn" value="{$lang.query}" />
+            </div>
+            <!--{if $filtered}-->
+            <a class="left formbtn1" href="index.php?app=partner">{$lang.cancel_query}</a>
+            <!--{/if}-->
+        </form>
+    </div>
+    <div class="fontr">
+        {include file=page.top.html}
+    </div>
+</div>
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!--{if $partners}-->
+        <tr class="tatr1">
+            <td width="20" class="firstCell"><input type="checkbox" class="checkall" /></td>
+            <td>{$lang.title}</td>
+            <td>{$lang.link}</td>
+            <td class="table-center">{$lang.logo}</td>
+            <td class="table-center">{$lang.sort_order}</td>
+            <td class="handler">{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$partners item=partner}-->
+        <tr class="tatr2">
+            <td class="firstCell"><input type="checkbox" class="checkitem" value="{$partner.partner_id}" /></td>
+            <td>{$partner.title}</td>
+            <td>{$partner.link}</td>
+            <td class="table-center"><!--{if $partner.logo}--><img src="{$partner.logo}" height="30"/><!--{/if}--></td>
+            <td class="table-center"><span ectype="inline_edit" fieldname="sort_order" fieldid="{$partner.partner_id}" datatype="pint" maxvalue="255" class="editable" title="{$lang.editable}">{$partner.sort_order}</span></td>
+            <td class="handler">
+            <a href="index.php?app=partner&amp;act=edit&amp;id={$partner.partner_id}">{$lang.edit}</a>
+                |
+                <a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=partner&amp;act=drop&amp;id={$partner.partner_id}');">{$lang.drop}</a>
+            </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="6">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <!--{if $partners}-->
+    <div id="dataFuncs">
+        <div id="batchAction" class="left paddingT15">&nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="index.php?app=partner&act=drop" presubmit="confirm('{$lang.drop_confirm}');" />
+            &nbsp;&nbsp;
+           <!-- <input class="formbtn batchButton" type="button" value="lang.update_order" name="id" presubmit="updateOrder(this);" />-->
+        </div>
+        <div class="pageLinks">
+            {include file=page.bottom.html}
+        </div>
+        <div class="clear"></div>
+    </div>
+    <!--{/if}-->
+</div>
+{include file="footer.html"}

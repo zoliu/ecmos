@@ -1,0 +1,110 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+{$page_seo}
+<link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+<link href="{res file=css/comment.css}" type="text/css" rel="stylesheet" />
+<link href="{res file=css/address.css}" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="index.php?act=jslang"></script>
+<script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{res file=js/nav.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}" charset="utf-8"></script>
+<script type="text/javascript">
+//<!CDATA[
+var SITE_URL = "{$site_url}";
+var REAL_SITE_URL = "{$real_site_url}";
+var PRICE_FORMAT = '{$price_format}';
+
+//]]>
+</script>
+
+{$_head_tags}
+<!--<editmode></editmode>-->
+</head>
+<style>
+.pay_con{ margin-top:70px; overflow:hidden; text-align:center;text-align:left; }
+.pay_con .succeed{  margin-bottom:10px;  overflow:hidden;padding:0 10px;}
+.pay_con .succeed img{ float:left; width:110px; margin-right:10px;}
+.pay_con .succeed  h4{ margin:25px 0 5px 0; font-size:18px; font-weight:normal;}
+.pay_con .order_info{clear: both;margin: 5px; padding: 10px;}
+.pay_con .order_info p{ font-size:14px; font-weight:bold; margin:5px 0;}
+.pay_con .order_info span{ color:#b20005;}
+.pay_con .buy .pay_way p{ float:left; vertical-align:middle; height:50px; line-height:50px;}
+.pay_con .buy .pay_way p .radio{ margin-top:18px;}
+.pay_con .buy .pay_way dt{background:#eee;padding:6px 10px; font-size:16px; margin:5px 0; border-left:#b20005 solid 5px; font-weight:bold; color:#444;}
+.pay_con .buy .pay_way dd{padding:6px 10px;margin:5px 0; border-bottom:#ddd dashed 1px; overflow:hidden;}
+.pay_con .buy .pay_way dd:last-child{ border:none;}
+.pay_con .red_btn,.pay_con .white_btn{ padding:7px 10px; width:120px; display:block; margin: 10px; text-align:center; float:left;line-height: 30px;}
+.epay_btn {padding: 10px 30px 10px 40px;}
+</style>  
+</head>
+<body>
+
+    <div class="fixed">
+        <!---头部------>
+        <div class="header header2">
+			<a href="{url app=buyer_order&act=index}" class="back2_pre"></a>
+            确认支付
+        </div>  
+    </div>
+    <form action="index.php?app=my_money&act=pay_order&order_id={$order.order_id}" method="POST" id="zft_pay">
+    <!---------订单-->
+    <div class="pay_con">
+    	<div class="succeed">
+        	
+        	<h4>{$lang.order_check}</h4>
+        	<p></p>
+        </div>
+        <div class="order_info">
+            <p>订单号：<span>{$order.order_sn}</span></p>
+            <p>订单总价：<span>{$order.order_amount|price}</span></p>
+            <input name="post_money" type="hidden" value="{$order.order_amount}" />
+            <a href="{url app=buyer_order}" target="_blank">{$lang.member_view_order}</a>
+        </div>
+        <div class="buy">
+            <dl class="pay_way">
+                <dt><b>
+                        {$lang.payment_money}
+                        <span style=" color:#FF4D0F">{$money.money}</span>
+                    </b><br />
+                    <span class="epay_btn">
+                        <a href="{url app=my_money&act=recharge}">{$lang.account_recharge}</a>
+                    </span>
+                    <span class="epay_btn">
+                        <a href="{url app=my_money&act=withdrawal}" style="color:red">{$lang.withdraw_cash}</a>
+                    </span>
+                </dt>
+                    <!--{if !$money.zf_pass}-->
+                    <dt>
+                        <b>
+                            <font color="red">{$lang.jinggao_set_zf_pass}</font>
+                        </b>
+                            <a href="{url index.php?app=my_money&act=setting}" target="_blank">{$lang.set_zf_pass}</a>
+                        <span class="epay_btn">
+                            <a href="javascript:history.go(0);" target="_blank">{$lang.refresh_set_zf_pass}</a>
+                        </span>
+                    </dt>
+                    <!--{else}-->
+                    <dd style="padding-left:20px;">
+                       
+                        {$lang.payment_zhifu}
+                        <input name="zf_pass" type="password" id="zf_pass" />
+                        <div class="make_sure">
+                            <p>
+                                <a href="javascript:$('#zft_pay').submit();" class="red_btn">确认付款</a>
+                            </p>
+                        </div>
+                        <!--{/if}-->
+                    </dd>
+                </dl>                
+            </div>
+        </div>
+    </form>
+{include file="member.footer.html"}

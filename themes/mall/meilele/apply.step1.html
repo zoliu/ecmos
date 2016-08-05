@@ -1,0 +1,41 @@
+{include file=header.html}
+<div class="content">
+<div id="main" class="w-full">
+<div id="page-apply" class=" mt10 mb20">
+   <div class="title border padding5 strong fs14">
+      {$lang.i_want_open_store}
+   </div>
+   <div class="border padding10 border-t-0 lineheight20">
+      <!--{foreach from=$sgrades item=sgrade name=fe_sgrade}-->
+      <dl class="clearfix mb10" {if $smarty.foreach.fe_sgrade.last} style="border-bottom:0;"{/if}>
+         <dt class="float-left strong">{$sgrade.grade_name}</dt>
+         <dd class="float-left">
+            <p>{$lang.goods_limit}{$lang.colon}<span>{$sgrade.goods_limit}</span></p>
+            <p>{$lang.space_limit}{$lang.colon}<span>{$sgrade.space_limit}</span></p>
+            <p>{$lang.skin_limit}{$lang.colon}<span>{$sgrade.skin_limit}</span></p>
+            <p>{$lang.charge}{$lang.colon}<span>{$sgrade.charge}</span></p>
+            <p>{$lang.need_confirm}{$lang.colon}<span><!--{if $sgrade.need_confirm}-->{$lang.yes}<!--{else}-->{$lang.no}<!--{/if}--></span></p>
+         </dd>
+         <dd class="float-left">
+            <p>{$lang.add_use}{$lang.colon}</p>
+            <p>
+               <!--{foreach from=$sgrade.functions item=functions key=k name=v}-->
+               <!--{if $domain && $k eq 'subdomain'}-->
+               <span>{$lang.domain}</span>
+               <!--{else}-->
+               <span>{$lang.$k}</span>
+               <!--{/if}-->
+               <!--{if !$smarty.foreach.v.last}-->
+               <!--{/if}-->
+               <!--{/foreach}-->
+            </p>
+         </dd>
+         <dd class="float-left">{$sgrade.description}</dd>
+         <dd class="float-left"><a href="{url app=apply&step=2&id=$sgrade.grade_id}" class="btn-apply fs14 strong fff center">{$lang.soon_open}</a></dd>
+      </dl>
+      <!--{/foreach}-->
+   </div>
+</div>
+</div>
+</div>
+{include file=footer.html}

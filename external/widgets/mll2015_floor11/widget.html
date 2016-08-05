@@ -1,0 +1,93 @@
+<div class="mll2015_floor11 w clearfix">
+    <div class="carousel carousel-{$widget_data.model_id}">
+        <a href="javascript:;" class="ctrl prev"></a>
+        <a href="javascript:;" class="ctrl next"></a>
+        <ul class="ks-switchable-content">
+            <li>
+                <a href="{$widget_data.ad1_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad1_image_url}" width="313" height="113">
+                </a>
+                <a href="{$widget_data.ad2_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad2_image_url}" width="313" height="113">
+                </a>
+                <a href="{$widget_data.ad3_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad3_image_url}" width="313" height="113">
+                </a>
+                <a href="{$widget_data.ad4_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad4_image_url}" width="313" height="113">
+                </a>
+                <a href="{$widget_data.ad5_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad5_image_url}" width="313" height="113">
+                </a>
+                <a href="{$widget_data.ad6_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad6_image_url}" width="313" height="113">
+                </a>
+            </li>
+            <li>
+                <a href="{$widget_data.ad7_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad7_image_url}" width="313" height="113">
+                </a>
+                <a href="{$widget_data.ad8_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad8_image_url}" width="313" height="113">
+                </a>
+                <a href="{$widget_data.ad9_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad9_image_url}" width="313" height="113">
+                </a>
+                <a href="{$widget_data.ad10_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad10_image_url}" width="313" height="113">
+                </a>
+                <a href="{$widget_data.ad11_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad11_image_url}" width="313" height="113">
+                </a>
+                <a href="{$widget_data.ad12_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad12_image_url}" width="313" height="113">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="article tab_{$widget_data.model_id}">
+        <div class="mt">
+            <ul class="ks-switchable-nav">
+                <li class="ks-active">{$widget_data.model_name}</li>
+                <li class>{$widget_data.model_name1}</li>
+            </ul>
+        </div>
+        <div class="ks-switchable-content">
+            <ul style="display: block">
+                <!-- {foreach from=$widget_data.articles1 item=article name=fe_article} -->
+                <li><a href="{url app=article&act=view&article_id=$article.article_id}" target="_blank">{$article.title|escape}</a></li>
+                <!-- {/foreach} -->
+
+            </ul>
+            <ul style="display: none">
+                <!-- {foreach from=$widget_data.articles2 item=article name=fe_article} -->
+                <li><a href="{url app=article&act=view&article_id=$article.article_id}" target="_blank">{$article.title|escape}</a></li>
+                <!-- {/foreach} -->
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    KISSY.use("switchable", function(S) {
+        var tiny_slide = new S.Carousel('.carousel-{$widget_data.model_id}', {
+            steps: 1,
+            effect: 'scrollx',
+            easing: 'easeOutStrong',
+            circular: true,
+            prevBtnCls: 'prev',
+            nextBtnCls: 'next',
+            disableBtnCls: 'disable',
+            interval: 4,
+            aria: false,
+            autoplay: true,
+            lazyDataType: 'img-src' //延迟加载图片？
+        });
+    });
+</script>
+<script>
+    KISSY.ready(function(S) {
+        var tabs = new S.Tabs('.tab_{$widget_data.model_id}', {
+            aria: false
+        });
+    });
+</script>

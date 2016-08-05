@@ -1,0 +1,178 @@
+{include file=member.header.html}
+<script type="text/javascript">
+$(function(){
+    $('#add_time_from').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#add_time_to').datepicker({dateFormat: 'yy-mm-dd'});
+});
+</script>
+<style type="text/css">
+.float_right {float: right;}
+table .clearfix{ display: table-cell;}
+.order_merge{padding: 2px 6px;margin-left: 15px;border: 1px solid #dcdcdc;background-color: #fff;}
+</style>
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+    	{include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <div class="public_index table">
+            	 <table>
+                 	<tr class="line_bold">
+                        <th colspan="7">
+
+                			<div class="user_search">
+               					<form method="get">
+                   					<!--{if $query.seller_name or $query.add_time_from or $query.add_time_to or $query.order_sn}-->
+                     				<a class="detlink float_right" href="{url app=buyer_order}">{$lang.cancel_query}</a>
+                    				<!--{/if}-->
+                    				<span>{$lang.add_time}: </span>
+                    				<input type="text" class="text1 width2" name="add_time_from" id="add_time_from" value="{$query.add_time_from}"/> &#8211;
+                    				<input type="text" class="text1 width2" name="add_time_to" id="add_time_to" value="{$query.add_time_to}"/>
+                    				<span>{$lang.order_sn}:</span>
+                    				<input type="text" class="text1 width_normal" name="order_sn" value="{$query.order_sn|escape}">
+                    				<span>{$lang.order_status}</span>
+                    				<select name="type">
+                    					{html_options options=$types selected=$type}
+                    				</select>
+                    				<input type="hidden" name="app" value="buyer_order" />
+                   					<input type="hidden" name="act" value="index" />
+                    				<input type="submit" class="btn" value="{$lang.soso}" />
+                				</form>
+               				</div>
+                         </th>
+                     </tr>
+                	<tr class="line gray">
+                        <th>{$lang.goods_name}</th>
+                        <th>{$lang.price}</th>
+                        <th>{$lang.quantity}</th>
+                        <th>{$lang.payment_name}</th>
+                        <th>{$lang.order_amount}</th>
+                        <th>{$lang.order_status}</th>
+                        <th>{$lang.evaluation}</th>
+                    </tr>
+                    <!--{if $orders}-->
+                  <tr class="sep-row"><td colspan="8"></td></tr>
+                    <tr class="operations">
+                        <th colspan="8">
+                            <p class="position1 clearfix">
+                            	<input type="checkbox" id="all" class="checkall"/>
+                        		<label for="all">{$lang.checkall}</label>
+                            </p>
+                            <p class="position1 clearfix">
+                                <a href="javascript:void(0);" class="order_merge" uri="index.php? app=buyer_order&act=order_merge" name="order_id" ectype="batchbutton" target="_blank">{$lang.order_merge}</a>
+                            </p>
+                            <p class="position2 clearfix">
+                                {include file=member.page.top.html}
+                            </p>
+                        </th>
+                    </tr>
+                    <!--{/if}-->
+                <!--{foreach from=$orders item=order}-->
+                <tr class="sep-row"><td colspan="7"></td></tr>
+                <tr class="line-hd">
+                    	<th colspan="7">
+                        	<p>
+                            	<input type="checkbox" value="{$order.order_id}" class="checkitem" {if $order.status neq ORDER_PENDING} disabled="disabled" {/if}/>
+
+                            	<label>{$lang.order_sn}：</label>{$order.order_sn}
+                            	<label>{$lang.add_time}：</label>{$order.add_time|date:Y-m-d H:i:s}
+                                <a href="{url app=store&id=$order.seller_id}" target="_blank" style="margin-left:15px;">{$order.seller_name|escape}</a>
+                                <!--{if $order.seller_info.im_qq}-->
+								<a href="http://wpa.qq.com/msgrd?v=1&amp;uin={$order.seller_info.im_qq|escape}&amp;site={$store.store_name|escape}&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:{$order.seller_info.im_qq|escape}:5" alt="QQ" ></a>
+								<!--{elseif $order.seller_info.im_aliww}-->
+								<a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid={ $order.seller_info.im_aliww|escape:url}&site=cntaobao&s=1&charset={$charset}" ><img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid={ $order.seller_info.im_aliww|escape:url}&site=cntaobao&s=1&charset={$charset}" alt="Wang Wang" align="absmiddle" /></a>
+								<!--{elseif $order.seller_info.im_msn}-->
+								<a target="_blank" href="http://settings.messenger.live.com/Conversation/IMMe.aspx?invitee={$order.seller_info.im_msn|escape}"><img src="http://messenger.services.live.com/users/{$order.seller_info.im_msn|escape}/presenceimage/" alt="im_msn" align="absMiddle" /></a>
+								<!--{else}-->
+								<a target="_blank" href="{url app=message&act=send&to_id=$order.buyer_id}" class="email"></a>
+                            	<!--{/if}-->
+                            </p>
+                        </th>
+                    </tr>
+                    <!--{foreach from=$order.order_goods item=goods name=fe_goods}-->
+                    <tr class="line<!--{if $smarty.foreach.fe_goods.last}--> last_line<!--{/if}-->">
+                        <td valign="top" class="first clearfix">
+                        	<div class="pic-info fleft">
+                            	<a href="{url app=goods&id=$goods.goods_id}" target="_blank"><img src="{$goods.goods_image}" width="50" height="50" /></a>
+                            </div>
+                            <div class="txt-info fleft">
+                            	<div class="txt">
+                                	<a href="{url app=goods&id=$goods.goods_id}" target="_blank">{$goods.goods_name|truncate:70}</a>
+                                </div>
+                                <!--{if $goods.specification}--><p class="gray-color mt5">{$goods.specification}</p><!--{/if}-->
+                            </div>
+                            
+                        </td>
+                        <td class="align2">{$goods.price|price}</td>
+                        <td class="align2">{$goods.quantity}</td>
+                        <!--{if $smarty.foreach.fe_goods.first}-->
+                        <td valign="top" class="align2 bottom-blue" rowspan="{$order.goods_quantities}">
+                        	<div class="mt15"><!--{if $order.payment_name}-->{$order.payment_name|escape}<!--{/if}--></div>
+                         </td>
+                        <td valign="top" class="align2 bottom-blue" rowspan="{$order.goods_quantities}">
+                        	<div class="mt15"><b id="order{$order.order_id}_order_amount">{$order.order_amount|price}</b></div>
+                        </td>
+                       
+                        <td valign="top" width="100" class="align2 bottom-blue" rowspan="{$order.goods_quantities}">
+                           <div class="btn-order-status">
+                            	<p><span class="{if $order.status==0}gray-color{else}color4{/if}">{$order.status|modifier:order_status}</span></p>
+                                
+                                <!--//查看订单-->
+								<a href="{url app=buyer_order&act=view&order_id=$order.order_id}" target="_blank">{$lang.view_order}</a>
+                            
+								<a href="{url app=cashier&order_id=$order.order_id}" target="_blank" id="order{$order.order_id}_action_pay"{if $order.status neq ORDER_PENDING} style="display:none"{/if} class="btn-order-status-pay">{$lang.pay}</a>
+
+                                <!--//确认收货 只有已发货的订单可以确认收货-->
+                            	<a href="javascript:;" ectype="dialog" dialog_id="buyer_order_confirm_order" dialog_width="400" dialog_title="{$lang.confirm_order}" uri="index.php?app=buyer_order&amp;act=confirm_order&order_id={$order.order_id}&ajax"  id="order{$order.order_id}_action_confirm"{if $order.status neq ORDER_SHIPPED or $order.payment_code eq 'cod'} style="display:none"{/if} />{$lang.confirm_order}</a>
+                            
+                            	<!--//取消订单 不是取消和完成的订单就可以取消-->
+                           		<a href="javascript:;" ectype="dialog" dialog_width="400" dialog_title="{$lang.cancel_order}" dialog_id="buyer_order_cancel_order" uri="index.php?app=buyer_order&amp;act=cancel_order&order_id={$order.order_id}&ajax"  id="order{$order.order_id}_action_cancel"{if $order.status neq ORDER_PENDING and $order.status neq ORDER_SUBMITTED and $order.status neq ORDER_ACCEPTED} style="display:none"{/if} />{$lang.cancel_order}</a>
+                         	</div>
+                         </td>
+                         <td width="60" class="align2 bottom-blue last" valign="top" rowspan="{$order.goods_quantities}">
+                         	<!--{if $order.evaluation_status eq '1'}--><p class="gray-color">我已评价</p><!--{/if}-->
+                            <!--申请退货-->
+                             {if $order.status eq ORDER_SHIPPED}<a class="btn1" href="{url app=my_discus&act=add&order_id=$order.order_id}" target="_blank">{$lang.discus}</a>
+                            {/if}
+                         	<a class="btn1" href="{url app=buyer_order&act=evaluate&order_id=$order.order_id}" target="_blank" id="order{$order.order_id}_evaluate"{if $order.status neq ORDER_FINISHED or $order.evaluation_status neq 0} style="display:none"{/if}>{$lang.evaluate}</a>
+                         </td>
+                         <!--{/if}-->
+                    </tr>
+                    <!--{/foreach}-->
+                    <!--{foreachelse}-->
+                    <tr><td class="member_no_records" colspan="7">{$lang.no_records}</td></tr>
+                    <!--{/foreach}-->
+                    <!--{if $orders}-->
+                    <tr class="sep-row">
+                        <td colspan="7"></td>
+                    </tr>
+                    <tr class="operations">
+                        <th colspan="7">
+                        	<p class="position1 clearfix">
+                            	<input type="checkbox" id="all2" class="checkall"/>
+                        		<label for="all2">{$lang.checkall}</label>
+                            </p>
+
+                            <p class="position1 clearfix">
+                                <a href="javascript:void(0);" class="order_merge" uri="index.php? app=buyer_order&act=order_merge" name="order_id" ectype="batchbutton">{$lang.order_merge}</a>
+                            </p>
+                            <p class="position2 clearfix">
+                                {include file=member.page.bottom.html}
+                            </p>
+                        </th>
+                    </tr>
+                    <!--{/if}-->
+                </table>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<iframe id='iframe_post' name="iframe_post" src="about:blank" frameborder="0" width="0" height="0"></iframe>
+{include file=footer.html}

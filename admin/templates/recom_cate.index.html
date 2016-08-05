@@ -1,0 +1,87 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>{$lang.recom_cate}</p>
+    <ul class="subnav">
+        <li><!--{if $wait_verify}-->
+            <a class="btn1" href="index.php?app=recom_cate">{$lang.manage}</a>
+            <!--{else}--><span>{$lang.manage}</span>
+            <!--{/if}-->
+        </li>
+        <li>
+            <a class="btn1" href="index.php?app=recom_cate&amp;act=add">{$lang.add}</a>
+        </li>
+        <li>
+            <!--{if $wait_verify}--><span>{$lang.wait_verify}</span><!--{else}-->
+            <a class="btn1" href="index.php?app=recom_cate&amp;wait_verify=1">{$lang.wait_verify}</a>
+            <!--{/if}-->
+        </li>
+    </ul>
+</div>
+<div class="mrightTop">
+    <div class="fontl">
+        <form method="get">
+            <div class="left">
+                <input type="hidden" name="app" value="recom_cate" />
+                <input type="hidden" name="act" value="index" />
+                <input type="hidden" name="wait_verify" value="{$wait_verify}">
+                {$lang.name}:
+                <input class="queryInput" type="text" name="cate_name" value="{$query.cate_name|escape}" />
+                <input type="submit" class="formbtn" value="{$lang.query}" />
+            </div>
+            <!--{if $filtered}-->
+            <a class="left formbtn1" href="index.php?app=recom_cate&wait_verify={$wait_verify}">{$lang.cancel_query}</a>
+            <!--{/if}-->
+            <span></span>
+        </form>
+    </div>
+    <div class="fontr">
+        {if $rcate}{include file=page.top.html}{/if}
+    </div>
+</div>
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!--{if $rcate}-->
+        <tr class="tatr1">
+            <td class="table-center"><span ectype="order_by" fieldname="cate_name">{$lang.name}</span></td>
+            <td class="table-center"><span ectype="order_by" fieldname="text">{$lang.cate_text}</span></td>
+            <td align="left" style="width: 500px;">{$lang.cate_desc}</td>
+             <td class="table-center"><span ectype="order_by" fieldname="sort_order">{$lang.sort_order}</span></td>
+            <td class="table-center">{$lang.if_show}</td>
+            <td class="handler">{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$rcate item=recommends}-->
+        <tr class="tatr2">
+            <td class="table-center">{$recommends.cate_name|escape}
+            </td>
+            <td class="table-center">{$recommends.text|escape}
+            </td>
+            <td align="left">{$recommends.cate_desc}</td>
+            <td class="table-center">{$recommends.sort_order}</td>
+            <td class="table-center">
+                <!--{if $recommends.if_show eq 1}-->
+                <img src="templates/style/images/positive_enabled.gif" ectype="inline_edit" fieldname="if_show" fieldid="{$recommends.cate_id}" fieldvalue="1"/>
+                <!--{else}-->
+                <img src="templates/style/images/positive_disabled.gif" ectype="inline_edit" fieldname="if_show" fieldid="{$recommends.cate_id}" fieldvalue="0"/>
+                <!--{/if}-->
+            </td>
+            <td class="handler">
+            <a href="index.php?app=recom_cate&amp;act=edit&amp;cate_id={$recommends.cate_id}">{$lang.edit}</a>  |  <a name="drop" href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=recom_cate&amp;act=drop&amp;cate_id={$recommends.cate_id}');">{$lang.drop}</a>
+            </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="7">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <!--{if $rcate}-->
+    <div id="dataFuncs">
+        <div class="pageLinks">
+            {include file=page.bottom.html}
+        </div>
+    </div>
+    <!--{/if}-->
+    <div class="clear"></div>
+</div>
+{include file="footer.html"}

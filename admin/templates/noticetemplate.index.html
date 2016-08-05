@@ -1,0 +1,38 @@
+{include file="header.html"}
+<style>
+tr td.handler, th.handler { text-align: center; width: 180px; }
+</style>
+<div id="rightTop">
+    <p>{$lang.noticetemplate}</p>
+    <ul class="subnav">
+        <li>{if $type eq $notice_mail}<span>{$lang.mailtemplate}</span>{else}<a class="btn1" href="index.php?app=mailtemplate&amp;type={$notice_mail}">{$lang.mailtemplate}</a>{/if}</li>
+        <li>{if $type eq $notice_msg}<span>{$lang.msgtemplate}</span>{else}<a class="btn1" href="index.php?app=mailtemplate&amp;type={$notice_msg}">{$lang.msgtemplate}</a>{/if}</li>
+    </ul>
+</div>
+<div class="tdare info">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!--{if $noticetemplates}-->
+        <tr class="tatr1">
+            <td  class="firstCell" align="left">{$lang.description}</td>
+            <td class="handler">{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$noticetemplates key=code item=noticetemplate}-->
+        <tr class="tatr2">
+            <td class="firstCell" align="left">{$noticetemplate.description}</td>
+            <td class="handler">
+            <a href="index.php?app=mailtemplate&amp;act={if $type eq $notice_mail}mail{/if}{if $type eq $notice_msg}msg{/if}&amp;code={$code}&amp;type={$type}">{$lang.edit}</a>
+            </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="3">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+        <div id="dataFuncs">
+
+    </div>
+
+</div>
+{include file="footer.html"}

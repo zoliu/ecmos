@@ -1,0 +1,63 @@
+{include file=header.html}
+        <script type="text/javascript">
+        $(function(){
+            $('#post_form').submit(function(){
+                var _compatible = '{$compatible}';
+                if (_compatible != '1')
+                {
+                    alert('{$lang.incompatible}');
+
+                    return false;
+                }
+            });
+        });
+        </script>
+        {if $messages}
+        <ul class="messages">
+            {foreach from=$messages item=msg}
+            <li>{$msg}</li>
+            {/foreach}
+        </ul>
+        {/if}
+        <div class="main_table">
+            <h3>{$lang.check_env}</h3>
+            <table>
+                <tr>
+                    <th width="35%">{$lang.item_name}</th>
+                    <th width="35%">{$lang.required_env}</th>
+                    <th>{$lang.current_server}</th>
+                </tr>
+            {foreach from=$check_env.detail item=ev key=ek}
+                <tr>
+                    <td>{$lang.$ek}</td>
+                    <td>{$ev.required}</td>
+                    <td class="ico {$ev.result}">{$ev.current}</td>
+                </tr>
+            {/foreach}
+            </table>
+
+            <h3>{$lang.file_and_folder_priv}</h3>
+            <table>
+                <tr>
+                    <th width="35%">{$lang.file_and_folder}</th>
+                    <th width="35%">{$lang.required_priv}</th>
+                    <th>{$lang.current_priv}</th>
+                </tr>
+                {foreach from=$check_file.detail item=ev key=ek}
+                <tr>
+                    <td>{$ev.file}</td>
+                    <td class="ico">{$lang.writable}</td>
+                    <td class="ico {$ev.result}">{$ev.current}</td>
+                </tr>
+                {/foreach}
+            </table>
+        </div>
+        <div class="btn">
+            <input type="hidden" value="{$compatible}" name="compatible" />
+            <input class="button mr10" type="button" value="{$lang.prev}" onclick="window.history.go(-1);" />
+            <input type="submit" class="button{if !$compatible} mr10{/if}" id="submit_button" value="{$lang.next}" />
+            {if !$compatible}
+            <input type="button" class="button" value="{$lang.recheck}" onclick="window.location.reload();" />
+            {/if}
+        </div>
+{include file=footer.html}

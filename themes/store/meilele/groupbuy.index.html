@@ -1,0 +1,252 @@
+{include file=header.html}
+{include file=top.html}
+<style>
+.inverse_proportion { float: left; width: 100px; height: 16px; overflow: hidden; background: url({res file=images/inverse_proportion.gif}) no-repeat -{$group.left_per}px center; }
+.error { display: block; }
+</style>
+
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    $('#join').click(function(){
+        var qty = 0;
+        var error = false;
+        var max_per_user = {$group.max_per_user};
+        $('input[ectype="quantity"]').each(function(){
+            if(parseInt($(this).val()) > 0 ){
+                qty += parseInt($(this).val());
+            }
+            if($(this).val() !='' && (parseInt($(this).val()) < 0 || isNaN(parseInt($(this).val()))))
+            {
+                error = true;
+            }
+        });
+        if('{$group.ican.login}'){
+        //if(!'{$visitor.user_id}'){
+           alert('{$lang.need_login}');
+           window.location.href = SITE_URL + '/index.php?app=member&act=login&ret_url=' + encodeURIComponent('index.php?app=groupbuy&id={$group.group_id}');
+        }else if(error == true){
+           alert('{$lang.invalid_quantity}');
+        }else if(qty == 0){
+           alert('{$lang.fill_quantity}');
+        }else if(max_per_user > 0 && qty > max_per_user){
+           alert('{sprintf lang=error_max_per_user var1=group.max_per_user}');
+        }else{
+            $('#info').show();
+            $('input[name="link_man"]').focus();
+            $('input[ectype="quantity"]').attr('disabled',true);
+        }
+    });
+    $('#close').click(function(){
+        $('#info').hide();
+        $('input[ectype="quantity"]').attr('disabled',false);
+    });
+    $('#join_group_form').submit(function(){
+        $('input[ectype="quantity"]').attr('disabled',false);
+    });
+
+    $('input[name="exit"]').click(function(){
+        if(!confirm('{$lang.confirm_exit}')){
+            return false;
+        }
+    });
+
+    $('#join_group_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        onkeyup : false,
+        rules : {
+            link_man : {
+                required   : true
+            },
+            tel :{
+                checkTel : true
+            }
+        },
+        messages : {
+            link_man  : {
+                required   : '{$lang.fill_join_user_info}'
+            },
+            tel: {
+                checkTel   : '{$lang.fill_join_user_info}'
+            }
+        }
+    });
+});
+
+//]]>
+</script>
+<div id="content">
+    <div id="left">
+        {include file=left.html}
+    </div>
+
+    <div id="right">
+        
+        <h2 class="ware_title">
+            <span class="main">{$group.group_name|escape}</span><br />
+            <span class="time">{$group.state_desc}</span></h2>
+
+        <div class="ware_info">
+            <div class="ware_pic"><a target="_blank" href="{url app=goods&id=$group.goods_id}"><img src="{$goods.default_image}" /></a></div>
+            <form method="post" id="join_group_form" action="index.php?app=groupbuy&amp;id={$group.group_id}">
+            <div class="ware_text">
+                <div class="info_particular">
+                    <ul>
+                        <li>
+                            <p class="title">{$lang.start_end_time}: </p>
+                            <p class="con">{$group.start_time|date:Y-m-d} {$lang.to} {$group.end_time|date:Y-m-d}</p>
+                        </li>
+                        <li>
+                            <p class="title">{$lang.min_quantity}: </p>
+                            <p class="con">
+                                <span class="quantity">{$group.min_quantity} <span class="ascertain">
+                                {if $group.min_quantity gt $group.quantity}
+                                ({$lang.short_of}{$group.left_quantity})
+                                {else}
+                                ({$lang.joined}{$group.quantity})
+                                {/if}
+                                </span></span>
+                                <span class="inverse_proportion"></span>
+                            </p>
+                        </li>
+                        <!-- {if $group.max_per_user gt 0} -->
+                        <li>
+                            <p class="title">{$lang.max_per_user}: </p>
+                            <p class="con">
+                            {$group.max_per_user}
+                            </p>
+                        </li>
+                        <!-- {/if} -->
+                        <li>
+                            <p class="title">{$lang.group_desc}: </p>
+                            <p class="con">
+                            <!-- {if $group.group_desc} -->
+                            {$group.group_desc}
+                            <!-- {else} -->
+                            {$lang.no_desc}
+                            <!-- {/if} -->
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="info_explain">{$lang.goods_name}: <a target="_blank" href="{url app=goods&id=$goods.goods_id}">{$goods.goods_name}</a></div>
+                <div class="info_table">
+                    <table>
+                        <tr>
+                            <th>{$goods.spec_name|escape}</th>
+                            <th>{$lang.original_price}</th>
+                            <th>{$lang.group_price}</th>
+                            <!-- {if $group.ican.join or $group.ican.join_info} -->
+                            <th>{$lang.buy_quantity}</th>
+                            <!-- {/if} -->
+                        </tr>
+                        
+                        <!-- {foreach from=$goods._specs item=spec} -->
+                        <tr>
+                            <td>{$spec.spec}<input ectype="spec" name="spec[]" type="hidden" class="text" value="{$spec.spec}" /><input ectype="spec_id" name="spec_id[]" type="hidden" class="text" value="{$spec.spec_id}" /></td>
+                            <td>{$spec.price|price}</td>
+                            <td>{$spec.group_price|price}</td>
+                            <!-- {if $group.ican.join or $group.ican.join_info} -->
+                            <td>
+                            <!-- {if $group.ican.join} --><input ectype='quantity' name="quantity[]" type="text" class="text" /><!-- {/if} -->
+                            <!-- {if $group.ican.join_info} -->{$spec.my_qty}<!-- {/if} -->
+                            </td>
+                            <!-- {/if} -->
+                        </tr>
+                        <!-- {/foreach} -->
+                    </table>
+                </div>
+                <div class="info_fun">
+
+
+                <div class="align">
+                        <!-- {if $group.ican.join_info} -->
+                        <span class="txt">{$lang.joined_this_groupbuy}</span>
+                        <!-- {/if} -->
+                        <!-- {if $group.ican.exit} -->
+                        <input name="exit" class="btn" type="submit" value="{$lang.exit_groupbuy}" />
+                        <!-- {/if} -->
+                        <!-- {if $group.ican.buy} -->
+                        <input name="buy" class="btn" onclick="window.location.href='index.php?app=order&goods=groupbuy&group_id={$smarty.get.id}'" type="button" value="{$lang.buy}" />
+                        <!-- {/if} -->
+                </div>
+                <!-- {if $group.ican.join} -->
+                    <div class="align">
+                        <input id="join" class="big_btn" type="button" value="" />
+                    </div>
+                    <div id="info" class="ware_cen_info_fun" style="display:none">
+                        <div class="ware_center_info_fun">
+                            <h1>
+                                <span class="dialog_title">{$lang.join_user_info}</span>
+                                <span class="close_link" title="{$lang.close}" id="close" onmouseover="this.className = 'close_hover'" onmouseout="this.className = 'close_link'"></span>                            </h1>
+                            <div class="ware_cen_btn">
+
+                                <p class="float_layer_text">{$lang.join_tips}</p>
+                                <ul class="fill_in_fun">
+                                    <li>
+                                        <p class="title">{$lang.real_name}: </p>
+                                        <p><input name="link_man" type="text" class="text" /></p>
+                                    </li>
+                                    <li>
+                                        <p class="title">{$lang.tel}: </p>
+                                        <p><input name="tel" type="text" class="text" /></p>
+                                    </li>
+                                    <li class="btn_fun"><input name="join" type="submit" value="{$lang.join_groupbuy}" /></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ware_cen_bottom_info_fun"></div>
+                    </div>
+                    <!-- {/if}  -->
+                </div>
+            </div>
+            </form>
+            <div class="clear"></div>
+
+        </div>
+
+        <div class="module_special">
+            <h2 class="common_title veins2">
+                <div class="ornament1"></div>
+                <div class="ornament2"></div>
+                <span class="ico1"><span class="ico2">{$lang.group_log}</span></span>
+            </h2>
+            <div class="wrap">
+                <div class="wrap_child">
+                    <ul class="buy_name">
+                        <!-- {foreach from=$join_list item=user} -->
+                        <li>{$user.user_name}</li>
+                        <!-- {foreachelse} -->
+                        <li>{$lang.no_groupbuy_log}</li>
+                        <!-- {/foreach} -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="module_currency">
+            <h2 class="common_title veins1">
+                <div class="ornament1"></div>
+                <div class="ornament2"></div>
+                <span class="ico1"><span class="ico2">{$lang.groupbuy_qa}</span></span>
+            </h2>
+            
+            <div class="wrap">
+                <div class="wrap_child">
+                    {include file=qa.html}
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="clear"></div>
+</div>
+
+{include file=footer.html}

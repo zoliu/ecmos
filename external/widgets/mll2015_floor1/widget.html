@@ -1,0 +1,48 @@
+<div class="mll2015_floor1 w clearfix">
+    <div class="mt w">
+        <h3>{$widget_data.model_name}</h3>
+        <span class="sub_title">{$widget_data.sub_title}</span>
+        <span class="keywords">
+            <!--{foreach from=$widget_data.keywords item=k}-->
+            <a href="{url app=search&keyword=$k|escape:url}" target="_blank">{$k}&nbsp;&nbsp;></a>
+            <!--{/foreach}-->
+        </span>
+    </div>
+    <div class="mc w">
+        <ul>
+            <li class="list1">
+                <a href="{$widget_data.ad1_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad1_image_url}" width="210" height="443">
+                </a>
+            </li>
+            <li class="list2 t">
+                <a href="{$widget_data.ad2_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad2_image_url}" width="252" height="220">
+                </a>
+                <a href="{$widget_data.ad3_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad3_image_url}" width="252" height="220">
+                </a>
+                <a href="{$widget_data.ad4_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad4_image_url}" width="252" height="220">
+                </a>
+                <a href="{$widget_data.ad5_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad5_image_url}" width="252" height="220">
+                </a>
+            </li>
+            <li class="list2 b">
+                <a href="{$widget_data.ad6_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad6_image_url}" width="252" height="220">
+                </a>
+                <a href="{$widget_data.ad7_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad7_image_url}" width="252" height="220">
+                </a>
+                <a href="{$widget_data.ad8_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad8_image_url}" width="252" height="220">
+                </a>
+                <a href="{$widget_data.ad9_link_url}" target="_blank">
+                    <img class="lazyload" initial-url="{$widget_data.ad9_image_url}" width="252" height="220">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

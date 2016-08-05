@@ -1,0 +1,34 @@
+<div class="eject_con">
+    <div id="warning"></div>
+    <div class="edit_table">
+        <p>{$lang.group_name}: {$group.group_name|escape}</p>
+        <form action="index.php?app=my_goods&amp;act=spec_edit&amp;id={$goods.goods_id}" method="POST" target="iframe_post">
+        <div class="edit_table_box">
+            <table>
+                <tr>
+                    <th class="width2">{$lang.user_name}</th>
+                    <th class="width2">{$lang.lankman}</th>
+                    <th class="width2">{$lang.tel}</th>
+                    <th>{$goods.spec_name}: {$lang.quantity}</th>
+                </tr>
+                <!--{foreach from=$join_list item=user}-->
+                <tr>
+                    <th class="width2">{$user.user_name|escape}</th>
+                    <th class="width2">{$user.linkman|escape}</th>
+                    <th class="width2">{$user.tel}</th>
+                    <td class="align2">
+                    {foreach from=$user.spec_quantity item=spec}
+                    {if $spec.spec}{$spec.spec|escape}{else}{$lang.default_spec}{/if}: {$spec.qty}<br />
+                    {/foreach}
+                    </td>
+                </tr>
+                <!--{foreachelse}-->
+                <tr>
+                    <th colspan="4">{$lang.no_log}</th>
+                </tr>
+                <!--{/foreach}-->
+            </table>
+        </div>
+        </form>
+    </div>
+</div>

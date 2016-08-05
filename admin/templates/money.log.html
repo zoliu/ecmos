@@ -1,0 +1,121 @@
+<!-- www.360cd.cn  Mosquito -->
+
+{include file="header.html"}
+
+<script type="text/javascript">
+
+$(function() {
+    
+    $('#start_time').datepicker({
+        dateFormat : 'yy-mm-dd'
+    });
+
+    $('#end_time').datepicker({
+        dateFormat : 'yy-mm-dd'
+    });
+
+});
+</script>
+
+<div id="rightTop">
+    <p>钱包中心</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="{url app=money}">管理</a></li>
+        <li><span>记录</span></li>
+    </ul>
+</div>
+
+<div class="mrightTop">
+	<div class="fontl">
+		<form method="get">
+			<div class="left">
+				<input type="hidden" name="app" value="money" />
+				<input type="hidden" name="act" value="log" />
+				
+                <span>用户名：</span>
+                <input type="text" name="user_name" value="{$query.user_name}" style="width: 6em;" />
+                
+				<span>日期：</span>
+                <input type="text" name="start_time" id="start_time" value="{$query.start_time}" style="width: 6em;" />
+                <span>-</span>
+                <input type="text" name="end_time" id="end_time" value="{$query.end_time}" style="width: 6em;" />
+                
+                <span>类型：</span>
+                <select class="querySelect" name="type">
+                    <option value="">请选择</option>
+                    {html_options options=$money_log_type_options selected=$query.type}
+                </select>
+                
+				<span>状态：</span>
+				<select class="querySelect" name="status">
+					<option value="">请选择</option>
+					{html_options options=$money_log_status_options selected=$query.status}
+				</select>
+				
+				<input type="submit" class="formbtn" value="{$lang.query}" />
+			</div>
+			{if $filter}
+			<a class="left formbtn1" href="{url app=money&act=log}">{$lang.cancel_query}</a>
+			{/if}
+		</form>
+	</div>
+	<div class="fontr">{include file=page.top.html}</div>
+</div>
+
+
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        {if $money_log_list}
+        <tr class="tatr1">
+            <td width="20" class="firstCell">
+                <input type="checkbox" class="checkall" />
+            </td>
+            <td>用户名</td>
+            <td>交易对方</td>
+            <td>资金</td>
+            <td>状态</td>
+            <td>类型</td>
+            <td>创建时间</td>
+            <td>操作</td>
+        </tr>
+        {/if}
+        {foreach from=$money_log_list item=data}
+        <tr class="tatr2">
+            <td class="firstCell">
+                <input type="checkbox" class="checkitem" value="{$data.id}" />
+            </td>
+            <td>{$data.user_name}</td>
+            <td>{$data.party_name}</td>
+            <td>{$flow_options[$data.flow]} {$data.money|price}</td>
+            <td>{$money_log_status_options[$data.status]}</td>
+            <td>{$money_log_type_options[$data.type]}</td>
+            <td style="width: 12em;">{$data.add_time|date:complete}</td>
+            <td style="width: 12em;">
+                <a href="{url app=money&act=log_view&id=$data.id}">查看</a>
+                {if $data.status eq $smarty.const.MONEY_L_S_AUDIT}
+                | <a href="{url app=money&act=audit&id=$data.id}">允许提现</a>
+                | <a href="{url app=money&act=audit&id=$data.id&type=no}">拒绝提现</a>
+                {/if}
+                | <a href="javascript:drop_confirm('{$lang.drop_confirm}', '{url app=money&act=log_drop&id=$data.id}');">删除</a> 
+            </td>
+        </tr>
+        {foreachelse}
+        <tr class="no_data">
+            <td colspan="10">{$lang.no_data}</td>
+        </tr>
+        {/foreach}
+    </table>
+    
+    {if $money_log_list}
+    <div id="dataFuncs">
+        <div id="batchAction" class="left paddingT15">
+            &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="{url app=money&act=log_drop}" presubmit="confirm('{$lang.drop_confirm}');" />
+        </div>
+        <div class="pageLinks">{include file=page.bottom.html}</div>
+        <div class="clear"></div>
+    </div>
+    {/if}
+</div>
+
+{include file="footer.html"}

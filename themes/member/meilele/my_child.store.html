@@ -1,0 +1,87 @@
+
+<!-- www.360cd.cn  Mosquito -->
+
+{include file=member.header.html}
+
+<script type="text/javascript">
+
+$(function() {
+    
+    $('#start_time').datepicker({
+        dateFormat : 'yy-mm-dd'
+    });
+
+    $('#end_time').datepicker({
+        dateFormat : 'yy-mm-dd'
+    });
+
+});
+</script>
+
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <div class="public table">
+                <div class="user_search">
+                    <form method="get">
+                        <input type="hidden" name="app" value="my_child" />
+                        <input type="hidden" name="act" value="store" />
+                
+                        <span>店铺名称：</span>
+                        <input class="queryInput" name="store_name" value="{$query.store_name}" type="text" />
+                        
+                        <span>联系电话：</span>
+                        <input class="queryInput" name="tel" value="{$query.tel}" type="text" />
+                        
+                        <input type="submit" class="btn" value="查询" />
+                    </form>
+                </div>
+
+                <table>
+                    {if $store_list}
+                    <tr class="line gray">
+                        <th style="width: 12em;">店铺名称</th>
+                        <th style="width: 12em;">店铺所属人</th>
+                        <th style="width: 12em;">联系电话</th>
+                        <th style="width: 12em;">开店时间</th>
+                        <th>店铺地址</th>
+                    </tr>
+                    {/if}
+
+                    {foreach from=$store_list item=data}
+                    <tr class="line_bold" align="center">
+                        <td>{$data.store_name}</td>
+                        <td>{$data.owner_name}</td>
+                        <td>{$data.tel}</td>
+                        <td>{$data.add_time|date}</td>
+                        <td>{$data.region_name}{$data.address}</td>
+                    </tr>
+                    {foreachelse}
+                    <tr>
+                        <td colspan="5" class="member_no_records padding6">没有符合条件的记录</td>
+                    </tr>
+                    {/foreach}
+                </table>
+
+                {include file="member.page.bottom.html"}
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<div class="clear"></div>
+
+<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
+
+{include file=footer.html}

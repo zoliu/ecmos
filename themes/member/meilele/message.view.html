@@ -1,0 +1,65 @@
+{include file=member.header.html}
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+{include file=member.submenu.html}
+        <div class="wrap">
+            <div class="public">
+                <div class="message message_line">
+                    <!--{if $box neq 'announcepm'}-->
+                    <h2>
+                        <span>&nbsp;</span>
+                        <a class="delete" href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=message&amp;act=drop_relate&amp;back={$box}&amp;msg_id={$message.msg_id}');">{$lang.drop}</a>    
+                    </h2>
+                    <!--{else}-->
+                    <h2 class="message_line"></h2>
+                    <!--{/if}-->
+                    <div class="message_con">
+                        <div class="user">
+                            <p><img src="{$message.portrait}" width="50" height="50" alt="" /></p>
+                            <h3><span>{$message.user_name|escape}</span><br />{$message.add_time|date:Y-m-d H:i}</h3>
+                        </div>
+                        <div class="txt">{$message.content|modifier:short_msg_filter}</div>
+                    </div>
+                    <!--{if $box eq 'privatepm'}-->
+                    <!--{foreach from=$replies item=reply}-->
+                    <div class="message_con">
+                        <div class="user">
+                            <p><img src="{$reply.portrait}" width="50" height="50" alt="" /></p>
+                            <h3><span>{$reply.user_name|escape}</span><br />{$reply.add_time|date:Y-m-d H:i}</h3>
+                        </div>
+                        <div class="txt">{$reply.content|modifier:short_msg_filter}</div>
+                    </div>
+                    <!--{/foreach}-->
+                    <!--{/if}-->
+                </div>
+                <!--{if $box eq 'privatepm'}-->
+                <div class="message">
+                    <h2><span><strong>{$lang.reply}</strong></span></h2>
+                    <dl>
+                        <form method="post" enctype="multipart/form-date">
+                        <dt>{$lang.content}: </dt>
+                        <dd>
+                            <p><textarea class="text" name="msg_content"></textarea></p>
+                            <div id="short_msg_desc" style="margin-left:0px; margin-bottom:10px;"><a href="javascript:;" id="msg_instrunction">{$lang.msg_instruction}</a>
+                                <div>{$lang.code_example}</div>
+                            </div>
+                            <p><input type="submit" class="btn" value="{$lang.submit}" /></p>
+                        </dd>
+                        </form>
+                    </dl>
+               </div>
+              <!--{/if}-->
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

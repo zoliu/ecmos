@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        {$page_seo}
+        <link type="text/css" rel="stylesheet" href="{res file=css/index.css}">
+            <link href="{res file=css/common.css}" rel="stylesheet" type="text/css" />
+            <script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+            <script type="text/javascript" src="{res file=js/jquery.flexslider.js}"></script>
+            <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+            <script type="text/javascript" src="{res file=js/iscroll.js}"></script>
+            <script type="text/javascript">
+        var SITE_URL = "{$site_url}";
+        var REAL_SITE_URL = "{$real_site_url}";
+        var PRICE_FORMAT = '{$price_format}';
+        </script>
+    
+
+</head>
+    <body>
+        {include file=header.html}
+        <div class="paixu">
+            <span class="red_btn">排序</span>
+          <a href="{url app=store&act=search&id=$store.store_id&keyword=$keyword&cate_id=$cate_id&order=sales-desc}" class='white_btn {if "sales-desc" eq $smarty.get.order}cur{/if}'>销量<i></i></a>
+            <a href="{url app=store&act=search&id=$store.store_id&keyword=$keyword&cate_id=$cate_id&order=add_time-desc}" class="white_btn <!--{if $smarty.get.order eq 'add_time-desc'}-->cur<!--{/if}-->">新品<i></i></a>
+            <a href="{url app=store&act=search&id=$store.store_id&keyword=$keyword&cate_id=$cate_id&order=price-desc}" class="white_btn <!--{if $smarty.get.order eq 'price-desc'}-->cur<!--{/if}-->">价格<i></i></a>
+            <a href="{url app=store&act=search&id=$store.store_id&keyword=$keyword&cate_id=$cate_id&order=views-desc}" class="white_btn <!--{if $smarty.get.order eq 'views-desc'}-->cur<!--{/if}-->">人气<i></i></a>
+        </div>
+        <!-----列表-->
+        <div class="lists lists1">
+            <ul>
+                <!--{if $searched_goods}-->
+                <!--{foreach from=$searched_goods item=sgoods}-->
+                <a href="{url app=goods&id=$sgoods.goods_id}">
+                    <li>
+                        <img src="{$sgoods.default_image}" />
+                        <p>{$sgoods.goods_name|escape}</p>
+                        <span>{$sgoods.price|price}</span>
+                    </li>
+                </a>
+                <!--{/foreach}-->
+                <!--{else}-->
+                {$lang.no_records}
+                <!--{/if}-->
+            </ul>
+        </div>
+
+        <!--------翻页-------------->
+        <div class="page">
+            {include file=page.bottom.html}
+        </div>
+        {include file=footer.html}
+    </body>
+</html>

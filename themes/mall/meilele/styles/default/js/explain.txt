@@ -1,0 +1,7 @@
+jquery.js   引用的 js 框架
+
+ad_cycle.js 首页轮换广告牌效果
+
+select.js   首页仿 select 的下拉菜单
+
+nav.js      导航效果

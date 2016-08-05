@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" name="viewport">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        {$page_seo}
+        <link type="text/css" rel="stylesheet" href="{res file=css/index.css}" />
+        <link type="text/css" rel="stylesheet" href="{res file=css/flexslider.css}" />
+        <script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+        <script type="text/javascript" src="{res file=js/jquery.flexslider.js}"></script>
+        <script type="text/javascript" src="{res file=js/iscroll.js}"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        <script type="text/javascript">
+        var SITE_URL = "{$site_url}";
+        var REAL_SITE_URL = "{$real_site_url}";
+        var PRICE_FORMAT = '{$price_format}';
+        </script>
+    </head>
+
+    <body>
+        <script>
+            $(window).load(function() {
+                $('.flexslider').flexslider({
+                    animation: "slide"
+                });
+            });
+        </script>
+        <div class="auto">
+            {include file=header.html}
+            <!---轮播开始------>
+            <!--{if $files_belong_store}-->
+            <section class="slider">
+                <div class="flexslider">
+                    <ul class="slides">
+                        <!--{foreach from=$files_belong_store item=file}-->
+                        <li>
+                            <img src="{$file.file_path}"/>
+                        </li>
+                        <!--{/foreach}-->
+                    </ul>
+                </div>
+            </section>
+            <!--{/if}-->
+            <!-------轮播结束------------>
+
+            <!-----主分类-->
+            <div class="main_sort">
+                <ul>
+                    <li> 
+                        <a href="{url app=store&act=search&id=$store.store_id&order=add_time desc}">
+                            <img src="<!--{if $store.store_new_images}-->{$store.store_new_images} <!--{else}-->{res file=images/sort_icon1.png}<!--{/if}--> " />
+                        </a> 
+                    </li>
+
+                    <li>
+                        <a href="{url app=store&act=search&id=$store.store_id&recommended=1}">
+                            <img src="<!--{if $store.store_recommend_images}-->{$store.store_recommend_images} <!--{else}-->{res file=images/sort_icon2.png}<!--{/if}-->" />
+                        </a></li>
+                    <li>
+                        <a href="{url app=store&act=search&id=$store.store_id&order=views desc}">     	
+                            <img src="<!--{if $store.store_hot_images}-->{$store.store_hot_images} <!--{else}-->{res file=images/sort_icon3.png}<!--{/if}-->" />              
+                        </a>
+                    </li>
+                    <!--{foreach from=$store.store_gcates_image item=gcategory}-->
+                    <li><a href="{url app=store&id=$store.store_id&act=search&cate_id=$gcategory.cate_id}">
+
+                            <img  src=" <!--{if $gcategory.cate_images}-->{$gcategory.cate_images}<!--{else}-->{res file=images/sort_icon3.png}<!--{/if}-->" />
+                        </a> </li>
+                    <!--{/foreach}-->
+                </ul>
+            </div>
+            <div class="border_line"></div>
+
+            <!----栏目------------->
+            <!--{if $recommended_goods}-->
+            <div class="blocks">
+                <h2>橱窗推荐</h2>
+                <ul>	
+                    <!--{foreach from=$recommended_goods item=rgoods}-->
+                    <li><a href="{url app=goods&id=$rgoods.goods_id}">
+                            <img src="{$rgoods.default_image}"></a>
+                    </li>
+                    <!-- {/foreach} -->
+
+                </ul>
+            </div>
+            <div class="border_line"></div>
+            <!--{/if}-->
+
+            <!--{if $new_goods}-->
+            <div class="blocks">
+                <h2>新品上市</h2>
+                <ul>
+                    <!--{foreach from=$new_goods item=ngoods}-->
+                    <li><a href="{url app=goods&id=$ngoods.goods_id}"><img src="{$ngoods.default_image}"></a></li>
+                    <!--{/foreach}-->
+                </ul>
+            </div>
+            <!--{/if}-->
+        </div>
+        {include file=footer.html}
+    </body>
+</html>

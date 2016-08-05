@@ -1,0 +1,179 @@
+{include file="header.html"}
+<link href="{res file=css/login.css}" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+//注册表单验证
+$(function(){
+    $('#register_form').validate({
+        errorPlacement: function(error, element){
+            var error_td = element.parent('em');
+            error_td.find('.field_notice').hide();
+            error_td.append(error);
+        },
+        success       : function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        onkeyup: false,
+        rules : {
+            user_name : {
+                required : true,
+                byteRange: [3,15,'{$charset}'],
+                remote   : {
+                    url :'index.php?app=member&act=check_user&ajax=1',
+                    type:'get',
+                    data:{
+                        user_name : function(){
+                            return $('#user_name').val();
+                        }
+                    },
+                    beforeSend:function(){
+                        var _checking = $('#checking_user');
+                        _checking.prev('.field_notice').hide();
+                        _checking.next('label').hide();
+                        $(_checking).show();
+                    },
+                    complete :function(){
+                        $('#checking_user').hide();
+                    }
+                }
+            },
+            password : {
+                required : true,
+                minlength: 6
+            },
+            password_confirm : {
+                required : true,
+                equalTo  : '#password'
+            },
+            email : {
+                required : true,
+                email    : true
+            },
+            captcha : {
+                required : true,
+                remote   : {
+                    url : 'index.php?app=captcha&act=check_captcha',
+                    type: 'get',
+                    data:{
+                        captcha : function(){
+                            return $('#captcha1').val();
+                        }
+                    }
+                }
+            },
+            agree : {
+                required : true
+            }
+        },
+        messages : {
+            user_name : {
+                required : '{$lang.user_name_required}',
+                byteRange: '{$lang.user_name_limit}',
+                remote   : '{$lang.user_already_taken}'
+            },
+            password  : {
+                required : '{$lang.password_required}',
+                minlength: '{$lang.password_length_limit}'
+            },
+            password_confirm : {
+                required : '{$lang.password_confirm_please}',
+                equalTo  : '{$lang.password_inconsistent}'
+            },
+            email : {
+                required : '{$lang.email_required}',
+                email    : '{$lang.email_invalid}'
+            },
+            captcha : {
+                required : '{$lang.captcha_required}',
+                remote   : '{$lang.captcha_error}'
+            },
+            agree : {
+                required : '{$lang.agree_required}'
+            }
+        }
+    });
+});
+</script>
+<div class="loginbg" style="height: 600px;">
+    <div class="loginptb">
+        <div class="logleft">
+            <form name="" id="register_form" method="post" action="">
+                <div class="login">
+                    <h1>{$lang.enter_register_info}</h1>
+                    <ul>
+                        <li><u>{$lang.user_name}:</u>
+                            <em><input type="text" id="user_name" name="user_name" placeholder="{$lang.user_name_desc}" />
+                                <label class="field_notice"></label>
+                                <label id="checking_user" class="checking"></label>
+                            </em>
+                        </li>
+                        <li>
+                            <u>{$lang.password}:</u>
+                            <em><input type="password" id="password" name="password" placeholder="{$lang.password_desc}" />
+                                <label class="field_notice"></label>
+                            </em>
+                        </li>
+                        <li>
+                            <u>{$lang.password_confirm}:</u>
+                            <em><input type="password" name="password_confirm" placeholder="{$lang.password_confirm_desc}" />
+                                <label class="field_notice"></label>
+                            </em>
+                        </li>
+                        <li>
+                            <u>{$lang.email}:</u>
+                            <em><input type="text" name="email" placeholder="{$lang.email_desc}" />
+                                <label class="field_notice"></label>
+                            </em>
+                        </li>
+                        <li>
+                            <u>直接上级:</u>
+                            <em>
+                                <input type="text" name="parent_name" value="{$parent_name}" placeholder="推荐你注册的用户名" />
+                            </em>
+                        </li>
+                        <!--{if $captcha}-->
+                        <li>
+                            <u>{$lang.captcha}:</u>
+                            <em>
+                                <input type="text" name="captcha" id="captcha1" placeholder="{$lang.captcha_desc}" />
+                                <a href="javascript:change_captcha($('#captcha'));"><img id="captcha" src="index.php?app=captcha&amp;{$random_number}" /></a>
+                                <label class="field_notice"></label>
+                            </em>
+                        </li>
+                        <!--{/if}-->
+                        <li>
+                            <b>
+                            <i><input id="clause" type="checkbox" name="agree" value="1" /> <label for="clause">{$lang.i_have_read} <a href="{url app=article&act=system&code=eula}" target="_blank" class="agreement">{$lang.mall_eula}</a></label></i></b>
+                        </li>
+
+                        <li class="logintip">
+                            <span class="valid_success"></span>
+                            <font></font>
+                        </li>   
+                        <li>
+                            <u></u>
+                            <ol colspan="2"><input type="submit" name="Submit" value="{$lang.register_now}" class="Submit" title="{$lang.register_now}" /></ol><input type="hidden" name="ret_url" value="{$ret_url}" />
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="logright">
+            <a href="#">
+                <img src="data/files/mall/template/201309050141133314.jpg" />
+            </a>
+            <div class="login" style="border-right: 0;margin-bottom: 10px;">
+                <ol class="a2">
+                    <div class="nologin" >{$lang.already_have_account}</div>
+                    <div class="register"><div class="registera">
+                        <a href="{url app=member&act=login&ret_url=$ret_url}">{$lang.user_login}</a></div>
+                    </div>&nbsp;
+                    {$lang.user_or}
+                    <a href="{url app=find_password}" class="clew">{$lang.find_password}</a>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="footer.html"}

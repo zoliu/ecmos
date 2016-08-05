@@ -1,0 +1,99 @@
+{include file="header.html"}
+<script type="text/javascript">
+function selectAll(param)
+{
+    
+    var obj = document.getElementById(param).getElementsByTagName('input');
+    var obj1 = document.getElementById('h'+param);
+    for (i = 0; i < obj.length; i++ )
+    {
+      obj[i].checked = obj1.checked;
+    }
+}
+$(function(){
+    $('#article_relate').click(function(){
+        $('.relate').attr('checked', $(this).attr('checked'));
+    });
+});
+</script>
+<div id="rightTop">
+  <p>{$lang.admin}</p>
+  <ul class="subnav">
+    <li><a class="btn1" href="index.php?app=admin">{$lang.manage}</a></li>
+    <!--{if $act eq edit}-->
+    <li><a class="btn1" href="index.php?app=admin&amp;act=add">{$lang.add}</a></li>
+    <!-- {else} -->
+    <li><span>{$lang.add}</span></li>
+    <!--{/if}-->
+  </ul>
+</div>
+
+<div class="mrightTop">
+  <div class="fontr">{include file=page.top.html}</div>
+</div>
+<div class="info">
+  <form method="post" enctype="multipart/form-data" id="admin_form">
+    <table class="infoTable">
+      <tr>
+        <th class="paddingT15"> {$lang.user_name}:</th><input type="hidden" name="priv" value="priv">
+        <td class="paddingT15 wordSpacing5">{$admin.user_name|escape}</td>
+      </tr>
+       <!--{foreach from=$priv item=priv1 key=key name=privs1}-->
+           <tr id="{$key}">
+           <!--{if $smarty.foreach.privs1.index eq 0}-->
+           <th class="paddingT15">{$lang.priv}</th>
+           <!--{else}-->
+           <th></th>
+           <!--{/if}-->
+           <td class="paddingT15 floatleft wordSpacing5" >
+           <input type="checkbox" onclick="selectAll('{$key}')" id="h{$key}"><b>{$lang.$key}</b></td>
+           <!--{foreach from=$priv1 item=priv11 key=key1}-->
+            <td class="paddingT15 floatleft">
+            <!--{ if $key1 eq 'article'}-->
+            <label><input type="checkbox" value="{$priv11.article}" id="article_relate" name="priv[{$key1}]"
+            <!--{foreach from=$checked_priv item=check_priv }-->
+                <!-- {if $check_priv == $priv11.article} -->
+                checked
+                <!-- {/if} --> 
+             <!--{/foreach}-->
+            >{$lang.$key1}
+            </label>
+            <div style="display:none;">
+            <!--{foreach from=$priv11.upload item=priv111 key=key11}-->
+            <label><input type="checkbox" value="{$priv111}" class="relate" name="priv[{$key11}]"
+            <!--{foreach from=$checked_priv item=check_priv }-->
+                <!-- {if $check_priv == $priv11.article} -->
+                checked
+                <!-- {/if} --> 
+             <!--{/foreach}-->
+            >
+            </label>
+            <!--{/foreach}-->
+            </div>
+            <!--{else}-->
+            <label><input type="checkbox" value="{$priv11}" name="priv[{$key1}]"
+            <!--{foreach from=$checked_priv item=check_priv }-->
+                <!-- {if $check_priv == $priv11} -->
+                checked
+                <!-- {/if} --> 
+             <!--{/foreach}-->
+            >{$lang.$key1}
+            </label>
+            <!--{/if}-->    
+            </td>
+        <!--{/foreach}-->
+           </tr>
+        <!--{foreachelse}-->
+            <tr class="no_data">
+            <td colspan="10">{$lang.no_data}</td>
+            </tr>
+        <!--{/foreach}-->
+      <tr>
+        <th></th>
+        <td class="ptb20"><input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+          <input class="formbtn" type="reset" name="Reset" value="{$lang.reset}" />        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+{include file="footer.html"} 

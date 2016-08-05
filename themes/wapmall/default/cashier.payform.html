@@ -1,0 +1,68 @@
+<!--{if $payform.online}-->
+  <h3>{$lang.connecting_pay_gateway}</h3>
+  <form action="{$payform.gateway}" id="payform" method="{$payform.method}" style="display:none">
+  <!-- {foreach from=$payform.params item=value key=_k} -->
+    <input type="hidden" name="{$_k}" value="{$value}" />
+  <!-- {/foreach} -->
+  </form>
+  <script type="text/javascript">
+      document.getElementById('payform').submit();
+  </script>
+{else}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{$page_seo}
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset={$charset}" />
+<meta http-equiv="Content-Type" content="text/html; charset={$charset}" />
+<link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+<style>
+.w_info{ background:#f3f3f3; padding:15px 10px; border-bottom:#eee solid 1px; margin-top:50px;}
+.w_info h2{ padding-bottom:5px;}
+.w_tit{color:#555; font-weight:bold; padding:0 10px; font-size:16px;}
+.w_tit i{color:#777; font-weight:normal;font-size:14px; font-style:normal; margin-left:5px;}
+.w_info span{ display:block; border-top:#ddd solid 1px;padding-top:5px;}
+.w_sbtn{ width:100%; padding:10px 0;}
+.info_table textarea{ border:#bbb solid 1px; width:100%;}
+.info_table td{padding:5px 10px;}
+</style>
+<div class="w_info">
+       <div class="fixed">
+        <!---头部------>
+        <div class="header header2">
+			<a href="{url app=buyer_order&act=index}" class="back2_pre"></a>
+            线下支付
+        </div>  
+    </div>
+    <h2>{$lang.payment_desc}</h2>
+    <span>  {$payform.desc}</span>
+      <!--{if $payment.bank_images}-->
+    <img src="{$payment.bank_images}" style="width:100%; height:120px; margin-top:5px;">
+    <!--{/if}-->
+</div>
+
+  <form class="info_table" id="pay_message_form" action="index.php?app=cashier&act=offline_pay&order_id={$order.order_id}" method="POST">
+  <table width="100%" border="0">
+    <tr>
+      <td class="w_tit">{$lang.input_pay_message}<i>({$lang.input_pay_message_notice}）</i></td>
+    </tr>
+    <tr>
+      <td><textarea name="pay_message" style=" height:100px;">{$order.pay_message|escape}</textarea></td>
+    </tr>
+    <tr>	
+      <td><input type="submit"  value="提交" class="red_btn w_sbtn"/></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>
+
+<!--{/if}-->

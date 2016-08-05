@@ -1,0 +1,93 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{$page_seo}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+
+<link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+<link href="{res file=css/sp_cart.css}" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+<script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{lib file=cart.js}" charset="utf-8"></script>
+
+<style type="text/css">
+    .fs14{font:12px/1.5 \5b8b\4f53,Tahoma, Arial,sans-serif; font-family:"微软雅黑";}
+    .count {width:100%; overflow:hidden;}
+    .count .btn{ display:block; width:100%; float:left; text-align:center; background:#fff; padding:10px 0; border-top:#ddd solid 1px;}
+    .count strong{ color:#b20005;}
+    .count .jie{ background:#b20005; color:#fff;border: 0;}
+    .count {width:100%; overflow:hidden;}
+.count a{ display:block; width:100%; float:left; text-align:right; background:#fff; padding:10px 0; border-top:#ddd solid 1px;}
+.count strong{ color:#b20005;margin-right: 20px;}
+</style>
+</head>
+<body class="gray">
+
+    <div class="fixed">
+        <!---头部------>
+        <div class="header header2">
+			<a href="javascript:history.go(-1);" class="back2_pre"></a>
+            购物车
+            <a href="{url app=my_favorite}" class="bookmark"></a>
+            <!--<div class="oprate">
+              <a href="javascript:;" class="white_btn">删除</a>
+                <a href="javascript:;" class="white_btn">全选</a>
+            </div>-->
+        </div>    
+    </div>
+    <!--------购物车为空时------------>
+    <div class="null" style="display:none;">
+        <p><img src="{res file=images/cart_null.png}" /></p>
+        <p>你的购物车是空的<br />现在就去购物吧~</p>
+        <p><a href="#" class="white_btn">去购物</a></p>
+    </div>
+    
+    <div class="goods_list">
+     <!--{foreach from=$carts item=cart key=store_id}-->
+        <form method="get" enctype="multipart/form-data" id="{$store_id}" style="margin-top: 10px;">
+            <input type="hidden" name="app" value="order" />
+            <input type="hidden" name="goods" value="cart" />
+            <input type="hidden" name="store_id" value="{$store_id}" />
+    	<ul>{$lang.store}: <a href="{url app=store&id=$store_id}">{$cart.store_name|escape}</a>
+            
+    	     <!--{foreach from=$cart.goods item=goods}-->
+            <li id="cart_item_{$goods.rec_id}">
+            	<div href="#" class="detail">
+                  <input type="checkbox" class="c_check" id="s{$store_id}" name="rec_id[{$goods.rec_id}]" value="{$store_id}:{$goods.rec_id}:{$goods.goods_id}"/>
+                   <a href="{url app=goods&id=$goods.goods_id}"> <img src="{$goods.goods_image}" /></a>
+                    <p class="c_info">{$goods.goods_name|escape}</p>
+                    <p>{$goods.specification|escape}</p>
+                    <p class="c_oprate">
+                        <span class="price">价格：<strong>{$goods.price|price}</strong></span>
+                      <!--  <span class="white_btn" onclick="decrease_quantity();">-</span>-->
+                        <span class="white_btn" onclick="decrease_quantity({$goods.rec_id});">-</span>
+                        
+                        <input type="text" id="input_item_{$goods.rec_id}"  value="{$goods.quantity}" orig="{$goods.quantity}"  class="addtext"  id="input_item"  onkeyup="change_quantity({$store_id}, {$goods.rec_id}, {$goods.spec_id}, this);"  changed="{$goods.quantity}"/>
+                       <!-- <span class="white_btn" onclick="add_quantity();">+</span>-->
+                        <span class="white_btn" onclick="add_quantity({$goods.rec_id});">+</span>
+
+                       <a href="#" onclick="drop_cart_item({$store_id}, {$goods.rec_id});"> <span class="close"><img src="{res file=images/close.jpg}" style="border:none; width:20px;height:20px;margin:0 0 5px 0;" /></span></a>
+                    </p>
+                </div>
+                  <!--{/foreach}-->
+            </li>
+               <div class="count">
+                    <a>合计(不含运费): <strong id='cart{$store_id}_amount'>{$cart.amount|price}</strong></a>
+                    <!--<a href="{url app=order&goods=cart&store_id=$store_id}" class="jie">去结算</a>-->
+                    <input type="submit" class="count jie btn fs14 center fff strong" value="{$lang.next_order_form}" id="submit{$store_id}" name="{$store_id}" />
+                </div>
+        </ul>
+        </form>
+        <!--{/foreach}-->
+    </div>
+</body>
+ {include file="member.footer.html"}
+</body>
+</html>
+
+  

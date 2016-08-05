@@ -1,0 +1,23 @@
+@charset "utf-8";
+.dialog_wrapper { background-color: rgba(221,221,221, 0.25);padding: 6px; -moz-box-shadow:0px 0px 12px rgba(0, 0, 0, 0.75); -webkit-box-shadow:0px 0px 12px rgba(0, 0, 0, 0.75); box-shadow:0px 0px 12px rgba(0, 0, 0, 0.75); *background:url(images/transparent.png) repeat;_background-color:#ddd; }
+    .dialog_body {background: #fff;border:1px #7B7B7B solid}
+        .dialog_head { height: 30px;}
+            .dialog_title {color: #666; font-size: 14px; font-weight: bold; display: block;color:#666666;background-color:#f1f1f1;border-bottom: 1px #E1E1E1 solid;padding: 8px 10px; height:14px;}
+            .dialog_close_button {display: block; width: 14px; height: 14px; background: url(images/dialog_close_button.gif) left top; position: absolute; top: 8px; right: 8px;}
+            .dialog_close_button:hover { background: url(images/dialog_close_button.gif); background-position: left -14px;}
+        	.dialog_content {}
+			.dialog_content input[type="text"],.dialog_content input[type="password"],.dialog_content textarea{border: 1px solid #A7A6AA; padding: 2px; font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #666; background: #fff url(images/input.png) repeat-x; }
+			.dialog_content select{border:1px solid #A7A6AA; height:22px;padding:1px; line-height:22px;margin-right:2px;}
+            .dialog_loading { text-align:center; }
+                .dialog_loading_text { padding:0px;padding-top:20px;padding-left:10px;width:220px;font-style:italic;margin:15px auto 5px auto; text-align:left; font-size:15px;background:transparent url(images/loading.gif) no-repeat center top; }
+            .dialog_message_body { margin:15px 5px 5px 5px; }
+                .dialog_message_contents { margin:0px 10px; padding-left:45px; padding-top:5px; padding-bottom:20px; }
+                .dialog_message_notice { background:transparent url(images/message_notice.gif) no-repeat left top; }
+                .dialog_message_warning { background:transparent url(images/message_warning.gif) no-repeat left top; }
+                .dialog_message_confirm { background:transparent url(images/message_confirm.gif) no-repeat left top; }
+                .dialog_buttons_bar { text-align:center;margin-top:5px;margin-bottom:20px; }
+                .dialog_buttons_bar input { margin:0px 5px; }
+                .dialog_buttons_bar .btn1 {width: 75px; height: 29px; border: 0; background: url(images/btn1.gif); color: #c73702; font-weight: bold; font-size: 14px;}
+                .dialog_buttons_bar .btn2 {width: 75px; height: 29px; border: 0; background: url(images/btn2.gif); color: #4e4e4e; font-weight: bold; font-size: 14px;}
+
+.dialog_no_title .dialog_head {height:0; overflow:hidden}

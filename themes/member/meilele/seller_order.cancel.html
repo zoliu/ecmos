@@ -1,0 +1,41 @@
+<script type="text/javascript">
+$(function(){
+        $('#cancel_button').click(function(){
+            DialogManager.close('seller_order_cancel_order');
+         });
+       $("input[name='cancel_reason']").click(function(){
+        if ($(this).attr('flag') == 'other_reason')
+        {
+            $('#other_reason').show();
+        }
+        else
+        {
+            $('#other_reason').hide();
+        }
+    });
+});
+</script>
+<div class="content1">
+<div id="warning"></div>
+<form method="post" action="index.php?app=seller_order&amp;act=cancel_order&amp;order_id={$order_id}" target="seller_order">
+    <h1>{$lang.cancel_order_confirm}</h1>
+    <!--{foreach from=$orders item=order}-->
+    <p>{$lang.order_sn}&nbsp;&nbsp;&nbsp;&nbsp;:<span>{$order.order_sn}</span></p>
+    <!--{/foreach}-->
+    <dl>
+        <dt>{$lang.cancel_reason}:</dt>
+        <dd>
+            <div class="li"><input type="radio" checked name="cancel_reason" id="d1" value="{$lang.cancel_reason1}" /> <label for="d1">{$lang.cancel_reason1}</label></div>
+            <div class="li"><input type="radio" name="cancel_reason" id="d2" value="{$lang.cancel_reason2}" /> <label for="d2">{$lang.cancel_reason2}</label></div>
+            <div class="li"><input type="radio" name="cancel_reason" id="d3" value="{$lang.cancel_reason3}" /> <label for="d3">{$lang.cancel_reason3}</label></div>
+            <div class="li"><input type="radio" name="cancel_reason" flag="other_reason" id="d4" value="{$lang.other_reason}" /> <label for="d4">{$lang.other_reason}</label></div>
+        </dd>
+        <dd id="other_reason" style="display:none">
+            <textarea id="other_reason_input" class="text" style="width:200px;" name="remark"></textarea>
+        </dd>
+    </dl>
+    <div class="btn">
+        <input type="submit" id="confirm_button" class="btn1" value="{$lang.confirm}" />
+    </div>
+</form>
+</div>

@@ -1,0 +1,40 @@
+<div class="allcategory mb10">
+	<div class="allcategory-list">
+		<div class="content clearfix">
+			<!--{foreach from=$widget_data.gcategories item=category name=fe_category}-->
+			<div class="item">
+				<div class="pborder">
+					<p><a href="{url app=search&cate_id=$category.id}" target="_blank">{$category.value|escape}</a><i>&gt;</i><b class="line"></b></p>
+				</div>
+				<div class="pop">
+					<div class="catlist float-left">
+						<!--{foreach from=$category.children item=child name=fe_child}--> 
+						<dl class="clearfix" {if $smarty.foreach.fe_child.last} style="border-bottom:0"{/if}>
+							<dt class="float-left"><a href="{url app=search&cate_id=$child.id}"><strong>{$child.value|escape}</strong></a></dt>
+							<dd class="float-left">
+								<!--{foreach from=$child.children item=child2 name=fe_child2}-->
+								<a href="{url app=search&cate_id=$child2.id}">{$child2.value|escape}</a>
+								<!--{/foreach}-->
+							</dd>
+						</dl> 
+						<!--{/foreach}-->
+					</div>
+					<div class="catbrand ">
+						<a class="btn-channel" href="{url app=search&cate_id=$category.id}">{$category.value|escape|truncate:16}<ins></ins></a>
+						<ul class="clearfix mb10">
+							<!-- {foreach from=$category.brands item=brand name=fe_brand} -->
+							<li class="float-left"><a href="{url app=search&brand=$brand.brand_name|escape:url}" title="{$brand.brand_name}"><img src="{$brand.brand_logo}" alt="{$brand.brand_name|escape}"/></a></li>
+							<!-- {/foreach} -->
+						</ul>
+						<p>
+							<!--{foreach from=$category.gads item=ads name=fe_ads}-->
+							<a href="{$ads.link_url}" target="_blank" class="mb10"><img src="{$ads.file_path}" width="180" height="140" /></a>
+							<!--{/foreach}-->
+						</p>
+					</div>           
+				</div>
+			</div>
+			<!--{/foreach}-->
+		</div>
+	</div>
+</div>

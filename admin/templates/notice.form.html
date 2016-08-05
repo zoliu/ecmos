@@ -1,0 +1,149 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function(){
+    $('#notice_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error); 
+        },
+        success       : function(label){
+            label.addClass('right').text('OK!');
+        },
+        rules : { 
+            user_name : {
+                required : check_user_name  
+            },   
+            amount    :{
+                number     : true
+            }
+        },
+        messages : {
+            user_name :{
+                required     : '{$lang.user_empty}'
+            },
+            amount    :{
+                number     : '{$lang.amount_only_number}'
+            }
+        }
+    });
+    function check_user_name()
+    {
+        var rs = $(":input[name='send_type']:checked").val();
+        
+        return rs == 1 ? true : false; 
+    }
+    $("input[name='send_type']").click(function(){
+        var rs = $(this).val();
+        switch(rs)
+        {
+            case '1':
+                $('#user_list').show();
+                $('#sgrade_list').hide();
+                break;
+            case '2':
+                $('#user_list').hide();
+                $('#sgrade_list').hide();
+                break;
+            case '3':
+                $('#sgrade_list').show();
+                $('#user_list').hide();
+                break;
+            case '4':
+                $('#user_list').hide();
+                $('#sgrade_list').hide();
+                break;
+        }
+    });
+    $("input[name='send_mode']").click(function(){
+        var rs = $(this).val();
+        switch(rs)
+        {
+            case '1':
+                $('#msg').show();
+                $('#email').hide();
+                $('#title').hide();
+                break;
+            case '2':
+                $('#msg').hide();
+                $('#email').show();
+                $('#title').show();
+                break;
+        }
+    });
+    
+    $('#msg_instrunction').toggle(function(){
+        $(this).next('div').fadeIn("slow")
+    },function(){
+        $(this).next('div').fadeOut("slow");
+    });
+});
+
+</script>
+<style type="text/css">
+#short_msg_desc { margin-top:10px; }
+#short_msg_desc a { color:#0099CC; }
+#short_msg_desc div { display:none;color:#646665;border:1px solid #CCCCCC;padding:5px;width:340px;background-color:#F5F5F5;line-height:25px; }
+</style>
+{$build_editor}
+<div id="rightTop">
+  <p>{$lang.user_notice}</p>
+  <ul class="subnav">
+    <li><span>{$lang.send_notice}</span></li>
+  </ul>
+</div>
+<div class="info">
+<form method="POST" id="notice_form">
+<input type="hidden" name="type" value="{$smarty.get.type}">
+<table class="infoTable">
+
+    <tr>
+        <th class="paddingT15">{$lang.send_type1}:</td>
+        <td class="paddingT15 wordSpacing5">
+            {html_radios options=$send_type name=send_type checked=1}
+        </td>
+    </tr>
+    <tr id="user_list">
+        <th class="paddingT15"> {$lang.receiver}:</th>
+        <td class="paddingT15 wordSpacing5"><textarea name="user_name" style="height:100px;" id="user_name"></textarea><span class="field_notice">{$lang.receiver_desc}<span></td>
+    </tr>
+    <tr id="sgrade_list" style="display:none;">
+        <th class="paddingT15"> {$lang.receiver}:</th>
+        <td class="paddingT15 wordSpacing5">
+        <select name="sgrade[]" multiple="multiple">
+            {html_options options=$sgrades}
+        </select>
+        </td>
+    </tr>
+    <tr>
+        <th class="paddingT15">{$lang.amount}:</td>
+        <td class="paddingT15 wordSpacing5"><input type="text" name="amount" value="20"><span class="field_notice">{$lang.amount_desc}</span></td>
+    </tr>
+    <tr>
+        <th class="paddingT15">{$lang.send_mode1}:</td>
+        <td class="paddingT15 wordSpacing5">{html_radios options=$send_mode name=send_mode checked=1}</td>
+    </tr>
+    <tr id="title" style="display:none;">
+        <th class="paddingT15">{$lang.msg_title}:</td>
+        <td class="paddingT15 wordSpacing5"><input type="text" name="title"></td>
+    </tr>
+    <tr id="email"  style="display:none;">
+        <th class="paddingT15">{$lang.content}:</td>
+        <td class="paddingT15 wordSpacing5"><textarea name="content" style="width:400px; height:300px;"></textarea></td>
+    </tr>
+    <tr id="msg">
+        <th class="paddingT15">{$lang.content}:</td>
+        <td class="paddingT15 wordSpacing5"><textarea name="content1" style="width:400px; height:300px;"></textarea>
+            <div id="short_msg_desc"><a href="javascript:;" id="msg_instrunction">{$lang.msg_instruction}</a>
+                <div>{$lang.code_example}</div>
+            <div>
+        </td>
+    </tr>
+    <tr>
+        <th class="paddingT15"> </th>
+        <td class="ptb20"><input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+          <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" /></td>
+    </tr>
+</table>
+</form>
+</div>
+{include file="footer.html"}

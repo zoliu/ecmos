@@ -1,0 +1,55 @@
+{include file="header.html"}
+<div id="rightTop">
+  <p>{$lang.goods_recommended}</p>
+  <ul class="subnav">
+    <li><a class="btn1" href="index.php?app=recommend">{$lang.recommend}</a></li>
+  </ul>
+</div>
+<div class="mrightTop">
+  <div class="fontl"> {$lang.recommend}:
+    <select class="infoTableSelect" onchange="location='index.php?app=recommend&act=view_goods&id=' + this.value">{html_options options=$recommends selected=$smarty.get.id}
+
+    </select>
+  </div>
+  <div class="fontr"> {if $goods_list}{include file=page.top.html}{/if} </div>
+</div>
+<div class="tdare">
+  <table width="100%" cellspacing="0" class="dataTable">
+    <tr class="tatr1">
+      <td width="20" class="firstCell"><input type="checkbox" class="checkall" /></td>
+      <td width="30%">{$lang.goods_name}</td>
+      <td width="100">{$lang.sort_order}</td>
+      <td width="10%">{$lang.store_name}</td>
+      <td width="10%">{$lang.brand}</td>
+      <td>{$lang.cate_name}</td>
+      <td>{$lang.if_show}</td>
+      <td>{$lang.closed}</td>
+      <td>{$lang.views}</td>
+    </tr>
+    <!--{foreach from=$goods_list item=goods}-->
+    <tr class="tatr2">
+      <td class="firstCell"><input type="checkbox" class="checkitem" value="{$goods.goods_id}" /></td>
+      <td>{$goods.goods_name|escape}</td>
+      <td><span ectype="inline_edit" fieldname="sort_order" fieldid="{$smarty.get.id}-{$goods.goods_id}" class="editable" title="{$lang.editable}">{$goods.sort_order}</span></td>
+      <td>{$goods.store_name|escape}</td>
+      <td>{$goods.brand|escape}</td>
+      <td>{$goods.cate_name|nl2br}</td>
+      <td><!-- {if $goods.if_show} --><img src="{res file=style/images/positive_enabled.gif}" /><!--{else}--><img src="{res file=style/images/positive_disabled.gif}" /><!-- {/if} --></td>
+      <td><!-- {if $goods.closed} --><img src="{res file=style/images/negative_enabled.gif}" /><!--{else}--><img src="{res file=style/images/negative_disabled.gif}" /><!-- {/if} --></td>
+      <td>{$goods.views|default:0}</td>
+    </tr>
+    <!--{foreachelse}-->
+    <tr class="no_data">
+      <td colspan="5">{$lang.no_data}</td>
+    </tr>
+    <!--{/foreach}-->
+  </table>
+  <div id="dataFuncs">
+    <div id="batchAction" class="left paddingT15"> &nbsp;&nbsp;
+      <input class="formbtn batchButton" type="button" value="{$lang.unrecommend}" name="goods_id" uri="index.php?app=recommend&act=drop_goods_from&id={$smarty.get.id}" />
+    </div>
+  </div>
+  <div class="pageLinks"> {if $goods_list}{include file=page.bottom.html}{/if} </div>
+  <div class="clear"></div>
+</div>
+{include file="footer.html"} 

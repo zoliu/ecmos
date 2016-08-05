@@ -1,0 +1,41 @@
+{include file="header.html"}
+{$build_editor}
+<div id="rightTop">
+    <p>{$lang.noticetemplate}</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?app=mailtemplate&amp;type={$notice_mail}">{$lang.mailtemplate}</a></li>
+        <li><a class="btn1" href="index.php?app=mailtemplate&amp;type={$notice_msg}">{$lang.msgtemplate}</a></li>
+    </ul>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">
+                    {$lang.title}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput" id="title" type="text" name="subject" value="{$mailtemplate.subject|escape}" />
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    <label for="link">{$lang.content}:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    <textarea style="width:650px;height:300px;" name="content">{$mailtemplate.content}</textarea>
+                </td>
+            </tr>
+            {if $cycleimg.img}
+            {/if}
+            <tr>
+            <th></th>
+            <td class="ptb20">
+                <input type="hidden" name="version" value="{$mailtemplate.version}" />
+                <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                <input class="formbtn" type="reset" name="reset" value="{$lang.reset}" />
+            </td>
+        </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

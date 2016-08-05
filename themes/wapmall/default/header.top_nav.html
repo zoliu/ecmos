@@ -1,0 +1,30 @@
+<header id="sub-title">
+ <a href="javascript:history.go(-1);"></a>
+<h1>卓信品诚</h1>
+<a href="{url app=cart}" class="header_top_nav_img header_top_nav_img_login " ><img  class="" src="{res file=images/cart_my2.png}"  /></a>
+<a href="{url app=search}"  class="header_top_nav_img header_top_nav_img_search" ><img  class=""  src="{res file=images/sort-home.png}"/></a>
+<a href="{url app=default}"></a>
+</header>
+<form id="searchbox" method="GET" action="index.php?app=search" style="margin-bottom: 0;border-bottom: 2px solid #d7143e;">
+	<input type="hidden" name="app" value="search">
+        <input type="hidden" name="act" value="index">
+        <input type="text"  name="keyword" value={$smarty.get.keyword}><input type="submit" value="">
+</form>
+<style>
+.header_top_nav_img{
+	position: absolute;
+	z-index: 0;
+	top: 50%;
+	width:24px;
+	height:24px;
+	line-height:24px;
+	margin-top: -9px;
+}
+.header_top_nav_img_login{
+	right:80px;
+
+}
+.header_top_nav_img_search{
+	right:45px;
+}
+</style>

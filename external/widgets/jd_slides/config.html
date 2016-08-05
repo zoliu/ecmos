@@ -1,0 +1,61 @@
+<script type="text/javascript">
+var _d = DialogManager.get('config_dialog');
+_d.setWidth(350);
+_d.setPosition('center');
+
+$('#add_image').click(function(){
+    $(this).before('<div class="field_item">' +
+        '<label>上传图片:(<span>支持 gif|jpg|jpeg|png 格式,尺寸:720px * 440px</span>)</label>' +
+        '<p><input type="file" name="ad_image_file[]" /></p>'+
+        '<label>链接地址:</label>' +
+        '<p style="overflow:hidden;"><input type="text" name="ad_link_url[]" value="{$image.ad_link_url}" />' +
+        '<input type="button" value="删除图片" onclick="drop_image(this)" /></p></div>');
+});
+function drop_image(btnObj)
+{
+    $(btnObj).parents('.field_item').remove();
+}
+</script>
+<div style="overflow:scroll; height:500px;">
+<div class="field_item">
+  <p style="margin-top:5px;">
+图片播放效果:
+<select name="effect">
+   <option value="scrollx" {if $options.effect=='scrollx'} selected="selected"{/if}>左右滚动</option>
+   <option value="scrolly" {if $options.effect=='scrolly'} selected="selected"{/if}>上下滚动</option>
+   <option value="fade" {if $options.effect=='fade'} selected="selected"{/if}>淡隐淡现</option>
+   <option value="none" {if $options.effect=='none'} selected="selected"{/if}>无效果</option>
+</select>
+</p>
+<p style="margin-top:5px;">
+   是否自动播放:
+   <select name="autoplay">
+      <option value="true" {if $options.autoplay=='true'} selected="selected"{/if}>自动播放</option>
+      <option value="false" {if $options.autoplay=='false'} selected="selected"{/if}>不自动播放</option>
+   </select>
+</p>
+</div>
+<!-- {if $options.ads} -->
+<!-- {foreach from=$options.ads item=image} -->
+<div class="field_item">
+    <label>上传图片:(<span>支持 gif|jpg|jpeg|png 格式,尺寸:720px * 440px</span>)</label>
+    <p><input type="file" name="ad_image_file[]" />
+        <input type="hidden" name="ad_image_url[]" value="{$image.ad_image_url}" />
+    <img src="{$image.ad_image_url}" height="15" /></p>
+    <label>链接地址:</label>
+    <p style="overflow:hidden;"><input type="text" name="ad_link_url[]" value="{$image.ad_link_url}" />
+    <input  type="button" value="删除图片" onclick="drop_image(this)" /></p>
+</div>
+<!-- {/foreach} -->
+<!-- {else} -->
+<div class="field_item">
+    <label>上传图片:(<span>支持 gif|jpg|jpeg|png 格式,尺寸:720px *  440px</span>)</label>
+    <p><input type="file" name="ad_image_file[]" /></p>
+    <label>链接地址:</label>
+    <p style="overflow:hidden;"><input type="text" name="ad_link_url[]" value="{$image.ad_link_url}" />
+    <input type="button" value="删除图片" onclick="drop_image(this)" /></p>
+</div>
+<!-- {/if} -->
+<input type="button" id="add_image" value="新增图片" />
+</div>
+

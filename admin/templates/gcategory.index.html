@@ -1,0 +1,61 @@
+{include file="header.html"}
+<script type="text/javascript" src="{lib file=ajax_tree.js}" charset="utf-8"></script>
+<div id="rightTop">
+    <p>{$lang.gcategory}</p>
+    <ul class="subnav">
+        <li><span>{$lang.manage}</span></li>
+        <li><a class="btn1" href="index.php?app=gcategory&amp;act=add">{$lang.add}</a></li>
+        <li><a class="btn1" href="index.php?app=gcategory&amp;act=export">{$lang.export}</a></li>
+        <li><a class="btn1" href="index.php?app=gcategory&amp;act=import">{$lang.import}</a></li>
+    </ul>
+</div>
+
+<div class="info2">
+    <table  class="distinction">
+        <!--{if $gcategories}-->
+        <thead>
+        <tr class="tatr1">
+            <td class="w30"><input id="checkall_1" type="checkbox" class="checkall" /></td>
+            <td width="50%"><span class="all_checkbox"><label for="checkall_1">{$lang.checkall}</label></span>{$lang.cate_name}</td>
+            <td>{$lang.sort_order}</td>
+            <td>{$lang.if_show}</td>
+            <td class="handler">{$lang.handler}</td>
+        </tr>
+        </thead>
+        <!--{/if}-->
+        <!-- {if $gcategories} --><tbody id="treet1"><!-- {/if} -->
+        <!--{foreach from=$gcategories item=gcategory}-->
+        <tr>
+            <td class="align_center w30"><input type="checkbox" class="checkitem" value="{$gcategory.cate_id}" /></td>
+            <td class="node" width="50%"><!--{if $gcategory.switchs}--><img src="templates/style/images/treetable/tv-expandable.gif" ectype="flex" status="open" fieldid="{$gcategory.cate_id}"><!--{else}--><img src="templates/style/images/treetable/tv-item.gif"><!--{/if}--><span class="node_name editable" ectype="inline_edit" fieldname="cate_name" fieldid="{$gcategory.cate_id}" required="1" title="{$lang.editable}">{$gcategory.cate_name|escape}</span></td>
+            <td class="align_center"><span class="editable" ectype="inline_edit" fieldname="sort_order" fieldid="{$gcategory.cate_id}" datatype="number" title="{$lang.editable}">{$gcategory.sort_order}</span></td>
+            <td class="align_center"><!--{if $gcategory.if_show}--><img src="templates/style/images/positive_enabled.gif" ectype="inline_edit" fieldname="if_show" fieldid="{$gcategory.cate_id}" fieldvalue="1" title="{$lang.editable}"/><!--{else}--><img src="templates/style/images/positive_disabled.gif" ectype="inline_edit" fieldname="if_show" fieldid="{$gcategory.cate_id}" fieldvalue="0" title="{$lang.editable}"/><!--{/if}--></td>
+            <td class="handler"><span><a href="index.php?app=gcategory&amp;act=edit&amp;id={$gcategory.cate_id}">{$lang.edit}</a>
+                |
+                <a href="javascript:if(confirm('{$lang.drop_confirm}'))window.location = 'index.php?app=gcategory&amp;act=drop&amp;id={$gcategory.cate_id}';">{$lang.drop}</a><!-- {if $region.layer lt $max_layer} --> | <a href="index.php?app=gcategory&amp;act=add&amp;pid={$gcategory.cate_id}">{$lang.add_child}</a><!-- {/if} -->
+                </span>
+                </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="5">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+        <!-- {if $gcategories} --></tbody><!-- {/if} -->
+        <tfoot>
+            <tr class="tr_pt10">
+            <!-- {if $gcategory} -->
+                <td class="align_center"><label for="checkall1"><input id="checkall_2" type="checkbox" class="checkall"></label></td>
+                <td colspan="4" id="batchAction">
+                    <span class="all_checkbox"><label for="checkall_2">{$lang.checkall}</label></span>&nbsp;&nbsp;
+                    <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="index.php?app=gcategory&act=drop" presubmit="confirm('{$lang.drop_confirm}');" />
+                    <input class="formbtn batchButton" type="button" value="{$lang.edit}" name="id" uri="index.php?app=gcategory&act=batch_edit" />
+                    <!--<input class="formbtn batchButton" type="button" value="lang.update_order" name="id" presubmit="updateOrder(this);" />-->
+                </td>
+            <!--{/if}-->
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+{include file="footer.html"}

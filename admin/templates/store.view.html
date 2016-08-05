@@ -1,0 +1,88 @@
+{include file="header.html"}
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    $("#reject").click(function(){
+        var reason = $.trim($("#reject_reason").val());
+        if (reason == '')
+        {
+            alert('{$lang.input_reason}');
+            return false;
+        }
+        return true;
+    });
+});
+//]]>
+</script>
+<div id="rightTop">
+  <p>{$lang.store}</p>
+  <ul class="subnav">
+    <li><a class="btn1" href="index.php?app=store">{$lang.manage}</a></li>
+    <li><a class="btn1" href="index.php?app=store&amp;act=test">{$lang.add}</a></li>
+    <li><a class="btn1" href="index.php?app=store&amp;wait_verify=1">{$lang.wait_verify}</a></li>
+  </ul>
+</div>
+<div class="info">
+  <form method="post" enctype="multipart/form-data">
+    <table class="infoTable">
+      <tr>
+        <th class="paddingT15">{$lang.owner_real_name}:</th>
+        <td class="paddingT15 wordSpacing5">{$store.owner_name|escape}</td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.owner_card}:</th>
+        <td class="paddingT15 wordSpacing5">{$store.owner_card|escape}</td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.store_name}:</th>
+        <td class="paddingT15 wordSpacing5">{$store.store_name|escape}</td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.scategory}:</th>
+        <td class="paddingT15 wordSpacing5" >{foreach from=$scates item=cate}{$cate.cate_name|escape}&nbsp;{/foreach}</td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.region}:</th>
+        <td class="paddingT15 wordSpacing5" >{$store.region_name|escape}</td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.address}:</th>
+        <td class="paddingT15 wordSpacing5">{$store.address|escape}</td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.zipcode}:</th>
+        <td class="paddingT15 wordSpacing5">{$store.zipcode|escape}</td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.tel}:</th>
+        <td class="paddingT15 wordSpacing5">{$store.tel|escape}</td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.sgrade}:</th>
+        <td class="paddingT15 wordSpacing5">{$store.sgrade}</td>
+      </tr>
+      <tr>
+          <th class="paddingT15">{$lang.apply_remark}:</th>
+          <td class="paddingT15 wordSpacing5">{$store.apply_remark|escape|nl2br}</td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.uploaded_image}:</th>
+        <td class="paddingT15 wordSpacing5">
+          {if $store.image_1}<a href="{$site_url}/{$store.image_1}" target="_blank">{$lang.view}</a>{/if}
+          {if $store.image_2}<a href="{$site_url}/{$store.image_2}" target="_blank">{$lang.view}</a>{/if}
+          {if $store.image_3}<a href="{$site_url}/{$store.image_3}" target="_blank">{$lang.view}</a>{/if}        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15" valign="top">{$lang.reject_reason}:</th>
+        <td class="paddingT15 wordSpacing5">
+        <textarea name="reject_reason" cols="60" rows="4" id="reject_reason"></textarea></td>
+      </tr>
+      <tr>
+        <th></th>
+        <td class="ptb20"><input class="formbtn" type="submit" name="agree" id="agree" value="{$lang.agree}" />
+          <input class="formbtn" type="submit" name="reject" id="reject" value="{$lang.reject}" /></td>
+      </tr>
+    </table>
+  </form>
+</div>
+{include file="footer.html"} 

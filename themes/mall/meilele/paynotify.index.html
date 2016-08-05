@@ -1,0 +1,39 @@
+{include file="header.html"}
+<style>
+
+.content{width:1200px;margin:0px auto;padding: 30px 10px;}
+.module_common{padding: 10px 10px;border: 1px solid #e5e5e5;}
+.module_common .clue_on{text-align: center;font-size: 1.5em;font-weight:bold;}
+.module_common .order_information{padding: 15px 5px;text-align: center;width: 99%;}
+.module_common .order_information b{margin-right: 10px;}
+
+.go_index{ background: #6f0e0e; width:100px; height:40px; line-height:40px; text-align:center; color:#fff; display:inline-block; font-size:16px;}
+</style>
+<div class="jim-main">
+    <div class="w1200 clearfix">
+      <div class="navbar fontsimsun mt20 clearfix">
+        {include file="curlocal.html"}
+      </div>
+
+        <div class="content">
+            <div class="module_common">
+                <div class="succeed">
+                    <h4>{$lang.pay_successed}</h4>
+                </div>
+                <div class="order_information">
+                     <h3>{$lang.pay_successed_desc} 
+                        <b><span><a href="{url app=member}">{$lang.member_center}</a>&nbsp;&nbsp;
+                            <!--{if $order.order_merge}-->
+                            <a href="{url app=buyer_order}">{$lang.view_order}</a>
+                            <!--{else}-->
+                            <a href="{url app=buyer_order&act=view&order_id=$order.order_id}">{$lang.view_order}</a>
+                            <!--{/if}-->
+                        </span></b>
+                     </h3>
+                    <a href="{$site_url}" class="go_index" title="{$lang.mall_index}" style="color: #fff;">{$lang.mall_index}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="footer.html"}

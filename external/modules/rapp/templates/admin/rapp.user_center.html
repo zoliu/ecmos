@@ -1,0 +1,48 @@
+
+<!-- www.360cd.cn  Mosquito -->
+
+{include file='header.html'}
+
+<style type="text/css">
+.main {
+	padding: 2em;
+}
+
+ul {
+	list-style: none;
+}
+
+li {
+    margin: 1em 0;
+}
+
+li>span:FIRST-CHILD {
+    display: inline-block;
+    width: 8em;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+</style>
+
+<div id="rightTop">
+	<ul class="subnav">
+		<li><a class="btn1" href="{url module=rapp&act=app_list}">应用列表</a></li>
+        <li><span>个人中心</span></li>
+	</ul>
+</div>
+
+<div class="mrightTop"></div>
+
+<div class="main">
+	<div>
+		<ul>
+            <li><span>用户名 :</span>{$member_info.user_name}</li>
+			<li><span>邮箱 :</span>{$member_info.email}</li>
+            <li><span>账户余额 :</span>{$money_info.money|price}</li>
+            <li><span></span><a href="{url module=rapp&act=user_config}">更换账户</a></li>
+		</ul>
+	</div>
+</div>
+
+{include file='footer.html'}

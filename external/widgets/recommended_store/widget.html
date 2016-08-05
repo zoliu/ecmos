@@ -1,0 +1,20 @@
+<div class="module_common">
+    <h2><b class="shops" title="SHOPS店辅推荐"></b></h2>
+    <div class="wrap">
+        <div class="wrap_child">
+            <ul class="particular">
+                <!-- {foreach from=$widget_data item=store} -->
+                <li>
+                    <div class="pic"><a href="{url app=store&id=$store.store_id}"><img src="{$store.store_logo}" width="65" height="65" /></a></div>
+                    <dl>
+                        <dt><a href="{url app=store&id=$store.store_id}" title="{$store.store_name|escape}">{$store.store_name|escape}</a></dt>
+                        <dd>店主: {$store.user_name|escape}</dd>
+                        <dd>商品: {$store.goods_count}</dd>
+                        <dd>信用: {$store.praise_rate}%</dd>
+                    </dl>
+                </li>
+                <!-- {/foreach} -->
+            </ul>
+        </div>
+    </div>
+</div>

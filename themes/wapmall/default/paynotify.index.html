@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset={$charset}" />
+        <meta http-equiv="Content-Type" content="text/html; charset={$charset}" />
+
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bookmark.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=member.js}" charset="utf-8"></script>
+
+    </head>
+
+    <body class="gray">
+
+        <div class="fixed">
+            <!---头部------>
+            <div class="header header2">
+                <a href="{url app=buyer_order}" class="back2_pre"></a>
+                {$lang.head_msg}
+            </div>  
+        </div>
+        <div class="mark"> 
+            <div class="bm_con">
+                <div class="marklist">
+                    <ul>
+                        <br/>
+                        <li style="text-align:center;">
+                            <p>{$lang.pay_successed_desc} </p>
+                            <p><a href='{url app=default}'>商城首页</a>&nbsp;&nbsp;<a href="{url app=buyer_order&act=view&order_id=$order.order_id}">{$lang.view_order}</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {include file="member.footer.html"}

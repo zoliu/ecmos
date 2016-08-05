@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+{$page_seo}
+<link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+<link href="{res file=css/user.css}" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+</head>
+<body class="gray" style="overflow-x:hidden;">
+<script type="text/javascript">
+$(function(){
+    $('#email_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        rules : {
+            orig_password : {
+                required : true
+            },
+           email : {
+                required   : true,
+                email      : true
+            }
+        },
+        messages : {
+            orig_password : {
+                required : '{$lang.orig_password_empty}'
+            },
+            email : {
+                required   : '{$lang.email_required}',
+                email    : '{$lang.email_invalid}'
+            }
+        }
+    });
+});
+</script>
+    
+	<div class="fixed">
+        <!---头部------>
+        <div class="header header2">
+            <a href="{url app=default}"
+               class="back2_index"></a>
+            个人中心
+            <a href="{url app=my_favorite}" class="bookmark"></a>
+        </div>    
+    </div>
+    <div class="user_header">
+        
+        <div class="order_panel" style="height:60px;">
+            <ul class="orders"style="margin-left:10px;height:60px;">
+            {include file="member.submenu.html"}
+            </ul>
+            <ul class="orders"style="margin-left:10px;height:160px;">
+            <form method="post" enctype="multipart/form-data" id="profile_form">
+                <li style="width:50%;text-align:right;">
+                    <span>{$lang.orig_password}:</span>
+                    <span>{$lang.email}:</span>
+                </li>
+                <li style="width:50%;text-align:left;">
+                    <span><input class="text width_normal" type="password" name="orig_password" /></span>
+                    <span><input class="text width_normal" type="text" name="email" /></span>
+                    <input class="btn" type="submit" value="{$lang.submit}" />
+                </li>
+            </form>
+            </ul>
+   		   {include file="member.menu.html"}
+        <div class="adorn_bottom"></div>
+            <iframe id='iframe_post' name="iframe_post" src="about:blank" frameborder="0" width="0" height="0"></iframe>
+			{include file="member.footer.html"}
+        </div>
+
+        <div class="set_address"><a href="index.php?app=my_address" id="address_text"></a></div>
+        <script>
+            $(function() {
+                $(".set_address").click(function() {
+                    if ($('#address_text').text() == '')
+                    {
+                        $('#address_text').text('收货地址管理');
+                    } else {
+                        $('#address_text').text('');
+                    }
+                })
+            })
+        </script>
+    </div>
+
+</body>
+</html>
+    

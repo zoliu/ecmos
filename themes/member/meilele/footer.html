@@ -1,0 +1,80 @@
+
+<!-- www.360cd.cn  Mosquito -->
+<!--底部-->
+<div class="footer mt40">
+    <div class="footer01">
+        <div class="w1200">
+            <div class="footer-menu clearfix">
+                {foreach from=$footer_article_list item=category}
+                <ul>
+                    <li><strong>{$category.cate_name}</strong></li>
+                    {foreach from=$category.article_list item=article}
+                    <li><a href="{if $article.link}{$article.link}{else}{url app=article&act=view&article_id=$article.article_id}{/if}">{$article.title}</a></li>
+                    {/foreach}
+                </ul>
+                {/foreach}
+                <ul>
+                    <li><strong>关注卓信微信公众号</strong></li>
+                    <li><img src="themes/mall/default/styles/default/images/erweima.jpg"></li>
+                </ul>
+                <ul style="margin-right: 0;">
+                    <li><a href="#"><strong>400-8533-358</strong></a></li>
+                    <li><a href="#">(周一至周日 8:00-18:00)</a></li>
+                    <li><div class="online">24小时在线</div></li>
+                </ul>
+            </div>
+            <div class="friendlink mt30">
+                <strong>合作伙伴：</strong>
+                {foreach from=$footer_partner_list item=partner}
+                <a href="{$partner.link}" target="_blank">{$partner.title}</a> |
+                {/foreach}
+            </div>
+        </div>
+    </div>
+    <div class="footerBar">
+        <div class="w1200">
+            <ul>
+                <li><img
+                    src="themes/mall/default/styles/default/images/footerbar01.jpg"><strong>全场正品</strong>
+                <p>正品行货又便宜</p></li>
+                <li><img
+                    src="themes/mall/default/styles/default/images/footerbar02.jpg"><strong>先行赔付</strong>
+                <p>保证金优先赔付</p></li>
+                <li><img
+                    src="themes/mall/default/styles/default/images/footerbar03.jpg"><strong>七天包邮包退</strong>
+                <p>不满意想退就退</p></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footerlast">
+        <div class="w1200">
+            <div class="sitemap mt20">
+                <a href="#" title="" target="_blank">关于我们</a>-
+                <a href="#" title="" target="_blank">帮助中心</a>-
+                <a href="#" title="" target="_blank">网站地图</a>-
+                <a href="#" title="" target="_blank">诚聘英才</a>-
+                <a href="#" title="" target="_blank">联系客服</a>-
+                <a href="#" title="" target="_blank">站长统计</a>
+            </div>
+            <div class="copyright">Copyright © 2012 - 2014
+                360cd.cn. All Rights Reserved 成都卓信 版权所有</div>
+            <div class="safeinfo mt10">
+                <a href="#" target="_blank"><img
+                    src="themes/mall/default/styles/default/images/logo/footer01.jpg"></a>
+                <a href="#" target="_blank"><img
+                    src="themes/mall/default/styles/default/images/logo/footer02.jpg"></a>
+                <a href="#" target="_blank"><img
+                    src="themes/mall/default/styles/default/images/logo/footer03.jpg"></a>
+                <a href="#" target="_blank"><img
+                    src="themes/mall/default/styles/default/images/logo/footer04.jpg"></a>
+                <a href="#" target="_blank"><img
+                    src="themes/mall/default/styles/default/images/logo/footer05.jpg"></a>
+                <a href="#" target="_blank"><img
+                    src="themes/mall/default/styles/default/images/logo/footer06.jpg"></a>
+                <a href="#" target="_blank"><img
+                    src="themes/mall/default/styles/default/images/logo/footer07.jpg"></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--底部 END-->

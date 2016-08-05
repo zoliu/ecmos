@@ -1,0 +1,60 @@
+<div class="hotsale border mb10">
+ 	<h3 class="border-b"><span>排行榜</span></h3>
+    <div class="content">
+        <ul class="rank-nav" id="rank-11">
+            <li class="curr" id="one"><a><span>最新</span></a></li>
+	        <li id="two"><a><span>热销</span></a></li>
+        </ul>
+        <ul class="rank-c clearfix" id="rank-one">
+            <!--{foreach from=$widget_data.news item=ngoods name=fe_n}-->
+            <li {if $smarty.foreach.fe_n.last}style="border:0;"{/if} class="clearfix">
+            	<div class="rank_num clearfix">
+					<b>{$smarty.foreach.fe_n.iteration}</b>已售出{$ngoods.sales}件
+                </div>
+                <div class="pic border"><a target="_blank" href="{url app=goods&id=$ngoods.goods_id}">
+                    <img width="60" height="60"  src="{$ngoods.default_image}"alt="{$ngoods.goods_name|truncate:20|escape}" title="{$ngoods.goods_name|escape}" /></a>
+                </div>
+		   	    <div class="desc">
+                	<a target="_blank" href="{url app=goods&id=$ngoods.goods_id}">{$ngoods.goods_name|escape}</a>
+                </div>
+		   		<div class="price"><strong>{$ngoods.price|price}</strong></div>
+            </li>
+            <!--{/foreach}-->
+       </ul>
+       <ul class="rank-c clearfix" id="rank-two" style="display:none;">
+            <!--{foreach from=$widget_data.hots item=hgoods name=fe_h}-->
+            <li {if $smarty.foreach.fe_h.last}style="border:0;"{/if} class="clearfix">
+            	<div class="rank_num clearfix">
+					<b>{$smarty.foreach.fe_h.iteration}</b>已售出{$hgoods.sales}件
+                </div>
+                <div class="pic border"><a target="_blank" href="{url app=goods&id=$hgoods.goods_id}">
+                    <img width="60" height="60"  src="{$hgoods.default_image}"alt="{$hgoods.goods_name|truncate:20|escape}" title="{$hgoods.goods_name|escape}" /></a>
+                </div>
+		   	    <div class="desc">
+                	<a target="_blank" href="{url app=goods&id=$hgoods.goods_id}">{$hgoods.goods_name|escape}</a>
+                </div>
+		   		<div class="price"><strong>{$hgoods.price|price}</strong></div>
+            </li>
+           <!--{/foreach}-->
+      </ul>
+  </div>
+</div>
+<script>
+$(function(){
+	$('.hotsale .content #one').hover(function(){
+		$(this).parent().find('li').attr('class','');
+		$(this).attr('class','curr');
+					
+		$('.hotsale .content').find('.rank-c').hide();
+		$('.hotsale .content #rank-'+this.id).show();
+	});
+				
+	$('.hotsale .content #two').hover(function(){
+		$(this).parent().find('li').attr('class','');
+		$(this).attr('class','curr');
+					
+		$('.hotsale .content').find('.rank-c').hide();
+		$('.hotsale .content #rank-'+this.id).show();
+	});
+});
+</script>

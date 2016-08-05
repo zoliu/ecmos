@@ -1,0 +1,83 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function(){
+    $('#user_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('right').text('OK!');
+        },
+        onkeyup    : false,
+        rules : {
+           
+            refund_money: {
+                required : true,
+                max : {$discus.order_amount},
+                min : 0
+            },
+        },
+        messages : {
+            refund_money: {
+                required : '{$lang.refund_money_empty}',
+                max   : '{$lang.refund_money_max}',
+                min   : '{$lang.refund_money_min}'
+            },
+        }
+    });
+});
+</script>
+<div id="rightTop">
+    <p>{$lang.view_discus}</p>
+    <ul class="subnav">
+        <li>
+            <a class="btn1" href="index.php?app=discus">{$lang.manage}</a>
+        </li>
+
+    </ul>
+</div>
+<div class="info">
+<form method="post" enctype="multipart/form-data" id="user_form">
+    <table class="infoTable">
+
+        <tr>
+            <th class="paddingT15"><h2><b>{$lang.order_info}</b></h2></th>
+            <td class="paddingT15 wordSpacing5">              
+
+            </td>
+        </tr>
+        <tr>
+            <th class="paddingT15">{$lang.order_amount}:</th>
+            <td class="paddingT15 wordSpacing5">
+                {$discus.order_amount|price}
+            </td>
+        </tr>    
+        <tr>
+            <th class="paddingT15">{$lang.shipping_fee}:</th>
+            <td class="paddingT15 wordSpacing5">
+                 {$order_ext.shipping_fee|price}
+            </td>
+        </tr>  
+       
+      
+        
+        <tr>
+            <th class="paddingT15">{$lang.refund_money}:</th>
+            <td class="paddingT15 wordSpacing5">
+                <input class="infoTableInput2" name="refund_money" type="text" id="refund_money" value="{$discus.order_amount}" />
+                <label class="field_notice">{$lang.refund_money_desc}</label> 
+                <input type=hidden name="order_id" value="{$discus.order_id}" />
+                <input type=hidden name="order_amount" value="{$discus.order_amount}" />
+            </td>
+        </tr>
+         <tr>
+        <th></th>
+        <td class="ptb20"><input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+          <input class="formbtn" type="reset" name="Reset" value="{$lang.reset}" />        </td>
+      </tr>
+
+</table>
+</form>
+</div>
+{include file="footer.html"}

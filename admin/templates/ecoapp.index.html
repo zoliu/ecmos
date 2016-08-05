@@ -1,0 +1,69 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>{$lang.ecoapp}</p>
+    <ul class="subnav">
+        <li><span>{$lang.manage}</span></li>
+        <li><a class="btn1" href="index.php?app=ecoapp&amp;act=add">{$lang.add}</a></li>
+       
+    </ul>
+</div>
+<div class="mrightTop">
+    <div class="fontl">
+        <form method="get">
+            <div class="left">
+                <input type="hidden" name="app" value="ecoapp" />
+                <input type="hidden" name="act" value="index" />
+                {$lang.ecoapp_name}:
+                <input class="queryInput" type="text" name="ecoapp_name" value="{$query.ecoapp_name|escape}" />  
+                                               
+                
+                <input type="submit" class="formbtn"style="cursor: pointer;" value="{$lang.query}" />
+            </div>
+            <!--{if $filtered}-->
+            <a class="left formbtn1" href="index.php?app=ecoapp">{$lang.cancel_query}</a>
+            <!--{/if}-->
+      <span>
+              </span></form>
+    </div>
+    <div class="fontr">
+        {if $ecoapp_list}{include file=page.top.html}{/if}
+    </div>
+</div>
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!--{if $ecoapp_list}-->
+        <tr class="tatr1">
+            <td width="20" class="firstCell"><input type="checkbox" class="checkall" /></td>
+            <td class="handler">{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$ecoapp_list item=ecoapp}-->
+        <tr class="tatr2">
+            <td class="firstCell"><input value="{$ecoapp.id}" class='checkitem' type="checkbox" /></td>
+          
+            <td class="handler">
+            <a href="index.php?app=ecoapp&amp;act=edit&amp;id={$ecoapp.id}">{$lang.edit}</a>  |  <a name="drop" href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=ecoapp&amp;act=drop&amp;id={$ecoapp.id}');">{$lang.drop}</a>
+          
+            </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="7">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <!--{if $ecoapp_list}-->
+    <div id="dataFuncs">
+        <div id="batchAction" class="left paddingT15">
+           
+            <input class="formbtn batchButton" type="button"style="cursor: pointer;" value="{$lang.drop}" name="id" uri="index.php?app=ecoapp&act=drop" presubmit="confirm('{$lang.drop_confirm}');" />
+           
+        </div>
+        <div class="pageLinks">
+            {if $ecoapp_list}{include file=page.bottom.html}{/if}
+        </div>
+    </div>
+    <!--{/if}-->
+    <div class="clear"></div>
+</div>
+{include file="footer.html"}

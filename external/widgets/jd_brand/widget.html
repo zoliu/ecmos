@@ -1,0 +1,9 @@
+<div class="floor-brand w mb10">
+	<!--{if $widget_data}-->
+     <ul class="clearfix">
+         <!--{foreach from=$widget_data item=brand name=fe_brand}-->
+     	 <li {if $smarty.foreach.fe_brand.first} style="border:0;"{/if}><a href="{url app=search&brand=$brand.brand_name|escape:url}"><img src="{$brand.brand_logo}" alt="{$brand.brand_name|escape}" width="100" height="40" title="{$brand.brand_name|escape}" /></a></li>
+         <!--{/foreach}-->
+     </ul>
+	 <!--{/if}-->
+</div>

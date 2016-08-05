@@ -1,0 +1,41 @@
+{include file="header.html"}
+<style type="text/css">
+.info th{ width:80px;}
+</style>
+<div class="mrightTop">
+	<div class="fontl">{$lang.welcome}</div>
+</div>
+<div id="rightTop">
+    <ul class="subnav" style="margin-left:0px;">
+         <li><a class="btn1" href="index.php?module=msg">{$lang.msglog}</a></li>
+        <li><span>{$lang.sendmsg}</span></li>
+        <li><a class="btn1" href="index.php?module=msg&act=setting">{$lang.setting}</a></li>
+    </ul>
+</div>
+
+<div class="info">
+  <table class="infoTable">
+  <form method="post">
+            <tr>
+                <th class="paddingT15">{$lang.to_mobile}:</th>
+                <td class="paddingT15 wordSpacing5">
+				<input type="text" class="text width_normal" name="to_mobile" value=""/><span style="margin-left:10px; color:#999;">{$lang.to_mobile_text}</span>
+				</td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.content}: </th>
+              <td class="paddingT15 wordSpacing5">
+				<textarea class="text width_long" name="msg_content" /></textarea>
+				</td>
+            </tr>
+            <tr>
+            <th></th>
+            <td class="ptb20">
+                <input class="formbtn" type="submit" name="Submit" value="{$lang.confirm_send}" />
+                <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />
+            </td>
+            </tr>
+    </form>
+      </table>	
+</div>
+{include file="footer.html"}

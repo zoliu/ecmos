@@ -1,0 +1,80 @@
+{include file="member.header.html"}
+{$_head_tags}
+{assign var='curr_nav' value='我的订单'}
+<style type="text/css">
+    .on{color: red;}
+</style>
+
+<div class="order_panel">
+    <ul class="orders">
+        <a href="{url app=buyer_order&act=index&type=pending}">
+            <li>
+                <span class="num  <!--{if $type eq pending}--> on <!--{/if}-->">{$pending_count}</span>
+                <span>待付款</span>
+            </li>
+        </a>
+        <a href="{url app=buyer_order&act=index&type=accepted}">
+            <li>
+                <span class="num <!--{if $type eq accepted}--> on <!--{/if}-->">{$accepted_count}</span>
+                <span>待发货</span>
+                
+            </li>
+        </a>
+        <a href="{url app=buyer_order&act=index&type=shipped}">
+            <li>
+                <span class="num <!--{if $type eq shipped}--> on <!--{/if}-->">{$shipped_count}</span>
+                <span>待收货</span>
+                
+            </li>
+        </a>
+        <a href="{url app=buyer_order&act=index&type=finished}">
+            <li>
+                <span class="num <!--{if $type eq finished}--> on <!--{/if}-->">{$finished_count}</span>
+                <span>已完成</span>
+                
+            </li>
+        </a>
+    </ul>
+</div>
+        <!------------订单页-->
+        <div class="u_order">
+            <!--{foreach from=$orders item=order}-->
+            <div class="orderbox">
+                <h2><span><i></i>{$order.seller_name|escape}</span><b>{$lang.order_status}:<font style="color:#b20005;">{$order.status|modifier:order_status}<!--{if $order.evaluation_status}-->,&nbsp;{$lang.already_evaluate}<!--{/if}--></font></b></h2>
+
+                <!--{foreach from=$order.order_goods item=goods}-->
+                <div class="detail">
+                    <a href="{url app=goods&id=$goods.goods_id}"> <img src="{$goods.goods_image}" /></a>
+                    <p class="title">{$goods.goods_name|escape}</p>
+                    <p>​{$goods.specification|escape}​</p>​
+                    <p class="title"><span style="float: right;">价格：<strong>{$goods.price|price}</strong></span><span>数量：{$goods.quantity}</span></p>
+                    <p><label>{$lang.add_time}：</label><span>{$order.add_time|date:Y-m-d H:i:s}</span></p>
+                </div>
+                <!--{/foreach}-->
+
+                <!--{if $order.payment_name}-->
+
+                <!--{/if}-->
+                <p class="opr">
+                    <a class="white_btn" href="{url app=buyer_order&act=evaluate&order_id=$order.order_id}" id="order{$order.order_id}_evaluate"{if $order.status neq ORDER_FINISHED or $order.evaluation_status neq 0} style="display:none"{/if}>{$lang.evaluate}</a>
+                    <a href="{url app=cashier&order_id=$order.order_id}"  id="order{$order.order_id}_action_pay"{if $order.status neq ORDER_PENDING} style="display:none"{/if} class="white_btn">{$lang.pay}</a>
+                    <input type="button" value="{$lang.confirm_order}" class="white_btn" ectype="dialog" dialog_id="buyer_order_confirm_order" dialog_width="100%" dialog_title="{$lang.confirm_order}" uri="index.php?app=buyer_order&amp;act=confirm_order&order_id={$order.order_id}&ajax"  id="order{$order.order_id}_action_confirm"{if $order.status neq ORDER_SHIPPED or $order.payment_code eq 'cod'} style="display:none"{/if} />
+                    <input type="button" value="{$lang.cancel_order}" class="white_btn" ectype="dialog" dialog_width="100%" dialog_title="{$lang.cancel_order}" dialog_id="buyer_order_cancel_order" uri="index.php?app=buyer_order&amp;act=cancel_order&order_id={$order.order_id}&ajax"  id="order{$order.order_id}_action_cancel"{if $order.status neq ORDER_PENDING and $order.status neq ORDER_SUBMITTED} style="display:none"{/if} />
+                           <a href="{url app=buyer_order&act=view&order_id=$order.order_id}"  class="white_btn">{$lang.view_order}</a>
+                </p>
+            </div>
+            <!--{foreachelse}-->
+
+            <div class="null" style="margin-top:120px;">
+                <p><img src="/themes/wapmall/default/styles/default/images/nothing.gif" /></p>
+                <p>你没有订单信息~</p>
+                <p><a href="{url app=search}" class="white_btn">去购物</a></p>
+            </div>
+            <!--{/foreach}-->
+        </div>
+        <div class="page">
+            {include file=member.page.bottom.html}
+        </div>
+
+        <iframe id='iframe_post' name="iframe_post" src="about:blank" frameborder="0" width="0" height="0"></iframe>
+    {include file="member.footer.html"}

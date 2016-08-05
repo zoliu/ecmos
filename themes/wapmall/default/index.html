@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0,minimum-scale=1.0, maximum-scale=2.0 user-scalable=yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	 {$page_seo}
+	<link href="{res file=css/style.css}" type="text/css" rel="stylesheet">
+	<script type="text/javascript" src="index.php?act=jslang"></script>
+    <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+    <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+	<script type="text/javascript" src="{res file=js/kissy/build/kissy.js}"></script>
+    <script type="text/javascript" src="{res file=js/kissy/build/switchable/switchable-pkg.js}"></script>
+
+	
+	{$_head_tags}
+        <script type="text/javascript">
+            //<!CDATA[
+            var SITE_URL = "{$site_url}";
+            var REAL_SITE_URL = "{$real_site_url}";
+            var PRICE_FORMAT = '{$price_format}';
+            //]]>
+        </script>
+
+<style>
+figure .flexslider {height: 150px;overflow: hidden;position: relative;margin: 0;}
+.flexslider {margin: 99px auto 0;width: 100%;}
+.flexslider img{width:100%;/**/}
+figure .flexslider .ks-switchable-nav a {display: block;-webkit-box-flex: 1;height: 100%;overflow: hidden;}
+figure .flexslider .ks-switchable-nav a.ks-active {background-color: #b20000;}
+figure .flexslider ul {height: 150px;top: 0;}
+figure .flexslider .ks-switchable-nav {position: absolute;width: 100%;height: 3px;bottom: 0;background-color: rgba(51,51,51,0.5);-webkit-transform: translate3d(0,0,0);display: -webkit-box;}
+</style>
+</head>
+<body>
+	<link type="text/css" rel="stylesheet" href="{res file=css/slider.css}" />
+	<script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+
+    <section id="wraper">
+		{include file="header.top_nav.html"}
+		<figure>
+		<div id="demo" class="flexslider">
+			<ul class="slides">
+				{foreach from=$nav_ads item=ads name=foreach_nav_ads}
+                    <li><a href="{$ads.url}"><img src="{$ads.logo}" /></a></li>
+				{/foreach}
+            </ul>
+        </div>
+	<script type="text/javascript" src="{res file=js/slider.js}"></script>
+	<script type="text/javascript">
+		$(function(){
+
+			$('#demo').flexslider({
+				animation: "slide",
+				direction:"horizontal",
+				easing:"swing"
+			});
+		});
+	</script>
+		</figure>
+		<nav id="nav">
+			{foreach from=$nav_list item=nav name=foreach_nav_list}
+			<a href="{if $nav.url}{$nav.url}{else}{url app=search&cate_id=$nav.gcategory_id}{/if}"><i style="background-image:url('{$nav.logo}')"></i><span>{$nav.name}</span></a>
+			{if $smarty.foreach.foreach_nav_list.iteration eq 2}
+
+           <!--{if !$visitor.user_id}-->
+				<div><a href="{url app=member&act=login}"><i></i><span>登录</span></a><a href="{url app=member&act=register}"><i></i><span>注册</span></a></div>
+           <!--{else}-->
+				<div><a href="{url app=member&act=wap_index}" style="height: 96px;background-color: #f3a29a;"><i style="width: 100%;height: 70px;background-image:url('/themes/wapmall/default/styles/default/images/mem_login.png')"></i><span style="line-height: 26px;background-color: #ee7b6f;width: 100%;height: 26px;">用户中心</span></a></div>
+
+           <!--{/if}-->
+			{/if}
+			{/foreach}	
+			
+		</nav>
+		
+		{if $goods_list}
+		{foreach from=$goods_list item=items}
+		<section class="pro-list">
+			<header>
+				<a class="current" href="{if $nav.url}{$nav.url}{else}{url app=search&cate_id=$items.cate_id}{/if}">
+				<h2><i></i><span>{$items.cate_name}</span></h2>
+				<nav>					
+					<a href="{url app=search&cate_id=$items.cate_id}"></a>
+					<a href="{url app=search&cate_id=$items.cate_id}"></a></nav>
+				</a>
+			</header>
+			<ul>
+				{foreach from=$items.goods_list item=goods}	
+				<li>
+					<div>
+						<figure><a href="{url app=goods&id=$goods.goods_id}"><img src="{$goods.default_image}" title="" alt=""></a></figure>
+						<figcaption style="width:99%;text-overflow:ellipsis; overflow:hidden; white-space:nowrap; margin-left: 2px;"><a href="{url app=goods&id=$goods.goods_id}">{$goods.goods_name}</a></figcaption>
+						<p><i></i><span>{$goods.price|price}</span></p>
+					</div>
+				</li>
+				{/foreach}			
+			</ul>
+		</section>
+		{/foreach}
+		{/if}
+			<!--联系我们-->
+			<section class="pro-list" style="display: none;" id="content">
+			<header>
+				<a class="current" href="#">
+				<h2><i></i><span>联系我们</span></h2>
+				<a href="javascript:void($('#content').hide(500));" style="float: right;">
+					关闭
+				</a>
+				</a>
+			</header>
+        <dt>
+            <p>400电话：
+                <a href="#">400-567-5677</a>
+            </p>
+            <p>CEO邮箱：
+                <a href="mailto: seemazoliu.cn">seemazoliu.cn</a>
+            </p>
+            <p>客服邮箱：
+                <a href="mailto: seemazoliu.cn">seemazoliu.cn</a>
+            </p>
+            <p>招商邮箱：
+                <a href="mailto: seemazoliu.cn">seemazoliu.cn</a>
+            </p>
+        </dt>
+		</section>
+		<footer id="footer">
+			<div>客服热线：400-008-5465</div>
+			<nav><a href="{url app=article&act=view&article_id=20}">关于卓信品诚</a><i>|</i><a href="javascript:void($('#content').show(500));">联系我们</a><i>|</i><a href="#"><span>TOP</span><b></b></a></nav>
+			<p>Copyright(c)2014卓信品诚版权所有</p>
+		</footer>
+	</section>
+</body>
+</html>

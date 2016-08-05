@@ -1,0 +1,179 @@
+
+<!-- www.360cd.cn  Mosquito -->
+
+{include file=member.header.html}
+
+<style type="text/css">
+.float_right {
+    float: right;
+}
+
+table .clearfix {
+    display: table-cell;
+}
+
+.order_merge {
+    padding: 2px 6px;
+    margin-left: 15px;
+    border: 1px solid #dcdcdc;
+    background-color: #fff;
+}
+</style>
+
+
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <div class="public_index table">
+                <table>
+                    <tr class="line_bold">
+                        <th colspan="10">
+                            <div class="user_search">
+                                <form method="get">
+                                    <input type="hidden" name="app" value="my_child" />
+                                    <input type="hidden" name="act" value="user_order" />
+                                    
+                                    <span>订单号</span>
+                                    <input name="order_sn" value="{$query.order_sn}" type="text" />
+                                    
+                                    <input type="submit" value="查询" />
+                                    
+                                    {if $filter}
+                                    <a href="{url app=my_child&act=user_order}">撤销检索</a>
+                                    {/if}
+                                </form>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr class="line gray">
+                        <th>商品名称</th>
+                        <th>价格</th>
+                        <th>数量</th>
+                        <th>支付方式</th>
+                        <th>买家</th>
+                        <th>卖家</th>
+                        <th>订单总价</th>
+                        <th>订单状态</th>
+                    </tr>
+                    
+                    {if $order_list}
+                    <tr class="sep-row"><td colspan="8"></td> </tr>
+                    <tr class="operations">
+                        <th colspan="8">
+                            <p class="position2 clearfix">{include file=member.page.top.html}</p>
+                        </th>
+                    </tr>
+                    {/if}
+                    
+                    {foreach from=$order_list item=order}
+                    <tr class="sep-row"><td colspan="10"></td></tr>
+                    <tr class="line-hd">
+                        <th colspan="10">
+                            <p>
+                                <input type="checkbox" value="{$order.order_id}" class="checkitem" {if $order.status neq ORDER_PENDING} disabled="disabled" {/if}/>
+                                <label>订单号：</label>{$order.order_sn}
+                                <label>成交时间：</label>{$order.add_time|date:Y-m-d H:i:s}
+                            </p>
+                        </th>
+                    </tr>
+                    
+                    {foreach from=$order.goods_list item=goods name=fe_goods}
+                    <tr
+                        class="line<!--{if $smarty.foreach.fe_goods.last}--> last_line<!--{/if}-->">
+                        <td valign="top" class="first clearfix">
+                            <div class="pic-info fleft">
+                                <a href="{url app=goods&id=$goods.goods_id}" target="_blank">
+                                    <img src="{$goods.goods_image}" width="50" height="50" />
+                                </a>
+                            </div>
+                            <div class="txt-info fleft">
+                                <div class="txt">
+                                    <a href="{url app=goods&id=$goods.goods_id}" target="_blank">{$goods.goods_name|truncate:70}</a>
+                                </div>
+                                {if $goods.specification}
+                                <p class="gray-color mt5">{$goods.specification}</p>
+                                {/if}
+                            </div>
+                        </td>
+                        <td class="align2">{$goods.price|price}</td>
+                        <td class="align2">{$goods.quantity}</td>
+                        {if $smarty.foreach.fe_goods.first}
+                        <td valign="top" class="align2 bottom-blue" rowspan="{$order.goods_quantities}">
+                            <div class="mt15">
+                            {if $order.payment_name}
+                            {$order.payment_name|escape}
+                            {/if}
+                            </div>
+                        </td>
+                        
+                        <td valign="top" class="align2 bottom-blue" rowspan="{$order.goods_quantities}">
+                            <a href="{url app=message&act=send&to_id=$order.buyer_id}" target="_blank">{$order.buyer_name|escape}</a>
+                            <br />
+                            {if $order.buyer_real_name}
+                            {$order.buyer_real_name|escape|truncate:14}
+                            {else}
+                            ----
+                            {/if}
+                            <br />
+                            <a target="_blank" href="{url app=message&act=send&to_id=$order.buyer_id}" class="email"></a>
+                        </td>
+                        
+                        <td valign="top" class="align2 bottom-blue" rowspan="{$order.goods_quantities}">
+                            <a href="{url app=message&act=send&to_id=$order.seller_id}" target="_blank">{$order.seller_name|escape}</a>
+                            <br />
+                            {if $order.seller_real_name}
+                            {$order.seller_real_name|escape|truncate:14}
+                            {else}
+                            ----
+                            {/if}
+                            <br />
+                            <a target="_blank" href="{url app=message&act=send&to_id=$order.seller_id}" class="email"></a>
+                        </td>
+                        
+                        <td valign="top" class="align2 bottom-blue" rowspan="{$order.goods_quantities}">
+                            <div class="mt15">
+                                <b id="order{$order.order_id}_order_amount">{$order.order_amount|price}</b>
+                            </div>
+                        </td>
+                        <td valign="top" width="100" class="align2 bottom-blue" rowspan="{$order.goods_quantities}">
+                            <div class="btn-order-status">
+                                <p>
+                                    <span class="{if $order.status==0}gray-color{else}color4{/if}">{$order.status|modifier:order_status}</span>
+                                </p>
+                                <!-- <a href="{url app=my_child&act=order_view&order_id=$order.order_id}" target="_blank">{$lang.view_order}</a> -->
+                            </div>
+                        </td>
+                        {/if}
+                    </tr>
+                    {/foreach}
+                    {foreachelse}
+                    <tr>
+                        <td class="member_no_records" colspan="10">{$lang.no_records}</td>
+                    </tr>
+                    {/foreach}
+                    {if $order_list}
+                    <tr class="sep-row"><td colspan="10"></td></tr>
+                    <tr class="operations">
+                        <th colspan="10">
+                            <p class="position2 clearfix">{include file=member.page.bottom.html}</p>
+                        </th>
+                    </tr>
+                    {/if}
+                </table>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<iframe id='iframe_post' name="iframe_post" src="about:blank" frameborder="0" width="0" height="0"></iframe>
+
+{include file=footer.html}

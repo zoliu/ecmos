@@ -1,0 +1,107 @@
+{include file="header.html"}
+
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    $(".show_image").mouseover(function(){
+        $(this).next("div").show();
+    });
+    $(".show_image").mouseout(function(){
+        $(this).next("div").hide();
+    });
+});
+//]]>
+</script>
+
+<div id="rightTop">
+  <p>{$lang.setting}</p>
+  <ul class="subnav">
+    <li><a class="btn1" href="index.php?app=setting&amp;act=base_setting">{$lang.base_setting}</a></li>
+    <li><span>{$lang.base_information}</span></li>
+    <li><a class="btn1" href="index.php?app=setting&amp;act=email_setting">{$lang.email_setting}</a></li>
+    <li><a class="btn1" href="index.php?app=setting&amp;act=captcha_setting">{$lang.captcha_setting}</a></li>
+    <li><a class="btn1" href="index.php?app=setting&amp;act=store_setting">{$lang.store_setting}</a></li>
+    <li><a class="btn1" href="index.php?app=setting&amp;act=credit_setting">{$lang.credit_setting}</a></li>
+    <li><a class="btn1" href="index.php?app=setting&amp;act=subdomain_setting">{$lang.subdomain_setting}</a></li>
+  </ul>
+</div>
+<div class="info">
+  <form method="post" enctype="multipart/form-data">
+    <table class="infoTable">
+      <tr>
+        <th class="paddingT15"> <label for="site_name">{$lang.site_name}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input id="site_name" type="text" name="site_name" value="{$setting.site_name}" class="infoTableInput"/>        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> <label for="site_title">{$lang.site_title}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input id="site_title" type="text" name="site_title" value="{$setting.site_title}" class="infoTableInput"/>        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15" valign="top"> <label for="site_description">{$lang.site_description}:</label></th>
+        <td class="paddingT15 wordSpacing5"><textarea name="site_description" id="site_description">{$setting.site_description}</textarea>        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.site_keywords}:</th>
+        <td class="paddingT15 wordSpacing5"><input id="site_keywords" type="text" name="site_keywords" value="{$setting.site_keywords}" class="infoTableInput"/></td>
+      </tr>
+<!--      <tr>
+        <th class="paddingT15"> <label for="copyright">{$lang.copyright}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input id="copyright" type="text" name="copyright" value="{$setting.copyright}" class="infoTableInput"/>        </td>
+      </tr> -->
+      <tr>
+        <th class="paddingT15"> <label for="site_logo">{$lang.site_logo}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableFile" id="site_logo" type="file" name="site_logo" />
+          <!--{if $setting.site_logo}-->
+          <img class="show_image" src="{res file=style/images/right.gif}" />
+          <div style="position:absolute; display:none"><img src="{$site_url}/{$setting.site_logo}?{$random_number}" /></div>
+          <!--{/if}--></td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> <label for="icp_number">{$lang.icp_number}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input id="icp_number" type="text" name="icp_number" value="{$setting.icp_number}" class="infoTableInput"/>        </td>
+      </tr>
+<!--      <tr>
+        <th class="paddingT15"> <label for="site_region">{$lang.site_region}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input id="site_region" type="text" name="site_region" value="{$setting.site_region}" class="infoTableInput"/>        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> <label for="site_address">{$lang.site_address}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input id="site_address" type="text" name="site_address" value="{$setting.site_address}" class="infoTableInput"/>        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> <label for="site_postcode">{$lang.site_postcode}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input id="site_postcode" type="text" name="site_postcode" value="{$setting.site_postcode}" class="infoTableInput"/>        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> <label for="site_phone_tel">{$lang.site_phone_tel}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input id="site_phone_tel" type="text" name="site_phone_tel" value="{$setting.site_phone_tel}" class="infoTableInput"/>        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> <label for="site_email">{$lang.site_email}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input id="site_email" type="text" name="site_email" value="{$setting.site_email}" class="infoTableInput"/>        </td>
+      </tr>-->
+      <tr>
+        <th class="paddingT15">{$lang.site_status}:</th>
+        <td class="paddingT15"><input id="site_status0" type="radio" name="site_status" {if $setting.site_status eq 0}checked{/if} value="0" />
+          <label for="site_status0">{$lang.close}</label>
+          <input id="site_status1" type="radio" name="site_status" {if $setting.site_status eq 1}checked{/if} value="1" />
+          <label for="site_status1">{$lang.open}</label>        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15" valign="top"> <label for="closed_reason">{$lang.closed_reason}:</label></th>
+        <td class="paddingT15 wordSpacing5"><textarea name="closed_reason" id="closed_reason">{$setting.closed_reason}</textarea>        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> <label for="hot_search">{$lang.hot_search}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input id="hot_search" type="text" name="hot_search" value="{$setting.hot_search}" class="infoTableInput"/>
+        <label class="field_notice">{$lang.hot_search_note}</label></td>
+      </tr>
+      <tr>
+        <th></th>
+        <td class="ptb20"><input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+          <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+{include file="footer.html"}

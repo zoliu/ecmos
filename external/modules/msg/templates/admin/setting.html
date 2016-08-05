@@ -1,0 +1,41 @@
+{include file="header.html"}
+
+<div class="mrightTop">
+	<div class="fontl">{$lang.welcome}</div>
+</div>
+
+<div id="rightTop">
+    <ul class="subnav" style="margin:0;">
+		<li><a class="btn1" href="index.php?module=msg">{$lang.msglog}</a></li>
+        <li><a class="btn1" href="index.php?module=msg&act=send">{$lang.sendmsg}</a></li>
+        <li><span>{$lang.setting}</span></li>
+    </ul>
+</div>
+
+<div class="info">
+
+  <table class="infoTable">
+    <form method="post">
+            <tr>
+                <th class="paddingT15">{$lang.msg_pid}:</th>
+                <td class="paddingT15 wordSpacing5">
+				<input name="msg_pid" type="text" value="{$setting.msg_pid}" size="20">
+				</td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.msg_key}:</th>
+              <td class="paddingT15 wordSpacing5">
+				<input name="msg_key" type="text" value="{$setting.msg_key}" size="20">
+				</td>
+            </tr>
+            <tr>
+            <th></th>
+            <td class="ptb20">
+                <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />
+            </td>
+            </tr>
+    </form>
+      </table>	
+</div>
+{include file="footer.html"}

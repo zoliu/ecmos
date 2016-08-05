@@ -1,0 +1,84 @@
+{include file=member.header.html}
+<div class="content">
+    <div class="totline"></div><div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+		{include file=member.curlocal.html}
+        {include file=member.submenu.html}
+
+<script type="text/javascript">
+function set_default(addr_id){
+    $.getJSON('index.php?app=my_address&act=set_default&addr_id=' + addr_id, function(result){
+
+        if(result){
+            //alert('设置成功！');
+            window.location.reload();    //刷新
+        }else{
+            alert('设置失败！');
+
+        }
+    });
+
+}
+</script>
+        <div class="wrap">
+            <div class="eject_btn" title="{$lang.add_address}"><b class="ico1" ectype="dialog" dialog_title="{$lang.add_address}" dialog_id="my_address_add" dialog_width="600" uri="index.php?app=my_address&act=add">{$lang.add_address}</b></div>
+
+            <div class="public table">
+                <table class="table_head_line">
+                    <!--{if $addresses}-->
+                    <tr class="line_bold">
+                        <th colspan="6"></th>
+                    </tr>
+                    <tr class="gray line tr_color">
+                        <th>{$lang.consignee}</th>
+                        <th>{$lang.region}</th>
+                        <th class="width3">{$lang.address}</th>
+                        <th>{$lang.zipcode}</th>
+                        <th class="width5">{$lang.phone}</th>
+                        <th>{$lang.handle}</th>
+                    </tr>
+                    <!--{/if}-->
+                    <!--{foreach from=$addresses item=address name=v}-->
+                    <!--{if $smarty.foreach.v.last}--><tr class="line_bold tr_align"><!--{else}--><tr class="line tr_align"><!--{/if}-->
+                        <td>{$address.consignee|escape}</td>
+                        <td>{$address.region_name|escape}</td>
+                        <td>{$address.address|escape}</td>
+                        <td>{$address.zipcode|escape}</td>
+                        <td>{$address.phone_tel} / {$address.phone_mob}</td>
+                        <td>
+                            <!--{if $address.set_default eq 1}-->
+                            <span style="padding-left: 15px;color: #4a4">{$lang.default_address}</span>
+                            <!--{else}-->
+                            <a href="javascript:void(0);" onclick="set_default({$address.addr_id})" id="{$address.addr_id}" class="edit">{$lang.set_default}</a>
+                            <!--{/if}-->
+                            <a href="javascript:void(0);" ectype="dialog" dialog_id="my_address_edit" dialog_title="{$lang.edit_address}" dialog_width="700" uri="index.php?app=my_address&act=edit&addr_id={$address.addr_id}" class="edit1 float_none">{$lang.edit}</a>
+                            <a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=my_address&amp;act=drop&addr_id={$address.addr_id}');" class="delete float_none">{$lang.drop}</a>
+                        </td>
+                        </td>
+                    </tr>
+                    <!--{foreachelse}-->
+                    <tr>
+                        <td colspan="6" class="member_no_records padding6">{$lang.$smarty.get.act}{$lang.no_records}</td>
+                    </tr>
+                    <!--{/foreach}-->
+                </table>
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+
+    <div class="clear"></div>
+
+
+
+</div>
+<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0">
+</iframe>
+{include file=footer.html}

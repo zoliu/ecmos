@@ -1,0 +1,21 @@
+<div class="module_common">
+    <h2><b class="sales" title="SALES超特价"></b></h2>
+    <div class="wrap">
+        <div class="wrap_child">
+            <ul class="list_pic">
+                <!--{foreach from=$widget_data.img_goods_list item=goods}-->
+                <li>
+                    <p><a href="{url app=goods&id=$goods.goods_id}" target="_blank"><img src="{$goods.default_image}" width="70" height="70" /></a></p>
+                    <h3><a href="{url app=goods&id=$goods.goods_id}" target="_blank" title="{$goods.goods_name|escape}">{$goods.goods_name|escape}</a><span>{$goods.price|price}</span></h3>
+                </li>
+                <!--{/foreach}-->
+            </ul>
+
+            <ul class="list_text">
+                <!--{foreach from=$widget_data.txt_goods_list item=goods}-->
+                <li><a href="{url app=goods&id=$goods.goods_id}" target="_blank" title="{$goods.goods_name|escape}">{$goods.goods_name|escape}</a><span>{$goods.price|price}</span></li>
+                <!--{/foreach}-->
+            </ul>
+        </div>
+    </div>
+</div>

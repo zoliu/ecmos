@@ -1,0 +1,38 @@
+<!--{if $widget_data.ads}-->
+<div class="circle carousel-{$widget_data.model_id} mb10 mt10 w">
+	<p class="title"><img src="{$widget_data.ad1_image_url}" width="210" height="151" /></p>
+  <div class="scroller">
+  	<a class="prev-{$widget_data.model_id} prev btn" href="javascript:;"><</a>
+	 <a class="next-{$widget_data.model_id} next btn" href="javascript:;">></a> 
+     <ul class="ks-switchable-content">
+     	<!--{foreach from=$widget_data.ads item=image name=fe_image} -->
+        <li {if $smarty.foreach.fe_image.iteration%4 eq 0} style="width:246px; margin:0;"{/if}><a href="{$image.ad_link_url}" target="_blank" title="{$image.ad_title}"><img title="{$image.ad_title}" class="lazyload" initial-url="{$image.ad_image_url}"  alt="{$image.ad_title}"/></a>
+        </li>       
+        <!-- {/foreach} -->
+      </ul>
+    </div>
+ </div>
+<script>
+KISSY.use("switchable", function(S) {
+var tiny_slide = new S.Carousel('.carousel-{$widget_data.model_id}', {
+steps:4,
+effect: 'scrollx',
+easing: 'easeOutStrong',
+circular: true,
+prevBtnCls: 'prev-{$widget_data.model_id}',
+nextBtnCls: 'next-{$widget_data.model_id}',
+disableBtnCls: 'disable',
+interval:10,
+autoplay:true,
+lazyDataType: 'img-src' //延迟加载图片？
+});
+});
+$(".carousel-{$widget_data.model_id} .scroller").hover(function(){
+	$(this).find(".btn").show();
+	},function(){
+	$(this).find(".btn").hide();	
+});
+</script>
+<!--{else}-->
+<center style="padding:10px;">请配置</center>
+<!--{/if}-->

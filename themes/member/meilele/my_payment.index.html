@@ -1,0 +1,50 @@
+{include file=member.header.html}
+<div class="content">
+    <div class="totline"></div><div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+{include file=member.submenu.html}
+        <div class="wrap">
+        <div class="public_index table">
+            <table>
+                <tr class="line_bold">
+                    <th class="" colspan="6">
+                    </th>
+                </tr>
+                <!--{if $payments}-->
+                <tr class="line gray">
+                    <th class="width13">{$lang.payment_name}</td>
+                    <th>{$lang.builtin_payment_desc}</th>
+                    <th class="width4">{$lang.enabled}</th>
+                    <th class="width13">{$lang.handle}</th>
+                </tr>
+                <!--{/if}-->
+                <!-- {foreach from=$payments item=payment name=v} -->
+                <!--{if $smarty.foreach.v.last}--><tr class="line_bold"><!--{else}--><tr class="line"><!--{/if}-->
+                    <td><span class="padding1">{$payment.name|escape}</span></td>
+                    <td>{$payment.desc}</td>
+                    <td class="align2"><!--{if $payment.enabled}-->{$lang.yes}<!--{else}-->{$lang.no}<!--{/if}--></td>
+                    <td>
+                    <div class="padding1">系统配置
+                    </div>
+                    </td>
+                </tr>
+                <!-- {foreachelse} -->
+                <tr>
+                    <td colspan="4" class="member_no_records">{$lang.no_records}</td>
+                </tr>
+                <!--{/foreach}-->
+            </table>
+            <div class="wrap_bottom"></div>
+        </div>
+        <iframe name="my_payment" style="display:none"></iframe>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+</div>
+<div class="clear"></div>
+{include file=footer.html}

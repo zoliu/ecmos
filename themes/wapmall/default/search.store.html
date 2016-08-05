@@ -1,0 +1,28 @@
+{include file='header2.html'}
+ <section id="wraper">
+      {include file="header.top_nav.html"}
+        <form id="searchbox">
+            <input type="text"><input type="submit" value="">
+        </form>
+        <ul class="pro-list-2">
+        <!--{foreach from=$stores item=store}-->
+        <li>
+                <figure><a href="{url app=store&id=$store.store_id}"><img src="{$store.store_logo}"   alt="{$store.store_name|escape}" title="{$store.store_name|escape}" ></a></figure>
+                <section>
+                    <h2><a href="{url app=store&id=$store.store_id}">{$store.store_name|escape}</a></h2>
+                    <p>{$store.user_name|escape}</p>
+                    <div>{$store.region_name|escape}<img src="{$store.credit_image}" style="width:17px; height:16px;" /></div>
+                </section>
+                <nav><a href="{url app=store&id=$store.store_id}">收藏店铺</a><a href="#">收藏店铺</a><a href="{url app=store&id=$store.store_id}">进入店铺</a></nav>
+            </li>
+        <!--{foreachelse}-->
+        暂无此类商品
+        <!--{/foreach}-->
+
+        </ul>
+        {include file='page.bottom.html'}
+     {include file='footer2.html'}
+    </section>
+    
+</body>
+</html>

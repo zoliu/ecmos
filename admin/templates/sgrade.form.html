@@ -1,0 +1,133 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function(){
+    $('#grade_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('right').text('OK!');
+        },
+        onkeyup    : false,
+        rules : {
+            grade_name : {
+                required : true,
+                remote   : {
+                url :'index.php?app=sgrade&act=check_grade',
+                type:'get',
+                data:{
+                        grade_name : function(){
+                        return $('#grade_name').val();
+                        },
+                        id  : '{$sgrade.grade_id}'
+                    }
+                }
+            },
+            goods_limit : {
+                digits  : true
+            },
+            space_limit : {
+                digits : true
+            },
+            sort_order : {
+                number  : true
+            }
+        },
+        messages : {
+            grade_name : {
+                required : '{$lang.grade_name_empty}',
+                remote   : '{$lang.name_exist}'
+            },
+            goods_limit : {
+                digits : '{$lang.note_limit}'
+            },
+            space_limit : {
+                digits  : '{$lang.note_limit}'
+            },
+            sort_order  : {
+                number   : '{$lang.number_only}'
+            }
+        }
+    });
+});
+</script>
+<div id="rightTop">
+  <p>{$lang.sgrade}</p>
+  <ul class="subnav">
+    <li><a class="btn1" href="index.php?app=sgrade">{$lang.manage}</a></li>
+    <li>
+      <!-- {if $sgrade.grade_id} -->
+      <a class="btn1" href="index.php?app=sgrade&amp;act=add">{$lang.add}</a>
+      <!-- {else} -->
+      <span>{$lang.add}</span>
+      <!-- {/if} -->
+    </li>
+  </ul>
+</div>
+<div class="info">
+  <form method="post" enctype="multipart/form-data" id="grade_form">
+    <table class="infoTable">
+      <tr>
+        <th class="paddingT15"> {$lang.grade_name}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="grade_name" type="text" id="grade_name" value="{$sgrade.grade_name}" />   <label class="field_notice">{$lang.grade_name}</label>     </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> {$lang.goods_limit}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="goods_limit" type="text" id="goods_limit" value="{$sgrade.goods_limit}" />
+          <!--<span class="grey">{$lang.note_for_limit}</span>--> <label class="field_notice">{$lang.note_for_limit}</label>       </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> {$lang.space_limit}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="space_limit" type="text" id="space_limit" value="{$sgrade.space_limit}" />
+          <!--<span class="grey">{$lang.note_for_limit}</span>-->  <label class="field_notice">{$lang.note_for_limit}</label>      </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> <label for="skin_limit">{$lang.skin_limit}:</label></th>
+        <td class="paddingT15 wordSpacing5">{$sgrade.skin_limit}
+          <span class="grey">{$lang.note_for_skin_limit}</span>        </td>
+      </tr>
+      <!--{if $functions}-->
+      <tr>
+        <th class="paddingT15"> <label for="skin_limit">{$lang.function_limit}:</label></th>
+        <td class="paddingT15 wordSpacing5">
+            {foreach from=$functions item=func}
+                <input type="checkbox" name="functions[]"{if $checked_functions.$func} checked{/if} value="{$func}" id="function_{$func}" /><label for="function_{$func}">&nbsp;{$lang.$func}</label>&nbsp;&nbsp;
+            {/foreach}
+        </td>
+      </tr>
+      <!--{/if}-->
+      <tr>
+        <th class="paddingT15"> {$lang.charge}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="charge" type="text" id="charge" value="{$sgrade.charge}" />
+          <label class="field_notice">{$lang.charge}</label>        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.need_confirm}:</th>
+        <td class="paddingT15 wordSpacing5"><p>
+            <label>
+            <input type="radio" name="need_confirm" value="1"{if $sgrade.need_confirm eq "1"} checked="checked"{/if} />
+            {$lang.yes}</label>
+            <label>
+            <input type="radio" name="need_confirm" value="0"{if $sgrade.need_confirm eq "0"} checked="checked"{/if} />
+            {$lang.no}</label>
+          </p></td>
+      </tr>
+      <tr>
+        <th class="paddingT15" valign="top">{$lang.description}:</th>
+        <td class="paddingT15 wordSpacing5">
+        <textarea name="description" id="description">{$sgrade.description}</textarea></td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.sort_order}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="sort_order" name="sort_order" type="text" id="sort_order" value="{$sgrade.sort_order}" /></td>
+      </tr>
+      <tr>
+        <th></th>
+        <td class="ptb20"><input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+          <input class="formbtn" type="reset" name="Reset" value="{$lang.reset}" />        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+{include file="footer.html"}

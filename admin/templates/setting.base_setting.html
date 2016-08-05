@@ -1,0 +1,231 @@
+{include file="header.html"}
+
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    $(".show_image").mouseover(function(){
+        $(this).next("div").show();
+    });
+    $(".show_image").mouseout(function(){
+        $(this).next("div").hide();
+    });
+    {if $setting.sitemap_enabled}
+    $('#sitemap_frequency_setting').show();
+    {/if}
+    $('#sitemap_disabled').click(function(){
+        $('#sitemap_frequency_setting').hide();
+    });
+    $('#sitemap_enabled').click(function(){
+        $('#sitemap_frequency_setting').show();
+    });
+
+    {if $setting.session_type eq 'memcached'}
+    $('#session_memcached').show();
+    {/if}
+    $('#mysql').click(function(){
+        $('#session_memcached').hide();
+    });
+    $('#memcached').click(function(){
+        $('#session_memcached').show();
+    });
+
+    {if $setting.cache_server eq 'memcached'}
+    $('#cache_memcached').show();
+    {/if}
+    $('#c_default').click(function(){
+        $('#cache_memcached').hide();
+    });
+    $('#c_memcached').click(function(){
+        $('#cache_memcached').show();
+    });
+});
+//]]>
+</script>
+
+<div id="rightTop">
+  <p>{$lang.setting}</p>
+  <ul class="subnav">
+    <li><span>{$lang.base_setting}</span></li>
+    <li><a class="btn1" href="index.php?app=setting&amp;act=base_information">{$lang.base_information}</a></li>
+    <li><a class="btn1" href="index.php?app=setting&amp;act=email_setting">{$lang.email_setting}</a></li>
+    <li><a class="btn1" href="index.php?app=setting&amp;act=captcha_setting">{$lang.captcha_setting}</a></li>
+    <li><a class="btn1" href="index.php?app=setting&amp;act=store_setting">{$lang.store_setting}</a></li>
+    <li><a class="btn1" href="index.php?app=setting&amp;act=credit_setting">{$lang.credit_setting}</a></li>
+    <li><a class="btn1" href="index.php?app=setting&amp;act=subdomain_setting">{$lang.subdomain_setting}</a></li>
+  </ul>
+</div>
+<div class="info">
+  <form method="post" enctype="multipart/form-data">
+    <table class="infoTable">
+      <tr>
+        <th class="paddingT15"><label for="time_zone"> {$lang.time_zone}:</label></th>
+        <td class="paddingT15 wordSpacing5"><select id="time_zone" name="time_zone">
+                {html_options options=$time_zone selected=$setting.time_zone}
+          </select>
+          <span class="grey">{$lang.note_for_time_zone}</span>
+        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"><label for="time_format_simple"> {$lang.time_format_simple}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input id="time_format_simple" type="text" name="time_format_simple" value="{$setting.time_format_simple}" class="infoTableInput"/></td>
+      </tr>
+      <tr>
+        <th class="paddingT15"><label for="time_format_complete"> {$lang.time_format_complete}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput" id="time_format_complete" type="text" name="time_format_complete" value="{$setting.time_format_complete}"/></td>
+      </tr>
+      <tr>
+        <th class="paddingT15"><label for="price_format"> {$lang.price_format}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput" id="price_format" type="text" name="price_format" value="{$setting.price_format}"/></td>
+      </tr>
+<!--      <tr>
+        <th class="paddingT15"> {$lang.url_rewrite}:</th>
+        <td class="paddingT15 wordSpacing5"><input id="url_rewrite0" type="radio" name="url_rewrite" {if $setting.url_rewrite eq 0}checked{/if} value="0"/>
+          <label for="url_rewrite0">{$lang.close}</label>
+          <input id="url_rewrite1" type="radio" name="url_rewrite" {if $setting.url_rewrite eq 1}checked{/if} value="1" />
+          <label for="url_rewrite1">{$lang.open}</label>
+        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15"><label for="cache_life"> {$lang.cache_life}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput" id="cache_life" type="text" name="cache_life" value="{$setting.cache_life}"/></td>
+      </tr>-->
+      <tr>
+        <th class="paddingT15"> <label for="default_goods_image">{$lang.default_goods_image}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableFile" id="default_goods_image" type="file" name="default_goods_image" />
+          <!--{if $setting.default_goods_image}-->
+          <img class="show_image" src="{res file=style/images/right.gif}" />
+          <div style="position:absolute; display:none"><img src="{$site_url}/{$setting.default_goods_image}?{$random_number}" /></div>
+          <!--{/if}--></td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> <label for="default_store_logo">{$lang.default_store_logo}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableFile" id="default_store_logo" type="file" name="default_store_logo" />
+          <!--{if $setting.default_store_logo}-->
+          <img class="show_image" src="{res file=style/images/right.gif}" />
+          <div style="position:absolute; display:none"><img src="{$site_url}/{$setting.default_store_logo}?{$random_number}" /></div>
+          <!--{/if}--></td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> <label for="default_user_portrait">{$lang.default_user_portrait}:</label></th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableFile" id="default_user_portrait" type="file" name="default_user_portrait" />
+          <!--{if $setting.default_user_portrait}-->
+          <img class="show_image" src="{res file=style/images/right.gif}" />
+          <div style="position:absolute; display:none"><img src="{$site_url}/{$setting.default_user_portrait}?{$random_number}" /></div>
+          <!--{/if}--></td>
+      </tr>
+      <!--{if $feed_enabled}-->
+      <tr>
+        <th class="paddingT15"> <label for="default_feed_config">{$lang.default_feed_config}:</label></th>
+        <td class="paddingT15 wordSpacing5">
+            <!--{foreach from=$feed_items key=_fi item=_fn}-->
+            <input type="checkbox" id="feed_{$_fi}" name="default_feed_config[{$_fi}]" value="1" {if $default_feed_config.$_fi} checked="true"{/if} /><label for="feed_{$_fi}">{$_fn}</label>&nbsp;
+            <!--{/foreach}-->
+        </td>
+      </tr>
+      <!--{/if}-->
+      <tr>
+        <th class="paddingT15"> <label for="statistics_code">{$lang.statistics_code}:</label></th>
+        <td class="paddingT15 wordSpacing5"><textarea name="statistics_code" id="statistics_code">{$setting.statistics_code|escape}</textarea></td>
+      </tr>
+<!--      <tr>
+        <th class="paddingT15">{$lang.disaplay_sales_volume}:</th>
+        <td><input id="disaplay_sales_volume0" type="radio" name="disaplay_sales_volume" {if $setting.disaplay_sales_volume eq 0}checked{/if} value="0" />
+          <label for="disaplay_sales_volume0">{$lang.close}</label>
+          <input id="disaplay_sales_volume1" type="radio" name="disaplay_sales_volume" {if $setting.disaplay_sales_volume eq 1}checked{/if} value="1" />
+          <label for="disaplay_sales_volume1">{$lang.open}</label>
+        </td>
+      </tr>-->
+      <tr>
+        <th class="paddingT15">{$lang.guest_comment}:</th>
+        <td class="paddingT15"><input id="guest_comment_disabled" type="radio" name="guest_comment" {if !$setting.guest_comment}checked{/if} value="0" />
+          <label for="guest_comment_disabled">{$lang.no}</label>
+          <input type="radio" id="guest_comment_enable" name="guest_comment" {if $setting.guest_comment}checked{/if} value="1" />
+          <label for="guest_comment_enable">{$lang.yes}</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="grey">{$lang.guest_comment_note}</span>
+        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.rewrite_enabled}:</th>
+        <td class="paddingT15"><input id="rewrite_disabled" type="radio" name="rewrite_enabled" {if !$setting.rewrite_enabled}checked{/if} value="0" />
+          <label for="rewrite_disabled">{$lang.no}</label>
+          <input type="radio" id="rewrite_enabled" name="rewrite_enabled" {if $setting.rewrite_enabled}checked{/if} value="1" />
+          <label for="rewrite_enabled">{$lang.yes}</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="grey">{$lang.rewrite_enabled_note}</span>
+        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.sitemap_enabled}:</th>
+        <td class="paddingT15"><input id="sitemap_disabled" type="radio" name="sitemap_enabled" {if !$setting.sitemap_enabled}checked{/if} value="0" />
+          <label for="sitemap_disabled">{$lang.no}</label>
+          <input type="radio" id="sitemap_enabled" name="sitemap_enabled" {if $setting.sitemap_enabled}checked{/if} value="1" />
+          <label for="sitemap_enabled">{$lang.yes}</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="grey">{$lang.sitemap_enabled_note}</span>
+        </td>
+      </tr>
+      <tr id="sitemap_frequency_setting" style="display:none">
+        <th class="paddingT15">
+            {$lang.sitemap_frequency}:
+        </th>
+        <td class="paddingT15">
+            <input type="text" name="sitemap_frequency" value="{$setting.sitemap_frequency}" />
+        </td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.session_type}:</th>
+        <td class="paddingT15"><input id="mysql" type="radio" name="session_type" {if $setting.session_type eq 'mysql'}checked{/if} value="mysql" />
+          <label for="mysql">Mysql</label>
+          <input type="radio" id="memcached" name="session_type" {if $setting.session_type eq 'memcached'}checked{/if} value="memcached" />
+          <label for="memcached">Memcahced</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="grey">{$lang.session_type_note}</span>
+        </td>
+      </tr>
+      <tr id="session_memcached" style="display:none">
+        <th class="paddingT15">
+            {$lang.session_memcached}:
+        </th>
+        <td class="paddingT15">
+            <input type="text" name="session_memcached" value="{$setting.session_memcached}" />
+            <span class="grey">{$lang.session_memcached_note}</span>
+        </td>
+      </tr>
+
+
+      <tr>
+        <th class="paddingT15">{$lang.cache_server}:</th>
+        <td class="paddingT15"><input id="c_default" type="radio" name="cache_server" {if $setting.cache_server eq 'default'}checked{/if} value="default" />
+          <label for="c_default">File</label>
+          <input type="radio" id="c_memcached" name="cache_server" {if $setting.cache_server eq 'memcached'}checked{/if} value="memcached" />
+          <label for="c_memcached">Memcahce</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="grey">{$lang.cache_server_note}</span>
+        </td>
+      </tr>
+      <tr id="cache_memcached" style="display:none">
+        <th class="paddingT15">
+            {$lang.cache_memcached}:
+        </th>
+        <td class="paddingT15">
+            <input type="text" name="cache_memcached" value="{$setting.cache_memcached}" />
+            <span class="grey">{$lang.cache_memcached_note}</span>
+        </td>
+      </tr>
+
+
+      <tr>
+        <th class="paddingT15">{$lang.enable_radar}:</th>
+        <td class="paddingT15"><input id="radar_disabled" type="radio" name="enable_radar" {if !$setting.enable_radar}checked{/if} value="0" />
+          <label for="radar_disabled">{$lang.no}</label>
+          <input type="radio" id="enable_radar" name="enable_radar" {if $setting.enable_radar}checked{/if} value="1" />
+          <label for="enable_radar">{$lang.yes}</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="grey">{$lang.enable_radar_note}</span>
+        </td>
+      </tr>
+      <tr>
+        <th></th>
+        <td class="ptb20"><input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+          <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+{include file="footer.html"}

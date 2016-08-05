@@ -1,0 +1,30 @@
+<script type="text/javascript">
+var _d = DialogManager.get('config_dialog');
+_d.setWidth(350);
+_d.setPosition('center');
+</script>
+<div class="field_item">
+    <label>上传广告图片:(<span>支持 gif|jpg|jpeg|png 格式</span>)</label>
+    <p><input type="file" name="ad_image_file" /><input type="hidden" name="ad_image_url" value="{$options.ad_image_url}" /></p>
+    <!-- {if $options.ad_image_url} --><p><img src="{$options.ad_image_url}"  width="300"  /></p><!-- {/if} -->
+</div>
+<div class="field_item">
+    <label>广告链接地址:</label>
+    <p><input type="text" name="ad_link_url" value="{$options.ad_link_url}" /></p>
+</div>
+<div class="field_item">
+    <label>图片宽度:</label>
+    <p><input type="text" name="ad_width" value="{$options.ad_width}" />px</p>
+</div>
+<div class="field_item">
+    <label>图片高度:</label>
+    <p><input type="text" name="ad_height" value="{$options.ad_height}" />px</p>
+</div>
+<div class="field_item">
+    <label>是否加外边框(border)</label>
+    <p><input type="text" name="ad_border" value="{$options.ad_border}" />px</p>
+</div>
+<div class="field_item">
+    <label>是否加外边距(margin)</label>
+    <p><input type="text" name="ad_margin" value="{$options.ad_margin}" /><font color="gray">填写4个值，如10px 10px 10px 10px，分别代表上右下左边距</font></p>
+</div>

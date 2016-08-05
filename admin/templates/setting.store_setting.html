@@ -1,0 +1,36 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>{$lang.setting}</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?app=setting&amp;act=base_setting">{$lang.base_setting}</a></li>
+        <li><a class="btn1" href="index.php?app=setting&amp;act=base_information">{$lang.base_information}</a></li>
+        <li><a class="btn1" href="index.php?app=setting&amp;act=email_setting">{$lang.email_setting}</a></li>
+        <li><a class="btn1" href="index.php?app=setting&amp;act=captcha_setting">{$lang.captcha_setting}</a></li>
+        <li><span>{$lang.store_setting}</span></li>
+        <li><a class="btn1" href="index.php?app=setting&amp;act=credit_setting">{$lang.credit_setting}</a></li>
+        <li><a class="btn1" href="index.php?app=setting&amp;act=subdomain_setting">{$lang.subdomain_setting}</a></li>
+        </ul>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">
+                    {$lang.store_allow}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input id="store_allow0" type="radio" name="store_allow" {if $setting.store_allow eq 0}checked{/if} value="0" /> <label for="store_allow0">{$lang.close}</label>
+                    <input id="store_allow1" type="radio" name="store_allow" {if $setting.store_allow eq 1}checked{/if} value="1" /> <label for="store_allow1">{$lang.open}</label>
+                </td>
+            </tr>
+            <tr>
+            <th></th>
+            <td class="ptb20">
+                <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />
+            </td>
+        </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

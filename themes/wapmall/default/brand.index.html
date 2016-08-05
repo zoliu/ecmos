@@ -1,0 +1,47 @@
+{include file='header2.html'}
+<style>
+  .pro-classify dt:hover, .pro-classify .current a, .pro-classify dt:hover a{
+		color: #fff;
+	}
+
+</style>
+
+<section id="wraper">
+		{include file="header.top_nav.html"}
+		<dl class="pro-classify" id="proClassify">
+			<dt class='current'>
+				<a href=''>{$lang.recommended_brands}</a>
+			</dt>
+			<!--{foreach from=$recommended_brands item=brand name=brand}-->
+            <dd style="display:inline-block;margin-left: 3%;">
+				<a href="{url app=search&brand=$brand.brand_name|escape:url}" style="width:104px;height:54px;"><img src="{$brand.brand_logo}" style="width:100px;height:50px;" alt="{$brand.brand_name}" /></a>          
+			</dd>
+           <!--{/foreach}-->
+
+			<!--{foreach from=$brand_list item=list}-->	
+			<dt class='current'>
+				<a href=''><!--{if $list.tag eq ''}-->{$lang.other}<!--{else}-->{$list.tag}<!--{/if}-->({$list.count})</a>
+			</dt>
+			<!--{foreach from=$list.brands item=brand name=brand}-->		
+			<dd style="display:inline-block;margin-left: 3%;">
+				<a href="{url app=search&brand=$brand.brand_name|escape:url}" style="width:104px;height:54px;"><img src="{$brand.brand_logo}" style="width:100px;height:50px;" alt="{$brand.brand_name}" /></a>          
+			</dd>
+			<!--{/foreach}-->		
+
+			<!--{foreachelse}-->		
+			<dd>暂无品牌</dd>
+			<!--{/foreach}-->		
+
+		</dl>
+{include file='footer2.html'}		
+	</section>
+
+
+
+</div>
+</body>
+</html>
+
+
+
+

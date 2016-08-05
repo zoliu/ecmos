@@ -1,0 +1,13 @@
+<div class="module_common">
+    <h2><b class="brands" title="BRANDS品牌区"></b></h2>
+    <div class="wrap">
+        <div class="wrap_child">
+            <ul class="brands_list">
+                <!--{foreach from=$widget_data item=brand}-->
+                <li><a href="{url app=search&brand=$brand.brand_name|escape:url}"><img src="{$brand.brand_logo}" alt="{$brand.brand_name|escape}" width="86" height="48" title="{$brand.brand_name|escape}" /></a></li>
+                <!--{/foreach}-->
+            </ul>
+            <input type="button" class="brands_btn" value="查看全部品牌" onclick="go(SITE_URL + '/{url app=brand}');" />
+        </div>
+    </div>
+</div>

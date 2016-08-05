@@ -1,0 +1,17 @@
+<div class="module_common">
+    <h2><b class="news" title="NEWS公告栏"></b></h2>
+    <div class="wrap">
+        <div class="wrap_child">
+            <ul class="news_list">
+                <!--{foreach from=$widget_data.notices item=article}-->
+                <li>{$article.add_time|date:m-d} <a href="{url app=article&act=view&article_id=$article.article_id}" title="{$article.title|escape}">{$article.title|escape}</a></li>
+                <!--{/foreach}-->
+            </ul>
+            <div class="ad_news">
+                <!-- {if $widget_data.ad_image_url} -->
+                <a href="{$widget_data.ad_link_url}" target="_blank"><img src="{$widget_data.ad_image_url}" width="180" height="60" /></a>
+                <!-- {/if} -->
+            </div>
+        </div>
+    </div>
+</div>

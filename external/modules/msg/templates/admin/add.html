@@ -1,0 +1,60 @@
+{include file="header.html"}
+<style type="text/css">
+.info th{ width:80px;}
+</style>
+<div class="mrightTop">
+	<div class="fontl">{$lang.welcome}</div>
+</div>
+<div id="rightTop">
+    <ul class="subnav" style="margin-left:0px;">
+         <li><a class="btn1" href="index.php?module=msg">{$lang.msglog}</a></li>
+        <li><a class="btn1" href="index.php?module=msg&act=user">{$lang.user}</a></li>
+        <li><span>{$lang.addmsg}</span></li>
+        <li><a class="btn1" href="index.php?module=msg&act=send">{$lang.sendmsg}</a></li>
+         <li><a class="btn1" href="index.php?module=msg&act=setting">{$lang.setting}</a></li>
+    </ul>
+</div>
+
+<div class="info">
+  <table class="infoTable">
+   	 <form method="post">
+            <tr>
+                <th class="paddingT15">{$lang.yonghuming}</th>
+                <td class="paddingT15 wordSpacing5">
+				<input name="user_name" type="text" value="<!--{foreach from=$data item=val}-->{$val.user_name}<!--{/foreach}-->" size="20">
+				</td>
+            </tr>
+            <tr>
+                <th class="paddingT15">增加/减少</th>
+              <td class="paddingT15 wordSpacing5">
+				<input name="num" type="text"  value="" size="10">
+				条
+				</td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.caozuoleixing}</th>
+           <td class="paddingT15 wordSpacing5"><input name="jia_or_jian" type="radio" value="jia" checked="CHECKED" />{$lang.zengjia}&nbsp;&nbsp;
+		   <input type="radio" name="jia_or_jian" value="jian" />{$lang.jianshao}
+		   <font color="#FF0000">{$lang.zhuyixuanze}</font>
+			  </td>
+            </tr>
+			<tr>
+                <th class="paddingT15">{$lang.jiluliushui}</th>		
+                <td class="paddingT15 wordSpacing5">
+				<input name="log_text" type="text" id="log_text" value="{$visitor.user_name}{$lang.adminmsglog}" size="60">
+                </td>
+            </tr>
+	
+            <tr>
+            <th></th>
+            <td class="ptb20">
+                <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />
+            </td>
+            </tr>
+    </form>
+
+
+      </table>	
+</div>
+{include file="footer.html"}

@@ -1,0 +1,164 @@
+{include file="header.html"}
+<style>
+
+</style>
+<script type="text/javascript">
+//<!CDATA[
+$(function()
+{
+    change_background();
+});
+
+function change_background()
+{
+    $("tbody tr").hover(
+    function()
+    {
+        $(this).css({background:"#EAF8DB"});
+    },
+    function()
+    {
+        $(this).css({background:"#fff"});
+    });
+}
+
+function flex(obj)
+{
+    var status = obj.attr('status');
+    var id = obj.attr('fieldid');
+    var pid = obj.parent('td').parent('tr').attr("class");
+    var src = $(obj).attr('src');
+    if(status == 'open')
+    {
+        var pr = $(obj).parent('td').parent('tr');
+        var selfurl = window.location.href;
+        var sr  = pr.clone();
+        var td2 = sr.find("td:eq(1)");
+        td2.prepend("<img class='preimg' src='templates/style/images/treetable/vertline.gif'/>")
+                        .find("img[ectype=flex]")
+                        .remove()
+                        .end()
+                        .find('span')
+                        .remove();
+        var img_count = td2.children("img").length;
+        var td2html = td2.html();
+         $.get(selfurl + "&act=ajax_cate", {id: id}, function(data){
+             if(data)
+             {
+                 var str = '';
+                 var add_child = '';
+                 var res = eval('(' + data + ')');
+                 for(var i = 0; i < res.length; i++)
+                 {
+                     if(res[i].switchs)
+                     {
+                         src =  "<img src='templates/style/images/treetable/tv-expandable.gif' ectype='flex' status='open' fieldid="+res[i].region_id+
+                           " onclick='flex($(this))'><span class='node_name'>" + res[i].region_name + "</span>";
+                     }
+                     else
+                     {
+                         src = "<img src='templates/style/images/treetable/tv-item.gif'><span class='node_name'>" + res[i].region_name + "</span>";
+                     }
+                     if(img_count < ({$max_layer} -1))
+                     {
+                         add_child = "<a href='index.php?app=region&amp;act=add&amp;pid="+res[i].region_id+"'>{$lang.add_child}</a>";
+                     }
+                     var itd2 = td2html + src;
+                     str+="<tr class='"+pid+" row"+id+"'><td class='align_center w30'><input type='checkbox' class='checkitem' value='" + res[i].region_id + "'></td>"+
+                        "<td class='node' width='50%'>" + itd2 + "</td>"+
+                        "<td class='align_center'><span ectype='inline_edit' fieldname='sort_order' fieldid='" + res[i].region_id + "' datatype='pint' maxvalue='255' title='{$lang.editable}' class='editable'>" + res[i].sort_order + "</span></td>"+
+                        "<td class='handler'><span><a href='index.php?app=region&act=edit&id=" + res[i].region_id + "'>{$lang.edit}</a> | <a href='javascript:if(confirm(\""+lang.confirm_delete+"\"))window.location=\"index.php?app=region&act=drop&id=" + res[i].region_id + "\";'>{$lang.drop}</a> | " + add_child + "</span></td>";
+                 }
+                pr.after(str);
+                change_background();
+                $('span[ectype="inline_edit"]').unbind('click');
+                $.getScript(SITE_URL+"/includes/libraries/javascript/inline_edit.js");
+             }
+         });
+         obj.attr('src',src.replace("tv-expandable","tv-collapsable"));
+         obj.attr('status','close');
+    }
+    if(status == 'close')
+    {
+        $('.row' + id).hide();
+        obj.attr('src',src.replace("tv-collapsable","tv-expandable"));
+        obj.attr('status','open');
+    }
+}
+var uri = "index.php?app=region&act=update_order";
+
+function updateOrder(obj){
+    var arr = new Array();
+    $(".checkitem:checked").each(function(){
+        arr.push($(this).parents("tr").find(":text").val());
+    });
+    $(obj).attr("uri", uri + "&sort_order=" + arr.join(','));
+    return true;
+}
+//]]>
+</script>
+
+<div id="rightTop">
+    <p>{$lang.region}</p>
+    <ul class="subnav">
+        <li><span>{$lang.manage}</span></li>
+        <li><a class="btn1" href="index.php?app=region&amp;act=add">{$lang.add}</a></li>
+        <li><a class="btn1" href="index.php?app=region&amp;act=export">{$lang.export}</a></li>
+        <li><a class="btn1" href="index.php?app=region&amp;act=import">{$lang.import}</a></li>
+    </ul>
+</div>
+
+<div class="info2">
+    <table class="distinction">
+        <!-- {if $regions} -->
+        <thead>
+        <tr>
+            <th class="w30"><input id="checkall_1" type="checkbox" class="checkall"/></th>
+            <th width="50%"><span class="all_checkbox"><label for="checkall_1">{$lang.checkall}</label></span>{$lang.region_name}</th>
+            <th>{$lang.sort_order}</th>
+            <th class="handler">{$lang.handler}</th>
+        </tr>
+        </thead>
+        <tbody id="treet1"><!-- {/if} -->
+        <!--{foreach from=$regions item=region}-->
+        <tr class="">
+            <td class="align_center w30"><input type="checkbox" class="checkitem" value="{$region.region_id}" /></td>
+            <td class="node" width="50%">
+            <!--{if $region.switchs}-->
+            <img src="templates/style/images/treetable/tv-expandable.gif" ectype="flex" status="open" fieldid="{$region.region_id}" onclick="flex($(this))">
+            <!--{else}-->
+            <img src="templates/style/images/treetable/tv-item.gif">
+            <!--{/if}-->
+            <span class="node_name">{$region.region_name|escape}</span></td>
+            <td class="align_center"><span ectype="inline_edit" fieldname="sort_order" fieldid="{$region.region_id}" datatype="pint" maxvalue="255" title="{$lang.editable}" class="editable">{$region.sort_order}</span></td>
+            <td class="handler">
+            <span>
+            <a href="index.php?app=region&amp;act=edit&amp;id={$region.region_id}">{$lang.edit}</a>
+                |
+                <a href="javascript:if(confirm('{$lang.drop_confirm}'))window.location = 'index.php?app=region&amp;act=drop&amp;id={$region.region_id}';">{$lang.drop}</a><!-- {if $region.layer lt $max_layer} --> | <a href="index.php?app=region&amp;act=add&amp;pid={$region.region_id}">{$lang.add_child}</a><!-- {/if} -->
+                </span>
+                </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="4">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+        <!-- {if $regions} --></tbody><!-- {/if} -->
+        <tfoot>
+            <tr class="tr_pt10">
+            <!-- {if $regions} -->
+                <td class="align_center"><label for="checkall1"><input id="checkall_2" type="checkbox" class="checkall"></label></td>
+                <td colspan="3" id="batchAction">
+                    <span class="all_checkbox"><label for="checkall_2">{$lang.checkall}</label></span>&nbsp;&nbsp;
+                    <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="index.php?app=region&act=drop" presubmit="confirm('{$lang.drop_confirm}');" />
+                </td>
+            <!--{/if}-->
+            </tr>
+        </tfoot>
+    </table>
+
+
+</div>
+
+{include file="footer.html"}

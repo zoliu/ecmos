@@ -1,0 +1,105 @@
+
+<!-- www.360cd.cn  Mosquito -->
+
+{include file=member.header.html}
+
+<script type="text/javascript">
+
+$(function() {
+    
+    $('#start_time').datepicker({
+        dateFormat : 'yy-mm-dd'
+    });
+
+    $('#end_time').datepicker({
+        dateFormat : 'yy-mm-dd'
+    });
+
+});
+</script>
+
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <div class="public table">
+                <div class="user_search">
+                    <form method="get">
+                        <input type="hidden" name="app" value="my_money" />
+                        <input type="hidden" name="act" value="log" />
+                
+                        <span>日期：</span>
+                        <input type="text" class="text1 width2" name="start_time" id="start_time" value="{$query.start_time}" />
+                        <span>-</span>
+                        <input type="text" class="text1 width2" name="end_time" id="end_time" value="{$query.end_time}" />
+                        
+                        <span>类型：</span>
+                        <select name="type">
+                            <option value="">全部类型</option>
+                            {html_options options=$money_log_type_options selected=$query.type}
+                        </select>
+                        
+                        <input type="submit" class="btn" value="查询" />
+                    </form>
+                </div>
+
+                <table>
+                    {if $money_log_list}
+                    <tr class="line gray">
+                        <th style="width: 12em;">日期</th>
+                        <th style="width: 22em;">金额</th>
+                        <th style="width: 10em;">类型</th>
+                        <th style="width: 8em;">交易对方</th>
+                        <th style="width: 6em;">状态</th>
+                        <th>备注</th>
+                    </tr>
+                    {/if}
+
+                    {foreach from=$money_log_list item=data}
+                    <tr class="line_bold">
+                        <td>{$data.add_time|date:complete}</td>
+                        <td>
+                            <p style="color: blue; float: left; width: 49%; display: inline-block;">{$flow_options[$smarty.const.FLOW_IN]}: {if $data.flow eq $smarty.const.FLOW_IN}{$data.money|price}{else}{$data.money_1|price}{/if}</p>
+                            <p style="color: red; float: right; width: 49%; display: inline-block;">{$flow_options[$smarty.const.FLOW_OUT]}: {if $data.flow eq $smarty.const.FLOW_OUT}{$data.money|price}{else}{$data.money_1|price}{/if}</p>
+                        </td>
+                        <td>{$money_log_type_options[$data.type]}</td>
+                        <td>{$data.party_name}</td>
+                        <td>
+                            {if $data.type eq $smarty.const.MONEY_L_T_CZ && $data.status eq $smarty.const.MONEY_L_S_GO}
+                            <a href="{url app=my_money&act=recharge&id=$data.id}" target="_blank">{$money_log_status_options[$data.status]}</a>
+                            {else}
+                            {$money_log_status_options[$data.status]}
+                            {/if}
+                        </td>
+                        <td>
+                        {$data.user_name} {$money_log_type_options[$data.type]} {$flow_options[$data.flow]}{$data.money|price}
+                        </td>
+                    </tr>
+                    {foreachelse}
+                    <tr>
+                        <td colspan="5" class="member_no_records padding6">没有符合条件的记录</td>
+                    </tr>
+                    {/foreach}
+                </table>
+
+                {include file="member.page.bottom.html"}
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<div class="clear"></div>
+
+<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
+
+{include file=footer.html}

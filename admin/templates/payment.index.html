@@ -1,0 +1,47 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p><strong>{$lang.payment_manage}</strong></p>
+</div>
+<div class="tdare info">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!--{if $payment}-->
+        <tr class="tatr1">
+            <td class="firstCell" width="15%">{$lang.payment_name}</td>
+            <td>{$lang.payment_description}</td>
+            <td width="5%">{$lang.enable}</td>
+            <td width="10%">{$lang.support_currency}</td>
+            <td width="10%">{$lang.author}</td>
+            <td width="10%" class="table-center">{$lang.version}</td>
+            <td width="50" class="handler" style="width: 100px">{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$payments item=payment}-->
+        <tr class="tatr2">
+            <td class="firstCell">{$payment.name}</td>
+            <td><span class="padding1">{$payment.desc}</span></td>
+            <td>{if $payment.system_enabled}{$lang.yes}{else}{$lang.no}{/if}</td>
+            <td><span class="padding1">{$payment.currency}</span></td>
+            <td><a href="{$payment.website}" target="_blank" title="{$lang.author_website}">{$payment.author}</a></td>
+            <td class="table-center">{$payment.version}</td>
+            <td class="handler" width="50" style="width: 100px">
+                <!--{if !$payment.system_enabled}-->
+            <a href="index.php?app=payment&amp;act=enable&amp;code={$payment.code}">{$lang.enable}</a>
+                <!--{else}-->
+                <a href="javascript:if(confirm('{$lang.disable_confirm}'))window.location='index.php?app=payment&act=disable&code={$payment.code}';">{$lang.disable}</a>
+                <!--{/if}-->
+				 <!--{if $payment.installed}--> <!--360cd.cn-->
+					<a href="index.php?app=payment&amp;act=config&payment_id={$payment.payment_id}&amp;code={$payment.code}" >{$lang.config}</a> 
+					<a href="javascript:drop_confirm('{$lang.uninstall_confirm}', 'index.php?app=payment&amp;act=uninstall&payment_id={$payment.payment_id}');" class="delete">{$lang.uninstall}</a>
+				<!--{else}-->
+					<a href="index.php?app=payment&amp;act=install&code={$payment.code}">{$lang.install}</a>
+				<!--{/if}--><!--360cd.cn-->
+                </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="7">{$lang.no_installed_payment}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+</div>
+{include file="footer.html"}

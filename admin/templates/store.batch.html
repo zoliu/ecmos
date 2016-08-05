@@ -1,0 +1,104 @@
+{include file="header.html"}
+<script type="text/javascript" src="index.php?act=jslang"></script>
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    regionInit("region");
+
+    $(":radio[name='certification']").click(function(){
+        $(".certification:checkbox").attr('disabled', this.value == 0);
+    });
+});
+//]]>
+</script>
+<div id="rightTop">
+  <p>{$lang.store}</p>
+  <ul class="subnav">
+    <li><a class="btn1" href="index.php?app=store">{$lang.manage}</a></li>
+    <li><a class="btn1" href="index.php?app=store&amp;act=test">{$lang.add}</a></li>
+    <li><a class="btn1" href="index.php?app=store&amp;wait_verify=1">{$lang.wait_verify}</a></li>
+  </ul>
+</div>
+<div class="info">
+  <form method="post" enctype="multipart/form-data">
+    <table class="infoTable">
+      <tr>
+        <th class="paddingT15"> {$lang.region}:</th>
+        <td class="paddingT15 wordSpacing5" ><div id="region">
+            <input type="hidden" name="region_id" value="0" class="mls_id" />
+            <input type="hidden" name="region_name" value="" class="mls_names" />
+            <select>
+              <option value="0">{$lang.select_pls}</option>
+              {html_options options=$regions}
+            </select>
+            <span class="grey">{$lang.note_for_select}</span> </div></td>
+      </tr>
+      <tr>
+        <th class="paddingT15"> <label for="sgrade"> {$lang.sgrade}: </label>
+        </th>
+        <td class="paddingT15 wordSpacing5"><select name="sgrade" id="sgrade">
+            <option value="0">{$lang.select_pls}</option>
+          {html_options options=$sgrades}
+          </select>
+          <span class="grey">{$lang.note_for_select}</span> </td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.certification}:</th>
+        <td class="paddingT15 wordSpacing5"><p>
+            <label>
+            <input name="certification" type="radio" value="0" checked="checked" />
+            {$lang.no_change}</label>
+            <label>
+            <input type="radio" name="certification" value="1" />
+            {$lang.change_to}</label> (
+            <label for="autonym">
+            <input name="autonym" type="checkbox" id="autonym" value="1" class="certification" disabled="disabled" />
+            {$lang.autonym}</label>
+            <label for="material">
+            <input type="checkbox" name="material" value="1" id="material" class="certification" disabled="disabled" />
+            {$lang.material}</label> )
+          </p></td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.recommend}:</th>
+        <td class="paddingT15 wordSpacing5"><p>
+            <label>
+            <input name="recommended" type="radio" value="-1" checked="checked" />
+            {$lang.no_change}</label>
+            <label>
+            <input type="radio" name="recommended" value="1" />
+            {$lang.yes}</label>
+            <label>
+            <input type="radio" name="recommended" value="0" />
+            {$lang.no}</label>
+          </p></td>
+      </tr>
+      <tr><!--360cd.cn-->
+        <th class="paddingT15">{$lang.open_pay}:</th>
+        <td class="paddingT15 wordSpacing5"><p>
+            <label>
+            <input name="is_open_pay" type="radio" value="-1" checked="checked" />
+            {$lang.no_change}</label>
+            <label>
+            <input type="radio" name="is_open_pay" value="1" />
+            {$lang.open}</label>
+            <label>
+            <input type="radio" name="is_open_pay" value="0" />
+            {$lang.close}</label>
+          </p></td>
+      </tr>
+      <tr><!--360cd.cn-->
+        <th class="paddingT15">{$lang.sort_order}:</th>
+        <td class="paddingT15 wordSpacing5"><input name="sort_order" type="text" id="sort_order" />
+          <span class="grey">{$lang.note_for_input}</span></td>
+      </tr>
+      <tr>
+        <th></th>
+        <td class="ptb20"><input type="hidden" name="id" value="{$smarty.get.id}" />
+          <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+          <input class="formbtn" type="reset" name="Reset" value="{$lang.reset}" /></td>
+      </tr>
+    </table>
+  </form>
+</div>
+{include file="footer.html"} 

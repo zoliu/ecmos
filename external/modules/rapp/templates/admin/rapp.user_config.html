@@ -1,0 +1,48 @@
+
+<!-- www.360cd.cn  Mosquito -->
+
+{include file='header.html'}
+
+<div id="rightTop">
+	<ul class="subnav">
+        <li><a class="btn1" href="{url module=rapp&act=app_list}">应用列表</a></li>
+        <li><a class="btn1" href="{url module=rapp&act=user_center}">个人中心</a></li>
+        <li><span>用户配置</span></li>
+    </ul>
+</div>
+
+<div class="mrightTop"></div>
+
+<div class="info">
+	<form method="post" enctype="multipart/form-data" id="_form_">
+		<table class="infoTable">
+			<tr>
+				<th class="paddingT15">用户名：</th>
+				<td class="paddingT15 wordSpacing5">
+                    <input name="user_name" type="text">
+                </td>
+			</tr>
+            <tr>
+                <th class="paddingT15">密码：</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input name="password" type="password">
+                </td>
+            </tr>
+			<tr>
+				<th></th>
+				<td class="ptb20">
+				<span>注：此用户名与密码为第三方<a href="{$s_url}" target="_blank">{$s_url}</a>中心所提供</span>
+				<a href="{$s_url}/?app=member&act=register" target="_blank">前往注册</a>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td class="ptb20">
+					<input class="formbtn" type="submit" value="提交">
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+{include file='footer.html'}

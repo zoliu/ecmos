@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={$charset}" />
+<title> {$lang.ecmall_sysmsg} -- Powered by ECMall </title>
+<link href="templates/style/admin.css" rel="stylesheet" type="text/css" />
+<style>
+<!--
+body {background: none}
+h1 {font-size: 13px; color: #444; line-height: 55px; background: url(templates/style/images/welcome_h1.gif); padding-left: 2%}
+dl { background: url(templates/style/images/welcome.gif) no-repeat left 10px; padding-left: 40px; margin: 35px 0 45px 15%}
+dt {line-height: 60px; color: #009de6; font-weight:bold;}
+dd {line-height: 18px; color: #444;}
+a {color: #06c}
+p {color: #999; border-top: 1px solid #cbe4f5; text-align: center; padding-top: 20px;}
+-->
+</style>
+</head>
+
+<body>
+<div id="rightTop">
+    <p>{$lang.db}</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?app=db&amp;act=backup">{$lang.backup}</a></li>
+        <li><a class="btn1" href="index.php?app=db&amp;act=restore">{$lang.restore}</a></li>
+    </ul>
+</div>
+<div class="info">
+<dl>
+    <dt>{$title}</dt>
+    <!--{if $auto_redirect}-->
+    <dd>{$lang.backup_notice}</dd>
+    <script>setTimeout("window.location.replace('{$auto_link}');", 1250);</script>
+    <!--{else}-->
+    <!--{foreach from=$list item=file}-->
+    <dd><a target="_blank" href="{$file.href}">{$file.name}</a></dd>
+    <!--{/foreach}-->
+    <!--{/if}-->
+</dl>
+</div>
+<p>Copyright 2003-2012 ShopEx Inc.,All rights reserved.</p>
+</body>
+</html>

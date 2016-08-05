@@ -1,0 +1,260 @@
+{include file=member.header.html}
+<style>
+.txt { margin-right:20px}
+.spec ul { width: 530px; overflow: hidden; }
+.spec .td { padding-bottom: 10px; }
+.spec li { float: left; margin-left: 6px; display: inline; }
+.spec li input { text-align: center; }
+.spec .th { padding: 3px 0; margin-bottom: 10px; border-top: 2px solid #e3e3e3; border-bottom: 1px solid #e3e3e3; background: #f8f8f8; }
+</style>
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    $('#start_time input').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#end_time input').datepicker({dateFormat: 'yy-mm-dd'});
+    if_show();
+    //check_spec();
+    $('input[name="if_publish"]').click(function(){
+        if_show();
+    });
+
+
+    $('#group_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        onkeyup : false,
+        rules : {
+            group_name : {
+                required   : true
+            },
+            group_desc : {
+                maxlength   : 255
+            },
+            end_time      : {
+                required     : true
+            },
+            goods_id      : {
+                required   :true,
+                min    : 1
+            },
+            min_quantity :{
+                required   :true,
+                min    :1
+            }
+        },
+        messages : {
+            group_name  : {
+                required   : '{$lang.fill_group_name}'
+            },
+            group_desc  : {
+                maxlength   : '{$lang.fill_max_group_desc}'
+            },
+            end_time       : {
+                required     : '{$lang.fill_end_time}'
+            },
+            goods_id      : {
+                required:  '{$lang.fill_goods}',
+                min   : '{$lang.fill_goods}'
+            },
+            min_quantity: {
+                required : '{$lang.fill_min_quantity}',
+                min   : '{$lang.fill_min_quantity}'
+            }
+        }
+    });
+
+});
+
+function gs_callback(){
+    query_spec($('#goods_id').val());
+}
+function if_show(){
+    if($('input[name="if_publish"]:checked').val() == 1){
+            $('#start_time').hide();
+        }else{
+            $('#start_time').show();
+    }
+}
+
+function check_spec(){
+    $('input[name="spec_id[]"]').click(function(){
+        var obj_group_price = $(this).parent().parent().find('input[name="group_price[]"]')
+        if($(this).attr('checked') == true){
+            obj_group_price.show();
+            obj_group_price.attr('disabled', false);
+        }else{
+            obj_group_price.hide();
+            obj_group_price.attr('disabled', true);
+            obj_group_price.val('');
+            $('label.error').remove();
+        }
+    });
+
+    $('#submit_group').unbind('click');
+    $('#submit_group').click(function(){
+        $('label.error').remove();
+        var qty = 0;
+        var error = false;
+        var price_empty = false;
+
+        $('*[ectype="spec_item"]').each(function(){
+            var obj_group_price = $(this).find('input[name="group_price[]"]');
+            var group_price = obj_group_price.val();
+            var if_checked = $(this).find('input[name="spec_id[]"]').attr('checked');
+            if_checked && qty++;
+            if(group_price != '' && (group_price < 0 || isNaN(group_price))){
+                error = obj_group_price;
+            }
+            if(if_checked && group_price == ''){
+                price_empty = obj_group_price;
+            return false;
+            }
+        })
+        if(qty == 0){
+            alert('{$lang.fill_spec}');
+            return false;
+        }
+        if(error != false){
+            error.focus();
+            error.addClass('error');
+            error.after('<label class="error" for="group_price[]" generated="true">{$lang.invalid_group_price}</label>');
+            return false;
+        }
+        if(price_empty != false){
+            price_empty.focus();
+            price_empty.addClass('error');
+            price_empty.after('<label class="error" for="group_price[]" generated="true">{$lang.fill_group_price}</label>');
+            return false;
+        }
+
+    });
+}
+
+function query_spec(goods_id){
+    $.getJSON('index.php?app=seller_groupbuy&act=query_goods_info',{
+        'goods_id':goods_id
+        },
+        function(data){
+            if(data.done){
+                var goods = data.retval;
+                $('#spec_name').html(goods.spec_name);
+                $('ul[ectype="spec_item"]').remove();
+                    $.each(goods._specs,function(i,item){
+                        $('#group_spec').append('<ul ectype="spec_item" class="td"><li class="distance2"><input name="spec_id[]" value="'+ item.spec_id +'" type="checkbox" checked="checked" />'+ item.spec +'</li><li class="distance1">' + item.stock + '</li><li class="distance1">'+ item.price +'</li><li><input name="group_price[]" type="text" class="text width2" /></li></ul>');
+                });
+                check_spec();
+            }
+        });
+}
+//]]>
+</script>
+<div class="content">
+  <div class="totline"></div>
+  <div class="botline"></div>
+  {include file=member.menu.html}
+  <div id="right">
+     {include file=member.curlocal.html}
+{include file=member.submenu.html}
+
+        <div id="seller_groupbuy_form" class="wrap">
+
+            <div class="public">
+                <form method="post" id="group_form" enctype="multipart/form-data">
+                    <div class="information_index">
+                        <h4>{$lang.groupbuy_basic_info}</h4>
+                        <div class="add_wrap">
+                            <div class="assort">
+                                <p class="txt">{$lang.group_name}:
+                                <input type="text" name="group_name" value="{$group.group_name|escape}" class="text width7" /> <span class="red">*</span></p>
+                            </div>
+                            <div class="assort">
+                                <p class="txt">
+                                    {$lang.if_publish}:
+                                    <span class="distance">
+                                        <label for="publish"><input id="publish" name="if_publish" value="1" type="radio" {if !$group.group_id}checked="checked" {/if}/> {$lang.yes}</label>
+                                        <label for="not_publish"><input id="not_publish" name="if_publish" value="0" type="radio" {if $group.group_id}checked="checked" {/if}/> {$lang.no}</label> <span class="red">*</span>
+                                        <span class="field_notice">{$lang.note_if_publish}</span>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="assort">
+                                <p class="txt" id="start_time">
+                                    {$lang.start_time}:
+                                    <input name="start_time" value="{$group.start_time|date:Y-m-d}" type="text" class="text width2" />
+                                </p>
+                                <p class="txt" id="end_time">
+                                    {$lang.end_time}:
+                                    <input name="end_time" value="{$group.end_time|date:Y-m-d}" type="text" class="text width2" /> <span class="red">*</span>
+                                </p>
+                            </div>
+                            <div class="assort">
+                                <p class="txt" id="start_time">
+                                    {$lang.group_desc}:
+                                    <textarea style="height: 150px; overflow-y: auto; width: 250px; vertical-align: top;" id="group_desc" name="group_desc" class="text">{$group.group_desc|escape}</textarea>
+                                </p>
+                            </div>
+                        </div>
+
+                        <h4>{$lang.groupbuy_goods_info}</h4>
+                        <div class="add_wrap">
+
+                            <div class="assort">
+                                <p class="txt">{$lang.select_goods}:
+                                {if !$goods}
+                                    <input gs_id="goods_id" gs_name="goods_name" gs_callback="gs_callback" gs_title="gselector" gs_width="480" gs_type="store" gs_store_id="{$store_id}" ectype="gselector" type="text" name="goods_name" id="goods_name" value="{$group.goods_name|escape}" class="text" /> <span class="red">*</span>
+                                {else}
+                                    {$goods.goods_name|escape}
+                                {/if}
+                                <input type="hidden" id="goods_id" name="goods_id" value="{$group.goods_id}" />
+                                </p>
+                            </div>
+                            <div class="assort">
+                                <p class="txt">{$lang.group_min_quantity}:
+                                <input type="text" name="min_quantity" value="{$group.min_quantity}" class="text width2" /> <span class="red">*</span><span class="field_notice">{$lang.note_group_min_quantity}</span></p>
+                            </div>
+                            <div class="assort">
+                                <p class="txt">{$lang.max_per_user}:
+                                <input type="text" name="max_per_user" value="{$group.max_per_user}" class="text width2" /><span class="field_notice">{$lang.note_max_per_user}</span></p>
+                            </div>
+                            <div class="assort">
+                                <p class="txt" style="float:left">{$lang.spec_price}:
+                                </p>
+                                    <div id="group_spec" class="spec" style="float:left">
+                                        <ul class="th">
+                                            <li id="spec_name" class="distance2">{if $goods}{$goods.spec_name}{else}{$lang.spec}{/if}</li>
+                                            <li class="distance1">{$lang.stock}</li>
+                                            <li class="distance1">{$lang.price}</li>
+                                            <li class="distance1">{$lang.group_price}</li>
+                                        </ul>
+                                        {foreach from=$goods._specs item=spec}
+                                        <ul ectype="spec_item" class="td">
+                                        <li class="distance2"><input name="spec_id[]" value="{$spec.spec_id}" type="checkbox"{if $spec.group_price} checked="checked"{/if} />{$spec.spec}</li>
+                                        <li class="distance1">{$spec.stock}</li>
+                                        <li class="distance1">{$spec.price}</li>
+                                        <li><input ectype="group_price" name="group_price[]" type="text" class="text width2" value="{$spec.group_price}"/></li>
+                                        </ul>
+                                        {/foreach}
+                                    </div>
+                            </div>
+                            <div class="issuance"><input id="submit_group" type="submit" class="btn" value="{$lang.submit}" /></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

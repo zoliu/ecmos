@@ -1,0 +1,64 @@
+{include file="header.html"}
+<script type="text/javascript">
+var template_name = '{$curr_template_name}';
+var style_name = '{$curr_style_name}';
+function use_theme(template, style){
+    if (template != template_name)
+    {
+        if (!confirm('{$lang.set_theme_warning}'))
+        {
+            return;
+        }
+
+    }
+    window.location.href = 'index.php?app=theme&act=set&template_name=' + template + '&style_name=' + style;
+}
+function preview_theme(template, style){
+    $('#template_name').val(template);
+    $('#style_name').val(style);
+    $('#preview_form').submit();
+}
+function go_index(){
+    $('#go_index').submit();
+}
+</script>
+<style type="text/css">
+<!--
+body {background: none}
+#rightTop p {padding-top: 5px;}
+#rightCon { list-style:none; width:100%; }
+#rightCon li { float:left; margin:10px; }
+#rightCon .title_name { font-size:15px; font-weight:bold; color:#4DA1E0; text-align:center; }
+#rightCon .templet_style { margin:5px; background:#eee; border:#ddd 1px solid; padding:3px; }
+#rightCon .templet_btn { text-align:center; }
+-->
+</style>
+<div id="rightTop">
+<p>
+    <b>{$lang.theme_setting}</b><br />
+{$lang.current_theme}:{$curr_template_name}&nbsp;{$curr_style_name}
+</p>
+
+</div>
+<ul id="rightCon">
+    <!--{foreach from=$theme_list key=template_name item=styles}-->
+    <!--{foreach from=$styles item=style_name}-->
+    <li>
+        <div class="title_name">{$template_name}&nbsp;{$style_name}</div>
+        <div class="templet_style"><img src="{$site_url}/themes/mall/{$template_name}/styles/{$style_name}/preview.jpg" onclick="preview_theme('{$template_name}', '{$style_name}');" /></div>
+        <div class="templet_btn">
+        <!--{if $curr_template_name neq $template_name or $curr_style_name neq $style_name}-->
+        <input type="button" value="{$lang.use}" onclick="use_theme('{$template_name}', '{$style_name}');" class="formbtn" />&nbsp;&nbsp;
+        <input type="button" value="{$lang.preview}" onclick="preview_theme('{$template_name}', '{$style_name}');" class="formbtn" />
+        <!--{else}-->
+        <input type="button" value="{$lang.go_index}" onclick="go_index()" class="formbtn" />
+        <!--{/if}-->
+        </div>
+    </li>
+    <!--{/foreach}-->
+    <!--{/foreach}-->
+</ul>
+<form id="preview_form" method="POST" action="index.php?app=theme&act=preview" target="_blank"><input type="hidden" name="template_name" id="template_name" /><input type="hidden" name="style_name" id="style_name" /></form>
+
+<form id="go_index" method="GET" action="{$site_url}" target="_blank"></form>
+{include file="footer.html"}

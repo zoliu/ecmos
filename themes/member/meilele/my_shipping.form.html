@@ -1,0 +1,125 @@
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+   regionInit("region");
+   $('#add_region_button').click(function(){
+        var region_id = $('#region_id').val();
+        var region_name = $('#region_name').val();
+        if(!region_id || !region_name){
+            return;
+        }
+        if($('#region_' + region_id).length == 0){
+            $('#current_cod_regions').append($('<label id="region' + region_id + '"><input type="checkbox" checked="true" name="cod_regions[' + region_id + ']" id="region_' + region_id + '" value="' + region_name + '" />&nbsp;' + region_name + '<a href="javascript:void(0);" class="delete" onclick="del_region('+region_id+')">{$lang.drop}</a></label>'));
+        }
+   });
+   $('#shipping_form').validate({
+         errorLabelContainer: $('#warning'),
+        invalidHandler: function(form, validator) {
+           var errors = validator.numberOfInvalids();
+           if(errors)
+           {
+               $('#warning').show();
+           }
+           else
+           {
+               $('#warning').hide();
+           }
+        },
+        onkeyup : false,
+        rules : {
+            shipping_name : {
+                required : true
+            },
+            first_price   : {
+                required : true,
+                number   : true
+            }
+        },
+        messages:{
+            shipping_name : {
+                required : '{$lang.name_not_null}.'
+            },
+            first_price   : {
+                required : '{$lang.first_price_not_null}.',
+                number   : '{$lang.number_only}'
+            }
+        }
+    });
+});
+function del_region(region_id){
+    $('#region'+region_id).remove();
+}
+//]]>
+</script>
+<style>
+.borline td { padding:10px 0px; }
+.ware_list th { text-align:left; }
+</style>
+
+<div class="eject_con">
+    <div class="info_table_wrap">
+        <div id="warning"></div>
+        <form method="post" action="index.php?app=my_shipping&amp;act={$smarty.get.act}<!--{if $smarty.get.shipping_id neq ''}-->&amp;shipping_id={$smarty.get.shipping_id}<!--{/if}-->" target="my_shipping" id="shipping_form">
+        <h3>{$lang.shipping_info}</h3>
+        <ul class="info_table">
+            <li>
+                <h4>{$lang.shipping_name}:</h4>
+               <p><select name='shipping_name'>
+               {html_options options=$options_shipping selected=$shipping.shipping_name}
+             </select>
+             <!--<input type="text" class="text width_normal" name="shipping_name" value="{$shipping.shipping_name|escape}" />-->
+              <b>*</b></p>
+            </li>
+            <li>
+                <h4>{$lang.shipping_desc}:</h4>
+                <p><textarea class="text" name="shipping_desc">{$shipping.shipping_desc|escape}</textarea><span>{$lang.shipping_desc_desc}</span></p>
+            </li>
+            <li>
+                <h4>{$lang.first_price}:</h4>
+                <p><input type="text" class="text width_normal" name="first_price" value="{$shipping.first_price}"/><b>*</b></p>
+            </li>
+            <li>
+                <h4>{$lang.step_price}:</h4>
+                <p><input type="text" class="text width_normal" name="step_price" value="{$shipping.step_price}" /></p>
+            </li>
+            <li>
+                <h4>{$lang.enabled}:</h4>
+                <p style="width:100px;">
+                   {html_radios options=$yes_or_no checked=$shipping.enabled name=enabled}
+                </p>
+            </li>
+            <li>
+                <h4>{$lang.sort_order}:</h4>
+                <p><input type="text" class="text width_short" name="sort_order" value="{$shipping.sort_order}"/></p>
+            </li>
+        </ul>
+        <h3>{$lang.cod_regions}</h3>
+        <ul class="info_table">
+            <li>
+                <h5>{$lang.add_cod_region}:</h5>
+                <p>
+                    <div id="region">
+                    <input type="hidden" name="region_id" id="region_id" class="mls_id" />
+                    <input type="hidden" name="region_name" id="region_name" class="mls_names" />
+                    <select>
+                      <option>{$lang.select_pls}</option>
+                      {html_options options=$regions}
+                    </select>
+                    <input class="btn" type="button" id="add_region_button" value="{$lang.add}" />
+                    </div>
+                </p>
+            </li>
+            <li>
+                <h5>{$lang.cod_regions}:</h5>
+                <div class="zone" id="current_cod_regions">
+                    <!--{foreach from=$cod_regions item=cod_r key=cod_r_id}-->
+                    <label id="region{$cod_r_id}"><input type="checkbox" checked="true" name="cod_regions[{$cod_r_id}]" id="region_{$cod_r_id}" value="{$cod_r}" />&nbsp;{$cod_r}<a href="javascript:;" class="delete" onclick="del_region({$cod_r_id})">{$lang.drop}</a></label>
+                    <!--{/foreach}-->
+
+                </div>
+            </li>
+        </ul>
+        <div class="submit"><input type="submit" class="btn" value="{$lang.submit}" /></div>
+        </form>
+    </div>
+</div>

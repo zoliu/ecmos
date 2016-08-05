@@ -1,0 +1,37 @@
+<div class="slide-c-1 J_S{$widget_data.model_id} mb10">
+    <!--{if !$widget_data.ads}-->
+    <div class="padding10 center">请配置</div>
+    <!--{else}-->
+   <div class="scroller">
+      <ul class="ks-content ks-switchable-content clearfix">
+      <!--{foreach from=$widget_data.ads item=ad}-->
+      <li><a href="{$ad.ad_link_url}"  target="_blank" style="background:url({$ad.ad_image_url}) scroll center center;"></a></li>
+      <!--{/foreach}-->
+      </ul>
+   </div>
+   <div class="ks-switchable-nav">
+       <!-- {foreach from=$widget_data.ads item=ad name=fe_ad} -->
+       <span {if $smarty.foreach.fe_ad.first}class="ks-active"{/if}></span>
+       <!-- {/foreach} -->
+   </div>
+   <!--{/if}-->
+</div>
+<script>
+// don't put in $(funciton(){});
+$('.J_S{$widget_data.model_id} ul li').css('width', $(window).width() +'px');
+//$(function(){
+	//var width=document.body.clientWidth;
+	//$('.s{$widget_data.model_id}').attr('style','height:410px;width:'+width+'px;overflow:hidden;');
+	//$('.s{$widget_data.model_id} .scroller ul li').attr('style','height:410px;width:'+width+'px');
+//});
+	 
+KISSY.use('switchable', function(S) {
+	S.Slide('.J_S{$widget_data.model_id}', {
+		effect: 'scrollx',
+		easing: 'easeOutStrong',
+		autoplay: true
+	});  
+});
+	 
+	 
+   </script>

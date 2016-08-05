@@ -1,0 +1,44 @@
+{include file=header.html}
+
+<style type="text/css">
+   .col-sub{width:200px;border: 1px solid #e5e5e5;padding: 10px;margin-top: 10px;line-height: 20px;float:left;}
+   .col-sub .title{border-bottom: 1px solid #e5e5e5;font-weight: bold;padding: 5px;background-color: #f5f5f5;}
+   .col-sub li{line-height: 30px;}
+   .col-main{border: 1px solid #e5e5e5;float: right;width: 950px;margin: 10px 0 0 10px;}
+   .col-main .title{height: 30px;line-height: 30px;border-bottom: 1px solid #e5e5e5;font-weight: bold;padding: 5px;background-color: #f5f5f5;}
+   .acontent{margin: 10px;line-height: 20px;padding: 5px 10px;}
+   .acontent li{line-height: 30px;}
+</style>
+<div id="main" class="w-full">
+<div id="page-article" class="w mb20 mt10 clearfix">
+   <div class="col-sub">
+	  <div class="title">{$lang.acategory}</div>
+	  <ul class=" mb10">
+	     <!-- {foreach from=$acategories item=acategory} -->
+         <li><a href="{url app=article&cate_id=$acategory.cate_id}">{$acategory.cate_name|escape}</a></li>
+         <!-- {/foreach} -->
+	  </ul>
+	  <div class="title">{$lang.new_article}</div>
+	  <ul class="">
+	      <!-- {foreach from=$new_articles item=new_article} -->
+          <li><a {if $new_article.link}target="_blank"{/if} href="{url app=article&act=view&article_id=$new_article.article_id}">{$new_article.title|escape}</a></li>
+		  <!-- {foreachelse} -->
+		  <li>{$lang.no_new_article}</li>
+          <!-- {/foreach} -->
+	  </ul>
+   </div>
+   <div class="col-main">
+      <div class="title">{include file=curlocal.html}</div>
+      <ul class="acontent">
+	     <!-- {foreach from=$articles item=article} -->
+	     <li><b></b><a {if $article.link}target="_blank"{/if} href="{url app=article&act=view&article_id=$article.article_id}" class="lebioa">{$article.title|escape}</a> <span>{$article.add_time|date:Y.m.d}</span></li>
+		 <!-- {foreachelse} -->
+		 <li>{$lang.no_records}</li>
+		 <!-- {/foreach} -->
+	  </ul>
+	 {include file=page.bottom.html}
+   </div>
+</div>
+</div>
+
+{include file=footer.html}

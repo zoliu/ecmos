@@ -1,0 +1,51 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>{$lang.data_call}</p>
+    <ul class="subnav">
+        <li><span>{$lang.manage_data}</span></li>
+        <li><a class="btn3" href="index.php?module=datacall&amp;act=add">{$lang.add_goods}</a></li>
+    </ul>
+</div>
+
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!-- {if $data} -->
+        <tr class="tatr1">
+            <td width="20" class="firstCell"><input id="checkall_1" type="checkbox" class="checkall"/></td>
+            <td>{$lang.description}</td>
+            <td>{$lang.belong_type}</td>
+            <td class="handler">{$lang.handler}</td>
+        </tr>
+        <!-- {/if} -->
+        <!--{foreach from=$data item=val key=key}-->
+        <tr class="tatr2">
+            <td width="20" class="firstCell">
+            <input type="checkbox" class="checkitem" value="{$key}" />
+            </td>
+            <td>{$val.description|escape}</td>
+            <td class="table_center"><!--{if $val.type eq 'goods'}-->{$lang.data_goods}<!--{/if}--></td>
+            <td class="handler">
+            <a href="index.php?module=datacall&amp;act=edit&amp;id={$key}">{$lang.edit}</a>
+                |
+                <a href="javascript:if(confirm('{$lang.drop_confirm}'))window.location = 'index.php?module=datacall&amp;act=drop&amp;id={$key}';">{$lang.drop}</a>  </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="4">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+        <tfoot>
+            <tr>
+            <!-- {if $data} -->
+                <td width="20" class="firstCell"><label for="checkall1"><input id="checkall_2" type="checkbox" class="checkall"></label></td>
+                <td colspan="3" id="batchAction">
+                    <span class="all_checkbox"><label for="checkall_2">{$lang.checkall}</label></span>&nbsp;&nbsp;
+                    <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="index.php?module=datacall&act=drop" presubmit="confirm('{$lang.drop_confirm}');" />
+                </td>
+            <!--{/if}-->
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+{include file="footer.html"}

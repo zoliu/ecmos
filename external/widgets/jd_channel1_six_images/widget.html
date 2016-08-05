@@ -1,0 +1,13 @@
+<div class="six-images-c-1 pb10">
+	<h2 class="title">{$widget_data.model_name|escape}</h2>
+	<ul class="content">
+    	<!--{foreach from=$widget_data.ads item=ad name=fe_ad}-->
+    	<li class="{if $smarty.foreach.fe_ad.first || $smarty.foreach.fe_ad.iteration eq 4}big-img{/if} each{$smarty.foreach.fe_ad.iteration}">
+        	<a class="a" href="{$ad.ad_link_url}" target="_blank"><img  class="p-img" src="{$ad.ad_image_url}" /></a>
+            <p class="txt">
+            	<a href="{$ad.ad_link_url}" target="_blank">{$ad.ad_title_url}</a>
+            </p>
+        </li>
+        <!--{/foreach}-->
+    </ul>
+</div>

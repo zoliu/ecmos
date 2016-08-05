@@ -1,0 +1,80 @@
+
+<!-- www.360cd.cn  Mosquito -->
+
+<script type="text/javascript" src="{lib file=jquery.plugins/jquery.validate.js}"></script>
+<script type="text/javascript">
+
+$(function() {
+    
+    $('#_form_').validate({
+        errorPlacement : function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success : function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        rules : {
+            card_number : {
+                required : true,
+            },
+            cardholder : {
+                required : true,
+            }
+        },
+        messages : {
+            card_number : {
+                required : '卡号 / 账户不能为空',
+            },
+            cardholder : {
+                required : '持卡人 / 姓名',
+            }
+        }
+    });
+    
+});
+
+</script>
+
+<div class="eject_con">
+    <div class="adds">
+        <div id="warning"></div>
+        <form id="_form_" method="post" action="{url app=my_money&act=$smarty.get.act}">
+            <ul>
+                <li>
+                    <h3>卡号 / 账户:</h3>
+                    <p>
+                        <input name="card_number" class="text width_normal" type="text" />
+                        <label class="field_notice">银行卡号或支付宝、微信账户</label>
+                    </p>
+                </li>
+                <li>
+                    <h3>持卡人 / 姓名:</h3>
+                    <p>
+                        <input name="cardholder" class="text width_normal" type="text" />
+                        <label class="field_notice">持卡人姓名或支付宝、微信所属人姓名</label>
+                    </p>
+                </li>
+                <li>
+                    <h3>开户行 / 账户类型:</h3>
+                    <p>
+                        <select name="bank_name">
+                            <option>请选择</option>
+                            {html_options options=$bank_name_list}
+                        </select>
+                    </p>
+                </li>
+                <li>
+                    <h3>开户行地址:</h3>
+                    <p>
+                        <input name="bank_address" class="text width_normal" type="text" />
+                        <label class="field_notice">支付宝、微信相关不用填写开户行地址</label>
+                    </p>
+                </li>
+            </ul>
+            <div class="submit">
+                <input type="submit" class="btn" value="提交" />
+            </div>
+        </form>
+    </div>
+</div>

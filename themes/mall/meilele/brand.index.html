@@ -1,0 +1,65 @@
+{include file=header.html}
+<!--主体-->
+<div class="jim-main">
+    <div class="w1200 clearfix">
+      <!--左侧-->
+    	<div class="left">
+      		<div class="navbar fontsimsun mt20 clearfix">
+              {include file=curlocal.html}
+      		</div>
+
+          <!--品牌列表-->
+          <!-- {if $brands} -->
+            <!--{foreach from=$brands item=brand}-->
+          <div class="condition-bar mt10">
+            <h1 style="line-height: 30px;margin-left: 50px;"><!--{if $brand.tag}-->{$brand.tag}<!--{else}-->{$lang.other}<!--{/if}--> ({$brand.count})</h1>
+          </div>
+
+          <div class="grid clearfix">
+                <!--{foreach from=$brand.brands item=b name=b_num}-->
+                {if $smarty.foreach.b_num.index<=5}
+              <a href="{url app=search&brand=$b.brand_name}" title="" target="_blank" class="product" style="width: 135px;">
+                  <img src="{$b.brand_logo}" class="product-img" alt="" title="{$b.brand_name}" width="90" height="45">
+                  <h2><strong>{$b.brand_name}</strong></h2>
+              </a>
+              {/if}
+              <!--{/foreach}-->
+          </div>
+              <!--{/foreach}-->
+          <!-- {/if} -->
+          <!--品牌列表 END-->
+
+          <!--分页-->
+          {include file=page.bottom.html}
+          <!--分页 END-->
+    	</div>
+      <!--左侧 END-->
+
+      <!--侧边栏-->
+    	<div class="side mt10">
+    		<div class="side-tit"><strong>{$lang.recommended_brands}</strong></div>
+    		<div class="side-txt">
+    			<ul class="side-list">
+            <!--{foreach from=$recommended_brands item=brand}-->
+    				<li><a href="{url app=search&brand=$brand.brand_name}" title="" target="_blank"><img src="{$brand.brand_logo}" width="86" height="48" alt="" title="{$brand.brand_name}"></a><h3><a href="{url app=search&brand=$brand.brand_name}">{$brand.brand_name|escape}</a></h3></li>
+            <!--{/foreach}-->
+    			</ul>
+    		</div>
+    	</div>
+      <!--侧边栏 END-->
+	  <div class="clr"></div>
+
+    </div>
+</div>
+<!--主体 END-->
+
+<!--底部-->
+  {include file=footer.html}
+<!--底部 END-->
+</body>
+
+<script src="{lib file=jquery-1.9.1.min.js}"></script>
+<script src="{lib file=jim-focus.js}"></script>
+<script src="{lib file=jq_scroll.js}"></script>
+<script src="{lib file=jquery.SuperSlide.js}"></script>
+</html>

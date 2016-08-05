@@ -1,0 +1,137 @@
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    regionInit("region");
+    $('#address_form').validate({
+        errorPlacement: function(error, element){
+            var _message_box = $(element).parent().find('.field_message');
+            _message_box.find('.field_notice').hide();
+            _message_box.append(error);
+        },
+        success       : function(label){
+            label.addClass('validate_right').text('OK!');
+        },/**/
+        errorLabelContainer: $('#warning'),
+        invalidHandler: function(form, validator) {
+           var errors = validator.numberOfInvalids();
+           if(errors)
+           {
+               $('#warning').show();
+           }
+           else
+           {
+               $('#warning').hide();
+           }
+        },
+        onkeyup : false,
+        rules : {
+            consignee : {
+                required : true
+            },
+            region_id : {
+                required : true,
+                min   : 1
+            },
+            address   : {
+                required : true
+            },
+            phone_tel : {
+                required : check_phone,
+                minlength:6,
+                checkTel:true
+            },
+            phone_mob : {
+                required : check_phone,
+                minlength:6,
+                digits : true
+            }
+        },
+        messages : {
+            consignee : {
+                required : '{$lang.consignee_required}. '
+            },
+            region_id : {
+                required : '{$lang.region_required}. ',
+                min  : '{$lang.region_required}. '
+            },
+            address   : {
+                required : '{$lang.address_required}. '
+            },
+            phone_tel : {
+                required : '{$lang.phone_required}. ',
+                minlength: '{$lang.phone_tel_error}. ',
+                checkTel: '{$lang.phone_tel_error}. '
+            },
+            phone_mob : {
+                required : '{$lang.phone_required}. ',
+                minlength: '{$lang.phone_mob_error}. ',
+                digits : '{$lang.phone_mob_error}. '
+            }
+        },
+        groups:{
+            phone:'phone_tel phone_mob'
+        }
+    });
+    function check_phone(){
+        return ($('[name="phone_tel"]').val() == '' && $('[name="phone_mob"]').val() == '');
+    }
+});
+function hide_error(){
+	
+    $('#region').find('.error').hide();
+}
+//]]>
+</script>
+<style>
+.dialog_wrapper{width:80%;}
+#region select{margin-top:10px;width: 95%; margin-left: 1%;}
+.active{margin: 5px;}
+</style>
+
+ <form method="post" action="index.php?app=my_address&act={$act}&addr_id={$address.addr_id}" id="address_form" target="iframe_post">
+    <div class="add_box" style="margin:10px;">
+    	<p>
+    	   <input  name="consignee" value="{$address.consignee|escape}" type="text" placeholder="请填写你的真实姓名"/>
+    	   <label class="field_message"><span class="field_notice"></span></label>
+    	</p>
+        <p>
+           <input type="text"   name="phone_tel" value="{$address.phone_tel}" placeholder="请填写你的电话号码" />
+           <label class="field_message"><span class="field_notice"></span></label>
+        </p>
+    <p>
+        <input type="text"  name="phone_mob" value="{$address.phone_mob}" placeholder="请填写你的手机号码" />
+        <label class="field_message"><span class="field_notice"></span></label>
+    </p>
+    	<p>
+            <div id="region">
+                <input type="hidden" name="region_id" value="{$address.region_id}" id="region_id" class="mls_id" />
+                <input type="hidden" name="region_name" value="{$address.region_name|escape}" class="mls_names" />
+            <!-- {if $address.region_id} -->
+                <span>{$address.region_name|escape}</span>
+                <input type="button" value="{$lang.edit}" class="edit_region" />
+                <select style="display:none;" onchange="hide_error();">
+                    <option>{$lang.select_pls}</option>
+                    {html_options options=$regions}
+                </select>
+            <!-- {else} -->
+                <select onchange="hide_error();">
+                    <option>--请选择地区--</option>
+                    {html_options options=$regions}
+                </select>
+            <!-- {/if} -->
+                <b class="field_message" style="font-weight:normal;"><label class="field_notice"></label></b>
+            </div>        
+        </p>
+        <p>
+            <input type="text" name="address" value="{$address.address|escape}" placeholder="请填写详细地址" />
+            <label class="field_message"><span class="field_notice"></span></label>
+        </p>
+        <!--<p>
+           <input type="text"  name="zipcode" value="{$address.zipcode|escape}" placeholder="邮政编码"/>
+           <label class="field_message"><span class="field_notice"></span></label>
+        </p>-->
+    <p>
+        <input type="submit" class="white_btn add_submit" value="<!--{if $address.addr_id}-->{$lang.edit_address}<!--{else}-->{$lang.add_address}<!--{/if}-->" />
+    </p>
+    </div>
+ </form>

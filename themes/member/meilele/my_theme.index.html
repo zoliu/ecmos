@@ -1,0 +1,114 @@
+{include file=member.header.html}
+<script type="text/javascript">
+var curr_template_name = '{$curr_template_name|escape}';
+var curr_style_name    = '{$curr_style_name|escape}';
+var preview_img = new Image();
+preview_img.onload = function(){
+    var d = DialogManager.get('preview_image');
+    if (!d)
+    {
+        return;
+    }
+
+    if (d.getStatus() != 'loading')
+    {
+
+        return;
+    }
+
+    d.setWidth(this.width + 50);
+    d.setPosition('center');
+    d.setContents($('<img src="' + this.src + '" alt="" />'));
+    ScreenLocker.lock();
+};
+preview_img.onerror= function(){
+    alert('{$lang.load_screenshot_error}');
+    DialogManager.close('preview_image');
+};
+function preview_theme(template_name, style_name){
+    var screenshot = '{$site_url}/themes/store/' + template_name + '/styles/' + style_name + '/screenshot.jpg';
+
+    var d = DialogManager.create('preview_image');
+    d.setTitle('{$lang.preview}');
+    d.setContents('loading', {'text':'loading'});
+    d.setWidth(270);
+    d.show('center');
+
+    preview_img.src = screenshot;
+}
+function use_theme(template, style){
+    var req = 'index.php?app=my_theme&act=set&template_name=' + template + '&style_name=' + style;
+    var d = DialogManager.create('use_theme');
+    d.setTitle('{$lang.use}');
+    d.setContents('loading', {'text':'loading'});
+    d.setWidth(270);
+    d.show('center');
+    $.getJSON(req, function(rtn){
+        if (rtn.done)
+        {
+            $('#current_theme_img').attr('src', $('#themeimg_' + template + '_' + style).attr('src'));
+            $('#current_template').html(template);
+            $('#current_style').html(style);
+            d.setTitle(lang.handle_successed);
+            d.setContents('message', {'text' : rtn.msg});
+        }
+        else
+        {
+            d.setTitle(lang.error);
+            d.setContents('message', {'type' : 'warning', 'text' : rtn.msg});
+        }
+
+
+    });
+
+}
+</script>
+<div class="content">
+    <div class="totline"></div><div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+		{include file=member.submenu.html}
+        <div class="wrap" style="border-top:0;">
+            <div class="public">
+
+                <div class="information_index">
+                    <div class="templet">
+                        <div class="nonce"><img src="{$site_url}/themes/store/{$curr_template_name}/styles/{$curr_style_name|escape}/preview.jpg" width="160" height="110" id="current_theme_img" /></div>
+                        <div class="txt">
+                            <p>{$lang.store_name}:<span>{$store.store_name|escape}</span><a href="{url app=store&id=$id}" target="_blank" class="btn">{$lang.store_index}</a></p>
+                            <p>{$lang.curr_template_name}:<b>{$curr_template_name|escape}</b></p>
+                            <p>{$lang.curr_style_name}:<b>{$curr_style_name|escape}</b></p>
+                            <!--<div class="btn_layer">
+                                <a href="javascript:void(0);" class="btn">{$lang.store_index}</a>
+                            </div>-->
+                        </div>
+                    </div>
+                    <h5 class="motif_title">{$lang.theme_list}</h5>
+                    <div class="motif">
+                        <ul>
+                        <!--{foreach from=$themes item=theme}-->
+                            <li>
+                                <p><a href="javascript:;" onclick="preview_theme('{$theme.template_name|escape}', '{$theme.style_name|escape}');"><img id="themeimg_{$theme.template_name|escape}_{$theme.style_name|escape}" src="{$site_url}/themes/store/{$theme.template_name|escape}/styles/{$theme.style_name|escape}/preview.jpg"  width="200" height="140" ></a></p>
+                                <h2>{$lang.template_name}: {$theme.template_name|escape}<br />{$lang.style_name}: {$theme.style_name|escape}</h2>
+                                <span>
+                                    <a href="javascript:use_theme('{$theme.template_name|escape}', '{$theme.style_name|escape}');" class="employ">{$lang.use}</a>
+                                    <a href="javascript:preview_theme('{$theme.template_name|escape}', '{$theme.style_name|escape}');" class="preview">{$lang.preview}</a>
+                                </span>
+                            </li>
+                        <!--{/foreach}-->
+                        </ul>
+                    </div>
+                 </div>
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

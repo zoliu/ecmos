@@ -1,0 +1,86 @@
+<div class="mll2015_floor3 w clearfix">
+    <div class="mt">
+        <strong class="cn">{$widget_data.model_name}<span>{$widget_data.model_subtitle}</span></strong>
+        <div class="key">
+            <!--{foreach from=$widget_data.keywords item=k}-->
+            <a href="{url app=search&keyword=$k|escape:url}" target="_blank">{$k}<span style="color:#ddd">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</span></a>
+            <!--{/foreach}-->
+             
+        </div>
+        <a href="{$widget_data.ad0_link_url}" target="_blank" style=" position: absolute; bottom: -5px;right:-15px;">更多>></a>
+       
+    </div>
+    <div class="border"></div>
+    <div class="mc">
+        <div class="map1">
+            <div class="left  tab_{$widget_data.model_id}">
+                <div class="ks-switchable-content">
+                    <a href="{$widget_data.ad1_link_url}" target="_blank">
+                        <img class="lazyload" initial-url="{$widget_data.ad1_image_url}" width="700" height="342">
+                    </a>
+                    <a href="{$widget_data.ad2_link_url}" target="_blank" style="display:none">
+                        <img class="lazyload" initial-url="{$widget_data.ad2_image_url}" width="700" height="342">
+                    </a>
+                    <a href="{$widget_data.ad3_link_url}" target="_blank" style="display:none">
+                        <img class="lazyload" initial-url="{$widget_data.ad3_image_url}" width="700" height="342">
+                    </a>
+                </div>
+                <div class="number">
+                    <ul class="ks-switchable-nav clearfix">
+                        <li class="ks-active">1</li>
+                        <li class>2</li>
+                        <li class>3</li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="right">
+                <a href="{$widget_data.ad4_link_url}">
+                    <img class="lazyload" initial-url="{$widget_data.ad4_image_url}" width="279" height="342">
+                </a>
+            </div>
+        </div>
+        <div class="map2">
+            <!-- {foreach from=$widget_data.goods_list_1 item=goods name=fe_goods} -->
+            <div class="list1">
+                <div class="p_img">
+                    <a href="{url app=goods&id=$goods.goods_id}" target="_blank">
+                        <img class="lazyload" initial-url="{$goods.default_image}" width="153" height="153">
+                    </a>
+                </div>
+                <p class="tt">
+                    <a href="{url app=goods&id=$goods.goods_id}" target="_blank">{$goods.goods_name|escape}</a>
+                </p>
+                <p>
+                    <span class="price">{$goods.price|price}</span>
+                    <span class="tj">销量：
+                        <span class="black">{$goods.sales}</span>
+                        件
+                    </span>
+                </p>
+            </div>
+            <!-- {/foreach} -->
+        </div>
+    </div>
+</div>
+<script>
+    KISSY.ready(function(S) {
+        var tabs = new S.Tabs('.tab_{$widget_data.model_id}', {
+            aria: false
+        });
+    });
+</script>   
+
+
+
+
+
+
+
+
+
+
+
+
+
+

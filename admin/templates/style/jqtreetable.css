@@ -1,0 +1,35 @@
+@charset "utf-8";
+/*
+Copyright: Paul Hanlon
+
+Released under the MIT/BSD licence which means you can do anything you want
+with it, as long as you keep this copyright notice on the page
+*/
+.collapsed { display: none; }
+.tablemain {background-color:#ccf;border-collapse: collapse; border: solid 1px #447; padding: 0px; text-align: left; }
+<!-- #treet1 {background-color:#fff} -->
+#treet2 {background-color:#ffc}
+<!-- #treet1 td { font: normal 10pt Arial; padding: 0px 2px 0px 0px; cursor: pointer;} -->
+#treet2 td { font: normal 10pt Arial; padding: 0px 2px 0px 0px; cursor: pointer;}
+.adeimg, .preimg, .parimg { border: none; margin: 0px; padding: 0px; vertical-align: bottom;}
+.ttimage { border: none; margin: 0px; padding: 0px; vertical-align: middle;}
+.adeimg, .parimg {cursor: pointer; }
+.even { background-color: #ddd; }
+.over { background-color: #eaf8db; }
+
+/* 后台树形菜单 */
+.info2 {border-top: 1px solid #c1dff3; overflow: hidden; padding-left: 2px;}
+.distinction {border-collapse:collapse; width: 100%;}
+.distinction thead th {border-bottom: 1px solid #bbdbf2; height: 32px;}
+tfoot tr.tr_pt10 td {padding-top: 10px;}
+.distinction thead .w30, .distinction tbody .w30 {width: 30px;}
+.align_left {text-align: left;}
+.align_center {text-align: center;}
+.all_checkbox {float:left; font-weight:normal; cursor:pointer}
+.distinction tbody td {height: 24px;}
+.distinction tbody td a {color: #234f8d;}
+.distinction tbody td a:hover {color: #f90;}
+.distinction tfoot td {border-top: 1px solid #bbdbf2; height: 32px;padding-bottom:40px;}
+
+#treet1 tr td.node{ padding-left:0px;}
+.node_name{ padding-left:10px; }

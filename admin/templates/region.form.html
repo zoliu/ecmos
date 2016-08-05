@@ -1,0 +1,40 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>{$lang.region}</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?app=region">{$lang.manage}</a></li>
+        <li><!-- {if $region.region_id} --><a class="btn1" href="index.php?app=region&amp;act=add">{$lang.add}</a><!-- {else} --><span>{$lang.add}</span><!-- {/if} --></li>
+    </ul>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">
+                    {$lang.region_name}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" id="region_name" type="text" name="region_name" value="{$region.region_name|escape}" />                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    <label for="parent_id">{$lang.parent_id}:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    <select id="parent_id" name="parent_id"><option value="0">{$lang.select_pls}</option>{html_options options=$parents selected=$region.parent_id}</select>                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.sort_order}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="sort_order" id="sort_order" type="text" name="sort_order" value="{$region.sort_order}" />                </td>
+            </tr>
+        <tr>
+            <th></th>
+            <td class="ptb20">
+                <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                <input class="formbtn" type="reset" name="reset" value="{$lang.reset}" />            </td>
+        </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

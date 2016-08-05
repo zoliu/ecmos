@@ -1,0 +1,41 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p><strong>{$lang.plugin_manage}</strong></p>
+</div>
+<div class="tdare info">
+    <table width="100%" cellspacing="0">
+        <!--{if $plugins}-->
+        <tr class="tatr1">
+            <td width="15%">{$lang.plugin_name}</td>
+            <td align="left">{$lang.plugin_description}</td>
+            <td width="10%">{$lang.author}</td>
+            <td width="10%">{$lang.version}</td>
+            <td class="handler">{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$plugins item=plugin}-->
+        <tr class="tatr2">
+            <td>{$plugin.name|escape}</td>
+            <td align="left">{$plugin.desc|escape}</td>
+            <td><a href="{$plugin.website}" target="_blank" title="{$lang.author_website}">{$plugin.author|escape}</a></td>
+            <td>{$plugin.version|escape}</td>
+            <td class="handler">
+                <!--{if !$plugin.enabled}-->
+            <a href="index.php?app=plugin&amp;act=enable&amp;id={$plugin.id}">{$lang.enable}</a>
+                <!--{else}-->
+                <a href="javascript:if(confirm('{$lang.disable_confirm}'))window.location='index.php?app=plugin&act=disable&id={$plugin.id}';">{$lang.disable}</a>
+                <!--{if $plugin.config}-->
+                |
+                <a href="index.php?app=plugin&amp;act=config&id={$plugin.id}">{$lang.config}</a>
+                <!--{/if}-->
+                <!--{/if}-->
+                </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td class="no_records" colspan="5">{$lang.no_installed_plugin}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+</div>
+{include file="footer.html"}

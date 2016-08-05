@@ -1,0 +1,164 @@
+{include file=member.header.html}
+
+
+
+<div class="content">
+
+    <div class="totline"></div><div class="botline"></div>
+
+    {include file=member.menu.html}
+
+    <div id="right">
+
+        {include file=member.submenu.html}
+
+        <div class="wrap">          
+
+
+
+        <div class="public table">
+
+            <table class="table_head_line">
+
+                <!--{if $discus_list}-->
+
+                <tr class="line_bold">
+
+                    <th class="width1"><input type="checkbox" id="all" class="checkall"/></th>
+
+                    <th class="align1" colspan="11">
+
+                        <span class="all"><label for="all">{$lang.checkall}</label></span>
+
+                       
+
+                    </th>
+
+                </tr>
+
+                <tr class="gray">
+
+                    <th></th>
+
+               <th align="left" class="align1" width="120">{$lang.order_sn}</th>
+
+               <th align="left" class="align1" width="120">{$lang.buyer_name}</th>
+
+               <th align="left" class="align1" width="120">{$lang.buyer_type}</th>
+
+               <th align="left" class="align1" width="120">{$lang.buyer_addtime}</th>
+
+               <th align="left" class="align1" width="120">{$lang.seller_name}</th>
+
+               <th align="left" class="align1" width="120">{$lang.seller_type}</th>
+
+               <th align="left" class="align1" width="120">{$lang.seller_addtime}</th>
+
+               <th align="left" class="align1" width="120">{$lang.status}</th>
+
+               <th align="left" class="align1" width="120">{$lang.admin_addtime}</th>
+
+                  
+
+                    <th width=80>{$lang.handle}</th>
+
+                </tr>
+
+                <!--{/if}-->
+
+                <!-- {foreach from=$discus_list item=discus name=v} -->
+
+                <!--{if $smarty.foreach.v.last}--><tr class="line_bold"><!--{else}--><tr class="line"><!--{/if}-->
+
+                    <td class="align2"><input type="checkbox" class="checkitem" value="{$discus.id}" /></td>
+
+                       <td align="left"><a href="{url app=buyer_order&act=view&order_id=$discus.order_id}">{$discus.order_sn}</a></td>
+
+                       <td align="left">{$discus.buyer_name}</td>
+
+                       <td align="left">{$lang[$discus.buyer_type]}</td>
+
+                       <td align="left">{$discus.buyer_addtime|date:Y-m-d}</td>
+
+                        <td align="left">{$discus.seller_name}</td>
+
+                       <td align="left">{$lang[$discus.seller_type]}</td>
+
+                       <td align="left">{$discus.seller_addtime|date:Y-m-d}</td>
+
+                       <td align="left">{$discus_status[$discus.status]}</td>
+
+                      <td align="left" >{if $discus.admin_addtime}{$discus.admin_addtime|date:Y-m-d}{/if}</td>
+
+                    <td class="" align=center> {if $discus.status < 2}<a href="index.php?app=my_discus&amp;act=edit&id={$discus.id}"  uri="" class="">{$lang.edit}</a>{/if}      <a href="index.php?app=my_discus&amp;act=view&id={$discus.id}"> {$lang.view}</a></td>
+
+                </tr>
+
+                <!-- {foreachelse} -->
+
+                <tr>
+
+                    <td colspan="11" class="member_no_records padding6">{$lang.no_records}</td>
+
+                </tr>
+
+                <!--{/foreach}-->
+
+                <!--{if $discus_list}-->
+
+                <tr>
+
+                    <th><input id="all2" type="checkbox" class="checkall" /></th>
+
+                    <th colspan="11">
+
+                    <p class="position1">
+
+                        <span class="all"><label for="all2">{$lang.checkall}</label></span>
+
+                       
+
+                    </p>
+
+                    <p class="position2">
+
+                    {include file=member.page.bottom.html}
+
+                    </p>
+
+                    </th>
+
+                </tr>
+
+                <!--{/if}-->
+
+            </table>
+
+            </div>
+
+            <div class="wrap_bottom"></div>
+
+        </div>
+
+  
+
+        <div class="clear"></div>
+
+        <div class="adorn_right1"></div>
+
+        <div class="adorn_right2"></div>
+
+        <div class="adorn_right3"></div>
+
+        <div class="adorn_right4"></div>
+
+    </div>
+
+    <div class="clear"></div>
+
+    </div>
+
+</div>
+
+{include file=footer.html}
+

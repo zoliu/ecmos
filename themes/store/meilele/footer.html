@@ -1,0 +1,15 @@
+<div id="footer">
+    <p>
+        <a href="index.php">{$lang.index}</a>
+        <!--{foreach from=$navs.footer item=nav}-->
+        | <a href="{$nav.link}"{if $nav.open_new} target="_blank"{/if}>{$nav.title|escape}</a>
+        <!--{/foreach}-->
+    </p>
+    {sprintf lang=query_info var1=query_time var2=query_count var3=query_user_count}
+    <!--{if $gzip_enabled}-->{$lang.gzip_enabled}<!--{else}-->{$lang.gzip_disabled}<!--{/if}-->
+    <!--{if $memory_info}-->{sprintf lang=memory_info var1=memory_info}<!--{/if}--> {$statistics_code}<br />
+    Powered by <a href="http://ecmall.shopex.cn/?pid=6&host={$site_domain}" target="_blank">ECMall {$ecm_version}</a> &copy; 2003-2012 <a href="http://www.shopex.cn" target="_blank">ShopEx Inc.</a>
+</div>
+{$async_sendmail}
+</body>
+</html>

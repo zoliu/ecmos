@@ -1,0 +1,60 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p><strong>{$lang.plugin_enable}</strong></p>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">
+                    <label for="plugin_name">{$lang.plugin_name}:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    {$plugin.name}
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    <label for="plugin_desc">{$lang.plugin_description}:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    {$plugin.desc}
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    <label for="module_desc">{$lang.version}:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    {$plugin.version}
+                </td>
+            </tr>
+            <!--{foreach from=$plugin.config item=info key=conf}-->
+            <tr>
+                <th class="paddingT15">
+                    <label for="plugin_{$conf}">{$info.text}:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    <!--{if $info.type eq 'text'}-->
+                        <input type="text" name="config[{$conf}]" value="{$config.$conf}" size="{$info.size}" />
+                    <!--{elseif $info.type eq 'select'}-->
+                        <select name="config[{$conf}]">{html_options options=$info.items selected=$config.$conf}
+                        </select>
+                    <!--{elseif $info.type eq 'textarea'}-->
+                        <textarea cols="{$info.cols}" rows="{$info.rows}" name="config[{$conf}]">{$config.$conf}</textarea>
+                    <!--{elseif $info.type eq 'radio'}-->
+                        {html_radios options=$info.items checked=$config.$conf name=$info.name}
+                    <!--{elseif $info.type eq 'checkbox'}-->
+                        {html_checkbox options=$info.items checked=$config.$conf name=$info.name}
+                    <!--{/if}-->
+                </td>
+            </tr>
+            <!--{/foreach}-->
+            <tr>
+                <th></th>
+                <td class="ptb20">
+                    <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                    <input class="formbtn" type="button" onclick="window.history.go(-1)" value="{$lang.return}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

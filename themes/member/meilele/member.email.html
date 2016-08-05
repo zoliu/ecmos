@@ -1,0 +1,102 @@
+{include file=member.header.html}
+<script type="text/javascript">
+$(function(){
+    $('#email_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        rules : {
+            orig_password : {
+                required : true,
+                maxlength : 20,
+                minlength : 6
+            },
+             vcode : {
+                required : true
+            },
+           email : {
+                required   : true,
+                email      : true
+            }
+        },
+        messages : {
+            orig_password : {
+                required : '{$lang.no_pass}',
+                minlength  : '{$lang.password_length_limit}',
+                maxlength  : '{$lang.password_length_limit}'
+            },
+             vcode : {
+                required :  '{$lang.vcode_required}'
+            },
+            email : {
+                required   : '{$lang.email_required}',
+                email    : '{$lang.email_invalid}'
+            }
+        }
+    });
+});
+</script>
+<script>
+    $(function(){ 
+
+    $("#tel_captcha").click(function(){       
+
+
+        $.getJSON('index.php?act=sms_captcha&code=modify_email', function(data) {
+            if(data == 1)
+            {
+                alert('验证码已发送成功！');
+                $("#valid_desc").show();
+            }else{
+                alert('验证码发送失败，请联系管理员');
+                $("#valid_desc").hide();
+            }
+            });
+        
+    }); 
+}); 
+</script>
+<style>
+.borline td { padding:10px 0px; }
+.ware_list th { text-align:left; }
+.bgwhite { background: #FFFFFF;}
+</style>
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+        	<div class="eject_con bgwhite">
+            <div class="add">
+                <div id="valid_desc" style="display: none;height: 30px;">{$lang.valid_phone_note}</div>
+                
+                <form method="post" id="email_form">
+                    <ul>
+                        <li><h3>{$lang.orig_password}:</h3>
+                        <p><input class="text width_normal" type="password" name="orig_password" /></p>
+                        </li>
+                        <li><h3>{$lang.new_email}:</h3>
+                        <p><input class="text width_normal" type="text" name="email" /></p>
+                        </li>
+                        <li style="display: ;">
+                            <h3>{$lang.captcha}:</h3>
+                            <p><input type="text" class="text width_normal" name="captcha" />
+                                <input name='tel_captcha' class="btn" id='tel_captcha' type="button" value="{$lang.send_captcha}"/></p>
+                        </li>
+                    </ul>
+                    <div class="submit">
+                                    <input class="btn" type="submit" value="{$lang.submit}" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

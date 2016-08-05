@@ -1,0 +1,72 @@
+{include file="header.html"}
+<!--/*<script language="javascript">
+$(function(){
+    $('#time').datepicker({dateFormat: 'yy-mm-dd'});
+});
+</script>*/-->
+<div class="mrightTop">
+	<div class="fontl">{$lang.welcome}</div>
+</div>
+<div id="rightTop">
+    <ul class="subnav" style="margin-left:0px;">
+        <li><a class="btn1" href="index.php?module=msg">{$lang.msglog}</a></li>
+        <li><span>{$lang.user}</span></li>
+        <li><a class="btn1" href="index.php?module=msg&act=add">{$lang.addmsg}</a></li>
+        <li><a class="btn1" href="index.php?module=msg&act=send">{$lang.sendmsg}</a></li>
+         <li><a class="btn1" href="index.php?module=msg&act=setting">{$lang.setting}</a></li>
+    </ul>
+</div>
+
+<div class="mrightTop">
+    <div class="fontl">
+       <form method="get">
+            <div class="left">
+              <input name="module" type="hidden" value="msg" />
+              <input name="act" type="hidden" value="user" />
+              用户名:
+              <input class="queryInput" type="text" name="user_name" value="{$query.user_name|escape}" />
+              <input type="submit" class="formbtn" value="{$lang.query}" />
+            </div>
+      </form>
+    </div>
+    <div class="fontr">
+		{include file=page.top.html}
+    </div>
+</div>
+
+<div class="tdare">
+    <table width="100%" cellspacing="0">
+
+        <tr class="tatr1">
+            <td width="50">id</td>
+            <td width="200">用户名</td>
+			<td width="200">绑定手机</td>
+            <td width="80">可用短信</td>
+            <td width="80">状态</td>
+            <td width="80">管理操作</td>
+        </tr>
+
+        <!--{foreach from=$user item=val key=key}-->
+        <tr class="tatr2">
+            <td><b>{$val.user_id}</b></td>
+            <td>{$val.user_name}</td>
+            <td>{$val.mobile}</td>
+           
+            <td>{$val.num}</td>
+            <td>{$val.state}</td>
+            <td><a href="index.php?module=msg&act=add&user_id={$val.user_id}&user_name={$val.user_name}">增加短信</a></td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="5">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <!--{if $index}-->
+<div id="dataFuncs">
+    <div class="pageLinks">{include file=page.bottom.html}</div>
+    <div class="clear"></div>
+  </div>
+  <!--{/if}-->
+</div>
+{include file="footer.html"}

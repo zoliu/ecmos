@@ -1,0 +1,59 @@
+{include file=member.header.html}
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+    	{include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <div class="eject_btn" title="{$lang.add_friend}"><b class="ico3" ectype="dialog" dialog_id="friend_add" dialog_title="{$lang.add_friend}" uri="index.php?app=friend&act=add" dialog_width="400">{$lang.add_friend}</b></div>
+            <div class="public table">
+                <div class="my_friend">
+                    <!--{if $friends}-->
+                    <div class="all_btn all_bg_up">
+                        <label for="all"><input type="checkbox" id="all" class="checkall"/> {$lang.checkall}</label>
+                        <a href="javascript:void(0);" class="note" uri="index.php?app=message&amp;act=send" name="to_id" ectype="batchbutton">{$lang.send_message}</a>
+                        <a href="javascript:void(0);" class="delete" uri="index.php?app=friend&act=drop" name="user_id" presubmit="confirm('{$lang.drop_confirm}')" ectype="batchbutton">{$lang.drop}</a>
+                    </div>
+                    <!--{/if}-->                    
+                    <ul <!--{if $friends}-->class="list"<!--{/if}-->>
+                    <!--{foreach from=$friends item=friend}-->
+                        <li>
+                            <p><img src="{$friend.portrait}" width="50" height="50" alt="{$friend.user_name|escape}" /></p>
+                            <h3>
+                                <b><label><input type="checkbox" class="checkitem" value="{$friend.user_id}"/>{$friend.user_name|escape}</label></b>
+                                <span>
+                                    <a href="{url app=message&act=send&to_id=$friend.user_id}" class="note">{$lang.send_message}</a>
+                                    <a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=friend&amp;act=drop&user_id={$friend.friend_id}');" class="delete">{$lang.drop}</a>
+                                </span>
+                            </h3>
+                        </li>
+                     <!--{foreachelse}-->
+                        <li class="member_no_records" style="text-align:center;width:100%;">{$lang.$smarty.get.act}{$lang.no_records}</li>
+                     <!--{/foreach}-->
+                        <div class="clear"></div>
+                    </ul>
+                    <!--{if $friends}-->
+                    <div class="all_btn all_bg_down">
+                        <label for="all2"><input type="checkbox" id="all2" class="checkall"/> {$lang.checkall}</label>
+                        <a href="javascript:void(0);" class="note" uri="index.php?app=message&amp;act=send" name="to_id" ectype="batchbutton">{$lang.send_message}</a>
+                        <a href="javascript:void(0);" class="delete"  uri="index.php?app=friend&act=drop" name="user_id" presubmit="confirm('{$lang.drop_confirm}')" ectype="batchbutton">{$lang.drop}</a>
+                    </div>
+                    <div class="pages">
+                        {include file=member.page.bottom.html}
+                    </div>
+                    <!--{/if}-->
+                </div>
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+<iframe id='iframe_post' name="iframe_post" src="about:blank" frameborder="0" width="0" height="0"></iframe>
+{include file=footer.html}

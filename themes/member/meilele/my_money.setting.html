@@ -1,0 +1,91 @@
+
+<!-- www.360cd.cn  Mosquito -->
+
+{include file=member.header.html}
+
+<script charset="utf-8" type="text/javascript" src="{lib file=jquery.plugins/jquery.validate.js}"></script>
+<script type="text/javascript">
+
+$(function() {
+	$('#_form_').validate({
+		rules : {
+			password : {
+				required : true,
+				minlength : 6,
+				maxlength : 20
+			},
+			ok_password : {
+				required : true,
+				equalTo : '#password',
+			}
+		},
+		messages : {
+			password : {
+				required : '新支付密码不能为空',
+				minlength : '新支付密码不能小于6位',
+				maxlength : '新支付密码不能大于20位'
+			},
+			ok_password : {
+				required : '确认密码不能为空',
+				equalTo : '两次输入的密码不一致',
+			}
+		}
+	});
+});
+
+</script>
+
+<div class="content">
+	{include file=member.menu.html}
+	<div id="right">
+		{include file=member.curlocal.html}
+		{include file=member.submenu.html}
+		<div class="wrap">
+			<div class="eject_con bgwhite">
+				<div class="add">
+					<form id="_form_" method="post">
+						<ul>
+							{if $isset_password}
+							<li>
+								<h3>旧支付密码：</h3>
+								<p>
+									<input name="old_password" type="password" />
+									<!-- <label class="field_notice"></label> -->
+								</p>
+							</li>
+							{/if}
+							<li>
+								<h3>新支付密码：</h3>
+								<p>
+									<input id="password" name="password" type="password" />
+								</p>
+							</li>
+							<li>
+								<h3>确认密码：</h3>
+								<p>
+									<input name="ok_password" type="password" />
+								</p>
+							</li>
+						</ul>
+						<div class="submit">
+							<input class="my_btn" type="submit" value="提交" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<div class="clear"></div>
+		<div class="adorn_right1"></div>
+		<div class="adorn_right2"></div>
+		<div class="adorn_right3"></div>
+		<div class="adorn_right4"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<div class="clear"></div>
+
+<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
+
+{include file=footer.html}

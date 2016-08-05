@@ -1,0 +1,110 @@
+{include file=header1.html}
+<!--头部-->
+<div class="header">
+    <div class="w1200 clearfix">
+        <h1 class="logo fl mt15" title="{$site_title}"><a href="index.php"><img src="{$site_logo}" width="236" height="70" alt="{$site_title}"></a></h1>
+        <ul class="steps fr clearfix mt30">
+            <li class="step-off"><span>1</span><p class="step-off-txt">{$lang.curlocal_my_cart}</p></li>
+            <li class="step-off"><span>2</span><p class="step-off-txt">{$lang.curlocal_do_order}</p></li>
+            <li class="step-on"><span class="fontbold">3</span><p class="step-on-txt">{$lang.curlocal_payment}</p></li>
+            <li><span>4</span><p>{$lang.curlocal_order_confirm}</p></li>
+            <li><span>5</span><p>{$lang.curlocal_my_evaluate}</p></li>
+        </ul>
+    </div>
+    
+    <div class="clr"></div>
+</div>
+<!--头部 END-->
+<style>
+.sucess{font-size: 1.5em;}
+.detail{width:300px;margin: 0 auto;}
+.order_information{ width:98%;padding: 0 10px; text-align: center; margin: 20px 0;}
+.order_information b { padding-right: 20px; }
+.order_information b a:hover { color: #c00; }
+.defray { width:1115px;height: 28px; line-height: 28px; background: #f5f5f5; padding-left: 20px; font-weight: bold; color: #333; }
+.payment li { background:none;width: 982px; overflow: hidden; padding-top: 10px; }
+.payment li .radio { float: left; width: 65px; text-align: center; padding-top: 14px; }
+.payment li .logo { float: left; width: 140px; }
+.payment li .explain { float: left; width: 777px; line-height: 45px; color: #787878; }
+.backindex{margin:20px 0;}
+</style>
+<!--主体-->
+<div class="jim-main">
+    <div class="w1200 clearfix">
+        <div class="payreturn mt40">
+            <!--订单信息-->
+            <div class="detail">
+            <h2 class="sucess"><strong>{$lang.order_created}</strong></h2>
+                {$lang.order_created_desc}
+            </div>            
+            <!--{if !$order.order_merge}-->
+            <div class="order_information">
+                <b>{$lang.order_sn}&nbsp;:<span class="color02 fontbold fontsize16">{$order.order_sn}</span></b>
+                <b>{$lang.order_amount}&nbsp;:<span class="color02 fontbold fontsize16">{$order.order_amount|price}</span></b>
+                <b><a href="{url app=buyer_order}" target="_blank">{$lang.member_view_order}</a></b>
+            </div>
+            <!--{else}-->
+            <div class="order_information">
+                <b>{$lang.order_sn}&nbsp;:<span class="color02 fontbold fontsize16">{$order.order_sn_num}</span></b>
+                <b>{$lang.order_amount}&nbsp;:<span class="color02 fontbold fontsize16">{$order.order_amount|price}</span></b>
+                <b><a href="{url app=buyer_order}" target="_blank">{$lang.member_view_order}</a></b>
+            </div>
+            <!--{/if}-->
+            <!--订单信息  END-->
+            <form action="index.php?app=cashier&act=goto_pay&order_id={$order.order_id}" method="POST" id="goto_pay">
+                
+            <div class="buy">
+                <h3><b>{$lang.select_payment}</b></h3>
+            </div>
+
+            <ul class="payment">
+                <div class="defray">{$lang.epay_name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{$lang.payment_money}<span style=" color:#FF4D0F"> {$money.money}&nbsp;</span></b></div>
+                <li>
+                    <p class="radio"><input id="payment_epay" type="radio" name="payment_id" value="0" checked /></p>
+                    <p class="logo"><label for="payment_epay"><img src="{res file=images/yeb.jpg}" alt="{$lang.epay_name}" title="{$lang.epay_name}" width="125" height="47" /></label></p>
+                    <p class="explain">{$lang.epay_desc}</p>
+                </li>
+            </ul>
+            <!--{if $payments.online}-->
+            <ul class="payment">
+                <div class="defray">{$lang.online_payment}</div>
+                <!--{foreach from=$payments.online item=payment}-->
+                <li>
+                    <p class="radio"><input id="payment_{$payment.payment_code}" type="radio" name="payment_id" value="{$payment.payment_id}" /></p>
+                    <p class="logo"><label for="payment_{$payment.payment_code}"><img src="{$site_url}/includes/payments/{$payment.payment_code}/logo.gif" alt="{$payment.payment_name|escape}-{$payment.payment_desc|escape}" title="{$payment.payment_name|escape}-{$payment.payment_desc|escape}" width="125" height="47" /></label></p>
+                    <p class="explain">{$payment.payment_desc|escape}</p>
+                </li>
+                <!--{/foreach}-->
+            </ul>
+            <!--{/if}-->
+            <!--{if $payments.offline}-->
+            <ul class="payment">
+                <div class="defray">{$lang.offline_payment}</div>
+                <!--{foreach from=$payments.offline item=payment}-->
+                <li>
+                    <p class="radio"><input type="radio" id="payment_{$payment.payment_code}" name="payment_id" value="{$payment.payment_id}" /></p>
+                    <p class="logo"><label for="payment_{$payment.payment_code}"><img alt="{$payment.payment_name|escape}-{$payment.payment_desc|escape}" title="{$payment.payment_name|escape}-{$payment.payment_desc|escape}" src="{$site_url}/includes/payments/{$payment.payment_code}/logo.gif" width="125" height="47" /></label></p>
+                    <p class="explain">{$payment.payment_desc|escape}</p>
+                </li>
+                <!--{/foreach}-->
+            </ul>
+            <!--{/if}-->
+            <ul class="payment">
+                <div class="defray">{$lang.confirm_pay}</div>
+                <div class="backindex"><a href="javascript:$('#goto_pay').submit();">{$lang.confirm_pay}</a></div>
+            </ul>
+        </form>
+        </div>
+    </div>
+</div>
+<!--主体 END-->
+<!--底部-->
+{include file=footer.html}
+<!--底部 END-->
+</div>
+</body>
+<script src="{lib file=jquery-1.9.1.min.js}" type="text/javascript" charset="utf-8"></script>
+<script src="{lib file=allcate.js}" type="text/javascript" charset="utf-8"></script>
+<script src="{lib file=popup.js}" type="text/javascript" charset="utf-8"></script>
+
+</html>

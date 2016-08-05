@@ -1,0 +1,50 @@
+{include file="header1.html"}
+<!--头部-->
+<div class="header">
+    <div class="w1200 clearfix">
+        <h1 class="logo fl mt15" title="{$site_title}"><a href="index.php"><img src="{$site_logo}" width="236" height="70" alt="{$site_title}"></a></h1>
+        <ul class="steps fr clearfix mt30">
+            <li class="step-on"><span class="fontbold">1</span><p class="step-on-txt">我的购物车</p></li>
+            <li><span>2</span><p>确认订单信息</p></li>
+            <li><span>3</span><p>付款</p></li>
+            <li><span>4</span><p>确认收货</p></li>
+            <li><span>5</span><p>评价</p></li>
+        </ul>
+    </div>
+</div>
+<!--头部 END-->
+
+<!--主体-->
+<div class="jim-main" style="margin-top: 80px;">
+    <div class="w1200 clearfix">
+        <div class="step_main">
+            <div class="null_shopping">
+                <h4>{$lang.cart_empty_notice}</h4>
+                <p>
+                    <a href="index.php">{$lang.choice_goods}>></a>
+                    <a href="{url app=buyer_order}">{$lang.view_orders}>></a>
+                </p>
+            </div>
+            <div class="clear"></div>
+        </div>
+        
+        <!--精品推荐-->
+        <!--{if $best_items}-->
+        <div class="mt30" style="border:1px solid #e5e5e5;">        
+            <div class="side-tit"><strong>{$lang.best_item}</strong></div>
+            <ul class="ohterproduct clearfix">
+            <!--{foreach from=$best_items item=goods}-->
+                <!--{if $smarty.foreach.goods.index lt 5}-->
+                <li>
+                    <a href="{url app=goods&goods_id=$goods.goods_id}" target="_blank"><img src="{$goods.default_image}" width="200" height="200" alt=""><p style="width:200px;text-overflow: ellipsis;white-space:nowrap;overflow:hidden;margin-left: 5px;">{$goods.goods_name|escape|truncate:58}</p></a>
+                    <h3><strong style="color: #cd1616;float: left;" class="ml10">{$goods.price|price}</strong><span></span></h3>
+                </li>
+                <!--{/if}-->
+            <!--{/foreach}-->
+          </ul>
+        </div>
+        <!--{/if}-->
+        <!--精品推荐 END-->
+    </div>
+</div>
+{include file="footer.html"}

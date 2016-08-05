@@ -1,0 +1,45 @@
+{include file='header2.html'}
+<style>
+  .pro-classify dt:hover, .pro-classify .current a, .pro-classify dt:hover a{
+		color: #fff;
+	}
+
+
+</style>
+
+<section id="wraper">
+		{include file="header.top_nav.html"}
+		<dl class="pro-classify" id="proClassify">
+			<dt class=''>
+				<a href=''>今日特惠</a>
+			</dt>
+		</dl>
+		 <ul class="pro-list-2">
+        <!--{foreach from=$goods_list item=goods name=fe_goods}-->
+        <li>
+                <figure><a href="{url app=goods&id=$goods.goods_id}"><img src="{$goods.default_image}"   alt="{$goods.name}" title="{$goods.name}" ></a></figure>
+                <section>
+                    <h2><a href="{url app=goods&id=$goods.goods_id}">{$goods.goods_name|escape}</a></h2>
+                    <p>{$goods.price|price}</p>
+                   
+                </section>
+                <nav><a href="javascript:collect_goods({$goods.goods_id});">收藏商品</a><a href="javascript:add_to_shop({$goods.spec_id},1);">加入购物车</a><a href="{url app=goods&id=$goods.goods_id}">进入购买</a></nav>
+            </li>
+        <!--{foreachelse}-->
+        暂无此类商品
+        <!--{/foreach}-->
+
+        </ul>
+        {include file='page.bottom.html'}
+{include file='footer2.html'}		
+	</section>
+
+
+
+</div>
+</body>
+</html>
+
+
+
+

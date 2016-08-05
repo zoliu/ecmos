@@ -1,0 +1,72 @@
+
+<!-- www.360cd.cn  Mosquito -->
+
+{include file='header.html'}
+
+<style type="text/css">
+.main {
+	padding: 2em;
+}
+
+ul {
+	list-style: none;
+}
+
+li {
+    margin: 1em 0;
+}
+
+li>span:FIRST-CHILD {
+    display: inline-block;
+    width: 8em;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+</style>
+
+<script type="text/javascript">
+
+function set_version(obj) {
+    obj.setAttribute('href', obj.getAttribute('href') + '&version_id=' + $('#version_id').val());
+}
+
+</script>
+
+<div id="rightTop">
+	<ul class="subnav">
+		<li><a class="btn1" href="{url module=rapp&act=app_list}">应用列表</a></li>
+        <li><a class="btn1" href="{url module=rapp&act=user_center}">个人中心</a></li>
+		<li><span>应用详情</span></li>
+	</ul>
+</div>
+
+<div class="mrightTop"></div>
+
+<div class="main">
+	<div>
+		<ul>
+			<li><img src="{$s_url}/{$app_info.app_logo}" style="width: 200px; height: 200px;"></li>
+			<li><span>应用名称 :</span>{$app_info.app_name}</li>
+			<li><span>应用价格 :</span><span>{$app_info.price|price}</span></li>
+			<li><span>应用描述 :</span>{$app_info.app_describe}</li>
+			<li><span>应用作者 :</span>{$app_info.author}</li>
+			<li><span>更新时间 :</span>{$app_info.update_time|date}</li>
+            <li>
+                <span>版本信息 :</span>
+                <select id="version_id">
+                {foreach from=$app_info.version_list item=version_info}
+                <option value="{$version_info.id}">{$version_info.version_name}</option>
+                {/foreach}
+                </select>
+            </li>
+            <li>
+                <a href="{url module=rapp&act=app_buy&app_id=$app_info.id}" >购买</a>
+                <a href="{url module=rapp&act=app_install&app_id=$app_info.id}" onclick="set_version(this)" >安装</a>
+                <a href="{url module=rapp&act=app_uninstall&app_id=$app_info.id}" onclick="set_version(this)" >卸载</a>
+            </li>
+		</ul>
+	</div>
+</div>
+
+{include file='footer.html'}

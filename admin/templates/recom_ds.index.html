@@ -1,0 +1,93 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>{$lang.recom_ds}</p>
+    <ul class="subnav">
+        <li><!--{if !$type}--><span>{$lang.manage}</span><!--{else}--><a class="btn1" href="index.php?app=recom_ds">{$lang.manage}</a><!--{/if}--></li>
+        <li><!--{if $type eq image}--><span>{$lang.image_type}</span><!--{else}--><a class="btn1" href="index.php?app=recom_ds&amp;type=image">{$lang.image_type}</a><!--{/if}--></li>
+        <li><!--{if $type eq goods}--><span>{$lang.goods_type}</span><!--{else}--><a class="btn1" href="index.php?app=recom_ds&amp;type=goods">{$lang.goods_type}</a><!--{/if}--></li>
+        <li><!--{if $type eq brand}--><span>{$lang.brand_type}</span><!--{else}--><a class="btn1" href="index.php?app=recom_ds&amp;type=brand">{$lang.brand_type}</a><!--{/if}--></li>
+        <li><!--{if $type eq recommend}--><span>{$lang.recommend_type}</span><!--{else}--><a class="btn1" href="index.php?app=recom_ds&amp;type=recommend">{$lang.recommend_type}</a><!--{/if}--></li>
+        <li><a class="btn1" href="index.php?app=recom_ds&amp;act=add&amp;type=image">{$lang.add_image_type}</a></li>
+        <li><a class="btn1" href="index.php?app=recom_ds&amp;act=add&amp;type=goods">{$lang.add_goods_type}</a></li>
+        <li><a class="btn1" href="index.php?app=recom_ds&amp;act=add&amp;type=brand">{$lang.add_brand_type}</a></li>
+        <li><a class="btn1" href="index.php?app=recom_ds&amp;act=add&amp;type=recommend">{$lang.add_recommend_type}</a></li>
+    </ul>
+</div>
+<div class="mrightTop">
+    <div class="fontl">
+        <form method="get">
+            <div class="left">
+                <input type="hidden" name="app" value="recom_ds" />
+                <input type="hidden" name="act" value="index" />
+                <input type="hidden" name="type" value="{$type}" />
+                {$lang.name}:
+                <input class="queryInput" type="text" name="name" value="{$query.name|escape}" />
+                {$lang.cate_name}:
+                <select class="querySelect" name="cate_id">
+                    <option value="">{$lang.select_pls}</option>
+                    {html_options options=$rcate_data selected=$smarty.get.cate_id}
+                </select>
+                <input type="submit" class="formbtn" value="{$lang.query}" />
+            </div>
+            <!--{if $filtered}-->
+            <a class="left formbtn1" href="index.php?app=recom_ds&type={$type}">{$lang.cancel_query}</a>
+            <!--{/if}-->
+            <span></span>
+        </form>
+    </div>
+    <div class="fontr">
+        {if $recom_data}{include file=page.top.html}{/if}
+    </div>
+</div>
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!--{if $recom_data}-->
+        <tr class="tatr1">
+            <td width="20" class="firstCell"><input type="checkbox" class="checkall" /></td>
+            <td align="left"><span ectype="order_by" fieldname="name">{$lang.name}</span></td>
+            <td align="left"><span ectype="order_by" fieldname="cate_id">{$lang.cate_name}</span></td>
+            <td align="left"><span ectype="order_by" fieldname="r_type">{$lang.recom_type}</span></td>
+            <td align="left" class="table-center">{$lang.logo}</td>
+             <td class="table-center"><span ectype="order_by" fieldname="sort_order">{$lang.sort_order}</span></td>
+            <td class="table-center"><span ectype="order_by" fieldname="recommended">{$lang.if_show}</span></td>
+            <td class="handler">{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$recom_data item=recom}-->
+        <tr class="tatr2">
+            <td class="firstCell"><input value="{$recom.id}" class='checkitem' type="checkbox" /></td>
+            <td align="left">{$recom.name|escape}</td>
+            <td align="left">{$recom.cate_name|escape}</td>
+            <td align="left">{$type_data[$recom.r_type]}</td>
+            <td align="left" class="table-center">{if $recom.logo}<img src="{$recom.logo}" height="30"/>{/if}</td>
+            <td class="table-center">{$recom.sort_order}</td> 
+            <td class="table-center"><!--{if $recom.if_show eq 1}--><img src="templates/style/images/positive_enabled.gif" ectype="inline_edit" fieldname="recommended" fieldid="{$recom.id}" fieldvalue="1"/><!--{else}--><img src="templates/style/images/positive_disabled.gif" ectype="inline_edit" fieldname="recommended" fieldid="{$recom.id}" fieldvalue="0"/><!--{/if}--></td>
+            <td class="handler">
+            <a href="index.php?app=recom_ds&amp;act=edit&amp;type={$recom.type}&amp;id={$recom.id}">{$lang.edit}</a>  |  <a name="drop" href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=recom_ds&amp;act=drop&amp;type={$recom.type}&amp;id={$recom.id}');">{$lang.drop}</a>
+            </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="7">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <!--{if $recom_data}-->
+    <div id="dataFuncs">
+        <div id="batchAction" class="left paddingT15">
+            &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.pass}" name="id" uri="index.php?app=recom_ds&act=pass" />
+             &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.refuse}" name="id" uri="index.php?app=recom_ds&act=refuse" />
+            &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="index.php?app=recom_ds&act=drop" presubmit="confirm('{$lang.drop_confirm}');" />
+            
+        </div>
+        <div class="pageLinks">
+            {if $recom_data}{include file=page.bottom.html}{/if}
+        </div>
+    </div>
+    <!--{/if}-->
+    <div class="clear"></div>
+</div>
+{include file="footer.html"}

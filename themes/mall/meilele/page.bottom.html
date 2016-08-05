@@ -1,0 +1,30 @@
+
+<!--{if $page_info.page_count gt 1}-->
+<div class="page mt30 mb20">
+    <!--{if $page_info.prev_link}-->
+    <a href="{$page_info.prev_link}">上一页</a>
+    <!--{else}-->
+    <span>上一页</span>
+    <!--{/if}-->
+    <span class="page_text">{sprintf lang=total_item var1=page_info.item_count}</span>
+    <!--{if $page_info.first_link}-->
+    <a href="{$page_info.first_link}">1&nbsp;<!--{$page_info.first_suspen}--></a>
+    <!--{/if}-->
+    <!--{foreach from=$page_info.page_links key=page item=link}-->
+    <!--{if $page_info.curr_page eq $page}-->
+    <span href="{$link}">{$page}</span>
+    <!--{else}-->
+    <a href="{$link}">{$page}</a>
+    <!--{/if}-->
+    <!--{/foreach}-->
+    <!--{if $page_info.last_link}-->
+    <a href="{$page_info.last_link}"><!--{$page_info.last_suspen}-->&nbsp;<!--{$page_info.page_count}--></a>
+    <!--{/if}-->
+    <span class="page_text">{$page_info.curr_page} / {$page_info.page_count}</span>
+    <!--{if $page_info.next_link}-->
+    <a href="{$page_info.next_link}">{$lang.next_page}</a>
+    <!--{else}-->
+    <span>{$lang.next_page}</span>
+    <!--{/if}-->
+</div>
+<!--{/if}-->

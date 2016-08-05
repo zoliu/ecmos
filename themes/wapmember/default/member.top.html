@@ -1,0 +1,25 @@
+<body class="gray" style="overflow-x:hidden;">
+
+    <div class="user_header">
+        <div class="user_photo">
+            <a href="{url app=member}"><img src="<!--{if $visitor.portrait}-->{$visitor.portrait}?{$random_number}<!--{else}-->{$site_url}/data/system/default_user_portrait.gif<!--{/if}-->" /></a>
+        </div>
+        <span class="user_name">
+            {$user_name}您好,欢迎。<a href="index.php?app=member&act=logout" style="color:#999;margin-left:5px;">退出</a>
+        </span>
+        
+        <div class="set_address"><a href="index.php?app=my_address" id="address_text"></a></div>
+        <script>
+            $(function() {
+                $(".set_address").click(function() {
+                    if ($('#address_text').text() == '')
+                    {
+                        $('#address_text').text('收货地址管理');
+                    } else {
+                        $('#address_text').text('');
+                    }
+                })
+            })
+        </script>
+    </div>
+</body>

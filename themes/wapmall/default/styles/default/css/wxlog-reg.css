@@ -1,0 +1,18 @@
+@charset "utf-8";
+/* CSS Document */
+#log-reg .header{ border-bottom:#b20005 solid 5px;box-shadow:0 1px 3px rgba(0, 0, 0, 0.3);}
+.login_panel{ margin:60px 5px 0; background:#fff; border-radius:5px;box-shadow:rgba(0,0,0,0.3) 1px 1px 3px;}
+
+.login_panel .text {
+    border: 1px solid #DDDDDD;
+    border-radius: 5px;
+    height: 40px;
+    margin: 5px 0;
+    text-indent: 10px;
+    width: 100%;
+}
+.login_panel .login_box h2{ font-weight:normal; padding:5px 0; }
+.login_panel .login_box{ padding:10px;}
+.login_panel .login_box .sub_btn{ width:100%; padding:10px 0; font-size:16px; font-family:"微软雅黑"; cursor:pointer;}
+.login_panel .login_box p{ color:#333; font-size:16px; margin:5px 0;}
+.login_panel .login_box p a{color:#b20005; text-decoration:underline;}

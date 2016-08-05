@@ -1,0 +1,35 @@
+{include file=member.header.html}
+<div class="content">
+    <div class="particular">
+        <div class="particular_wrap">
+            <p class="{if $icon eq "notice"}success{else}defeated{/if}">
+                <span></span>
+                <b style="float: left; width:380px;">{$message}</b>
+                <!--{if $err_file}-->
+                <b style="clear: both; float: left; font-size: 15px;">Error File: <strong>{$err_file}</strong> at <strong>{$err_line}</strong> line.</b>
+                <!--{/if}-->
+                <!--{if $icon neq "notice"}-->
+                <font style="clear: both; display:block; margin:0 0 0 50px;">
+                <!--{foreach from=$links item=item}-->
+                        <a style="color:#aaa;" href="{$item.href}">>> {$item.text}</a><br />
+                <!--{/foreach}-->
+                </font>
+                <!--{/if}-->
+            </p>
+        </div>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<script type="text/javascript">
+//<!CDATA[
+<!--{if $redirect}-->
+window.setTimeout("{$redirect}", 1000);
+<!--{/if}-->
+//]]>
+</script>
+{include file=footer.html}

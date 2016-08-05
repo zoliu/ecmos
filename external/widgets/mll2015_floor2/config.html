@@ -1,0 +1,134 @@
+<script type="text/javascript">
+    var _d = DialogManager.get('config_dialog');
+    _d.setWidth(350);
+    _d.setPosition('center');
+</script>
+<div style="height:500px;overflow-y:scroll;">
+
+
+    <div class="field_item">
+        <label>模块标题</label>
+        <p><input type="text" name="model_name" value="{$options.model_name}"/></p>
+        <label>更多链接地址</label>
+        <p><input type="text" name="model_name_link" value="{$options.model_name_link}"/></p>
+    </div>
+    <div class="field_item">
+        <label>选择商品分类:</label>
+        <select name="cate_id">
+            <option value="0">请选择分类...</option>
+            <!-- {html_options options=$gcategories selected=$options.cate_id} -->
+        </select>
+    </div>
+    <div class="field_item">
+        <label>选择楼层风格:</label>
+        <select name="floor_id">
+            <option value="0">请选择楼层风格...</option>
+            <!-- {html_options options=$floors selected=$options.floor_id} -->
+        </select>
+    </div>
+
+    <div class="field_item">
+        <label>上传广告图片1:(<span>图片尺寸：200x320，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad1_image_file" /><input type="hidden" name="ad1_image_url" value="{$options.ad1_image_url}" /></p>
+        <!-- {if $options.ad1_image_url} --><p><img src="{$options.ad1_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>广告1链接地址:</label>
+        <p><input type="text" name="ad1_link_url" value="{$options.ad1_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>上传广告图片2:(<span>图片尺寸：200x320，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad2_image_file" /><input type="hidden" name="ad2_image_url" value="{$options.ad2_image_url}" /></p>
+        <!-- {if $options.ad2_image_url} --><p><img src="{$options.ad2_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>广告2链接地址:</label>
+        <p><input type="text" name="ad2_link_url" value="{$options.ad2_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>上传广告图片3:(<span>图片尺寸：280x180，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad3_image_file" /><input type="hidden" name="ad3_image_url" value="{$options.ad3_image_url}" /></p>
+        <!-- {if $options.ad3_image_url} --><p><img src="{$options.ad3_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>广告3链接地址:</label>
+        <p><input type="text" name="ad3_link_url" value="{$options.ad3_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>上传广告图片4:(<span>图片尺寸：280x180，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad4_image_file" /><input type="hidden" name="ad4_image_url" value="{$options.ad4_image_url}" /></p>
+        <!-- {if $options.ad4_image_url} --><p><img src="{$options.ad4_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>广告4链接地址:</label>
+        <p><input type="text" name="ad4_link_url" value="{$options.ad4_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>上传广告图片5:(<span>图片尺寸：220x180，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad5_image_file" /><input type="hidden" name="ad5_image_url" value="{$options.ad5_image_url}" /></p>
+        <!-- {if $options.ad5_image_url} --><p><img src="{$options.ad5_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>广告5链接地址:</label>
+        <p><input type="text" name="ad5_link_url" value="{$options.ad5_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>上传广告图片6:(<span>图片尺寸：220x180，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad6_image_file" /><input type="hidden" name="ad6_image_url" value="{$options.ad6_image_url}" /></p>
+        <!-- {if $options.ad6_image_url} --><p><img src="{$options.ad6_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>广告6链接地址:</label>
+        <p><input type="text" name="ad6_link_url" value="{$options.ad6_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>上传广告图片7:(<span>图片尺寸：220x180，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad7_image_file" /><input type="hidden" name="ad7_image_url" value="{$options.ad7_image_url}" /></p>
+        <!-- {if $options.ad7_image_url} --><p><img src="{$options.ad7_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>广告7链接地址:</label>
+        <p><input type="text" name="ad7_link_url" value="{$options.ad7_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>上传广告图片8:(<span>图片尺寸：220x180，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad8_image_file" /><input type="hidden" name="ad8_image_url" value="{$options.ad8_image_url}" /></p>
+        <!-- {if $options.ad8_image_url} --><p><img src="{$options.ad8_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>广告8链接地址:</label>
+        <p><input type="text" name="ad8_link_url" value="{$options.ad8_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>上传广告图片9:(<span>图片尺寸：220x180，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad9_image_file" /><input type="hidden" name="ad9_image_url" value="{$options.ad9_image_url}" /></p>
+        <!-- {if $options.ad9_image_url} --><p><img src="{$options.ad9_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>广告9链接地址:</label>
+        <p><input type="text" name="ad9_link_url" value="{$options.ad9_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>上传广告图片10:(<span>图片尺寸：220x180，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad10_image_file" /><input type="hidden" name="ad10_image_url" value="{$options.ad10_image_url}" /></p>
+        <!-- {if $options.ad10_image_url} --><p><img src="{$options.ad10_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>广告10链接地址:</label>
+        <p><input type="text" name="ad10_link_url" value="{$options.ad10_link_url}" /></p>
+    </div>
+    <div class="field_item">
+        <label>上传广告图片11:(<span>图片尺寸：220x180，支持 gif|jpg|jpeg|png 格式</span>)</label>
+        <p><input type="file" name="ad11_image_file" /><input type="hidden" name="ad11_image_url" value="{$options.ad11_image_url}" /></p>
+        <!-- {if $options.ad11_image_url} --><p><img src="{$options.ad11_image_url}" height="20" /></p><!-- {/if} -->
+    </div>
+    <div class="field_item">
+        <label>广告11链接地址:</label>
+        <p><input type="text" name="ad11_link_url" value="{$options.ad11_link_url}" /></p>
+    </div>
+</div>
+
+
+
+
+

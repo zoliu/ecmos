@@ -1,0 +1,5 @@
+@charset "utf-8";
+.money_btn { border: 0; width: 120px; height: 32px; background: url(../images/member/btn.gif) no-repeat 0 -253px; cursor: pointer; font-weight: bold; color: #3f3d3e; }
+.epay_btn {background: url(../images/member01.gif) no-repeat scroll center center transparent; height: 32px; padding: 10px 30px 10px 40px;    width: 64px;}
+.epay_btn a{ text-decoration:none;}
+.epay_txt{font-size:14px; height:32px; line-height:32px;}

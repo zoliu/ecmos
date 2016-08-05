@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset={$charset}" />
+        <meta http-equiv="Content-Type" content="text/html; charset={$charset}" />
+
+        {$page_seo}
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bookmark.css}" type="text/css" rel="stylesheet" /><!---->
+        <!--<link href="{res file=css/wxlog-reg.css}" rel="stylesheet" type="text/css" />-->
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=member.js}" charset="utf-8"></script>
+        <script type="text/javascript">
+            //<!CDATA[
+            var SITE_URL = "{$site_url}";
+            var REAL_SITE_URL = "{$real_site_url}";
+            var PRICE_FORMAT = '{$price_format}';
+            //]]>
+        </script>
+        {$_head_tags}
+    </head>
+
+    <body id="log-reg" class="gray">
+
+        <div class="fixed">
+            <!---头部-->
+            <div class="header header2">
+                <a class="back2_pre" href="javascript:history.back(-1);"></a>
+                {$head_msg}
+            </div>
+        </div> 
+        <div class="mark"> 
+            <div class="bm_con">
+                <div class="marklist">
+                    <ul>
+                        <br>
+                            <li style="text-align:center;">{$message}
+                                <!--{if $err_file}-->
+                                <b style="clear: both; float: left; font-size: 15px;">Error File: <strong>{$err_file}</strong> at <strong>{$err_line}</strong> line.</b>
+                                <!--{/if}-->
+                                <!--{if $icon neq "notice"}-->
+                                <font style="clear: both; display:block; margin:0 0 0 50px;">
+                                    <!--{foreach from=$links item=item}-->
+                                    <a style="color:#aaa;" href="{$item.href}">>> {$item.text}</a><br />
+                                    <!--{/foreach}-->
+                                </font>
+                                <!--{/if}-->
+                            </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <script type="text/javascript">
+            //<!CDATA[
+<!--{if $redirect}-->
+            window.setTimeout("{$redirect}", 1000);
+<!--{/if}-->
+            //]]>
+        </script>
+
+        <style>
+            footer {border-top: 1px solid #fcfaf9;text-align: center;background: #f5f2e5;padding: 15px 0;font-size: .8125em;color: #999}
+            footer a {color: #67738a;margin:0 10px;}
+            footer .copyright{ margin-top:10px;font-size: .8125em;}
+        </style>
+
+        <footer>
+            {if $user_name}
+            <a href='{url app=member}'>用户中心</a>|<a href='user.php?act=logout'>退出</a>
+            {else}
+            <a href='{url app=member}'>登录</a>|<a href='user.php?act=register'>注册</a>
+            {/if}|
+            <a href="#">客服</a>|
+            <a href="#">临时订单</a>
+            <div class="copyright">Copyright &copy; 2013 手机管</div>
+        </footer>

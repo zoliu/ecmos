@@ -1,0 +1,90 @@
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    $('input[ectype="logo"]').change(function(){
+            var src = getFullPath($(this)[0]);
+            $('img[ectype="logo1"]').attr('src' , src);
+            $(this).removeAttr('name');
+            $(this).attr('name' , 'brand_logo');
+    });
+    $(".ok").mouseover(function(){
+        $(this).next("div").show();
+    });
+    $(".ok").mouseout(function(){
+        $(this).next("div").hide();
+    });
+    $('#brand_apply_form').validate({
+         errorLabelContainer: $('#warning'),
+        invalidHandler: function(form, validator) {
+           var errors = validator.numberOfInvalids();
+           if(errors)
+           {
+               $('#warning').show();
+           }
+           else
+           {
+               $('#warning').hide();
+           }
+        },
+        rules : {
+            brand_name : {
+                required : true,
+                byteRange: ['',100,'{$charset}']
+            },
+            brand_logo  : {
+                required : true,
+                accept : 'jpe?g|png|gif'
+            }
+        },
+        messages : {
+            brand_name : {
+                required : '{$lang.brand_name_required}. ',
+                byteRange: '{$lang.brand_maxlength_error}. '
+            },
+            brand_logo  : {
+                required : '{$lang.brand_logo_required}',
+                accept   : '{$lang.logo_accept_error}. '
+            }
+        }
+    });
+});
+//]]>
+</script>
+<div class="eject_con">
+    <div class="adds">
+        <div id="warning"></div>
+        <form method="post" action="index.php?app=my_goods&act={$smarty.get.act}<!--{if $smarty.get.id neq ''}-->&id={$smarty.get.id}<!--{/if}-->" target="my_goods" enctype="multipart/form-data" id="brand_apply_form">
+        <ul>
+            <li>
+                <h3>{$lang.brand_name}:</h3>
+                <p><input type="text" class="text width14" name="brand_name" value="{$brand.brand_name|escape}" id="brand_name" /><b class="strong">*</b></p>
+            </li>
+            <li>
+                <h3>{$lang.tag}:</h3>
+                <p><input type="text" class="text width14" name="tag" value="{$brand.tag|escape}" /></p>
+            </li>
+            <li>
+                <h3>{$lang.brand_logo}:</h3>
+                <div class="sign_box">
+                    <div class="sign_con">
+                        <div class="sign"><img src="<!--{if $brand.brand_logo}-->{$brand.brand_logo}<!--{else}-->data/system/no_pic.gif<!--{/if}-->" width="150" height="50" alt="{$brand.brand_name|escape}" ectype="logo1"/></div>
+                        <div class="upload_pic">
+                            <span class="file1"><input type="file" size="1" maxlength="0" hidefocus="true" ectype="logo"/></span>
+                            <span class="file2"><input type="file" size="1" maxlength="0" hidefocus="true" ectype="logo"/></span>
+                            <div class="txt">{$lang.upload_types}</div>
+                        </div>
+                    </div>
+                    <div class="sign_con">
+                        <span class="color5"></span><br />
+                        <span class="color7"></span>
+                    </div>
+                </div>
+            </li>
+            <li>
+               <span class="field_notice">{$lang.brand_desc}</span>
+            </li>
+        </ul>
+        <div class="submit"><input type="submit" class="btn" value="{$lang.submit}" /></div>
+        </form>
+    </div>
+</div>

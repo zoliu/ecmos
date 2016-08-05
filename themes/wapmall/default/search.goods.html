@@ -1,0 +1,65 @@
+{include file='header2.html'}
+
+<style>
+.header_top_nav_img{position: absolute;z-index: 0; top:50%;width:24px;height:24px;line-height:24px;margin-top: -9px;}
+.header_top_nav_img_login{right:80px;}
+.header_top_nav_img_search{right:45px;}
+</style>
+<script type="text/javascript" src="{lib file=search_goods.js}" charset="utf-8"></script>
+ <section id="wraper">
+        <header id="sub-title">
+            <a href="javascript:history.go(-1);"></a>
+            <h1>商品列表</h1>
+            <a href="{url app=cart}" class="header_top_nav_img header_top_nav_img_login " ><img  class="" src="{res file=images/cart_my2.png}"  /></a>
+            <a href="{url app=search}"  class="header_top_nav_img header_top_nav_img_search" ><img  class=""  src="{res file=images/sort-home.png}"/></a>
+            <a href="{url app=default}"></a>
+        </header>
+        <form id="searchbox" method="GET" action="index.php?app=search">
+		<input type="hidden" name="app" value="search">
+            <input type="hidden" name="act" value="index">
+            <input type="text"  name="keyword" value={$smarty.get.keyword}><input type="submit" value="">
+        </form>
+        <ul class="pro-list-2">
+        <!--{foreach from=$goods_list item=goods name=fe_goods}-->
+        <li>
+                <figure><a href="{url app=goods&id=$goods.goods_id}"><img src="{$goods.default_image}"   alt="{$goods.name}" title="{$goods.name}" ></a></figure>
+                <section>
+                    <h2><a href="{url app=goods&id=$goods.goods_id}">{$goods.goods_name|escape|truncate:30}</a></h2>
+                    <p>{$goods.price|price}</p>
+                    <!--<del style="text-decoration: line-through;">{$goods.market_price|price}</del>
+                    <p>PV:{$goods.pvprice}</p>-->
+                    <div>{$goods.grade_name}</div>
+                </section>
+                <nav><a href="javascript:collect_goods({$goods.goods_id});">收藏商品</a><a href="javascript:add_to_shop({$goods.spec_id},1);">加入购物车</a><a href="{url app=goods&id=$goods.goods_id}">进入购买</a></nav>
+            </li>
+        <!--{foreachelse}-->
+        <li style="text-align: center;margin: 10px auto;">暂无此类商品</li>
+        <!--{/foreach}-->
+
+        </ul>
+        {include file='page.bottom.html'}
+     {include file='footer2.html'}
+    </section>
+    <script>
+        function add_to_shop(spec_id, quantity)
+        {
+            var url = 'index.php?app=cart&act=add';
+
+            $.getJSON(url, {'spec_id': spec_id, 'quantity': quantity}, function(data) {
+                if (data.done)
+                {
+                    alert('购物车加入成功！');
+                    //window.location.href = 'index.php?app=cart';
+                    // $('.bold_num').text(data.retval.cart.kinds);
+                    // $('.bold_mly').html(price_format(data.retval.cart.amount));
+                    // $(".buynow .msg").slideDown().delay(5000).slideUp();
+                }
+                else
+                {
+                    alert(data.msg);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

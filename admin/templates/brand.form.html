@@ -1,0 +1,120 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function(){
+    $('#brand_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('right').text('OK!');
+        },
+        onkeyup    : false,
+        rules : {
+            brand_name : {
+                required : true,
+                remote   : {                //唯一
+                url :'index.php?app=brand&act=check_brand',
+                type:'get',
+                data:{
+                    brand_name : function(){
+                        return $('#brand_name').val();
+                        },
+                    id  : '{$brand.brand_id}'
+                    }
+                }
+            },
+            logo : {
+                accept  : 'gif|png|jpe?g'
+            },
+            sort_order : {
+                number   : true
+            }
+        },
+        messages : {
+            brand_name : {
+                required : '{$lang.brand_empty}',
+                remote   : '{$lang.name_exist}'
+            },
+            logo : {
+                accept : '{$lang.limit_img}'
+            },
+            sort_order  : {
+                number   : '{$lang.number_only}'
+            }
+        }
+    });
+});
+</script>
+<div id="rightTop">
+    <p>{$lang.brand}</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?app=brand">{$lang.manage}</a></li>
+        {if $brand.brand_id}
+        <li><a class="btn1" href="index.php?app=brand&amp;act=add">{$lang.add}</a></li>
+        {else}
+        <li><span>{$lang.add}</span></li>
+        {/if}
+        <li><a class="btn1" href="index.php?app=brand&wait_verify=1">{$lang.wait_verify}</a></li>
+    </ul>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data" id="brand_form">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">
+                    {$lang.brand_name}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" id="brand_name" type="text" name="brand_name" value="{$brand.brand_name|escape}" /> <label class="field_notice">{$lang.brand_name}</label>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.tag}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" id="tag" type="text" name="tag" value="{$brand.tag|escape}" /> <label class="field_notice">{$lang.tag}</label>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.logo}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableFile2" id="brand_logo" type="file" name="logo" />
+                    <label class="field_notice">{$lang.limit_img}</label>
+                </td>
+            </tr>
+            {if $brand.brand_logo}
+            <tr>
+                <th class="paddingT15">
+                </th>
+                <td class="paddingT15 wordSpacing5">
+                <img src="{$brand.brand_logo}" class="makesmall" max_width="120" max_height="90" />
+                </td>
+            </tr>
+            {/if}
+            <tr>
+                <th class="paddingT15">
+                    {$lang.if_recommended}:</th>
+                <td class="paddingT15 wordSpacing5">
+                {html_radios options=$yes_or_no checked=$brand.recommended name=recommended}</td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.sort_order}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="sort_order" id="sort_order" type="text" name="sort_order" value="{$brand.sort_order}" />
+                    <label class="field_notice">{$lang.update_order}</label>
+                </td>
+            </tr>
+        <tr>
+            <th></th>
+            <td class="ptb20">
+                <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />
+            </td>
+        </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

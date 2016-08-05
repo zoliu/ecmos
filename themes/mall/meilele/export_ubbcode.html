@@ -1,0 +1,31 @@
+<script type="text/javascript">
+$(function(){
+    $('#copyubb').click(function(){
+        if(copyToClipboard("{$alert_code}") == false){
+            alert(lang.get('copy_fail'));
+        }else
+        {
+            $('#ubbcode').select();
+            alert(lang.get('copy_ok'));
+        }
+    });
+    $('#ubbcode').click(function(){
+        this.select();
+    });
+});
+</script>
+<ul class="tab">
+    <li class="active">{$lang.export_ubbcode}</li>
+</ul>
+<div class="eject_con">
+<div class="add" style="width: 320px;">
+    <div id="warning"></div>
+    <ul>
+        <li style="width: 320px;">
+            <p>
+            <textarea class="text" style="width: 300px; height: 160px; " id="ubbcode" name="ubbcode">{$code|escape}</textarea></p>
+        </li>
+    </ul>
+    <div class="submit"><input id="copyubb" type="submit" class="btn" value="{$lang.copy}" /></div>
+</div>
+</div>

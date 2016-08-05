@@ -1,0 +1,73 @@
+{include file=member.header.html}
+<div class="content">
+    <div class="totline"></div><div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+{include file=member.submenu.html}
+        <div class="wrap">
+            <div class="public table">
+                <table>
+                    <!--{if $collect_store}-->
+                     <tr class="operations line_bold">
+                        <th colspan="8">
+                            <p class="position1 clearfix">
+                            	<input type="checkbox" id="all" class="checkall"/>
+                        		<label for="all">{$lang.checkall}</label>
+                            	<a href="javascript:void(0);" class="delete" uri="index.php?app=my_favorite&act=drop&type=store" name="item_id" presubmit="confirm('{$lang.drop_confirm}')" ectype="batchbutton">{$lang.drop}</a>
+                            </p>
+                            <p class="position2 clearfix">
+                                {include file=member.page.top.html}
+                            </p>
+                        </th>
+                    </tr>
+                    
+                    <!--{/if}-->
+                    <!--{foreach from=$collect_store item=store name=v}-->
+                    <!--{if $smarty.foreach.v.last}--><tr class="line_bold"><!--{else}--><tr class="line"><!--{/if}-->
+                        <td class="align2" style="width:25px;"><input type="checkbox" class="checkitem" value="{$store.store_id}"/></td>
+                        <td>
+                            <p class="ware_pic"><a href="{url app=store&id=$store.store_id}" target="_blank"><img src="{$store.store_logo}" width="50" height="50"  /></a></p>
+                        </td>
+                        <td>
+                            <p class="ware_text"><a href="{url app=store&id=$store.store_id}" target="_blank">{$store.store_name|escape}</a></p>
+                        </td>
+                        <td class="width2">{$store.user_name|escape}</td>
+                        <td class="width2"><a target="_blank" href="{url app=message&act=send&to_id=$store.store_id}" class="email" title="{$lang.send_message}"></a></td>
+                        <td class="width5">{$store.region_name|escape}</td>
+                        <td class="width2"><img src="{$store.credit_image}" /></td>
+                        <td class="width2"><a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=my_favorite&amp;act=drop&type=store&item_id={$store.store_id}');" class="delete">{$lang.drop}</a></td>
+                    </tr>
+                    <!--{foreachelse}-->
+                    <tr>
+                        <td colspan="8" class="member_no_records">{$lang.no_records}</td>
+                    </tr>
+                    <!--{/foreach}-->
+                    <!--{if $collect_store}-->
+                    <tr class="operations">
+                        <th colspan="8">
+                            <p class="position1 clearfix">
+                            	<input type="checkbox" id="all2" class="checkall"/>
+                        		<label for="all2">{$lang.checkall}</label>
+                            	<a href="javascript:void(0);" class="delete" uri="index.php?app=my_favorite&act=drop&type=store" name="item_id" presubmit="confirm('{$lang.drop_confirm}')" ectype="batchbutton">{$lang.drop}</a>
+                            </p>
+                            <p class="position2 clearfix">
+                                {include file=member.page.bottom.html}
+                            </p>
+                        </th> 
+                    </tr>
+                    
+                    <!--{/if}-->
+                </table>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<iframe name="iframe_post" width="0" height="0"></iframe>
+{include file=footer.html}

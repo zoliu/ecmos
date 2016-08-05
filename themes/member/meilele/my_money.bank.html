@@ -1,0 +1,68 @@
+
+<!-- www.360cd.cn  Mosquito -->
+
+{include file=member.header.html}
+
+<script type="text/javascript" src="{lib file=dialog/dialog.js}" id="dialog_js"></script>
+<script type="text/javascript" src="{lib file=jquery.ui/jquery.ui.js}"></script>
+
+<script type="text/javascript">
+
+$(function() {
+});
+
+</script>
+
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <div class="eject_btn_two eject_pos1" title="新增银行卡"><b class="ico3" ectype="dialog" dialog_title="新增银行卡" dialog_id="bank_add" dialog_width="640" uri="{url app=my_money&act=bank_add}">新增银行卡</b></div>
+            <br/><br/>
+            <div class="public table">
+                <table>
+                    {if $bank_list}
+                    <tr class="line gray">
+                        <th>卡号 / 账户</th>
+                        <th>持卡人 / 姓名</th>
+                        <th>开户行 / 账户类型</th>
+                        <th>开户行地址</th>
+                        <th>操作</th>
+                    </tr>
+                    {/if}
+
+                    {foreach from=$bank_list item=data}
+                    <tr class="line_bold" align="center">
+                        <td>{$data.card_number}</td>
+                        <td>{$data.cardholder}</td>
+                        <td>{$data.bank_name}</td>
+                        <td>{$data.bank_address}</td>
+                        <td>
+                            <a href="javascript:drop_confirm('{$lang.drop_confirm}', '{url app=my_money&act=bank_drop&id=$data.id}')" class="delete float_none">删除</a>
+                        </td>
+                    </tr>
+                    {foreachelse}
+                    <tr>
+                        <td colspan="5" class="member_no_records padding6">没有符合条件的记录</td>
+                    </tr>
+                    {/foreach}
+                </table>
+            </div>
+        </div>
+        
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<div class="clear"></div>
+
+<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
+
+{include file=footer.html}

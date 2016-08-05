@@ -1,0 +1,37 @@
+{include file="member.header.html"}
+{$_head_tags}
+{assign var='curr_nav' value='$lang.my_coupon'}
+
+
+    <!--订单页-->
+    <div class="u_order">
+
+    <!-- {if $coupons} -->
+        <!-- {foreach from=$coupons item=coupon name=v} -->
+
+        <div class="orderbox">            
+            <div class="detail">
+                <p>{$lang.coupon_sn}：{$coupon.coupon_sn}</p>
+                <p>{$lang.coupon_value}：<!--{if $coupon.coupon_value}-->{$coupon.coupon_value}<!--{else}-->{$lang.no_limit}<!--{/if}--></p>
+                <p>{$lang.limit_time}：{$coupon.start_time|date} {$lang.to} <!--{if $coupon.end_time}-->{$coupon.end_time|date}<!--{else}-->{$lang.no_limit}<!--{/if}--></p>
+                <p>{$lang.min_amount}：<!--{if $coupon.min_amount}-->{sprintf lang=min_amount_desc var1=coupon.min_amount}<!--{else}-->{$lang.no_limit}<!--{/if}--></p>
+                <p>{$lang.store_name}：<a href="{url index.php?app=store&id=$coupon.store_id}">{$coupon.store_name}</a></p>
+                <p>{$lang.remain_times}：<!--{if $coupon.remain_times eq -1}-->{$lang.no_limit}<!--{else}-->{$coupon.remain_times}<!--{/if}--></p>
+                <p>{$lang.if_valid}：<!--{if $coupon.valid}-->{$lang.yes}<!--{else}-->{$lang.no}<!--{/if}--></p>
+            </div>
+        </div>
+
+        <!--{foreachelse}-->
+
+        <div class="null" >
+            <p><img src="{res file=images/nothing.gif}" /></p>
+            <p>你没有代金券信息~</p>
+        </div>
+        <!--{/foreach}-->
+    <!-- {/if} -->
+    </div>
+    <div class="page">
+        {include file=member.page.bottom.html}
+    </div>
+    <iframe id='iframe_post' name="iframe_post" src="about:blank" frameborder="0" width="0" height="0"></iframe>
+    {include file="member.footer.html"}

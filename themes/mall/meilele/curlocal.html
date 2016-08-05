@@ -1,0 +1,11 @@
+
+<div class="position fl fontsize14">
+    {$lang.curlocal}:
+    <!--{foreach from=$_curlocal item=lnk}-->
+    <!--{if $lnk.url}-->
+        <a href="{$lnk.url}">{$lnk.text|escape}</a> &gt;
+    <!--{else}-->
+    {$lnk.text|escape}
+    <!--{/if}-->
+    <!--{/foreach}-->
+</div>

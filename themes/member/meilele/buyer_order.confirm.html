@@ -1,0 +1,23 @@
+<script type="text/javascript">
+$(function(){
+    $('#confirm_cancel').click(function(){
+        DialogManager.close('buyer_order_confirm_order');
+    });
+});
+</script>
+<div class="content1">
+<div id="warning"></div>
+<form action="index.php?app=buyer_order&act=confirm_order&order_id={$order.order_id}&ajax" method="post" target="iframe_post">
+    <input type="hidden" value="{$order.order_id}" />
+    <h1>{$lang.confirm_order_confirm}</h1>
+    <p>{$lang.order_sn}:<span>{$order.order_sn}</span></p>
+    <div class="clue_on">
+        {$lang.notice}&nbsp;:&nbsp;{$lang.confirm_order_notice}
+    </div>
+    <div class="btn">
+        <input type="submit" id="confirm_yes" class="btn1" value="{$lang.confirm}" />
+        <input type="button" id="confirm_cancel" class="btn2" value="{$lang.cancel}" />
+    </div>
+</form>
+</div>
+

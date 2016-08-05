@@ -1,0 +1,105 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>{$lang.view_discus}</p>
+    <ul class="subnav">
+        <li>
+            <a class="btn1" href="index.php?app=discus">{$lang.manage}</a>
+        </li>
+
+    </ul>
+</div>
+
+<div class="info">
+    <table class="infoTable">
+
+        <tr>
+            <th class="paddingT15"><h2><b>{$lang.buyer_info}</b></h2></th>
+            <td class="paddingT15 wordSpacing5">              
+
+            </td>
+        </tr>
+        <tr>
+            <th class="paddingT15">{$lang.buyer_type}:</th>
+            <td class="paddingT15 wordSpacing5">
+                {$lang[$discus.buyer_type]}
+            </td>
+        </tr>
+        <tr>
+            <th class="paddingT15">{$lang.buyer_remark}:</th>
+            <td class="paddingT15 wordSpacing5">
+                {$discus.buyer_remark}
+            </td>
+        </tr>
+        <tr>
+            <th class="paddingT15">{$lang.buyer_addtime}:</th>
+            <td class="paddingT15 wordSpacing5">
+               {$discus.buyer_addtime|date:Y-m-d H:i:s}
+            </td>
+        </tr>
+         <tr>
+            <th class="paddingT15">&nbsp;</th>
+            <td class="paddingT15 wordSpacing5">              
+
+            </td>
+        </tr>
+        <tr>
+            <th class="paddingT15"><h2><b>{$lang.seller_info}</b></h2></th>
+            <td class="paddingT15 wordSpacing5">              
+
+            </td>
+        </tr>
+        <tr>
+            <th class="paddingT15">{$lang.seller_type}:</th>
+            <td class="paddingT15 wordSpacing5">
+                {$lang[$discus.seller_type]}
+            </td>
+        </tr>
+        <tr>
+            <th class="paddingT15">{$lang.seller_remark}:</th>
+            <td class="paddingT15 wordSpacing5">
+                {$discus.seller_remark}
+            </td>
+        </tr>
+        <tr>
+            <th class="paddingT15">{$lang.seller_addtime}:</th>
+            <td class="paddingT15 wordSpacing5">
+               {$discus.seller_addtime|date:Y-m-d H:i:s}
+            </td>
+        </tr>
+         <tr>
+            <th class="paddingT15">&nbsp;</th>
+            <td class="paddingT15 wordSpacing5">              
+
+            </td>
+        </tr>
+
+
+          <tr>
+            <th class="paddingT15"><h2><b>{$lang.admin_info}</b></h2></th>
+            <td class="paddingT15 wordSpacing5">              
+
+            </td>
+        </tr>
+        <tr>
+            <th class="paddingT15">{$lang.status}:</th>
+            <td class="paddingT15 wordSpacing5">
+                {$discus_status[$discus.status]}
+            </td>
+        </tr>
+        <tr>
+            <th class="paddingT15">{$lang.admin_remark}:</th>
+            <td class="paddingT15 wordSpacing5">
+                {$discus.admin_remark}
+            </td>
+        </tr>
+        <tr>
+            <th class="paddingT15">{$lang.admin_addtime}:</th>
+            <td class="paddingT15 wordSpacing5">
+               {$discus.admin_addtime|date:Y-m-d H:i:s}
+            </td>
+        </tr>
+
+</table>
+
+</div>
+{include file="footer.html"}

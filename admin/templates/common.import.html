@@ -1,0 +1,44 @@
+{include file="header.html"}
+<div id="rightTop">
+  <p>{$lang.import_data}</p>
+  <ul class="subnav">
+  </ul>
+</div>
+<div class="info">
+  <form method="post" enctype="multipart/form-data">
+    <table class="infoTable">
+      <tr>
+        <th class="paddingT15">{$lang.select_file}:</th>
+        <td class="paddingT15 wordSpacing5">
+        <input type="file" name="csv" id="csv" />
+        <span class="grey">{$lang.note_for_file}</span></td>
+      </tr>
+      <tr>
+        <th class="paddingT15">{$lang.select_charset}:</th>
+        <td class="paddingT15 wordSpacing5"><p>
+            <label>
+            <input type="radio" name="charset" value="utf-8" checked="checked" />
+            utf-8</label>
+            <label>
+            <input type="radio" name="charset" value="gbk" />
+            gbk</label>
+            <label>
+            <input type="radio" name="charset" value="big5" />
+            big5</label>
+            <span class="grey">{$note_for_import}</span>
+          </p>
+          </td>
+      </tr>
+      <tr>
+        <th class="paddingT15" valign="top">{$lang.file_format}:</th>
+        <td class="paddingT15 wordSpacing5">{$lang.file_format_desc}</td>
+      </tr>
+      <tr>
+        <th></th>
+        <td class="ptb20"><input class="formbtn" type="submit" name="Submit" value="{$lang.import}" />
+          <input class="formbtn" type="button" onclick="history.go(-1)" value="{$lang.back}" />        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+{include file="footer.html"} 

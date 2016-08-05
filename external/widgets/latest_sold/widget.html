@@ -1,0 +1,15 @@
+<div class="module_common">
+    <h2><b class="bargain_on" title="最新成交"></b></h2>
+    <div class="wrap">
+        <div class="wrap_child">
+            <ul class="list_pic">
+                <!-- {foreach from=$widget_data item=goods} -->
+                <li>
+                    <p><a href="{url app=goods&id=$goods.goods_id}" target="_blank"><img src="{$goods.goods_image}" width="78" height="78" /></a></p>
+                    <h3><a href="{url app=goods&id=$goods.goods_id}" target="_blank" title="{$goods.goods_name|escape}">{$goods.goods_name|escape}</a><span>{$goods.price|price}</span></h3>
+                </li>
+                <!-- {/foreach} -->
+            </ul>
+        </div>
+    </div>
+</div>

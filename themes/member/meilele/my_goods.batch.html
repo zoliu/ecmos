@@ -1,0 +1,142 @@
+{include file=member.header.html}
+<style>
+.sub_btn {margin-right:10px; background:transparent url({res file=images/member/btn.gif}) no-repeat scroll 0 -253px; border:0 none; color:#3F3D3E; cursor:pointer; font-weight:bold; height:32px; width:120px; }
+.add_wrap .assort .txt { width: 60px; }
+</style>
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    // add store_gcategory
+    gcategoryInit("gcategory");
+    // validate
+    $('#batch_form').validate({
+        errorPlacement: function(error, element){
+            $(element).parent().next('.new_add').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        onkeyup : false,
+        rules : {
+            price      : {
+                number     : true,
+                min : 0
+            },
+            stock      : {
+                digits    : true
+            }
+        },
+        messages : {
+            price       : {
+                number     : '{$lang.number_only}',
+                min : '{$lang.price_ge_0}'
+            },
+            stock       : {
+                digits  : '{$lang.number_only}'
+            }
+        }
+    });
+});
+//]]>
+</script>
+<div class="content">
+  <div class="totline"></div>
+  <div class="botline"></div>
+  {include file=member.menu.html}
+  <div id="right"> {include file=member.curlocal.html}
+{include file=member.submenu.html}
+    <div class="wrap">
+      <div class="public">
+        <form id="batch_form" method="POST" enctype="multipart/form-data">
+          <div class="information_index">
+            <div class="add_wrap">
+              <div class="assort">
+                <p class="txt">{$lang.mgcategory}: </p>
+                <p id="gcategory" class="select">
+                  <input type="hidden" name="cate_id" value="0" class="mls_id" />
+                  <input type="hidden" name="cate_name" value="" class="mls_names" />
+                  <select>
+                    <option>{$lang.select_pls}</option>
+                    {html_options options=$mgcategories}
+                  </select>
+                </p>
+              </div>
+              <div class="assort">
+                <p class="txt">{$lang.sgcategory}: </p>
+                <p class="select">
+                  <select name="sgcate_id[]" class="sgcategory">
+                    <option value="0">{$lang.select_pls}</option>
+                    {html_options options=$sgcategories}
+                  </select>
+                </p>
+                <p class="new_add">
+                  <a id="add_sgcategory" class="btn" href="javascript:;">{$lang.add}</a>
+                  <span>{$lang.note_for_select}</span>
+                </p>
+              </div>
+              <div class="assort">
+                <p class="txt">{$lang.brand}: </p>
+                <p>
+                  <input type="text" name="brand" class="text" />
+                </p>
+                <p class="new_add"><span>{$lang.note_for_input}</span></p>
+              </div>
+              <div class="assort">
+                <p class="txt">{$lang.if_show_status}: </p>
+                <p>
+                  <label>
+                  <input type="radio" name="if_show" value="-1" checked="checked" />
+                  {$lang.no_change}</label>
+                  <label>
+                  <input type="radio" name="if_show" value="1" />
+                  {$lang.show}</label>
+                  <label>
+                  <input type="radio" name="if_show" value="0" />
+                  {$lang.hide}</label>
+                </p>
+              </div>
+              <div class="assort">
+                <p class="txt">{$lang.recommended_status}: </p>
+                <p>
+                  <label>
+                  <input type="radio" name="recommended" value="-1" checked="checked" />
+                  {$lang.no_change}</label>
+                  <label>
+                  <input type="radio" name="recommended" value="1" />
+                  {$lang.recommend}</label>
+                  <label>
+                  <input type="radio" name="recommended" value="0" />
+                  {$lang.not_recommend}</label>
+                </p>
+              </div>
+              <div class="assort">
+                <p class="txt">{$lang.price}: </p>
+                <p class="select">
+                  <select name="price_change">{html_options options=$lang.change_array}</select>
+                  <input name="price" type="text" class="text" />
+                </p>
+                <p class="new_add"><span>{$lang.note_for_input}</span></p>
+              </div>
+              <div class="assort">
+                <p class="txt">{$lang.stock}: </p>
+                <p class="select">
+                  <select name="stock_change">{html_options options=$lang.change_array}</select>
+                  <input name="stock" type="text" class="text" />
+                </p>
+                <p class="new_add"><span>{$lang.note_for_input}</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="send_out">
+            <input type="hidden" name="id" value="{$smarty.get.id}" />
+            <input class="sub_btn" type="submit" name="Submit" value="{$lang.submit}" />
+            <input class="sub_btn" type="reset" name="Reset" value="{$lang.reset}" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+{include file=footer.html}

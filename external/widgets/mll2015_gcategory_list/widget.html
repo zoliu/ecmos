@@ -1,0 +1,29 @@
+<div class="allcategory">
+    <div class="allcategory-list">
+        <div class="content clearfix">
+            <!--{foreach from=$widget_data.gcategories item=category name=fe_category}-->
+            <!--{if $smarty.foreach.fe_category.iteration lt 13}-->
+            <div class="item item_{$smarty.foreach.fe_category.iteration}">
+                <div class="pborder">
+                    <p><a href="{url app=search&cate_id=$category.id}" target="_blank">{$category.value|escape}</a><b></b></p>
+                </div>
+                <div class="pop" {if $category.top} style="top:{$category.top}"{/if}>
+                     <div class="catlist float-left">
+                        <!--{foreach from=$category.children item=child name=fe_child}--> 
+                        <dl class="clearfix" {if $smarty.foreach.fe_child.last} style="border-bottom:0"{/if}>
+                            <dt class="float-left"><a href="{url app=search&cate_id=$child.id}"><strong>{$child.value|escape}</strong></a></dt>
+                            <dd class="float-left">
+                                <!--{foreach from=$child.children item=child2 name=fe_child2}-->
+                                <a  href="{url app=search&cate_id=$child2.id}">{$child2.value|escape}</a>
+                                <!--{/foreach}-->
+                            </dd>
+                        </dl> 
+                        <!--{/foreach}-->
+                    </div>
+                </div>
+            </div>
+            <!--{/if}-->
+            <!--{/foreach}-->
+        </div>
+    </div>
+</div>

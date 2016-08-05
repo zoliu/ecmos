@@ -1,0 +1,259 @@
+{include file=header1.html}
+
+<script type="text/javascript">
+$(function(){
+  // 全选
+  $("input[name='sellect_all']").click(function(){
+    $("input[type='checkbox']").prop("checked",this.checked);
+    set_amount();
+  });
+  $("#check_all").click(function(){
+    $("input[type='checkbox']").prop("checked",this.checked);
+    set_amount();
+  });
+  // 店铺全选
+  $(".order-list  input[name='store_id']").click(function(event) {
+    $(".order-list ul li .cart-checkbox input[id='"+$(this).val()+"']").prop("checked",this.checked);
+    $(".order-list input[value='"+$(this).val()+"']").prop("checked",this.checked);
+    set_amount();
+  });
+  // 批量删除/收藏
+  $(".operation a").click(function(){
+    var name = this.name;
+    var id=this.id;
+    var checked = 0;
+    $(".order-list ul li input[id='"+id+"']").each(function(){
+      if($(this).prop("checked")==true){
+        srg = $(this).val().split(":");
+        if(name=="batch_del"){
+          drop_cart_item(srg[0], srg[1]);
+        } else {
+          batch_move_favorite(srg[0], srg[1], srg[2],checked==0);
+        }
+        checked++;
+      }
+    });
+    if(!checked) {
+      alert('你未选择任何项');
+    }
+    set_amount();
+  });
+   $("input[type='submit']").click(function(){
+      
+      var checked = 0;
+      $(".goods_list input[type='checkbox']").each(function(){
+         if($(this).prop("checked")==true){
+            checked++;
+         }
+      });
+      if(!checked) {
+         alert('你未选择任何商品');
+         return false;
+      }
+      set_amount();
+   });
+
+   $(".goods_list input[type='checkbox']").click(function(event) {
+     set_amount();
+     var id=this.id;
+     $(".order-list  input[name='store_id["+id+"]']").val(id);
+   });
+
+});
+function set_amount()
+{
+    var amount=0;
+    var cart_amount=0;
+    var cart_quantity=0;
+   $(".goods_list input[type='checkbox']").each(function(index, el) {
+      var id = this.id;
+
+      if($(this).prop("checked")==true){
+        srg = $(this).val().split(":");
+        //change_amount_by_check(srg[1]);
+        amount=get_subtotal(srg[1]);
+        quantity=1;
+
+      }else{
+        srg = $(this).val().split(":");
+        //change_amount_by_check_sub(srg[1]);
+        amount=0;
+        quantity=0;
+      }
+      cart_amount=parseFloat(amount)+parseFloat(cart_amount);
+      cart_quantity=parseFloat(cart_quantity)+parseFloat(quantity);
+   });
+
+   $("#cart_amount_bottom").attr('amount',cart_amount);
+   $("#cart_amount_bottom").html(price_format(cart_amount));
+   $("#cart_amount_top").html(price_format(cart_amount));
+   $('#cart_quantity').html(cart_quantity);
+}
+
+function get_subtotal(rec_id){
+  var amount=$("#item"+rec_id+"_subtotal").attr("amount");
+  return amount;
+}
+/*function change_amount_by_check(rec_id)
+{
+   var amount=$("#item"+rec_id+"_subtotal").attr("amount");
+   var cart_amount=$("#cart_amount_bottom").attr('amount');
+   
+   if(!amount)
+   {
+    amount=0;
+   }
+   if(!cart_amount)
+   {
+     cart_amount=0;
+   }
+   var total_amount=parseFloat(amount)+parseFloat(cart_amount);
+   $("#cart_amount_bottom").attr('amount',total_amount);
+   $("#cart_amount_bottom").html(price_format(total_amount));
+   $("#cart_amount_top").html(price_format(total_amount));
+}
+function change_amount_by_check_sub(store_id,rec_id)
+{
+  var amount=$("#item"+rec_id+"_subtotal").attr("amount");
+  var cart_amount=$("#cart_amount_bottom").attr('amount');
+  if(!amount)
+  {
+    amount=0;
+   }
+   if(!cart_amount)
+   {
+     cart_amount=0;
+   }
+   var total_amount=parseFloat(cart_amount)-parseFloat(amount);
+   if (total_amount<=0) {
+      total_amount=0;
+    }
+   $("#cart_amount_bottom").attr('amount',total_amount);
+   $("#cart_amount_bottom").html(price_format(total_amount));
+   $("#cart_amount_top").html(price_format(total_amount));
+}*/
+
+</script>
+<!--头部-->
+<div class="header">
+    <div class="w1200 clearfix">
+        <h1 class="logo fl mt15" title="{$site_title}"><a href="index.php"><img src="{$site_logo}" width="236" height="70" alt="{$site_title}"></a></h1>
+        <ul class="steps fr clearfix mt30">
+            <li class="step-on"><span class="fontbold">1</span><p class="step-on-txt">{$lang.curlocal_my_cart}</p></li>
+            <li><span>2</span><p>{$lang.curlocal_do_order}</p></li>
+            <li><span>3</span><p>{$lang.curlocal_payment}</p></li>
+            <li><span>4</span><p>{$lang.curlocal_order_confirm}</p></li>
+            <li><span>5</span><p>{$lang.curlocal_my_evaluate}</p></li>
+        </ul>
+    </div>
+</div>
+<!--头部 END-->
+
+<!--主体-->
+<div class="jim-main">
+  <div class="w1200 clearfix">
+		<!--购物车-->
+		<div class="cart mt40">
+			<h2><strong>{$lang.my_cart}</strong><span style="display:;">已选商品(不含运费)：<b class="color02" id="cart_amount_top">{$carts.cart_amount|price}</b><i>结算</i></span></h2>
+			<div class="cart-main">
+				<div class="cart-table-th clearfix fontsimsun">
+					<div class="th-chk fl">
+						<div class="cart-checkbox">
+              <input type="checkbox" value="true" name='sellect_all' id="sellect_all">
+            </div>
+						{$lang.sellectAll}
+					</div>
+					<div class="th-item fl">商品信息</div>
+					<div class="th-info fl">&nbsp;</div>
+					<div class="th-price fl">单价（元）</div>
+					<div class="th-amount fl">数量</div>
+					<div class="th-sum fl">金额（元）</div>
+					<div class="th-op fl" style="text-align: center;">操作</div>
+				</div>
+			</div>
+			<div class="order-list fontsimsun">
+      <form method="get" enctype="multipart/form-data">
+        <input type="hidden" name="app" value="order" />
+        <input type="hidden" name="goods" value="cart" />
+        <!--{foreach from=$carts item=cart key=store_id}-->
+        <input type="hidden" name="store_id[{$store_id}]" value="" />
+				<div class="shopbar">
+					<div class="shop-info">
+						<div class="cart-checkbox" id="{$cart.store_id}">
+              <input type="checkbox" name="store_id" value="{$store_id}">{$lang.store}: <a href="{url app=store&id=$store_id}"><u>{$cart.store_name|escape}</u></a><a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid=1009618401&site=cntaobao&s=2&charset=utf-8" ><img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid=1009618401&site=cntaobao&s=2&charset=utf-8" alt="点击这里给我发消息" /></a>&nbsp;<a target=blank href=http://wpa.qq.com/msgrd?V=1&Uin=1009618401&Site=商城客服&Menu=yes><img border="0" SRC=http://wpa.qq.com/pa?p=1:1009618401:8 alt="点击这里给我发消息"></a>
+            </div>
+					</div>
+					<div class="order-promot-info">满200元 ,免运费</div>
+				</div>
+        <div class="goods_list">
+        <!--{foreach from=$cart.goods item=goods}-->
+  				<ul class="item-content clearfix">
+  					<li class="td-chk fl">
+  						<div class="cart-checkbox"><input type="checkbox" id="{$store_id}" name="rec_id[{$goods.rec_id}]" value="{$store_id}:{$goods.rec_id}:{$goods.goods_id}"></div>
+  					</li>
+  					<li class="td-item fl">
+  						<div class="td-inner">
+  							<div class="item-pic fl"><a href="{url app=goods&id=$goods.goods_id}" target="_blank"><img src="{$goods.goods_image}" alt="{$goods.goods_name|escape}" width="80" height="80"></a></div>
+  							<div class="item-info fl ml10">
+  								<div class="item-basic-info lineheight18"><a href="{url app=goods&id=$goods.goods_id}" target="_blank">{$goods.goods_name|escape}</a></div>
+  								<div class="item-other-info">
+  									<!--<a href="#" target="_blank"><img src="images/zheng-01.gif" alt=""></a>-->
+  								</div>
+  							 </div>
+  						</div>
+  					</li>
+  					<li class="td-info fl lineheight18">
+  						<p class="sku-line">&nbsp;{$goods.specification|escape}</p>
+  					</li>
+  					<li class="td-price fl">&nbsp;{$goods.price|price}</li>
+  					<li class="td-amount fl">
+              <input id="min1" onclick="decrease_quantity({$goods.rec_id});" alt="{$lang.decrease}" class="addreduce" name="" type="button" value="-" />
+
+              <input id="input_item_{$goods.rec_id}" value="{$goods.quantity}" orig="{$goods.quantity}" changed="{$goods.quantity}" onkeyup="change_quantity({$store_id}, {$goods.rec_id}, {$goods.spec_id}, this);" type="text" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+
+              <input id="add1" onclick="add_quantity({$goods.rec_id});" alt="{$lang.increase}" class="addreduce" name="" type="button" value="+" />     
+            </li>
+  					<li class="td-sum fl"><b class="color02" id="item{$goods.rec_id}_subtotal" amount="{$goods.subtotal}">{$goods.subtotal|price}</b></li>
+  					<li class="td-op fl lineheight18" style="text-align: center;"><a class="move" href="javascript:;" onclick="move_favorite({$store_id}, {$goods.rec_id}, {$goods.goods_id});">{$lang.move_favorite}</a><br><a class="del" href="javascript:;" onclick="drop_cart_item({$store_id}, {$goods.rec_id});">{$lang.drop}</a></li>
+  				</ul>
+        <!--{/foreach}-->
+        </div> 
+      <!--{/foreach}-->          
+        <div class="cal-bar mt20 fontsimsun clearfix">
+          <div class="operation">
+            <div class="cart-checkbox"><input type="checkbox" id="check_all"></div>全选
+            <a href="javascript:;" name="batch_del" id="s{$store_id}" title="{$lang.batch_del}">批量删除</a>|
+            <a href="javascript:;" name="batch_collect" id="s{$store_id}" title="{$lang.batch_collect}">移入收藏夹</a>
+            <a href="{url app=store&id=$store_id}" class="back">{$lang.goon_shopping}</a>
+          </div>
+          <div class="total clearfix">
+            <div class="allselected fl">已选商品 <span class="color02 fontbold fontsize16 fontyahei" id="cart_quantity">0</span> 件</div>
+            <div class="transpay fl ml20">{$lang.goods_amount}:&nbsp;&nbsp;<span class="color02 fontbold fontsize18 fontyahei" id="cart_amount_bottom" amount='{$carts.cart_amount}'>{$carts.cart_amount|price}</span></div>
+            <div class="checkout fl">
+              <input type="submit" class="" value="{$lang.next_order_form}" id="submit" />
+            </div>
+          </div>
+        </div>
+      </form>
+			</div> 
+		</div>
+		<!--购物车 END-->
+		
+        <!--相关产品-->
+        <ul class="ohterproduct mt30 clearfix">
+          <!--{foreach from=$interest item=goods}-->
+            <li><a href="{url app=goods&id=$goods.goods_id}" target="_blank"><img src="{$goods.default_image}" width="200" height="200" alt=""><p style="text-overflow: ellipsis;white-space:nowrap;overflow:hidden;">{$goods.goods_name|escape|truncate:42}</p></a></li>
+            <!--{/foreach}-->
+        </ul>
+        <!--相关产品 END-->
+    </div>
+</div>
+<!--主体 END-->
+<!--底部-->
+  {include file=footer.html}
+<!--底部 END-->
+</div>
+</body>
+<script src="{lib file=jquery-1.9.1.min.js}" type="text/javascript" charset="utf-8"></script>
+<!---<script src="{lib file=Calculation.js}" type="text/javascript" charset="utf-8"></script>-->
+</html>

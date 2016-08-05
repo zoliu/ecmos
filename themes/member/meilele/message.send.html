@@ -1,0 +1,110 @@
+{include file=member.header.html}
+<script type="text/javascript">
+$(function(){
+    $('a[ectype="to_user_name"]').click(function (){
+        var str = $('input[name="to_user_name"]').val();
+        var id = $(this).attr('id');
+        if(str.indexOf(id) < 0){
+            doFriend(id, 'add');
+        }else{
+            doFriend(id, 'delete');
+        }
+    });
+}
+);
+$(function(){
+  $('#send_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+            $(element).attr('name')=='msg_content' && $(element).after().css({display:'block'});
+        },
+        success       : function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        rules : {
+            to_user_name : {
+                required   : true
+            },
+            msg_content : {
+                required   : true
+            }
+        },
+        messages : {
+            to_user_name : {
+                required : '{$lang.to_id_empty}'
+            },
+            msg_content : {
+                required   : '{$lang.message_content_empty}'
+            }
+        }
+    });
+});
+function doFriend(user_name, action){
+    var input_name = $("input[name='to_user_name']").val();
+    var key, i = 0;
+    var exist = false;
+    var arrOld = new Array();
+    var arrNew = new Array();
+    input_name = input_name.replace(/\uff0c/g,',');
+    arrOld     = input_name.split(',');
+    for(key in arrOld){
+        arrOld[key] = $.trim(arrOld[key]);
+        if(arrOld[key].length > 0){
+            arrOld[key] == user_name &&  action == 'delete' ? null : arrNew[i++] = arrOld[key];
+            arrOld[key] == user_name ? exist = true : null;
+        }
+    }
+    if(!exist && action == 'add'){
+        arrNew[i] = user_name;
+    }
+    $("input[name='to_user_name']").val(arrNew);
+}
+</script>
+<div class="content">
+    <div class="totline"></div><div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+{include file=member.submenu.html}
+          <div class="wrap">
+            <div class="eject_wrap_msg">
+                <div class="fill_in">
+                    <div class="eject_con">
+                        <div class="msg">
+                            <form method="post" enctype="multipart/form-data" id="send_form" action="index.php?app=message&act=send">
+                            <ul>
+                                <li>
+                                    <h3>{$lang.to_user_name}: </h3>
+                                    <p><input type="text" class="text width_normal" name="to_user_name" value="{$smarty.get.to_user_name|escape}"/><span class="field_notice">{$lang.tips_to_user_name}</span></p>
+                                </li>
+                                <li>
+                                    <h3>{$lang.content}: </h3>
+                                    <p><textarea class="text width_long" name="msg_content" /></textarea></p>
+                                    <div class="clear"></div>
+                                    <div id="short_msg_desc"><a href="javascript:;" id="msg_instrunction">{$lang.msg_instruction}</a>
+                                        <div>{$lang.code_example}</div>
+                                    <div>
+                                </li>
+                            </ul>
+                            <div class="submit"><input type="submit" class="btn" value="{$lang.confirm_send}" /></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="friend">
+                    <h2>{$lang.friend}({$friend_num})</h2>
+                    <ul>
+                    <!--{foreach from=$friends item=friend}-->
+                        <li><a href="javascript:void(0);" id="{$friend.user_name|escape}" ectype="to_user_name">{$friend.user_name|escape}</a></li>
+                    <!--{foreachelse}-->
+                        <li class="member_no_record">{$lang.no_friends}</li>
+                    <!--{/foreach}-->
+                    </ul>
+                </div>
+            </div>
+          </div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

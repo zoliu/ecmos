@@ -1,0 +1,78 @@
+{include file="header.html"}
+<style type="text/css">
+.store_reply { padding:5px 0px; color:green; }
+</style>
+<div id="rightTop">
+  <p>{$lang.consulting}</p>
+    <ul class="subnav">
+    <li><span>{$lang.manage}</span></li>
+  </ul>
+</div>
+
+
+<div class="mrightTop">
+  <div class="fontl">
+    <form method="get">
+      <div class="left">
+          <input type="hidden" name="app" value="consulting" />
+          {$lang.asker}:
+          <input class="queryInput" type="text" name="asker" value="{$query.asker|escape}" />
+          {$lang.content}:
+          <input class="queryInput" type="text" name="content" value="{$query.content|escape}" />
+          <input type="submit" class="formbtn" value="{$lang.query}" />
+      </div>
+      <!--{if $filtered}-->
+            <a class="left formbtn1" href="index.php?app=consulting">{$lang.cancel_query}</a>
+     <!--{/if}-->
+    </form>
+    </div>
+  <div class="fontr">{include file=page.top.html}</div>
+</div>
+<div class="tdare">
+
+  <form method=get>
+  <table width="100%" cellspacing="0" class="dataTable">
+    <!--{if $list_data}-->
+    <tr class="tatr1">
+      <td width="20" class="firstCell"><input type="checkbox" class="checkall" /></td>
+      <td width="80">{$lang.asker}</td>
+      <td width="15%">{$lang.item_name}</td>
+      <td>{$lang.content}</td>
+      <td width="100">{$lang.store_name}</td>
+      <td width="120" style="text-align:center;">{$lang.time}</td>
+      <td style="width:80px;" class="handler">{$lang.handler}</td>
+    </tr>
+
+    <!--{/if}-->
+    <!--{foreach from=$list_data item=data}-->
+    <tr class="tatr2">
+        <td class="firstCell"><input type="checkbox" class="checkitem" value="{$data.ques_id}" /></td>
+        <td><!--{if $data.user_name eq ''}--> {$lang.guest}<!--{else}-->{$data.user_name|escape}<!--{/if}--></td>
+        <td>[{$lang.$data.type}]&nbsp;<a target="_blank" href="{$site_url}/index.php?app={$data.type}&amp;id={$data.item_id}">{$data.item_name|escape}</a></td>
+        <td>{$data.question_content|escape}
+        {if $data.reply_content}<div class="store_reply">{$lang.reply_content}&nbsp;:&nbsp;{$data.reply_content|escape}</div>{/if}</td>
+        <td><a target="_blank" href="{$site_url}/index.php?app=store&id={$data.store_id}">{$data.store_name}</a></td>
+        <td>{$data.time_post|date:complete}</td>
+        <td style="width:80px;" class="handler"><a href="javascript:drop_confirm('{$lang.drop_confirm}','index.php?app=consulting&amp;act=delete&amp;id={$data.ques_id}');" >{$lang.delete}</a></td>
+    </tr>
+
+    <!--{foreachelse}-->
+    <tr class="no_data">
+      <td colspan="7">{$lang.no_data}</td>
+    </tr>
+    <!--{/foreach}-->
+    </table>
+
+    <div id="dataFuncs">
+        <div class="pageLinks">{include file=page.bottom.html}</div>
+        <!--{if $list_data}--><div id="dataFuncs">
+            <div id="batchAction" class="left paddingT15"> &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="index.php?app=consulting&act=delete" presubmit="confirm('{$lang.drop_confirm}');" />
+            </div>
+        </div><!--{/if}-->
+    </div>
+    <div class="clear"></div>
+  </div>
+ </form>
+</div>
+{include file="footer.html"}

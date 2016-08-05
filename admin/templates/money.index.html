@@ -1,0 +1,90 @@
+<!-- www.360cd.cn  Mosquito -->
+
+{include file="header.html"}
+
+<div id="rightTop">
+    <p>钱包中心</p>
+    <ul class="subnav">
+        <li><span>管理</span></li>
+        <li><a class="btn1" href="{url app=money&act=log}">记录</a></li>
+    </ul>
+</div>
+
+<div class="mrightTop">
+	<div class="fontl">
+		<form method="get">
+			<div class="left">
+				<input type="hidden" name="app" value="money" />
+				<input type="hidden" name="act" value="index" />
+				
+				<span>用户名：</span>
+				<input class="queryInput" name="user_name" value="{$query.user_name}" type="text" />
+				
+				<span>状态：</span>
+				<select class="querySelect" name="status">
+					<option value="">请选择</option>
+					{html_options options=$money_status_options selected=$query.status}
+				</select>
+				
+				<input type="submit" class="formbtn" value="{$lang.query}" />
+			</div>
+			{if $filter}
+			<a class="left formbtn1" href="{url app=money&act=index}">{$lang.cancel_query}</a>
+			{/if}
+		</form>
+	</div>
+	<div class="fontr">{include file=page.top.html}</div>
+</div>
+
+
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        {if $money_list}
+        <tr class="tatr1">
+            <td width="20" class="firstCell">
+                <input type="checkbox" class="checkall" />
+            </td>
+            <td>用户名|真实姓名</td>
+            <td>资金</td>
+            <td>冻结资金</td>
+            <td>状态</td>
+            <td>创建时间</td>
+            <td>操作</td>
+        </tr>
+        {/if}
+        {foreach from=$money_list item=data}
+        <tr class="tatr2">
+            <td class="firstCell">
+                <input type="checkbox" class="checkitem" value="{$data.id}" />
+            </td>
+            <td>{$data.user_name} | {$data.real_name}</td>
+            <td>{$data.money|price}</td>
+            <td>{$data.money_dj|price}</td>
+            <td>{$money_status_options[$data.status]}</td>
+            <td>{$data.add_time|date:complete}</td>
+            <td>
+                <a href="{url app=money&act=reset&id=$data.id}">重置</a>
+                | <a href="{url app=money&act=recharge&id=$data.id}">充值</a>
+                | <a href="javascript:drop_confirm('{$lang.drop_confirm}', '{url app=money&act=drop&id=$data.id}');">删除</a> 
+            </td>
+        </tr>
+        {foreachelse}
+        <tr class="no_data">
+            <td colspan="10">{$lang.no_data}</td>
+        </tr>
+        {/foreach}
+    </table>
+    
+    {if $money_list}
+    <div id="dataFuncs">
+        <div id="batchAction" class="left paddingT15">
+            &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="{$lang.drop}" name="id" uri="{url app=money&act=drop}" presubmit="confirm('{$lang.drop_confirm}');" />
+        </div>
+        <div class="pageLinks">{include file=page.bottom.html}</div>
+        <div class="clear"></div>
+    </div>
+    {/if}
+</div>
+
+{include file="footer.html"}

@@ -1,0 +1,34 @@
+<!-- {if $widget_data.style eq "code"} -->
+    <!-- {if $widget_data.html and $widget_data.is_valid} -->
+    {$widget_data.html}
+    <!-- {else} -->
+    <div style="padding:10px; text-align:center;">请配置</div>
+    <!-- {/if} -->
+<!-- {elseif $widget_data.style eq "text"} -->
+    <!-- {if $widget_data.title and $widget_data.is_valid} -->
+    <a href="{$widget_data.link1}" target="_blank" {if $widget_data.size}style="font-size: {$widget_data.size};"{/if}>{$widget_data.title|escape}</a>
+    <!-- {else} -->
+    <div style="padding:10px; text-align:center;">请配置</div>
+    <!-- {/if} -->
+<!-- {elseif $widget_data.style eq "image"} -->
+    <!-- {if $widget_data.url1 and $widget_data.is_valid} -->
+    <a href="{$widget_data.link2}" target="_blank">
+        <img src="{$widget_data.url1}" {if $widget_data.alt}alt="{$widget_data.alt}"{/if} border="0" {if $widget_data.height1}height="{$widget_data.height1}"{/if} {if $widget_data.width1}width="{$widget_data.width1}"{/if}>
+    </a>
+    <!-- {else} -->
+    <div style="padding:10px; text-align:center;">请配置</div>
+    <!-- {/if} -->
+<!-- {elseif $widget_data.style eq "flash"} -->
+    <!-- {if $widget_data.url2 and $widget_data.is_valid} -->
+    <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="{$widget_data.width2}" height="{$widget_data.height2}">
+        <param name="movie" value="{$widget_data.url2}" />
+        <param name="quality" value="high" />
+        <param name="wmode" value="transparent" />
+        <embed src="{$widget_data.url2}" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" wmode="transparent" width="{$widget_data.width2}" height="{$widget_data.height2}"></embed>
+    </object>
+    <!-- {else} -->
+    <div style="padding:10px; text-align:center;">请配置</div>
+    <!-- {/if} -->
+<!-- {else} -->
+    <div style="padding:10px; text-align:center;">请配置</div>
+<!-- {/if} -->

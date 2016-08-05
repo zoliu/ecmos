@@ -1,0 +1,69 @@
+{include file="header.html"}
+<script type="text/javascript">
+<!--//<![CDATA[
+$(function(){
+    {$payment.onconfig}
+});
+//]]>-->
+</script>
+<div id="rightTop">
+    <p><!--{if $smarty.get.act eq config}-->{$lang.config_payment}<!--{else}-->{$lang.install_payment}<!--{/if}--></p>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data" id="partner_form" action="index.php?app=payment&amp;act={$smarty.get.act}&amp;code={$smarty.get.code}&amp;payment_id={$smarty.get.payment_id}">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">{$lang.payment_name}:</th>
+                <td class="paddingT15 wordSpacing5">{$payment.name|escape}</td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.payment_desc}</h4>
+                <td class="paddingT15 wordSpacing5"><textarea class="text" name="payment_desc">{$payment.payment_desc|escape}</textarea><label class="field_notice">{$lang.payment_desc_desc}</label></td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.enabled}:</th>
+                <td class="paddingT15 wordSpacing5">
+                     {html_radios options=$yes_or_no checked=$payment.enabled name=enabled}
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.sort_order}:</th>
+                <td class="paddingT15 wordSpacing5"><input type="text" class="text width2" value="{$payment.sort_order}" name="sort_order"/></td>
+            </tr>
+            <!--{foreach from=$payment.config item=info key=conf}-->
+            <tr>
+                <th class="paddingT15">{$info.text}:</th>
+                <td class="paddingT15 wordSpacing5"><!--{if $info.type eq 'text'}--> <input type="text" name="config[{$conf}]" id="ctrl_{$conf}" value="{$config.$conf}" size="{$info.size}" onfocus="{$info.onfocus}" onchange="{$info.onchange}" onblur="{$info.onblur}" class="text"/>
+                <!--{elseif $info.type eq 'select'}-->
+                <select name="config[{$conf}]" id="ctrl_{$conf}" onchange="{$info.onchange}" class="width8 padding4">
+                       {html_options options=$info.items selected=$config.$conf}
+                 </select>
+                 <!--{elseif $info.type eq 'textarea'}-->
+                 <textarea cols="{$info.cols}" rows="{$info.rows}" name="config[{$conf}]" id="ctrl_{$conf}" onfocus="{$info.onfocus}" onchange="{$info.onchange}" onblur="{$info.onblur}" class="text" >{$config.$conf}</textarea>
+                 <!--{elseif $info.type eq 'radio'}-->
+                       {html_radios options=$info.items checked=$config.$conf name=$info.name}
+                 <!--{elseif $info.type eq 'checkbox'}-->
+                    {html_checkbox options=$info.items checked=$config.$conf name=$info.name}
+                 <!--{/if}-->
+                 <label class="field_notice">{$info.desc}</label>
+                 </td>
+            </tr>
+            <!--{/foreach}-->
+            <!--{if $payment.is_online}-->
+            <tr>
+                <th class="paddingT15">{$lang.payment_pcode}:</th>
+                <td class="paddingT15 wordSpacing5"><input type="text" name="config[pcode]" value="{$config.pcode}" size="3" class="text" /><label class="field_notice">{$lang.pcode_desc}</label></td>
+            </tr>
+            <!--{/if}-->
+        <tr>
+            <th></th>
+            <td class="ptb20">
+                <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />
+            </td>
+        </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

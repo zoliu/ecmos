@@ -1,0 +1,109 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function(){
+    $('#add_time_from').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#add_time_to').datepicker({dateFormat: 'yy-mm-dd'});
+});
+
+ function goods_toggle(id)
+    {
+       $('.order_'+id).toggle();
+    }
+</script>
+
+<style>
+  .show_spec{position: relative;
+    top:0; z-index: 999; }
+  .tar3{ height: 0px;}
+  .show_spec ul li{ float:left; width:12%; }
+  .show_spec ul { margin-left: 5%;  width: 95%;}
+</style>
+<div id="rightTop">
+    <p>{$lang.order_manage}</p>
+    <ul class="subnav">
+        <li><span>{$lang.manage}</span></li>
+    </ul>
+</div>
+<div class="mrightTop">
+    <div class="fontl">
+        <form method="get">
+             <div class="left">
+                <input type="hidden" name="app" value="order" />
+                <input type="hidden" name="act" value="index" />
+                <select class="querySelect" name="field">{html_options options=$search_options selected=$smarty.get.field}
+                </select>:<input class="queryInput" type="text" name="search_name" value="{$query.search_name|escape}" />
+                <select class="querySelect" name="status">
+                    <option value="">{$lang.search_status}</option>
+                    {html_options options=$order_status_list selected=$query.status}
+                </select>
+                {$lang.add_time_from}:<input class="queryInput2" type="text" value="{$query.add_time_from}" id="add_time_from" name="add_time_from" class="pick_date" />
+                {$lang.add_time_to}:<input class="queryInput2" type="text" value="{$query.add_time_to}" id="add_time_to" name="add_time_to" class="pick_date" />
+                {$lang.order_amount_from}:<input class="queryInput2" type="text" value="{$query.order_amount_from}" name="order_amount_from" />
+                {$lang.order_amount_to}:<input class="queryInput2" type="text" style="width:60px;" value="{$query.order_amount_to}" name="order_amount_to" class="pick_date" />
+                <input type="submit" class="formbtn" value="{$lang.query}" />
+            </div>
+            <!--{if $filtered}-->
+            <a class="left formbtn1" href="index.php?app=order">{$lang.cancel_query}</a>
+            <!--{/if}-->
+        </form>
+    </div>
+    <div class="fontr">
+        {if $orders}{include file=page.top.html}{/if}
+    </div>
+</div>
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!--{if $orders}-->
+        <tr class="tatr1">
+            <td width="15%" class="firstCell"><span ectype="order_by" fieldname="seller_id">{$lang.store_name}</span></td>
+            <td width="15%"><span ectype="order_by" fieldname="order_sn">{$lang.order_sn}</span></td>
+            <td width="15%"><span ectype="order_by" fieldname="add_time">{$lang.add_time}</span></td>
+            <td width="10%"><span ectype="order_by" fieldname="buyer_name">{$lang.buyer_name}</span></td>
+            <td width="15%"><span ectype="order_by" fieldname="order_amount">{$lang.order_amount}</span></td>
+            <td>{$lang.payment_name}</td>
+            <td width="10%"><span ectype="order_by" fieldname="status">{$lang.status}</span></td>
+            <td width="10%">{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$orders item=order}-->
+        <tr class="tatr2">
+            <td class="firstCell"><!--{if $order.order_merge}--><b style="color: red;">{$lang.merge_order}</b><!--{else}-->{$order.seller_name|escape}<!--{/if}--></td>
+            <td>{$order.order_sn}&nbsp;&nbsp;<!--{if $order.extension eq 'groupbuy'}-->[{$lang.groupbuy}]<!--{/if}--></td>
+            <td>{$order.add_time|date:complete}</td>
+            <td>{$order.buyer_name|escape}</td>
+            <td>{$order.order_amount|price}</td>
+            <td>{$order.payment_name|escape|default:-}</td>
+            <td>{$order.status|modifier:order_status}</td>
+            <td><!--{if $order.order_merge}--><b><a href="javascript:goods_toggle({$order.order_id});">{$lang.merge}</a></b><!--{else}--><a href="index.php?app=order&amp;act=view&amp;id={$order.order_id}">{$lang.view}</a><!--{/if}-->
+                
+            </td>
+        </tr>
+        <!--{if $order.order_merge}-->
+        <tr class="tatr1 tar3">
+          <td colspan="8">
+            <div  class="show_spec order_{$order.order_id}" style="display:none;">
+               <ul>
+                    <li>{$lang.merge_order_sn}</li>
+                    {foreach from=$order.order_sns item=order_sn key=order_id}
+                    <li><a href="index.php?app=order&amp;act=view&amp;id={$order_id}">{$order_sn}</a></li>
+                    {/foreach}
+                </ul>
+               <div class="clear"></div>
+            </div>
+          </td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="7">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <div id="dataFuncs">
+        <div class="pageLinks">
+            {if $orders}{include file=page.bottom.html}{/if}
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file="footer.html"}

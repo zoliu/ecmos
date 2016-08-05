@@ -1,0 +1,15 @@
+<style>
+.next{padding: 8px 10px;}
+</style>
+<!--{if $page_info.page_count gt 1}-->
+<div class="pages" style="margin: 10px auto;text-align: center;">
+	<a href="" class="next">{sprintf lang=total_item var1=page_info.item_count}</a>
+    <!--{if $page_info.prev_link}-->
+    <a href="{$page_info.prev_link}" class="next">上一页</a>
+    <!--{/if}-->
+     <a href="" class="next">{$page_info.curr_page} / {$page_info.page_count} </a>
+    <!--{if $page_info.next_link}-->
+    <a href="{$page_info.next_link}" class="next">下一页</a>
+    <!--{/if}-->
+</div>
+<!--{/if}-->

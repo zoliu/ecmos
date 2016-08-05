@@ -1,0 +1,39 @@
+@charset "utf-8";
+.dialog_wrapper {  background: #595959; padding-bottom: 4px;}
+    .dialog_body { padding: 6px; border: 4px solid #dadada; background: #fff;}
+        .dialog_head { height: 0px;}
+            .dialog_title {color: #666; font-size: 16px; font-weight: bold; background: #fff url(images/linebox_h1_span.gif) no-repeat left 3px; padding: 4px 10px 5px 15px; display: block; float: left;display:none }
+            .dialog_close_button {display: block; width: 21px; height: 21px; background: url(images/ico.gif) 0 -761px; position: absolute; top: 10px; right: 10px;}
+            .dialog_close_button:hover { background: url(images/ico.gif) 0 -783px;}
+        .dialog_content {}
+            .dialog_loading { text-align:center; }
+                .dialog_loading_text { padding:0px;padding-top:20px;padding-left:10px;width:220px;font-style:italic;margin:15px auto 5px auto; text-align:left; font-size:15px;background:transparent url(images/loading.gif) no-repeat center top; }
+            .dialog_message_body { margin:15px 5px 5px 5px; }
+                .dialog_message_contents { margin:0px 10px; padding-left:45px; padding-top:5px; padding-bottom:20px; }
+                .dialog_message_notice { background:transparent url(images/message_notice.gif) no-repeat left top; }
+                .dialog_message_warning { background:transparent url(images/message_warning.gif) no-repeat left top; }
+                .dialog_message_confirm { background:transparent url(images/message_confirm.gif) no-repeat left top; }
+                .dialog_buttons_bar { text-align:center;margin-top:5px; }
+                .dialog_buttons_bar input { margin:0px 5px; }
+                .dialog_buttons_bar .btn1 {width: 75px; height: 29px; border: 0; background: url(images/btn1.gif); color: #c73702; font-weight: bold; font-size: 14px;}
+                .dialog_buttons_bar .btn2 {width: 75px; height: 29px; border: 0; background: url(images/btn2.gif); color: #4e4e4e; font-weight: bold; font-size: 14px;}
+
+
+.dialog_has_title { background: #555; }
+    .dialog_has_title .dialog_body { background: #fff; bottom: 3px; right: 3px; padding: 10px; border: 4px solid #dadada; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #666;}
+        .dialog_has_title .dialog_head {background: url(images/login_h1.gif); height: 30px;}
+            .dialog_has_title .dialog_title {color: #666; font-size: 16px; font-weight: bold; background: #fff url(images/linebox_h1_span.gif) no-repeat left 3px; padding: 4px 10px 5px 15px; display: block; float: left; }
+            .dialog_has_title .dialog_close_button {position: absolute; top: 10px; _top:14px; right: 10px; background: #fff url(images/dialog_close_button.gif) no-repeat right bottom; width: 21px; height: 21px; padding-right: 10px; overflow: hidden; cursor: pointer;}
+            .dialog_has_title .dialog_close_button:hover {background: #fff url(images/dialog_close_button.gif) no-repeat right top;}
+        .dialog_has_title .dialog_content {}
+            .dialog_has_title .dialog_loading { text-align:center; }
+                .dialog_has_title .dialog_loading_text { padding:0px;padding-top:20px;padding-left:10px;width:220px;font-style:italic;margin:15px auto 5px auto; text-align:left; font-size:15px;background:transparent url(images/loading.gif) no-repeat center top; }
+            .dialog_has_title .dialog_message_body { margin:15px 5px 5px 5px; }
+                .dialog_has_title .dialog_message_contents { margin:0px 10px; padding-left:45px; padding-top:5px; padding-bottom:20px; }
+                .dialog_has_title .dialog_message_notice { background:transparent url(images/message_notice.gif) no-repeat left top; }
+                .dialog_has_title .dialog_message_warning { background:transparent url(images/message_warning.gif) no-repeat left top; }
+                .dialog_has_title .dialog_message_confirm { background:transparent url(images/message_confirm.gif) no-repeat left top; }
+                .dialog_has_title .dialog_buttons_bar { text-align:center;margin-top:5px; }
+                .dialog_has_title .dialog_buttons_bar input { margin:0px 5px; }
+                .dialog_has_title .dialog_buttons_bar .btn1 {width: 75px; height: 29px; border: 0; background: url(images/btn1.gif); color: #c73702; font-weight: bold; font-size: 14px;}
+                .dialog_has_title .dialog_buttons_bar .btn2 {width: 75px; height: 29px; border: 0; background: url(images/btn2.gif); color: #4e4e4e; font-weight: bold; font-size: 14px;}

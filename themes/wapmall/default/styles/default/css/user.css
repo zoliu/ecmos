@@ -1,0 +1,32 @@
+@charset "utf-8";
+/* CSS Document */
+/* 个人中心 */
+/* 头部 */
+.user_header{ background:url(../images/user_header_bg.gif); margin-top:45px; position:relative; height:85px; }
+.user_header .user_photo{ position:absolute; left:10px; top:40px; z-index:99;border-radius:60px;height:100px; width:100px; border:#fff solid 3px; box-shadow:rgba(0,0,0,0.4) 0 0 4px;}
+.user_header .user_photo img{ border-radius:60px; height:100px; width:100px;}
+.user_header .user_name{ color: #FFF; font-size: 16px; left: 120px; position: absolute;top: 58px;text-shadow: 1px 1px 2px #000;text-overflow:ellipsis;white-space:nowrap; overflow:hidden; display:block; width:60%; }
+.user_header .order_panel{ background:#fff; height:80px;position: absolute; top: 85px; width: 100%; left:0;box-shadow:rgba(0,0,0,0.3) 0 0 3px;  }
+.order_panel .orders{ margin-left:130px; overflow:hidden; padding:15px 0;}
+.order_panel .orders li{ float:left; width:25%; text-align:center;}
+.order_panel .orders li span{  display:block; float:left; width:99%; }
+.order_panel .orders li b{  display:block;  width:1%; background:url(../images/user_header_line.png) repeat-y; height:30px; margin:10px 0 0;}
+.order_panel .orders li .num{ font-weight:bold; font-size:16px; margin-bottom:5px;}	
+.order_panel .orders li .on{ color:#000;}
+.set_address{ position:absolute; right:0; bottom:20px;   background:url(../images/user_ico.png) no-repeat -148px -8px #fff; border-radius:5px 0 0 5px; border:#aaa solid 1px; border-right:none; height:40px; line-height:40px; padding-left: 40px;display:block; font-size:14px;}
+.set_address_show{ right:0;}
+
+/* 订单页 */
+.u_order{ padding:10px; overflow:hidden; margin-top:80px; min-height:252px;}
+.u_order .orderbox{ background:#fff; border-radius:5px; border:#ccc solid 1px;overflow:hidden; margin-bottom:10px;}
+.u_order .orderbox h2{  padding:0 10px;font-size:14px; color:#333; border-bottom:#ccc solid 1px; overflow:hidden; font-weight:normal;}
+.u_order .orderbox h2 span{ height:36px; line-height:36px; display:block; float:left;}
+.u_order .orderbox h2 span i{ background:url(../images/user_ico.png) no-repeat -8px -8px; height:36px; width:36px; display:block; float:left;}
+.u_order .orderbox h2 b{ float:right;height:36px; line-height:36px; font-size:12px; font-weight:normal;}
+.u_order .orderbox .detail{ padding:10px; overflow:hidden;border-bottom:#ccc solid 1px;}
+.u_order .orderbox img{ width:100px; height:100px; float:left; margin-right:10px;}
+.u_order .orderbox strong{ color:#b20005; margin-right:20px;}
+.u_order .orderbox .detail .title{ height:40px; line-height:20px; overflow:hidden;}
+.u_order .orderbox .opr{ padding:0 10px 10px; }
+.u_order .orderbox .opr .white_btn{ padding:5px 2%; margin:10px 2% 0 0; width:27%; text-align:center; display:inline-block;cursor:pointer;}
+.u_order .orderbox .opr .white_btn:last-child{margin-right:0;}

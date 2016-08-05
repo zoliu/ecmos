@@ -1,0 +1,91 @@
+<div class="mll2015_floor2 clearfix">
+    <div class="mt {$widget_data.floor_id} clearfix">
+        <div class="mt_left">
+            <a href="{$widget_data.model_name_link}" class="title" target="_blank">
+                <span class="item_left">{$widget_data.model_name}</span>
+                <span class="sign_right"></span>
+            </a>
+            <ul>
+                <!--{foreach from=$widget_data.cates item=cate name=fe_cate}-->
+                <!--{if $smarty.foreach.fe_cate.iteration le 10}-->
+                <li>
+                    <a href="{url app=search&cate_id=$cate.cate_id}" target="_blank">{$cate.cate_name}</a>
+                </li>
+                <!--{/if}-->
+                <!--{/foreach}-->
+            </ul>
+            <a href="{$widget_data.ad1_link_url}" target="_blank">
+                <img class="lazyload" initial-url="{$widget_data.ad1_image_url}" width="202" height="146" class="img">
+            </a>
+        </div>
+        <div class="left_lunbo">
+            <div class="side  carousel-{$widget_data.model_id}">
+                <div class="ks-switchable-nav">
+                    <a href="javascript:;" class="ks-active"></a>
+                    <a href="javascript:;" class=""></a>
+                    <a href="javascript:;" class=""></a>
+                </div>
+                <ul class="ks-switchable-content" style="position: absolute; width: 400px; left: 0px;">
+                    <li style="display: block; float: left;">
+                        <a href="{$widget_data.ad2_link_url}" target="_blank">
+                            <img class="lazyload" initial-url="{$widget_data.ad2_image_url}" width="489" height="340">
+                        </a>
+                    </li>
+                    <li style="display: block; float: left;">
+                        <a href="{$widget_data.ad3_link_url}" target="_blank">
+                            <img class="lazyload" initial-url="{$widget_data.ad3_image_url}" width="489" height="340">
+                        </a>
+                    </li>
+                    <li style="display: block; float: left;">
+                        <a href="{$widget_data.ad4_link_url}" target="_blank">
+                            <img class="lazyload" initial-url="{$widget_data.ad4_image_url}" width="489" height="340">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt_right">
+            <a href="{$widget_data.ad5_link_url}" target="_blank">
+                <img class="lazyload" initial-url="{$widget_data.ad5_image_url}" width="254" height="340">
+            </a>
+            <a href="{$widget_data.ad6_link_url}" target="_blank">
+                <img class="lazyload" initial-url="{$widget_data.ad6_image_url}" width="254" height="340">
+            </a>
+        </div>
+    </div>
+    <div class="mc">
+        <a href="{$widget_data.ad7_link_url}" class="img" target="_blank">
+            <img class="lazyload" initial-url="{$widget_data.ad7_image_url}"  width="215" height="242">
+        </a>
+        <a href="{$widget_data.ad8_link_url}" class="img1" target="_blank">
+            <img class="lazyload" initial-url="{$widget_data.ad8_image_url}" width="250" height="242">
+        </a>
+        <a href="{$widget_data.ad9_link_url}" class="img1" target="_blank">
+            <img class="lazyload" initial-url="{$widget_data.ad9_image_url}" width="250" height="242">
+        </a>
+        <a href="{$widget_data.ad10_link_url}" class="img2" target="_blank">
+            <img class="lazyload" initial-url="{$widget_data.ad10_image_url}" width="255" height="242">
+        </a>
+        <a href="{$widget_data.ad11_link_url}" class="img2" target="_blank">
+            <img class="lazyload" initial-url="{$widget_data.ad11_image_url}" width="255" height="242">
+        </a>
+        
+    </div>
+</div>
+<script>
+    KISSY.use("switchable", function(S) {
+        var tiny_slide = new S.Carousel('.carousel-{$widget_data.model_id}', {
+            steps: 1,
+            effect: 'scrollx',
+            easing: 'easeOutStrong',
+            circular: true,
+            prevBtnCls: 'prev',
+            nextBtnCls: 'next',
+            disableBtnCls: 'disable',
+            interval: 4,
+            aria: false,
+            autoplay: true,
+            lazyDataType: 'img-src' //延迟加载图片？
+        });
+    });
+</script>

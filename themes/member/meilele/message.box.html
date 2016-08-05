@@ -1,0 +1,94 @@
+{include file=member.header.html}
+<style type="text/css">
+.user_name { position: relative; bottom: 18px; margin-left:5px; }
+
+</style>
+<div class="content">
+    <div class="totline"></div><div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+    	{include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <div class="eject_btn" title="{$lang.send_message}"><b class="ico2" onclick="go('index.php?app=message&act=send');">{$lang.send_message}</b></div>
+            <div class="public table">
+                <table class="table_head_line" style="margin-top:30px;">
+                    <!--{if $messages}-->
+
+                    <tr class="gray line_bold" >
+                    <!--{if $smarty.get.act neq 'announcepm'}-->
+                        <th class="width1"><input type="checkbox" id="all" class="checkall"/></th>
+                        <th class="align1" colspan="4">
+                            <label for="all"><span class="all">{$lang.checkall}</span></label>
+                            <a href="javascript:;" class="delete" uri="index.php?app=message&act=drop" name="msg_id" presubmit="confirm('{$lang.drop_confirm}')" ectype="batchbutton">{$lang.drop}</a>
+                        </th>
+                    <!--{else}-->
+                        <th class="width1"></th>
+                        <th colspan="5"></th>
+                    <!--{/if}-->
+                    </tr>
+
+                    <tr class="line tr_color">
+                        <th></th>
+                        <th class="align1">{$lang.user_name}</th>
+                        <th>{$lang.content}</th>
+                        <th>{$lang.last_update}</th>
+                        <th class="width4">{$lang.handle}</th>
+                    </tr>
+                    <!--{/if}-->
+                    <!--{foreach from=$messages item=message name=v}-->
+                    <tr <!--{if $smarty.foreach.v.last}-->class="line_bold"<!--{else}-->class="line"<!--{/if}-->>
+                        <td class="align2"><!--{if $smarty.get.act neq 'announcepm'}--><input type="checkbox" class="checkitem" value="{$message.msg_id}"/><!--{/if}--></td>
+                        <td class="width13"><img class="makesmall" max_width="48" max_height="48" src="{$message.user_info.portrait}" /><span class="user_name">{$message.user_info.user_name}</span></td>
+                        <td <!--{if $message.new eq 1}-->class="link2 font_bold"<!--{else}-->class="link2"<!--{/if}-->>{$message.content|truncate:110}</td>
+                        <td class="align2 color1 width8">{$message.last_update|date:Y-m-d H:i}</td>
+                        <td class="width8">
+                            <a href="{url app=message&act=view&msg_id=$message.msg_id}" class="desc">{$lang.view_detail}</a>
+                            <!--{if $smarty.get.act neq 'announcepm'}--><a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=message&amp;act=drop&msg_id={$message.msg_id}');" class="delete">{$lang.drop}</a><!--{/if}-->
+                        </td>
+                    </tr>
+                    <!--{foreachelse}-->
+                    <tr>
+                        <td colspan="5" class="member_no_records padding6">{$lang.no_records}{$lang.$smarty.get.act}</td>
+                    </tr>
+
+                    <!--{/foreach}-->
+                    <!--{if $messages}-->
+                    <!--{if $smarty.get.act neq 'announcepm'}-->
+                    <tr class="operations">
+                        <th colspan="5">
+                           <p class="position1 clearfix">
+                            	<input type="checkbox" id="all2" class="checkall"/>
+                        		<label for="all2">{$lang.checkall}</label>
+                            	<a href="javascript:void(0);" class="delete" uri="index.php?app=message&act=drop" name="msg_id" presubmit="confirm('{$lang.drop_confirm}')" ectype="batchbutton">{$lang.drop}</a>
+                           </p>
+                           <p class="position2">
+                                {include file=member.page.bottom.html}
+                            </p>
+                         </th>
+                    </tr>
+                    <!--{else}-->
+                    <tr class="operations">
+                        <th colspan="5">
+                           <p class="position2">
+                                {include file=member.page.bottom.html}
+                           </p>
+                        </th>
+                    </tr>
+                    <!--{/if}-->
+                    <!--{/if}-->
+                </table>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>
+<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0">
+</iframe>
+{include file=footer.html}

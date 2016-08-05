@@ -1,0 +1,43 @@
+<script type="text/javascript">
+$(function(){
+    $('#export_form').validate({
+        errorLabelContainer: $('#warning'),
+        invalidHandler: function(form, validator) {
+               $('#warning').show();
+        },
+        onfocusout : false,
+        onkeyup    : false,
+        rules : {
+            amount : {
+                required : true,
+                digits   : true,
+                range : [1,1000]
+            }
+        },
+        messages : {
+            amount  : {
+                required : '{$lang.amount_required}',
+                digits   : '{$lang.number_only}',
+                range : '{$lang.amount_range}'
+            }
+        }
+    });
+});
+</script>
+<ul class="tab">
+    <li class="active">{$lang.coupon_export}</li>
+</ul>
+<div class="eject_con">
+ <div class="adds">
+        <div id="warning"></div>
+        <form id="export_form" method="post" target="coupon" action="index.php?app=coupon&act=export&id={$id}">
+        <ul style="width:255px;">
+            <li>
+                <h3 style="width:60px;">{$lang.amount}:</h3>
+                <p><input class="text width2" type="text" name="amount" id="amount" /> <span class="field_notice">{$lang.amount_desc}</span></p>
+            </li>      
+        </ul>
+        <div class="submit"><input type="submit" class="btn" value="{$lang.submit}" /></div>
+        </form>
+    </div>
+</div>

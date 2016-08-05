@@ -1,0 +1,109 @@
+{include file=header.html}
+        <script type="text/javascript">
+        $(function(){
+            {if $site_url_error}
+            $('#site_url').focus();
+            {/if}
+            {if $admin_email_error}
+            $('#admin_email').focus();
+            {/if}
+            {if $pass_error}
+            $('#pass_confirm').focus();
+            {/if}
+        });
+        </script>
+        {if $missing_items}
+        <ul class="messages">
+            <li>{$lang.have_missing_item}:&nbsp;{foreach from=$missing_items item=item}[{$lang.$item}]&nbsp;&nbsp;{/foreach}</li>
+        </ul>
+        {/if}
+        {if $mysql_error}
+        <ul class="messages">
+            <li>{$lang.connect_mysql_failed}:{$mysql_error}</li>
+        </ul>
+        {/if}
+        {if $create_db_error}
+        <ul class="messages">
+            <li>{$lang.create_db_error}:{$create_db_error}</li>
+        </ul>
+        {/if}
+        <div class="main_form">
+            <h3>{$lang.db_info}</h3>
+            <table>
+                <tr>
+                    <th>{$lang.db_host}:</th>
+                    <td><input type="text" class="input_text" name="db_host" value="{$smarty.post.db_host|default:localhost}" /></td>
+                    <td class="color92a">{$lang.db_host_notice}</td>
+                </tr>
+                <tr>
+                    <th>{$lang.db_port}:</th>
+                    <td><input type="text" class="input_text" name="db_port" value="{$smarty.post.db_port|default:3306}" /></td>
+                    <td class="color92a">{$lang.db_port_notice}</td>
+                </tr>
+                <tr>
+                    <th>{$lang.db_name}:</th>
+                    <td><input type="text" class="input_text" name="db_name" value="{$smarty.post.db_name}" /></td>
+                    <td class="color92a">{$lang.db_name_notice}</td>
+                </tr>
+                <tr>
+                    <th>{$lang.db_user}:</th>
+                    <td><input type="text" class="input_text" name="db_user" value="{$smarty.post.db_user}" /></td>
+                    <td class="color92a">{$lang.db_user_notice}</td>
+                </tr>
+                <tr>
+                    <th>{$lang.db_pass}:</th>
+                    <td><input type="password" class="input_text" name="db_pass" value="{$smarty.post.db_pass}" /></td>
+                    <td class="color92a">{$lang.db_pass_notice}</td>
+                </tr>
+                <tr>
+                    <th>{$lang.db_prefix}:</th>
+                    <td><input type="text" class="input_text" name="db_prefix" value="{$smarty.post.db_prefix|default:ecm_}" /></td>
+                    <td class="color92a">{$lang.db_prefix_notice}</td>
+                </tr>
+                {if $has_ecmall}
+                <tr>
+                    <th>&nbsp;</th>
+                    <td><input type="checkbox" name="force_install" id="force_install" value="1" />&nbsp;&nbsp;<label for="force_install">{$lang.force_install}</label></td>
+                    <td class="color92a"><strong style="color:red;">{$lang.force_install_notice}</strong></td>
+                </tr>
+                {/if}
+            </table>
+
+            <h3>{$lang.init_info}</h3>
+            <table>
+                <tr>
+                    <th>{$lang.site_url}:</th>
+                    <td><input type="text" class="input_text" name="site_url" id="site_url" value="{if $smarty.post.site_url}{$smarty.post.site_url}{else}{$site_url}{/if}" /></td>
+                    <td class="color92a">{if $site_url_error}<strong style="color:red">{$lang.site_url_error}</strong>{else}{$lang.site_url_notice}{/if}</td>
+                </tr>
+                <tr>
+                    <th>{$lang.admin_name}:</th>
+                    <td><input type="text" class="input_text" name="admin_name" value="{$smarty.post.admin_name}" /></td>
+                    <td class="color92a">{$lang.admin_name_notice}</td>
+                </tr>
+                <tr>
+                    <th>{$lang.admin_email}:</th>
+                    <td><input type="text" class="input_text" id="admin_email" name="admin_email" value="{$smarty.post.admin_email}" /></td>
+                    <td class="color92a">{if $admin_email_error}<strong style="color:red">{$lang.admin_email_error}</strong>{else}{$lang.admin_email_notice}{/if}</td>
+                </tr>
+                <tr>
+                    <th>{$lang.admin_pass}:</th>
+                    <td><input type="password" class="input_text" name="admin_pass" value="{$smarty.post.admin_pass}" /></td>
+                    <td class="color92a">{$lang.admin_pass_notice}</td>
+                </tr>
+                <tr>
+                    <th>{$lang.pass_confirm}:</th>
+                    <td><input type="password" class="input_text" id="pass_confirm" name="pass_confirm" value="{$smarty.post.pass_confirm}" /></td>
+                    <td class="color92a">{if $pass_error}<strong style="color:red">{$lang.pass_error}</strong>{else}{$lang.pass_confirm_notice}{/if}</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>
+                        <input type="button" class="button mtb20" style="margin-right:10px;" value="{$lang.prev}" onclick="window.history.go(-1);" />
+                        <input type="submit" class="button mtb20" id="submit_button" value="{$lang.next}" />
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+{include file=footer.html}
