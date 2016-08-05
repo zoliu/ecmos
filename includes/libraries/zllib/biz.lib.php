@@ -128,7 +128,9 @@ class Biz {
 	}
 	
 	static function get_search_stats($type) {
-		import('dslib/search.lib');
+		
+		import('search.lib');
+		
 		$search = new search();
 		$cate_id = $_GET['cate_id'];
 		$brand = $_GET['brand'];
