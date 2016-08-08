@@ -30,8 +30,7 @@
         <div class="fixed">
             <!---头部------>
             <div class="header header2">
-                <a href="javascript:history.go(-1);" class="back2_pre"></a>
-                个人中心
+                <a href="javascript:history.go(-1);" class="back2_pre"></a>个人中心
                 <a href="{url app=my_favorite}" class="bookmark"></a>
             </div>
         </div>
@@ -105,8 +104,7 @@
         <div class="fixed">
             <!---头部------>
             <div class="header header2">
-                <a href="javascript:history.go(-1);" class="back2_index"></a>
-                个人中心
+                <a href="{url app=default}" class="back2_index"></a>个人中心
                 <a href="{url app=my_favorite}" class="bookmark"></a>
             </div>
         </div>
@@ -118,38 +116,41 @@
             <dd>
                 <a href="{url app=member&act=index}">账户概览</a>
                 <a href="{url app=member&act=profile}">个人资料</a>
-                <a href="{url app=my_favorite}">我的收藏</a>
-                <a href="{url app=my_address}">收货地址</a>
-                <a href="{url app=buyer_order}">我的订单</a>
                 <a href="{url app=cart}">我的购物车</a>
             </dd>
+            
+            <!-- 钱包中心 -->
             <dt>
-                <a href='#'>账户设置</a>
+                <a href='#'>钱包中心</a>
             </dt>
             <dd>
-                <a href="{url app=my_money&act=setting}">账户设置</a>
+            	<a href="{url app=my_money}">总览</a>
+                <a href="{url app=my_money&act=setting}">设置</a>
+                <a href="{url app=my_money&act=log}">记录</a>
+                <a href="{url app=my_money&act=bank}">银行卡</a>
             </dd>
+            
+            <!-- 下级管理 -->
             <dt>
-                <a href='#'>在线充值</a>
+                <a href='#'>下级管理</a>
             </dt>
             <dd>
-                <a href="{url app=my_money&act=recharge}">在线充值</a>
-                <a href="{url app=my_money&act=log}">充值记录</a>
-                <a href="{url app=my_money&act=withdrawal}">提现申请</a>
-                <a href="{url app=my_money&act=log}">提现记录</a>
-                <a href="{url app=my_money&act=transfer}">余额转账</a>
+            	<a href="{url app=my_child}">总览</a>
+            	<a href="{url app=my_child&act=user}">下级会员</a>
+            	<a href="{url app=my_child&act=user_order}">下级会员订单</a>
+            	<a href="{url app=my_child&act=store}">下级商铺</a>
+            	<a href="{url app=my_child&act=store_order}">下级商铺订单</a>
             </dd>
+            
             <dt>
-                <a href='#'>消费明细</a>
+                <a href='#'>我是买家</a>
             </dt>
             <dd>
-                <a href="{url app=my_money&act=log}">消费明细</a>
-            </dd>
-            <dt>
-                <a href='#'>我的优惠券</a>
-            </dt>
-            <dd>
-                <a href="{url app=my_coupon}">优惠券列表</a>
+            	<a href="{url app=buyer_order}">我的订单</a>
+            	<a href="{url app=my_favorite}">我的收藏</a>
+            	<a href="{url app=my_address}">我的地址</a>
+                <a href="{url app=my_coupon}">优惠券</a>
+                <a href="{url app=my_discus}">退款/退货</a>
             </dd>
         </dl>
         {include file='footer2.html'}       

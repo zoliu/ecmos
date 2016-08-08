@@ -55,12 +55,9 @@ $(function() {
 
 </script>
 
-<div class="content">
-    {include file=member.menu.html}
-    <div id="right">
-        {include file=member.curlocal.html}
-        {include file=member.submenu.html}
-        <div class="wrap">
+<div class="u_order">
+	<div id="orderbox">
+		<div class="detail">
             <form id="_form_" method="post">
             <div class="_info">
                 <p>可用余额：{$money_info.money}</p>
@@ -85,4 +82,4 @@ $(function() {
 
 <iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
 
-{include file=footer.html}
+{include file=member.footer.html}

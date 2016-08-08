@@ -48,12 +48,9 @@ $(function() {
 
 </script>
 
-<div class="content">
-    {include file=member.menu.html}
-    <div id="right">
-        {include file=member.curlocal.html}
-        {include file=member.submenu.html}
-        <div class="wrap">
+<div class="u_order">
+    <div id="orderbox">
+        <div class="detail">
             <form id="_form_" method="post">
                 <p>充值金额：<input type="text" name="money" /> </p>
                 <div style="margin: 0.5em 0;">
@@ -82,6 +79,6 @@ $(function() {
 
 <iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
 
-{include file=footer.html}
+{include file=member.footer.html}
 
 {/if}

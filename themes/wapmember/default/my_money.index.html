@@ -37,12 +37,9 @@
 
 </style>
 
-<div class="content">
-	{include file=member.menu.html}
-	<div id="right">
-		{include file=member.curlocal.html}
-		{include file=member.submenu.html}
-		<div class="wrap">
+<div class="u_order">
+	<div id="orderbox">
+		<div class="detail">
             <div class="money_info">
                 <p>账户总余额：<span>{$money_info.money|price}</span>&nbsp;&nbsp;&nbsp;&nbsp;总冻结：<span>{$money_info.money_dj|price}</span></p>
                 <p></p>
@@ -53,18 +50,11 @@
                 <input class="withdrawal_btn" type="button" onclick="location.href = '{url app=my_money&act=withdrawal}'" value="提现" />
             </div>
 		</div>
-		
-		<div class="clear"></div>
-		<div class="adorn_right1"></div>
-		<div class="adorn_right2"></div>
-		<div class="adorn_right3"></div>
-		<div class="adorn_right4"></div>
 	</div>
-	<div class="clear"></div>
 </div>
 
 <div class="clear"></div>
 
 <iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
 
-{include file=footer.html}
+{include file=member.footer.html}

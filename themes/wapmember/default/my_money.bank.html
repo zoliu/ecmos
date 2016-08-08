@@ -13,12 +13,9 @@ $(function() {
 
 </script>
 
-<div class="content">
-    {include file=member.menu.html}
-    <div id="right">
-        {include file=member.curlocal.html}
-        {include file=member.submenu.html}
-        <div class="wrap">
+<div class="u_order">
+	<div id="orderbox">
+		<div class="detail">
             <div class="eject_btn_two eject_pos1" title="新增银行卡"><b class="ico3" ectype="dialog" dialog_title="新增银行卡" dialog_id="bank_add" dialog_width="640" uri="{url app=my_money&act=bank_add}">新增银行卡</b></div>
             <br/><br/>
             <div class="public table">
@@ -65,4 +62,4 @@ $(function() {
 
 <iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
 
-{include file=footer.html}
+{include file=member.footer.html}
