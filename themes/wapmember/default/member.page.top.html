@@ -1,0 +1,13 @@
+<div class="mpage">
+	<span class="stat" style="padding: 0 20px;text-align: center;">{$page_info.curr_page}/{$page_info.page_count}</span>
+	<!--{if $page_info.prev_link}-->
+	<a class="former" href="{$page_info.prev_link}"></a>
+	<!--{else}-->
+	<span class="former_no"></span>
+	<!--{/if}-->
+	<!--{if $page_info.next_link}-->
+	<a class="down" href="{$page_info.next_link}">{$lang.next_page}</a>
+	<!--{else}-->
+	<span class="down_no">{$lang.next_page}</span>
+	<!--{/if}-->
+</div>	

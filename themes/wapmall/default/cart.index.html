@@ -48,17 +48,19 @@
     </div>
     
     <div class="goods_list">
-     <!--{foreach from=$carts item=cart key=store_id}-->
-        <form method="get" enctype="multipart/form-data" id="{$store_id}" style="margin-top: 10px;">
+     
+        <form method="get" enctype="multipart/form-data" style="margin-top: 10px;">
             <input type="hidden" name="app" value="order" />
             <input type="hidden" name="goods" value="cart" />
-            <input type="hidden" name="store_id" value="{$store_id}" />
-    	<ul>{$lang.store}: <a href="{url app=store&id=$store_id}">{$cart.store_name|escape}</a>
+            
+            <!--{foreach from=$carts item=cart key=store_id}-->
+            
+            <ul>{$lang.store}: <a href="{url app=store&id=$store_id}">{$cart.store_name|escape}</a>
             
     	     <!--{foreach from=$cart.goods item=goods}-->
             <li id="cart_item_{$goods.rec_id}">
             	<div href="#" class="detail">
-                  <input type="checkbox" class="c_check" id="s{$store_id}" name="rec_id[{$goods.rec_id}]" value="{$store_id}:{$goods.rec_id}:{$goods.goods_id}"/>
+                  <input type="checkbox" class="c_check" id="{$store_id}" name="rec_id[{$goods.rec_id}]" value="{$store_id}:{$goods.rec_id}:{$goods.goods_id}"/>
                    <a href="{url app=goods&id=$goods.goods_id}"> <img src="{$goods.goods_image}" /></a>
                     <p class="c_info">{$goods.goods_name|escape}</p>
                     <p>{$goods.specification|escape}</p>
@@ -76,14 +78,15 @@
                 </div>
                   <!--{/foreach}-->
             </li>
-               <div class="count">
-                    <a>合计(不含运费): <strong id='cart{$store_id}_amount'>{$cart.amount|price}</strong></a>
-                    <!--<a href="{url app=order&goods=cart&store_id=$store_id}" class="jie">去结算</a>-->
-                    <input type="submit" class="count jie btn fs14 center fff strong" value="{$lang.next_order_form}" id="submit{$store_id}" name="{$store_id}" />
-                </div>
         </ul>
-        </form>
         <!--{/foreach}-->
+        <div class="count">
+            <a>合计(不含运费): <strong id='cart{$store_id}_amount'>{$cart.amount|price}</strong></a>
+            <!--<a href="{url app=order&goods=cart&store_id=$store_id}" class="jie">去结算</a>-->
+            <input type="submit" class="count jie btn fs14 center fff strong" value="{$lang.next_order_form}" id="submit{$store_id}" />
+        </div>
+        </form>
+        
     </div>
 </body>
  {include file="member.footer.html"}

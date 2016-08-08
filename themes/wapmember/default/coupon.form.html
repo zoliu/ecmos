@@ -1,0 +1,100 @@
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    $('#coupon_form').validate({
+         errorLabelContainer: $('#warning'),
+        invalidHandler: function(form, validator) {
+           var errors = validator.numberOfInvalids();
+           if(errors)
+           {
+               $('#warning').show();
+           }
+           else
+           {
+               $('#warning').hide();
+           }
+        },
+        rules : {
+            coupon_name : {
+                required : true
+            },
+            coupon_value : {
+                required : true,
+                number : true
+            },
+            use_times : {
+                required : true,
+                digits : true
+            },
+            min_amount : {
+                required : true,
+                number : true
+            },
+            end_time : {
+                required : true
+            }
+        },
+            messages : {
+            coupon_name : {
+                required : '{$lang.coupon_name_required}'
+            },
+            coupon_value : {
+                required : '{$lang.coupon_value_required}',
+                number : '{$lang.coupon_value_only_number}'
+            },
+            use_times : {
+                required : '{$lang.use_times_empty}',
+                digits : '{$lang.use_times_only_digits}'
+            },
+            min_amount : {
+                required : '{$lang.mim_amount_required}',
+                number : '{$lang.min_amount_only_number}'
+            },
+            end_time : {
+                required : '{$lang.end_time_required}'
+            }
+        }
+    });
+    $('#add_time_from').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#add_time_to').datepicker({dateFormat: 'yy-mm-dd'});
+});
+//]]>
+</script>
+<div class="eject_con">
+    <div class="adds">
+        <div id="warning"></div>
+        <form method="post" action="index.php?app=coupon&act={$smarty.get.act}&id={$smarty.get.id}" target="coupon" id="coupon_form">
+        <ul>
+            <li>
+                <h3>{$lang.coupon_name}:</h3>
+                <p><input type="text" class="text width14" name="coupon_name" value="{$coupon.coupon_name|escape}"/><b class="strong">*</b></p>
+            </li>
+            <li>
+                <h3>{$lang.coupon_value}:</h3>
+                <p><input type="text" class="text width2" name="coupon_value" value="{$coupon.coupon_value}" /><b class="strong">*</b></p>
+            </li>
+            <li>
+                <h3>{$lang.use_times}:</h3>
+                <p><input type="text" class="text width2" name="use_times" value="<!--{if $coupon.use_times}-->{$coupon.use_times}<!--{else}-->1<!--{/if}-->" /><span class="field_notice">{$lang.use_times_desc}</span><b class="strong">*</b></p>
+            </li>
+            <li>
+                <h3>{$lang.time_limit}:</h3>
+                <p><input type="text" class="text width2" name="start_time" value="<!--{if $coupon.start_time}-->{$coupon.start_time|date}<!--{else}-->{$today|date}<!--{/if}-->" id="add_time_from" readonly="readonly" />
+                 {$lang.to} <input type="text" class="text width2" name="end_time" value="<!--{if $coupon.end_time}-->{$coupon.end_time|date}<!--{/if}-->" id="add_time_to" readonly="readonly" /><b class="strong">*</b>
+                </p>
+            </li>
+            <li>
+                <h3>{$lang.min_amount}:</h3>
+                <p><span class="field_notice" style="padding-left: 0px; ">{$lang.min_amount_desc_start}  <input type="text" class="text width1" name="min_amount" value="{$coupon.min_amount}" />   {$lang.min_amount_desc_end}</span><b class="strong">*</b></p>
+            </li>
+            <li>
+                <h3>{$lang.if_issue}:</h3>
+                <p style="line-height:25px;"><input type="checkbox" name="if_issue" value="1" />{$lang.yes_issue} <span class="field_notice">{$lang.issue_desc}</span></p>
+                <div class="clear"></div>
+            </li>
+        </ul>
+        <div class="submit"><input type="submit" class="btn" value="{$lang.submit}" /></div>
+        </form>
+    </div>
+    <div style="border:0px; height:70px; width:10px;"></div>
+</div>

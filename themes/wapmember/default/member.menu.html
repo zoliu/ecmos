@@ -1,0 +1,13 @@
+    <div id="left">
+    	<!--{foreach from=$_member_menu item=item name=fe_item}-->
+        <!--{if $item.submenu}-->
+        <dl class="menu">
+            <dt {if $smarty.foreach.fe_item.first} class="first"{/if}><b></b><span>{$item.text}</span></dt>
+        	<!--{foreach from=$item.submenu item=subitem k=k}-->
+            <dd><a href="{$subitem.url}" class="{if $subitem.name eq $_curitem}active{else}normal{/if}"><span class="{$subitem.icon}">{$subitem.text}</span></a></dd>
+        	<!--{/foreach}-->
+        </dl>
+        <!--{/if}-->
+    	<!--{/foreach}-->
+    </div>
+    

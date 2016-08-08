@@ -1,0 +1,39 @@
+<script type="text/javascript">
+$(function(){
+    $('#extend_form').validate({
+        errorLabelContainer: $('#warning'),
+        invalidHandler: function(form, validator) {
+               $('#warning').show();
+        },
+        onfocusout : false,
+        onkeyup    : false,
+        rules : {
+            user_name : {
+                required : true
+            }
+        },
+        messages : {
+            user_name : {
+                required   : '{$lang.user_name_required}'
+            }
+        }
+    });
+});
+</script>
+<ul class="tab">
+    <li class="active">{$lang.extend_coupon}</li>
+</ul>
+<div class="eject_con">
+ <div class="adds">
+        <div id="warning"></div>
+        <form id="extend_form" method="post" target="coupon" action="index.php?app=coupon&act=extend&id={$id}">
+        <ul style="width:255px;">
+            <li>{$lang.extend_to_users}</li>
+            <li><p><textarea name="user_name" cols="23" rows="10"></textarea></p></li>
+            <li><span class="field_notice">{$lang.extend_to_users_desc}</span></li>
+            <li><span class="field_notice">{$lang.extend_to_users_desc1}</span></li>
+        </ul>
+        <div class="submit"><input type="submit" class="btn" value="{$lang.submit}" /></div>
+        </form>
+    </div>
+</div>

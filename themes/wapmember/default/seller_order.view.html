@@ -1,0 +1,167 @@
+{include file="member.header.html"}
+<script language="javascript">
+       $(function(){
+
+       var dataObj={$shipping_info};;//转换为json对象
+
+        var html='<tr>';
+
+         html+='<th>物流状态：</th>';
+
+         html+='<td>';          
+
+      if(dataObj.status>0){                  
+         html+='<table width="520px"cellspacing="0" cellpadding="0" border="0"style="border-collapse: collapse; border-spacing: 0pt;">';
+         html+='<tr>';                  
+         html+='<td width="163"style="background-color:#e6f9fa;border:1px solid#75c2ef;font-size:14px;font-weight:bold;height:20px;text-indent:15px;">';                  
+         html+='时间';                  
+         html+='</td>';                  
+         html+='<td width="354"style="background-color:#e6f9fa;border:1px solid#75c2ef;font-size:14px;font-weight:bold;height:20px;text-indent:15px;">';                  
+         html+='地点和跟踪进度';                  
+         html+='</td>';                   
+         html+='</tr>';                  
+         //输出data的子对象变量                  
+         $.each(dataObj.data,function(idx,item){                          
+            html+='<tr>';                          
+            html+='<td width="163" style="border:1px solid #dddddd;font-size:12px;line-height:22px;padding:3px 5px;">';                          
+            html+=item.time;// 每条数据的时间                          
+            html+='</td>';                          
+            html+='<td width="354"style="border:1px solid #dddddd;font-size:12px;line-height:22px;padding:3px 5px;">';                          
+            html+=item.context;// 每条数据的状态                         
+            html+='</td>';                          
+            html+='</tr>';                 
+          });                  
+         html+='</table>';          
+      }else{
+            //查询不到                  
+            html+='<spanstyle="color:#f00">很抱歉，'+dataObj.message+'</span>';         
+        }     
+         html+='</td></tr>';      
+         $("#shipping_detail").append(html);    
+    });
+
+    </script>
+<div class="content">
+    <div class="particular">
+        <div class="particular_wrap"><h2>{$lang.detail}</h2>
+        <style type="text/css">
+        .log_list { color:#666666; list-style:none; padding:5px 10px;  }
+         .log_list li { margin:8px 0px; }
+        .log_list li .operator { font-weight:bold; color:#FE5400; margin-right:5px; }
+        .log_list li .log_time { font-style:italic; margin:0px 5px; font-weight:bold; }
+        .log_list li .order_status { font-style:italic; margin:0px 5px; font-weight:bold; }
+        .log_list li .reason { font-style:italic; margin:0px 5px; font-weight:bold; }
+        </style>
+            <div class="mb10">
+                <div class="state">{$lang.order_status}&nbsp;:&nbsp;<strong>{$order.status|modifier:order_status}</strong></div>
+                <div class="num">{$lang.order_sn}&nbsp;:&nbsp;{$order.order_sn}</div>
+                <div class="time">{$lang.add_time}&nbsp;:&nbsp;{$order.add_time|date:complete}</div>
+            </div>
+            <h3>{$lang.order_info}</h3>
+            <dl class="info">
+                <dt>{$lang.buyer_info}</dt>
+                <dd>{$lang.buyer_name}&nbsp;:&nbsp;{$order.buyer_name|escape}</dd>
+                <dd>{$lang.phone_tel}&nbsp;:&nbsp;{$order.phone_tel|default:-}</dd>
+                 <dd>{$lang.region}&nbsp;:&nbsp;{$order.region_name|escape|default:-}</dd>
+                 <dd>{$lang.phone_mob}&nbsp;:&nbsp;{$order.phone_mob|default:-}</dd>
+                 <dd>{$lang.email}&nbsp;:&nbsp;{$order.buyer_email|default:-}</dd>
+                 <dd>{$lang.address}&nbsp;:&nbsp;{$order.address|escape|default:-}</dd>
+             </dl>
+         <div class="ware_line">
+            <div class="ware">
+                 <!--{foreach from=$goods_list item=goods}-->
+                <div class="ware_list">
+                       <div class="ware_pic"><img src="{$goods.goods_image}" width="50" height="50"  /></div>
+                    <div class="ware_text">
+                        <div class="ware_text1">
+                        <a href="{url app=goods&id=$goods.goods_id}">{$goods.goods_name|escape}</a>
+                        {if $group_id}<a target="_blank" href="{url app=groupbuy&id=$group_id}"><strong class="color8">[{$lang.groupbuy}]</strong></a>{/if}
+                        <br />
+                        <span>{$goods.specification|escape}</span>
+                        </div>
+                        <div class="ware_text2">
+                          <span>{$lang.quantity}&nbsp;:&nbsp;<strong>{$goods.quantity}</strong></span>
+                          <span>{$lang.goods_price}&nbsp;:&nbsp;<strong>{$goods.price}</strong></span>
+                          <!--{if $goods.sku}--><span>{$lang.sku}&nbsp;:&nbsp;<strong>{$goods.sku}</strong></span><!--{/if}-->
+                        </div>
+                    </div>
+                </div>
+                <!--{/foreach}-->
+                <div class="transportation">{$lang.shipping_fee}&nbsp;:&nbsp;<span>{$order_extm.shipping_fee|price}<strong>({$options_shipping[$order_extm.shipping_name]|escape})</strong></span>{$lang.preference}&nbsp;:&nbsp;<span>{$order.discount|price}</span>{$lang.order_amount}&nbsp;:&nbsp;<b>{$order.order_amount|price}</b>
+                <!--360cd.cn trans-->&nbsp;&nbsp;&nbsp;
+                {if $order.trans_info}                
+                    运费优惠&nbsp;:
+                    <b>{$order.trans_info}</b>
+                {/if}
+                <!--360cd.cn trans-->
+                </div>
+                <ul class="order_detail_list">
+                   <!--{if $order.payment_code}-->
+                    <li>{$lang.payment_name}&nbsp;:&nbsp;{$order.payment_name|escape}</li>
+                    <!--{/if}-->
+                    <!--{if $order.pay_message}-->
+                    <li>{$lang.pay_message}&nbsp;:&nbsp;{$order.pay_message|escape}</li>
+                    <!--{/if}-->
+                    <li>{$lang.add_time}&nbsp;:&nbsp;{$order.add_time|date:complete}</li>
+                    <!--{if $order.pay_time}-->
+                    <li>{$lang.pay_time}&nbsp;:&nbsp;{$order.pay_time|date:complete}</li>
+                    <!--{/if}-->
+                    <!--{if $order.ship_time}-->
+                    <li>{$lang.ship_time}&nbsp;:&nbsp;{$order.ship_time|date:complete}</li>
+                    <!--{/if}-->
+                    <!--{if $order.finished_time}-->
+                    <li>{$lang.finished_time}&nbsp;:&nbsp;{$order.finished_time|date:complete}</li>
+                    <!--{/if}-->
+                </ul>
+           </div>
+       </div>
+       
+       <h3>{$lang.consignee_info}</h3>
+       <table id='shipping_detail'></table><!--物流信息-->
+          <div class="goods">
+           {$lang.consignee_address}&nbsp;:&nbsp;{$order_extm.consignee|escape}<!--{if $order_extm.phone_mob}-->, &nbsp;{$order_extm.phone_mob}<!--{/if}--><!--{if $order_extm.phone_tel}-->,&nbsp;{$order_extm.phone_tel}<!--{/if}-->
+                ,&nbsp;{$order_extm.region_name|escape}&nbsp;{$order_extm.address|escape}
+                <!--{if $order_extm.zipcode}-->,&nbsp;{$order_extm.zipcode|escape}<!--{/if}--><br />
+           {$lang.shipping_name}&nbsp;:&nbsp;{$options_shipping[$order_extm.shipping_name]|escape}<br/>
+            <!--{if $order.invoice_no}-->
+               {$lang.invoice_no}&nbsp;:&nbsp;{$order.invoice_no|escape}<!--&nbsp;&nbsp;&nbsp;&nbsp;<a href="{$shipping_info.query_url}&amp;{$order.invoice_no}" target="_blank">{$lang.query_logistics}</a>-->
+               <br />
+           <!--{/if}-->
+           <!--{if $order.postscript}-->
+           {$lang.postscript}&nbsp;:&nbsp;{$order.postscript|escape}<br />
+           <!--{/if}-->
+          </div>
+       <!--{if $order_logs}-->
+       <h3>{$lang.operate_log}</h3>
+        <ul class="log_list">
+            <!--{foreach from=$order_logs item=log}-->
+            <li>
+                <span class="operator"><!--{if $log.operator eq '0'}--><span style="color:green;">[{$lang.system}]</span><!--{else}-->{$log.operator|escape}<!--{/if}--></span>
+                            {$lang.at}
+                <span class="log_time">{$log.log_time|date:complete}</span>
+                            {$lang.change_status}
+                <span class="order_status">{$log.order_status}</span>
+                            {$lang.change_to}
+                <span class="order_status">{$log.changed_status}</span>
+                <!--{if $log.remark}-->
+                {$lang.reason}:<span class="reason">{$log.remark|escape}</span>
+                <!--{/if}-->
+            </li>
+            <!--{/foreach}-->
+        </ul>
+       <!--{/if}-->
+       </div>
+          <div class="particular_bottom"></div>
+        </div>
+
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+</div>
+{include file="footer.html"}

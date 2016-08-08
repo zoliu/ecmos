@@ -1,0 +1,49 @@
+{include file=member.header.html}
+<style>
+.txt { margin-right:20px}
+.spec ul { width: 530px; overflow: hidden; }
+.spec .td { padding-bottom: 10px; }
+.spec li { float: left; margin-left: 6px; display: inline; }
+.spec li input { text-align: center; }
+.spec .th { padding: 3px 0; margin-bottom: 10px; border-top: 2px solid #e3e3e3; border-bottom: 1px solid #e3e3e3; background: #f8f8f8; }
+</style>
+<div class="content">
+  <div class="totline"></div>
+  <div class="botline"></div>
+  {include file=member.menu.html}
+  <div id="right">
+     {include file=member.curlocal.html}
+{include file=member.submenu.html}
+
+        <div class="wrap">
+
+            <div class="public">
+                <form method="post" id="goods_form">
+                    <div class="information_index">
+                        <h4>{$lang.group_desc}: </h4>
+                        <div class="add_wrap">
+                            <div class="assort">
+                                <p class="txt" id="start_time">
+                                    &nbsp;<textarea style="height: 150px; overflow-y: auto; width: 250px;" name="group_desc" class="text">{$group.group_desc|escape}</textarea>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="add_wrap">
+                            <div class="issuance"><input type="submit" class="btn" value="{$lang.submit}" /></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

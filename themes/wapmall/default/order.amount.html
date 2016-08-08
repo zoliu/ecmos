@@ -121,71 +121,90 @@ $(function(){
   }
 });
 </script>
-<style>  
-  .zf_password-button{margin-top: 5px;padding: 5px 5%;height: 30px;float: right;border: 1px solid #ddd;font-weight:bold;color: #BD0000;font-size: 14px;background-color: #f0f0f0;}
-  .btn-allow-coupon{border: 1px solid #ddd;}
-  .usable{margin-left: -1;display: none;}
-  .unusable{margin-left: -1;display: none;}
+<style>
+.zf_password-button {
+	margin-top: 5px;
+	padding: 5px 5%;
+	height: 30px;
+	float: right;
+	border: 1px solid #ddd;
+	font-weight: bold;
+	color: #BD0000;
+	font-size: 14px;
+	background-color: #f0f0f0;
+}
+
+.btn-allow-coupon {
+	border: 1px solid #ddd;
+}
+
+.usable {
+	margin-left: -1;
+	display: none;
+}
+
+.unusable {
+	margin-left: -1;
+	display: none;
+}
 </style>
 
 <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
 <link href="{res file=css/global.css}" type="text/css" rel="stylesheet" />
 
 <div class="w1150 price-promotion mt10 mb10 f60">
-  <p class="mb10 mt10">
-    {if $goods_info.allow_coupon}
-    <input id="use_coupon" type="button" class="btn-allow-coupon center" value="{$lang.use_coupon}" />
-    {/if}
-  </p>
-  {if $goods_info.allow_coupon}
-  <p class="allow-coupon border padding10 mb10 hidden clearfix">
-    {$lang.coupon_sn}:&nbsp;
-    <input name="coupon_sn" id="coupon_sn" class='new_input' value="0" type="text" style="width: 50%;">
-    <input type="hidden" name="my_coupon" id="my_coupon" value='0' />
-    <input type="button" value="{$lang.check}" class="zf_password-button" id="check_coupon" style="margin-left: 28px;" />
-    <span class="usable">{$lang.usable}</span> 
-    <span class="unusable">{$lang.unusable}</span>
-  </p>
-  {/if}
+	<p class="mb10 mt10">
+		{if $store.allow_coupon}
+		<input id="use_coupon" type="button" class="btn-allow-coupon center" value="{$lang.use_coupon}" />
+		{/if}
+	</p>
+	{if $store.allow_coupon}
+	<p class="allow-coupon border padding10 mb10 hidden clearfix">
+		{$lang.coupon_sn}:&nbsp; <input name="coupon_sn" id="coupon_sn"
+			class='new_input' value="0" type="text" style="width: 50%;">
+		<input type="hidden" name="my_coupon" id="my_coupon" value='0' /> <input
+			type="button" value="{$lang.check}" class="zf_password-button"
+			id="check_coupon" style="margin-left: 28px;" /> <span class="usable">{$lang.usable}</span>
+		<span class="unusable">{$lang.unusable}</span>
+	</p>
+	{/if}
 </div>
 
 <div class="w1150 price-promotion mt10 mb10 f60">
-  <p class="mb10 mt10">
-    <input id="use_money" type="button" class="btn-allow-coupon center" value="{$lang.use_money}" />
-  </p>
-  <p class="allow-coupon border padding10 mb10 hidden clearfix" style="text-align:left;">
-    {$lang.my_money_note}{$lang.colon}
-    <input name="my_money" id="my_money"  class='new_input' value="0" type="text">账户总额：{$my_money.money|price}
-    <span class='my_money_note' style="color: #BD0000;"></span>
-    <span><br /></span>
-    <span><br /></span>
-    <b style="{if $my_money.zf_pass}display:none;{/if}">
-          <font color="red">{$lang.jinggao_set_zf_pass}</font><br />
-          <a href="{url index.php?app=my_money&act=setting}" target="_blank">{$lang.set_zf_pass}</a>
-          &nbsp; &nbsp; &nbsp; &nbsp;
-      <span class="epay_btn">
-          <a href="javascript:history.go(0);" target="_blank">设置成功后请刷新页面</a>
-      </span>
-    </b>
-    
-    <b style="{if !$my_money.zf_pass}display:none;{/if}">
-      {$lang.use_password_now}
-      <input name="password" id="password"  class='new_input' type="password"><br />
-      <input id="use_password" type="button" class="zf_password-button" value="{$lang.use_password}" />
-    </b>
-  </p>
+	<!-- <p class="mb10 mt10">
+		<input id="use_money" type="button" class="btn-allow-coupon center"
+			value="{$lang.use_money}" />
+	</p> -->
+	<p class="allow-coupon border padding10 mb10 hidden clearfix"
+		style="text-align: left;">
+		{$lang.my_money_note}{$lang.colon}
+		<input name="my_money" id="my_money" class='new_input' value="0" type="text">账户总额：{$my_money.money|price}
+		<span class='my_money_note' style="color: #BD0000;"></span> <span><br /></span>
+		<span><br /></span> <b style=""> <font color="red">{$lang.jinggao_set_zf_pass}</font><br />
+			<a href="{url index.php?app=my_money&act=setting}" target="_blank">{$lang.set_zf_pass}</a>
+			&nbsp; &nbsp; &nbsp; &nbsp; <span class="epay_btn"> <a
+				href="javascript:history.go(0);" target="_blank">设置成功后请刷新页面</a>
+		</span>
+		</b> <b style=""> {$lang.use_password_now} <input name="password"
+			id="password" class='new_input' type="password"><br /> <input
+			id="use_password" type="button" class="zf_password-button"
+			value="{$lang.use_password}" />
+		</b>
+	</p>
 
 </div>
 <div class="make_sure w1150 mb10" style="padding: 5px 3%;">
-  <p style="height: 40px;">
-    <span style="float: left;">
-    <a href="{url app=cart&store_id=$goods_info.store_id}" class="back">{$lang.backto_cart}</a>
-    </span><strong id="order_amount" style="float: right;">{$goods_info.amount|price}</strong>
-    <span style="float: right; line-height: 30px;">{$lang.order_amount}{$lang.colon}</span>
-    </p><p>
-    <span>
-      <a href="javascript:void($('#order_form').submit());" id="submit" class="submit_btn btn-step fff center strong fs14 ml20" style="margin: 0;">{$lang.shopping_step_three}</a>
-    </span>
-  </p>
+	<p style="height: 40px;">
+		<span style="float: left;">
+		<a href="{url app=cart&store_id=$goods_info.store_id}" class="back">{$lang.backto_cart}</a>
+		</span><strong id="order_amount" style="float: right;">{$goods_info.amount|price}</strong>
+		<span style="float: right; line-height: 30px;">{$lang.order_amount}{$lang.colon}</span>
+	</p>
+	<p>
+		<span> <a href="javascript:void($('#order_form').submit());"
+			id="submit" class="submit_btn btn-step fff center strong fs14 ml20"
+			style="margin: 0;">{$lang.shopping_step_three}</a>
+		</span>
+	</p>
 </div>
 <div class="w1150 price-notice mt10 mb10 pt10 f60 pb10">{$lang.price_notice}</div>

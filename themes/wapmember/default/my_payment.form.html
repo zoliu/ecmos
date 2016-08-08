@@ -1,0 +1,60 @@
+<script type="text/javascript">
+<!--//<![CDATA[
+$(function(){
+    {$payment.onconfig}
+});
+//]]>-->
+</script>
+<div class="eject_con">
+    <div class="info_table_wrap">
+        <form method="post" action="index.php?app=my_payment&amp;act={$smarty.get.act}&amp;code={$smarty.get.code}&amp;payment_id={$smarty.get.payment_id}" target="my_payment">
+            <h3><!--{if $smarty.get.act eq config}-->{$lang.config_payment}<!--{else}-->{$lang.install_payment}<!--{/if}--></h3>
+        <ul class="info_table">
+            <li>
+                <h4>{$lang.payment_name}:</h4>
+                <p class="new_style">{$payment.name|escape}</p>
+            </li>
+            <li>
+                <h4>{$lang.payment_desc}</h4>
+                <p><textarea class="text" name="payment_desc">{$payment.payment_desc|escape}</textarea><span>{$lang.payment_desc_desc}</span></p>
+            </li>
+            <li>
+                <h4>{$lang.enabled}:</h4>
+                <p style="width:100px;">
+                     {html_radios options=$yes_or_no checked=$payment.enabled name=enabled}
+                </p>
+            </li>
+            <li>
+                <h4>{$lang.sort_order}:</h4>
+                <p><input type="text" class="text width2" value="{$payment.sort_order}" name="sort_order"/></p>
+            </li>
+            <!--{foreach from=$payment.config item=info key=conf}-->
+            <li>
+                <h4>{$info.text}:</h4>
+                <p><!--{if $info.type eq 'text'}--> <input type="text" name="config[{$conf}]" id="ctrl_{$conf}" value="{$config.$conf}" size="{$info.size}" onfocus="{$info.onfocus}" onchange="{$info.onchange}" onblur="{$info.onblur}" class="text"/>
+                <!--{elseif $info.type eq 'select'}-->
+                <select name="config[{$conf}]" id="ctrl_{$conf}" onchange="{$info.onchange}" class="width8 padding4">
+                       {html_options options=$info.items selected=$config.$conf}
+                 </select>
+                 <!--{elseif $info.type eq 'textarea'}-->
+                 <textarea cols="{$info.cols}" rows="{$info.rows}" name="config[{$conf}]" id="ctrl_{$conf}" onfocus="{$info.onfocus}" onchange="{$info.onchange}" onblur="{$info.onblur}" class="text" >{$config.$conf}</textarea>
+                 <!--{elseif $info.type eq 'radio'}-->
+                       {html_radios options=$info.items checked=$config.$conf name=$info.name}
+                 <!--{elseif $info.type eq 'checkbox'}-->
+                    {html_checkbox options=$info.items checked=$config.$conf name=$info.name}
+                 <!--{/if}-->
+                 <span>{$info.desc}</span>
+                 </p>
+            </li>
+            <!--{/foreach}-->
+            <!--{if $payment.is_online}-->
+            <li>
+                <h4>{$lang.payment_pcode}:</h4>
+                <p><input type="text" name="config[pcode]" value="{$config.pcode}" size="3" class="text" /><span>{$lang.pcode_desc}</span></p>
+            </li>
+            <!--{/if}-->
+        </ul>
+        <div class="submit"><input type="submit" class="btn" value="{$lang.submit}" /></div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<script type="text/javascript">
+$(function(){
+     $('#message').validate({
+        errorLabelContainer: $('#warning'),
+        invalidHandler: function(form, validator) {
+           var errors = validator.numberOfInvalids();
+           if(errors)
+           {
+               $('#warning').show();
+           }
+           else
+           {
+               $('#warning').hide();
+           }
+        },
+        rules : {
+                     content : {
+                         required : true,
+                         byteRange : [0,255,'{$charset}']
+                     }
+                  },
+        messages : {
+                     content : {
+                         required : '{$lang.content_not_null}',
+                         byteRange: '{$lang.max_script}'
+                        }
+                     }
+         })
+})
+</script>
+<style type="text/css">
+.height26 { line-height:26px; }
+.eject_con .add_float { width:340px; }
+</style>
+<div class="eject_con">
+    <div class="add_float">
+        <form id="message" target="pop_warning" method="post" action="index.php?app=my_qa&act={$smarty.get.act}&ques_id={$ques_id}">
+        <div id="warning"></div>
+        <ul>
+            <li>
+                <h3>{$lang.question_content}:</h3>
+                 <p><label class="height26">{$my_qa_data.question_content|escape|nl2br}</label></p>
+            </li>
+            <li>
+                <h3>{$lang.reply_question}:</h3>
+                <input type="hidden" id="act" name="act" value="{$smarty.get.act}" />
+                <input type="hidden" id="ques_id" name="ques_id" value="{$smarty.get.ques_id}"/>
+                <p><textarea class="text width11" name="content">{$my_qa_data.reply_content}</textarea><br /></p>
+            </li>
+        </ul>
+        <div class="submit"><input type="submit" class="btn" value="{$lang.confirm}" /></div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+{include file=member.header.html}
+<style type="text/css">
+.bgwhite { background: #FFFFFF; }
+.borline td { padding:10px 0px; }
+.ware_list th { text-align:left; }
+.eject_con .add { width:80%; }
+.eject_con .add ul { width:100%; }
+.eject_con .add ul li { width:100%; }
+.eject_con .add ul li p { padding:5px; }
+</style>
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.submenu.html}
+        <div class="eject_con bgwhite">
+            <div class="add">
+                <form method="post" id="feed_settings_form">
+                        <ul>
+                            <li>{$lang.feed_settings_desc}</li>
+                            <li><h3>{$lang.feed_settings}:</h3>
+                                <p>&nbsp;&nbsp;&nbsp;
+                                <!--{foreach from=$feed_items key=_fi item=_fn}-->
+                                    <input type="checkbox" name="feed_config[{$_fi}]" value="1"{if $feed_config.$_fi} checked="true"{/if} id="feed_{$_fi}" /><label for="feed_{$_fi}">{$_fn}</label>&nbsp;
+                                <!--{/foreach}-->
+                                </p>
+                            </li>
+                        </ul>
+                    <div class="submit">
+                        <input class="btn" type="submit" value="{$lang.submit}" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

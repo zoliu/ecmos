@@ -1,0 +1,507 @@
+{include file=member.header.html}
+{$images_upload}
+{$editor_upload}
+{$build_editor}
+<style>
+.box_arr .table_btn { width: 222px; }
+.box_arr .table_btn a { float: left; }
+.box_arr .table_btn a.disable_spec { background: url({res file=images/member/btn.gif}) repeat 0 -1018px; float: right; }
+.add_spec .add_link { color:#919191; }
+.add_spec .add_link:hover { color:red; }
+add_spec h2 { padding-left: 10px; }
+.width7{ width: 250px;}
+.f_l{ float:left; }
+.mls_id { width: 0; filter: alpha(opacity=0);opacity: 0; }
+</style>
+<script type="text/javascript">
+//<!CDATA[
+var SPEC = {$goods.spec_json};
+
+
+function add_uploadedfile(file_data)
+{
+    if(file_data.instance == 'goods_image'){
+        $('#goods_images').append('<li ectype="handle_pic" file_id="'+ file_data.file_id +'" thumbnail="{$site_url}/'+ file_data.thumbnail +'"><input type="hidden" value="'+ file_data.file_id +'" name="goods_file_id[]"/><div class="pic"><img src="{$site_url}/'+ file_data.thumbnail +'" width="55" height="55" alt="" /><div ectype="handler" class="bg"><p class="operation"><span class="cut_in" ectype="set_cover" ecm_title="{$lang.set_cover}"></span><span class="delete" ectype="drop_image" ecm_title="{$lang.drop}"></span></p></div></div></li>');
+                trigger_uploader();
+        if($('#big_goods_image').attr('src') == '{$goods.default_goods_image}'){
+            set_cover(file_data.file_id);
+        }
+        if(GOODS_SWFU.getStats().files_queued == 0){
+            window.setTimeout(function(){
+                $('#uploader').hide();
+                $('#open_uploader').find('.show').attr('class','hide');
+            },4000);
+        }
+    }else if(file_data.instance == 'desc_image'){
+        $('#desc_images').append('<li file_name="'+ file_data.file_name +'" file_path="'+ file_data.file_path +'" ectype="handle_pic" file_id="'+ file_data.file_id +'"><input type="hidden" name="desc_file_id[]" value="'+ file_data.file_id +'"><div class="pic" style="z-index: 2;"><img src="{$site_url}/'+ file_data.file_path +'" width="50" height="50" alt="'+ file_data.file_name +'" /></div><div ectype="handler" class="bg" style="z-index: 3;display:none"><img src="{$site_url}/'+ file_data.file_path +'" width="50" height="50" alt="'+ file_data.file_name +'" /><p class="operation"><a href="javascript:void(0);" class="cut_in" ectype="insert_editor" ecm_title="{$lang.insert_editor}"></a><span class="delete" ectype="drop_image" ecm_title="{$lang.drop}"></span></p><p class="name">'+ file_data.file_name +'</p></div></li>');
+                trigger_uploader();
+        if(EDITOR_SWFU.getStats().files_queued == 0){
+            window.setTimeout(function(){
+                $('#editor_uploader').hide();
+            },5000);
+        }
+    }
+}
+
+
+function set_cover(file_id){
+    if(typeof(file_id) == 'undefined'){
+        $('#big_goods_image').attr('src','{$goods.default_goods_image}');
+        return;
+    }
+    var obj = $('*[file_id="'+ file_id +'"]');
+    $('*[file_id="'+ file_id +'"]').clone(true).prependTo('#goods_images');
+    $('*[ectype="handler"]').hide();
+    $('#big_goods_image').attr('src',obj.attr('thumbnail'));
+    obj.remove();
+}
+
+$(function(){
+     $('#goods_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        onkeyup : false,
+        rules : {
+            goods_name : {
+                required   : true
+            },
+            price      : {
+                number     : true,
+                required : true,
+                min :0
+            },
+            stock      : {
+                digits    : true
+            },
+            remark      : {
+                maxlength:250
+            },
+            cate_id    : {
+                remote   : {
+                    url  : 'index.php?app=my_goods&act=check_mgcate',
+                    type : 'get',
+                    data : {
+                        cate_id : function(){
+                            return $('#cate_id').val();
+                        }
+                    }
+                }
+            }
+        },
+        messages : {
+            goods_name  : {
+                required   : '{$lang.goods_name_empty}'
+            },
+            price       : {
+                number     : '{$lang.number_only}',
+                required : '{$lang.price_empty}',
+                min : '{$lang.price_ge_0}'
+            },
+            stock       : {
+                digits  : '{$lang.number_only}'
+            },
+            remark       : {
+                maxlength  : '{$lang.remark_note}'
+            },
+            cate_id     : {
+                remote  : '{$lang.select_leaf_category}'
+            }
+        }
+    });
+    // init cover
+    set_cover($("#goods_images li:first-child").attr('file_id'));
+
+    // init spec
+    spec_update();
+
+
+});
+
+function check_max_point()
+{
+
+}
+//]]>
+</script>
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div  class="wrap">
+            <style>
+    .dialog_body {width:845px;}
+    .dialog_wrapper {width:800px;}
+</style>
+
+            <div class="public" style="height: 1300px;">
+                <form method="post" id="goods_form">
+                    <div class="information_index">
+
+                        <div class="add_spec" dialog_title="{$lang.edit}{$lang.specification}" ectype="dialog_contents" style="display: none" >
+                            <!--<form>
+                            -->
+                            <p>{$lang.note_for_add_spec_popup}</p>
+                            <div class="table" ectype="spec_editor" style="width:840px;">
+                                <ul class="th" style="width:840px;">
+                                    <li>
+                                        <input col="spec_name_1" type="text" class="text width4" />
+                                    </li>
+                                    <li>
+                                        <input col="spec_name_2" type="text" class="text width4" />
+                                    </li>
+                                    <li class="distance1">{$lang.price}</li>
+                                    <li class="distance1">{$lang.stock}</li>
+                                    <li class="distance2">{$lang.sku}</li>
+                                    <li class="distance3">{$lang.handle}</li>
+                                </ul>
+                                <ul class="td" ectype="spec_item" style="width:840px;">
+                                    <li>
+                                        <input item="spec_1" type="text" class="text width4" />
+                                    </li>
+                                    <li>
+                                        <input item="spec_2" type="text" class="text width4" />
+                                    </li>
+                                    <li>
+                                        <input item="price" type="text" class="text width4" />
+                                    </li>
+                                    <li>
+                                        <input item="stock" type="text" class="text width4" />
+                                    </li>
+                                    <li>
+                                        <input item="sku" type="text" class="text width8" />
+                                        <input item="spec_id" type="hidden" />
+                                    </li>
+                                    <li class="padding3">
+                                        <span ectype="up_spec_item" class="up_btn"></span>
+                                        <span ectype="down_spec_item" class="down_btn"></span>
+                                        <span ectype="drop_spec_item" class="delete_btn"></span>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li class="add">
+                                        <a href="javascript:;" ectype="add_spec_item" class="add_link">{$lang.add_spec_item}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="btn_wrap">
+                                <input ectype="save_spec" type="submit" class="btn" value="{$lang.save_spec}" />
+                            </div>
+                            <!--</form>--></div>
+
+                        <h4>{$lang.mgcategory}</h4>
+                        <div class="add_wrap">
+                            <div class="assort">
+                                <p class="txt">{$lang.mgcategory}:</p>
+                                <p class="select" id="gcategory">
+                                    <!-- {if $goods.cate_id} -->
+                                    <span class="f_l">{$goods.cate_name|escape}</span>
+                                    <a class="edit_gcategory btn" href="javascript:;">{$lang.edit}</a>
+                                    <select style="display:none">
+                                        <option>{$lang.select_pls}</option>
+                                        {html_options options=$mgcategories}
+                                    </select>
+                                    <!-- {else} -->
+                                    <select>
+                                        <option>{$lang.select_pls}</option>
+                                        {html_options options=$mgcategories}
+                                    </select>
+                                    <!-- {/if} -->
+                                    <input type="text" id="cate_id" name="cate_id" value="{$goods.cate_id}" class="mls_id" />
+                                    <input type="hidden" name="cate_name" value="{$goods.cate_name|escape}" class="mls_names" />
+                                </p>
+                            </div>
+                            <div class="assort">
+                                <p class="txt">{$lang.sgcategory}:</p>
+                                <p class="select">
+                                    <!--{if $goods._scates}-->
+                                    <!--{foreach from=$goods._scates item=sgcate}-->
+                                    <select name="sgcate_id[]" class="sgcategory">
+                                        <option value="0">{$lang.select_pls}</option>
+                                        {html_options options=$sgcategories selected=$sgcate.cate_id}
+                                    </select>
+                                    <!-- {/foreach} -->
+                                    <!--{else}-->
+                                    <select name="sgcate_id[]" class="sgcategory">
+                                        <option value="0">{$lang.select_pls}</option>
+                                        {html_options options=$sgcategories}
+                                    </select>
+                                    <!--{/if}--> </p>
+                                <p class="new_add">
+                                    <a href="javascript:;" id="add_sgcategory" class="btn">{$lang.add_scategory}</a>
+                                    <span>{$lang.note_for_sgcategory}</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="prop_list" {if $smarty.get.act eq 'add' || !$prop_list}style="display:none"{/if}>
+                            <h4>{$lang.goods_props}</h4>
+                            <div id="props" style="background:#F5F5F5;padding:10px;border:1px #E2E2E2 solid;margin-bottom:20px;">
+                                {if $smarty.get.act eq 'edit'}
+                          {foreach from=$prop_list item=prop}
+                                <span>{$prop.name}</span>
+                                <select name="props[]" style="margin-right:30px;">
+                                    <option value=""></option>
+                                    {foreach from=$prop.value item=item}
+                                    <option value="{$item.pid}:{$item.vid}" {if $item.selected} selected="selected"{/if}>{$item.prop_value}</option>
+                                    {/foreach}
+                                </select>
+                                {/foreach}
+                          {/if}
+                            </div>
+                        </div>
+
+                        <!-- end sku -->
+
+                        <h4>{$lang.goods_base_info}</h4>
+                        <div class="add_wrap">
+
+                            <div class="pic_list">
+                                <div class="big_pic">
+                                    <img id="big_goods_image" src="{$goods.default_goods_image}" width="300" height="300" alt="" />
+                                </div>
+                                <div class="small_pic">
+                                    <ul id="goods_images">
+                                        <!--{foreach from=$goods_images item=goods_iamge}-->
+                                        <li ectype="handle_pic" file_id="{$goods_iamge.file_id}" thumbnail="{$site_url}/{$goods_iamge.thumbnail}">
+                                            <input type="hidden" name="goods_file_id[]" value="{$goods_iamge.file_id}">
+                                            <div class="pic">
+                                                <img src="{$site_url}/{$goods_iamge.thumbnail}" width="55" height="55" />
+                                                <div ectype="handler" class="bg">
+                                                    <p class="operation">
+                                                        <span class="cut_in" ectype="set_cover" ecm_title="{$lang.set_cover}"></span>
+                                                        <span class="delete" ectype="drop_image" ecm_title="{$lang.drop}"></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!--{/foreach}--> </ul>
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="upload_btn">
+                                    <div class="upload" id="open_uploader"> <b class="hide">{$lang.upload_goods_image}</b>
+                                    </div>
+                                    <div class="upload_con" id="uploader" style="display:none">
+                                        <div class="upload_con_top"></div>
+                                        <div class="upload_wrap">
+
+                                            <ul>
+                                                <li class="btn1">
+                                                    <div id="divSwfuploadContainer">
+                                                        <div id="divButtonContainer">
+                                                            <span id="spanButtonPlaceholder"></span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <iframe src="index.php?app=comupload&act=view_iframe&id={$id}&belong={$belong}&instance=goods_image" width="86" height="30" scrolling="no" frameborder="0"></iframe>
+                                                </li>
+                                                <li id="open_remote" class="btn2">{$lang.rem_upload}</li>
+                                            </ul>
+                                            <div id="remote" class="upload_file" style="display:none">
+                                                <iframe src="index.php?app=comupload&act=view_remote&id={$id}&belong={$belong}&instance=goods_image" width="272" height="39" scrolling="no" frameborder="0"></iframe>
+                                            </div>
+                                            <div id="goods_upload_progress"></div>
+                                            <div class="upload_txt">
+                                                <span>{$lang.note_for_upload}</span>
+                                            </div>
+
+                                        </div>
+                                        <div class="upload_con_bottom"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="products">
+                                <ul>
+                                    <li>
+                                        <h2>{$lang.goods_name}:</h2>
+                                        <div class="arrange">
+                                            <input title="{$goods.goods_name|escape}" type="text" name="goods_name" value="{$goods.goods_name|escape}" class="text width_normal" />
+                                            <span class="red">*</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h2>{$lang.brand}:</h2>
+                                        <div class="arrange">
+                                            <input type="text" name="brand" value="{$goods.brand|escape}" class="text width_normal" />
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h2>{$lang.tags}:</h2>
+                                        <div class="arrange">
+                                            <input type="text" name="tags" value="{$goods.tags|escape}" class="text width_normal" />
+                                            <span class="gray">{$lang.goods_tags_note}</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h2  ectype="no_spec">{$lang.price}:</h2>
+                                        <div class="arrange"  ectype="no_spec">
+                                            <input name="spec_id" value="{$goods._specs.0.spec_id}" type="hidden" />
+                                            <input name="price" value="{$goods._specs.0.price}" type="text" class="text width_short" />
+                                        </div>
+                                    </li>
+                                    <li ectype="no_spec">
+                                        <h2>{$lang.stock}:</h2>
+                                        <div class="arrange">
+                                            <input name="stock" value="{$goods._specs.0.stock}" type="text" class="text width_short" />
+                                        </div>
+                                    </li>
+                                    <li ectype="no_spec">
+                                        <h2>{$lang.sku}:</h2>
+                                        <div class="arrange">
+                                            <input name="sku" value="{$goods._specs.0.sku}" type="text" class="text width_normal" />
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h2>{$lang.spec}:</h2>
+                                        <div class="arrange">
+                                            <div class="box_arr" ectype="no_spec"  style="display: none;">
+                                                <p class="pos_btn">
+                                                    <a ectype="add_spec" href="javascript:;" class="add_btn">{$lang.enable_spec}</a>
+                                                </p>
+                                                <p class="pos_txt">{$lang.note_for_add_spec}</p>
+                                            </div>
+                                            <div class="box_arr" ectype="has_spec"  style="display: none;">
+                                                <table ectype="spec_result">
+
+                                                    <tr>
+                                                        <th col="spec_name_1">loading..</th>
+                                                        <th col="spec_name_2">loading..</th>
+                                                        <th col="price">{$lang.price}</th>
+                                                        <th col="stock">{$lang.stock}</th>
+                                                        <th col="sku">{$lang.sku}</th>
+                                                    </tr>
+                                                    <tr ectype="spec_item" style="display:none">
+                                                        <td item="spec_1"></td>
+                                                        <td item="spec_2"></td>
+                                                        <td item="price"></td>
+                                                        <td item="stock"></td>
+                                                        <td item="sku"></td>
+                                                    </tr>
+                                                </table>
+                                                <p class="table_btn">
+                                                    <a ectype="edit_spec" href="javascript:;" class="add_btn edit_spec">{$lang.edit_spec}</a>
+                                                    <a ectype="disable_spec" href="javascript:;" class="add_btn disable_spec">{$lang.disable_spec}</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h2>{$lang.if_show}:</h2>
+                                        <div class="arrange">
+                                            <span class="distance">
+                                                <label>
+                                                    <input name="if_show" value="1" type="radio" {if $goods.if_show}checked="checked" {/if}/>
+                                                    {$lang.yes}
+                                                </label>
+                                                <label>
+                                                    <input name="if_show" value="0" type="radio" {if !$goods.if_show}checked="checked" {/if}/>
+                                                    {$lang.no}
+                                                </label>
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h2>{$lang.recommended}:</h2>
+                                        <div class="arrange">
+                                            <span class="distance">
+                                                <label>
+                                                    <input name="recommended" value="1" {if $goods.recommended}checked="checked" {/if}type="radio" />
+                                                    {$lang.yes}
+                                                </label>
+                                                <label>
+                                                    <input name="recommended" value="0" {if !$goods.recommended}checked="checked" {/if}type="radio" />
+                                                    {$lang.no}
+                                                </label>
+                                            </span>
+                                            <span class="gray">{$lang.note_for_recommended}</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+
+                        <div class="add_bewrite">
+                            <h5>{$lang.description}</h5>
+                            <div class="add_wrap">
+                                <div class="editor">
+                                    <div><textarea name="description" id="description"  style="width:100%; height:400px;">{$goods.description|escape}</textarea></div>
+                                    <div style=" position: relative; top: 10px; z-index: 5;">
+                                        <a class="btn3" id="open_editor_uploader">{$lang.uploadedfile}</a>
+                                        <div class="upload_con" id="editor_uploader" style="display:none">
+                                            <div class="upload_con_top"></div>
+                                            <div class="upload_wrap">
+
+                                                <ul>
+                                                    <li>
+                                                        <div id="divSwfuploadContainer">
+                                                            <div id="divButtonContainer">
+                                                                <span id="editor_upload_button"></span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <iframe src="index.php?app=comupload&act=view_iframe&id={$id}&belong={$belong}&instance=desc_image" width="86" height="30" scrolling="no" frameborder="0"></iframe>
+                                                    </li>
+                                                    <li id="open_editor_remote" class="btn2">{$lang.rem_upload}</li>
+                                                </ul>
+                                                <div id="editor_remote" class="upload_file" style="display:none">
+                                                    <iframe src="index.php?app=comupload&act=view_remote&id={$id}&belong={$belong}&instance=desc_image" width="272" height="39" scrolling="no" frameborder="0"></iframe>
+                                                </div>
+                                                <div id="editor_upload_progress"></div>
+                                                <div class="upload_txt">
+                                                    <span>{$lang.note_for_upload}</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="upload_con_bottom"></div>
+                                        </div>
+                                    </div>
+                                    <ul id="desc_images" class="preview" style="">
+                                        <!--{foreach from=$desc_images item=desc_image}-->
+                                        <li ectype="handle_pic" file_name="{$desc_image.file_name|escape}" file_path="{$desc_image.file_path}" file_id="{$desc_image.file_id}">
+                                            <input type="hidden" name="desc_file_id[]" value="{$desc_image.file_id}">
+                                            <div class="pic">
+                                                <img src="{$site_url}/{$desc_image.file_path}" width="50" height="50" alt="{$desc_image.file_name|escape}" title="{$desc_image.file_name|escape}" />
+                                            </div>
+                                            <div ectype="handler" class="bg">
+                                                <img src="{$site_url}/{$desc_image.file_path}" width="50" height="50" alt="{$desc_image.file_name|escape}" title="{$desc_image.file_name|escape}" />
+                                                <p class="operation">
+                                                    <a class="cut_in" ectype="insert_editor" href="javascript:void(0);" ecm_title="{$lang.insert_editor}"></a>
+                                                    <span class="delete" ectype="drop_image" ecm_title="{$lang.drop}"></span>
+                                                </p>
+                                                <p title="{$desc_image.file_name|escape}" class="name">{$desc_image.file_name|escape}</p>
+                                            </div>
+                                        </li>
+                                        <!--{/foreach}--> </ul>
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="issuance">
+                                    <input type="submit" class="btn" value="{$lang.submit}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

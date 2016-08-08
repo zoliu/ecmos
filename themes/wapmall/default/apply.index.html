@@ -1,0 +1,206 @@
+{include file=header.html}
+
+<script type="text/javascript" src="index.php?act=jslang"></script>
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    regionInit("region");
+
+    $("#apply_form").validate({
+        errorPlacement: function(error, element){
+            var error_td = element.parent('td').next('td');
+            error_td.find('.field_notice').hide();
+            error_td.find('.red').hide();
+            error_td.append(error);
+        },
+        success: function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        onkeyup: false,
+        rules: {
+            owner_name: {
+                required: true
+            },
+            store_name: {
+                required: true,
+                remote : {
+                    url  : 'index.php?app=apply&act=check_name',
+                    type : 'get',
+                    data : {
+                        store_name : function(){
+                            return $('#store_name').val();
+                        }
+                    }
+                }
+            },
+            tel: {
+                required: true,
+                minlength:6,
+                checkTel:true
+            },
+            image_1: {
+                accept: "jpg|jpeg|png|gif"
+            },
+            image_2: {
+                accept: "jpg|jpeg|png|gif"
+            },
+            image_3: {
+                accept: "jpg|jpeg|png|gif"
+            },
+            notice: "required"
+        },
+        messages: {
+            owner_name: {
+                required: '{$lang.input_owner_name}'
+            },
+            store_name: {
+                required: '{$lang.input_store_name}',
+                remote: '{$lang.name_exist}'
+            },
+            tel: {
+                required: '{$lang.input_tel}',
+                minlength: '{$lang.phone_tel_error}',
+                checkTel: '{$lang.phone_tel_error}'
+            },
+            image_1: {
+                accept: '{$lang.select_valid_image}'
+            },
+            image_2: {
+                accept: '{$lang.select_valid_image}'
+            },
+            image_3: {
+                accept: '{$lang.select_valid_image}'
+            },
+            notice: {
+                required: '{$lang.check_notice}'
+            }
+        }
+    });
+});
+//]]>
+</script>
+
+<div class="login">
+    <h1><img alt="{$lang.i_want_open_store}" src="{res file=images/set_up_shop.gif}" /></h1>
+    <div class="login_con1">
+        <form method="post" id="apply_form" name="apply_form" enctype="multipart/form-data">
+        <table class="shop_form">
+            <caption>{$lang.input_store_info}</caption>
+            <tr>
+                <td>{$lang.owner_name}<span class="plr12">:</span></td>
+                <td><input type="text" class="text2 w240" name="owner_name" /></td>
+                <td><span class="red">*</span><label class="field_notice">{$lang.note_for_owner_name}</label></td>
+            </tr>
+            <tr>
+                <td>{$lang.owner_card}<span class="plr12">:</span></td>
+                <td><input type="text" class="text2 w240" name="owner_card" /></td>
+                <td><label class="field_notice">{$lang.note_for_owner_card}</label></td>
+            </tr>
+            <tr>
+                <td>{$lang.store_name}<span class="plr12">:</span></td>
+                <td><input type="text" class="text2 w240" name="store_name" id="store_name" /></td>
+                <td><span class="red">*</span><label class="field_notice">{$lang.note_for_store_name}</label></td>
+            </tr>
+            <tr>
+              <td>{$lang.store_category}<span class="plr12">:</span></td>
+              <td><select name="cate_id">
+                <option value="0">{$lang.select_pls}</option>
+                {html_options options=$scategories}
+              </select></td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>{$lang.region}<span class="plr12">:</span></td>
+                <td><div id="region">
+                    <input type="hidden" name="region_id" value="0" class="mls_id" />
+                    <input type="hidden" name="region_name" value="" class="mls_names" />
+                    <select>
+                      <option value="0">{$lang.select_pls}</option>
+                      {html_options options=$regions}
+                    </select>
+                </div></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>{$lang.address}<span class="plr12">:</span></td>
+                <td><input type="text" class="text2 w240" name="address" /></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>{$lang.zipcode}<span class="plr12">:</span></td>
+                <td><input type="text" class="text2 w240" name="zipcode" /></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>{$lang.tel}<span class="plr12">:</span></td>
+              <td><input type="text" class="text2 w240" name="tel" /></td>
+              <td>&nbsp;<span class="field_notice red">*</span></td>
+            </tr>
+            <tr>
+                <td>{$lang.upload_image}<span class="plr12">:</span></td>
+                <td><input type="file" name="image_1" class="w300" /></td>
+                <td><label class="field_notice">{$lang.note_for_image}</label></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="file" name="image_2" class="w300" /></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="file" name="image_3" class="w300" /></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="vatop">{$lang.sgrade}<span class="plr12">:</span></td>
+                <td colspan="2">
+                    <table class="child_table" style="width: 650px;">
+                    <tr>
+                        <th class="w80">{$lang.select}</th>
+                        <th>{$lang.goods_limit}</th>
+                        <th>{$lang.space_limit}</th>
+                        <th>{$lang.skin_limit}</th>
+                        <th>{$lang.function_limit}</th>
+                        <th>{$lang.charge}</th>
+                        <th>{$lang.need_confirm}</th>
+                        <th class="w200">{$lang.description}</th>
+                    </tr>
+                    <!--{foreach from=$sgrades item=sgrade name=fe_sgrade}-->
+                    <tr>
+                      <td style="text-align:left; padding:5px;" class="w80"><input type="radio" name="sgrade" value="{$sgrade.grade_id}" {if $smarty.foreach.fe_sgrade.first}checked="checked"{/if} /> {$sgrade.grade_name|escape}</td>
+                        <td>{$sgrade.goods_limit}</td>
+                        <td>{$sgrade.space_limit}</td>
+                        <td>{$sgrade.skin_limit}</td>
+                        <td>
+                            {foreach from=$sgrade.functions item=func}
+                                {$lang.$func}&nbsp;&nbsp;
+                            {/foreach}
+                        </td>
+                        <td>{$sgrade.charge}</td>
+                        <td>{if $sgrade.need_confirm}{$lang.yes}{else}{$lang.no}{/if}</td>
+                        <td class="w200" style="text-align:left; padding:5px;">{$sgrade.description|nl2br}</td>
+                    </tr>
+                    <!--{/foreach}-->
+                    </table></td>
+            </tr>
+            <tr>
+                <td class="vatop">{$lang.apply_remark}<span class="plr12">:</span></td>
+                <td><textarea name="apply_remark" id="apply_remark" rows="4" cols="40"></textarea></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="checkbox" name="notice" value="1" /> {$lang.notice}</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td><input type="hidden" name="app" value="apply" /></td>
+                <td><input class="shop_btn" type="submit" name="Submit" value="" /></td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+        </form>
+    </div>
+</div>
+
+{include file=footer.html}

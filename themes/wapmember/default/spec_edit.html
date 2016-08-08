@@ -1,0 +1,27 @@
+<div class="eject_con">
+    <div id="warning"></div>
+    <div class="edit_table">
+        <p>{$goods.goods_name|escape}</p>
+        <form action="index.php?app=my_goods&amp;act=spec_edit&amp;id={$goods.goods_id}" method="POST" target="iframe_post">
+        <div class="edit_table_box">
+            <table>
+                <tr>
+                    <!--{if $goods.spec_name_1}--><th class="width2">{$goods.spec_name_1|escape}</th><!--{/if}-->
+                    <!--{if $goods.spec_name_2}--><th>{$goods.spec_name_2|escape}</th><!--{/if}-->
+                    <th>{$lang.price}</th>
+                    <th>{$lang.stock}</th>
+                </tr>
+                <!--{foreach from=$goods.gs item=spec}-->
+                <tr>
+                    <!--{if $goods.spec_name_1}--><td class="align2">{$spec.spec_1|escape}</td><!--{/if}-->
+                    <!--{if $goods.spec_name_2}--><td class="align2">{$spec.spec_2|escape}</td><!--{/if}-->
+                    <td class="align2"><input type="text" class="text width2" name="price[{$spec.spec_id}]" value="{$spec.price}" /></td>
+                    <td class="align2"><input type="text" class="text width2" name="stock[{$spec.spec_id}]" value="{$spec.stock}" /></td>
+                </tr>
+                <!--{/foreach}-->
+            </table>
+        </div>
+        <div class="submit"><input type="submit" class="btn" value="{$lang.save}" /></div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<!--{if $_curlocal}-->
+<div class="location">
+	<!--{foreach from=$_curlocal item=lnk}-->
+	<!--{if $lnk.url}-->
+	<a href="{$lnk.url}">{$lnk.text|escape}</a>
+	<!--{else}-->
+	{$lnk.text|escape}
+	<!--{/if}-->
+	<!--{/foreach}-->
+	</div>
+<!--{/if}-->
+

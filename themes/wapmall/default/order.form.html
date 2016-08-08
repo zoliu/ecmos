@@ -58,18 +58,14 @@ var PRICE_FORMAT = '{$price_format}';
 
           }
            </script>
-  <div class="orderlist">
-   <ul>
-     <li>{$lang.postscript}</li>
-     <li>  <textarea  class="com_text" id="postscript" placeholder="{$lang.postscript_desc}" onclick="postscript_activation(this);"></textarea></li>
-   </ul>
-  </div>
  
-  <div class="orderlist">
+ <!--{foreach from=$carts item=store}-->
+ 
+  <div class="orderlist store" id="{$store.store_id}">
     <ul>
-      <li>{$lang.store}：<a href="{url app=store&id=$goods_info.store_id}" >{$goods_info.store_name|escape}</a>
+      <li>{$lang.store}：<a href="{url app=store&id=$store.store_id}" >{$goods_info.store_name|escape}</a>
       </li>
-      <!--{foreach from=$goods_info.items item=goods}-->
+      <!--{foreach from=$store.items item=goods}-->
       <li>
         <a  href="{url app=goods&id=$goods.goods_id}">	<img src="{$goods.goods_image}" /></a>
         <p>  <a href="{url app=goods&id=$goods.goods_id}">{$goods.goods_name|escape}</a></p>
@@ -77,19 +73,26 @@ var PRICE_FORMAT = '{$price_format}';
         <p>数量：{$goods.quantity}{$lang.goods_unit}<strong>{$goods.subtotal|price}</strong></p>
       </li>
       <!--{/foreach}-->
+      
       <span style="margin-left:10px;"> 配送方式：</span>
-      <!--{foreach from=$shipping_methods item=shipping_method name=shipping_select}-->
-      <li class="shipping_item" shipping_id="{$shipping_method.shipping_id}">
-        <input type="radio" checked="true" name="shipping_id" value="{$shipping_method.shipping_id}" />
+      <!--{foreach from=$store.shipping_methods item=shipping_method name=shipping_select}-->
+      <li class="shipping_item" shipping_id="{$store.amount}:{$store.quantity}:{$shipping_method.shipping_id}" store_id='{$store.store_id}'>
+        <input type="radio" checked="true" name="shipping_id[{$store.store_id}]" value="{$shipping_method.shipping_id}" shipping_fee='{$shipping_method.price}' />
           {$shipping_method.shipping_name|escape}
-          {$lang.shipping_fee}:&nbsp;<span class="money" ectype="shipping_fee">&yen; 0.00</span>
+          {$lang.shipping_fee}:&nbsp;<span class="money" ectype="shipping_fee">&yen; {$shipping_method.price}</span>
       </li>
       <!--{/foreach}-->
-      <li>合计：<strong id="order_amount2">{$goods_info.amount|price}</strong></li>
+      <li>店铺合计(含运费)：<strong id="amount_{$store.store_id}" amount="{$store.amount}">{$store.amount|price}</strong></li>
+      
+      <li>{$lang.postscript}</li>
+     <li>  <textarea  class="com_text" id="postscript[{$store.store_id}]" placeholder="{$lang.postscript_desc}" onclick="postscript_activation(this);"></textarea></li>
     </ul>
   </div>
+  <!--{/foreach}-->
+  
   <!--<p class="total_price">实付款：<strong id="order_amount">{$goods_info.amount|price}</strong></p>
   <a href="javascript:void($('#order_form').submit());" class="submit_btn">提交订单</a>-->
   <div>{include file=order.amount.html}</div>
 </form >
+
 {include file="member.footer.html"}

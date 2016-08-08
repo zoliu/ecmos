@@ -1,0 +1,150 @@
+
+<!-- www.360cd.cn  Mosquito -->
+{include file="header.html"}
+
+<style type="text/css">
+.module_common {
+    line-height: 20px;
+}
+
+.defrays {
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.defrays dt {
+    height: 45px;
+    line-height: 45px;
+    background: #f5f5f5;
+    padding-left: 20px;
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+}
+
+.defrays dd {
+    overflow: hidden;
+    padding-top: 10px;
+}
+
+.make_sure {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.make_sure a {
+    color: #fff;
+}
+
+.epay_btn {
+    background: url('{res file=images/member/member01.gif}') no-repeat
+        scroll center center transparent;
+    height: 30px;
+    padding: 10px 30px 10px 40px;
+    width: 64px;
+}
+
+.epay_btn a {
+    text-decoration: none;
+}
+
+.content {
+    width: 1000px;
+    margin: 0px auto;
+    padding: 30px 10px;
+}
+
+.module_common {
+    padding: 10px 10px;
+    border: 1px solid #e5e5e5;
+}
+
+.module_common .clue_on {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.module_common .order_information {
+    padding: 15px 5px;
+    text-align: center;
+    width: 100%;
+}
+
+.module_common .order_information b {
+    margin-right: 10px;
+}
+
+.defrays dd .text {
+    height: 30px;
+    width: 180px;
+    border: 1px solid #e5e5e5;
+}
+
+.make_sure .btn {
+    background: #6f0e0e;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    display: inline-block;
+    font-size: 16px;
+}
+</style>
+<script type="text/javascript">
+    
+</script>
+<div class="content">
+    <div class="module_common">
+        <form method="post" id="_form_">
+            <div class="clue_on">
+                <h4>确认支付，输入支付密码</h4>
+            </div>
+            
+            {if !$order_info.order_merge}
+            <div class="order_information">
+                <h3>订单号：
+                    <b><span>{$order_info.order_sn}</span></b>订单总价：
+                    <b><span>{$order_info.order_amount|price}</span></b>
+                    <a href="{url app=buyer_order&act=view&order_id=$order_info.order_id}" target="_blank">查看订单</a>
+                </h3>
+            </div>
+            {else}
+            <div class="order_information">
+                <h3>订单号：
+                    <b><span>{$order_info.order_sn_num}</span></b>订单总价：
+                    <b><span>{$order_info.order_amount|price}</span></b>
+                </h3>
+            </div>
+            {/if}
+            
+            <div style="margin-top: 20px;">
+                <dl class="defrays">
+                    <dt>
+                        <b>帐户余额：<span style="color: #FF4D0F">{$money_info.money}</span></b>
+                        <span class="epay_btn"><a href="{url app=my_money&act=recharge}" target="_blank">充值</a></span>
+                    </dt>
+                    {if !$money_info.password}
+                    <dt>
+                        <b><font color="red">警告！你还没有设置支付密码，请</font>
+                        </b> <a href="{url app=my_money&act=setting}" target="_blank">设置支付密码</a>
+                        <span class="epay_btn"> <a href="javascript:history.go(0);" target="_blank">设置支付密码后，刷新页面即可</a></span>
+                    </dt>
+                    {else}
+                    <dd style="padding-left: 20px;">支付密码：
+                        <input name="password" type="password" class="text width5" />
+                        <div class="make_sure">
+                            <p>
+                                <a href="javascript:$('#_form_').submit();" class="btn">确认付款</a>
+                            </p>
+                        </div>
+                    </dd>
+                    {/if}
+                </dl>
+            </div>
+        </form>
+    </div>
+</div>
+
+{include file="footer.html"}

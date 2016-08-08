@@ -1,0 +1,165 @@
+{include file=member.header.html}
+<script type="text/javascript">
+$(function(){
+    var t = new EditableTable($('#my_goods'));
+    $('#truncate').click(function(){
+        var goods_ids = '{$goods_ids}';
+        if(goods_ids && confirm('{sprintf lang=truncate_confirm var1=page_info.item_count}')){
+            $('#truncate_form').append('<input type="hidden" name="act" value="truncate" />');
+            $('#truncate_form').append('<input type="hidden" name="goods_ids" value="' + goods_ids + '" />');
+            $('#truncate_form').submit();
+            return false;
+        }
+    });
+});
+</script>
+<style>
+.member_no_records {border-top: 0px !important;}
+.table .ware_text { width: 155px; }
+</style>
+<div class="content">
+  <div class="totline"></div>
+  <div class="botline"></div>
+  {include file=member.menu.html}
+  <div id="right">
+  		{include file=member.curlocal.html}
+    	{include file=member.submenu.html}
+        
+        <div class="wrap">
+            <div class="public_select table">
+                <table id="my_goods" server="{$site_url}/index.php?app=my_goods&amp;act=ajax_col" >
+                    <tr class="line_bold">
+                        <th colspan="12">
+                            <div class="select_div clearfix">
+                            	<form id="truncate_form" method="post">
+                            	</form>
+                            
+                            	<form id="my_goods_form" method="get" class="fleft">
+                            		<input type="hidden" name="app" value="my_goods">
+                            		<select class="select1" name='sgcate_id'>
+                                		<option value="0">{$lang.sgcategory}</option>
+                                		{html_options options=$sgcategories selected=$smarty.get.sgcate_id}
+                            		</select>
+                            		<select class="select2" name="character">
+                                		<option value="0">{$lang.character}</option>
+                                		{html_options options=$lang.character_array selected=$smarty.get.character}
+                            		</select>
+                            		<input type="text" class="text_normal" name="keyword" value="{$smarty.get.keyword|escape}"/>
+                            		<input type="submit" class="btn" value="{$lang.soso}" />
+                            	</form>
+                            	<a id="truncate" class="detlink" href="javascript:;">{$lang.truncate}</a>
+                            	<!--{if $filtered}-->
+                            	<a class="detlink" href="{url app=my_goods}">{$lang.cancel_query}</a>
+                            	<!--{/if}-->
+                            </div>
+                        </th>
+                    </tr>
+                    <tr class="sep-row" height="20"><td colspan="8"></td></tr>
+                    <!--{if $goods_list}-->
+                    <tr class="gray"  ectype="table_header">
+                        <th width="80">{$lang.radar_title}</th>
+                        <th width="50" coltype="editable" column="add_time" checker="check_number" inputwidth="50px" title="{$lang.sort_order}"  class="cursor_pointer"><span ectype="order_by">{$lang.goods_add_time}</span></th>
+
+                        <th width="110" coltype="editable" column="goods_name" checker="check_required" inputwidth="90%" title="{$lang.sort_order}"  class="cursor_pointer"><span ectype="order_by">{$lang.goods_name}</span></th>
+
+                        <th width="90" column="cate_id" title="{$lang.sort_order}"  class="cursor_pointer"><span ectype="order_by">{$lang.gcategory}</span></th>
+
+                        <th width="50" coltype="editable" column="brand" checker="check_required" inputwidth="55px" title="{$lang.sort_order}"  class="cursor_pointer"><span ectype="order_by">{$lang.brand}</span></th>
+                        
+                        <th width="50" class="cursor_pointer" coltype="editable" column="price" checker="check_number" inputwidth="50px" title="{$lang.sort_order}"><span ectype="order_by">{$lang.price}</span></th>
+                        <th width="50" class="cursor_pointer" coltype="editable" column="stock" checker="check_pint" inputwidth="50px" title="{$lang.sort_order}"><span ectype="order_by">{$lang.stock}</span></th>
+                        <th width="40" coltype="switchable" column="if_show" onclass="right_ico" offclass="wrong_ico" title="{$lang.sort_order}"  class="cursor_pointer"><span ectype="order_by">{$lang.if_show}</span></th>
+                        <th width="40" coltype="switchable" column="recommended" onclass="right_ico" offclass="wrong_ico" title="{$lang.sort_order}"  class="cursor_pointer"><span ectype="order_by">{$lang.recommended}</span></th>
+                        <th width="40" column="closed" title="{$lang.sort_order}" class="cursor_pointer"><span ectype="order_by">{$lang.closed}</span></th>
+                        <th width="218">{$lang.handle}</th>
+                    </tr>
+                    <tr class="sep-row"><td colspan="12"></td></tr>
+                    <tr class="operations">
+                        <th colspan="12">
+                            <p class="position1 clearfix">
+                            	<input type="checkbox" id="all" class="checkall"/>
+                        		<label for="all">{$lang.checkall}</label>
+                            	<a href="javascript:void(0);" class="edit" ectype="batchbutton" uri="index.php?app=my_goods&act=batch_edit" name="id">{$lang.edit}</a>
+                            	<a href="javascript:void(0);" class="delete" ectype="batchbutton" uri="index.php?app=my_goods&act=drop" name="id" presubmit="confirm('{$lang.drop_confirm}')">{$lang.drop}</a>
+                            </p>
+                            <p class="position2 clearfix">
+                                {include file=member.page.top.html}
+                            </p>
+                        </th>
+                    </tr>
+                    <!--{/if}-->
+                    <!--{foreach from=$goods_list item=goods name=_goods_f}-->
+                    <tr class="sep-row"><td colspan="12"></td></tr>
+                    <tr class="line-hd">
+                    	<th colspan="12">
+                        	<p><input type="checkbox" class="checkitem" value="{$goods.goods_id}"/><label>商家编码</label>{$goods.specs.0.sku}</p>
+                        </th>
+                    </tr>
+                    <tr class="line line-blue<!--{if $smarty.foreach._goods_f.last}--> last_line<!--{/if}-->" ectype="table_item" idvalue="{$goods.goods_id}">
+                        <td width="60" class="align2 first"><a href="{url app=goods&id=$goods.goods_id}" target="_blank"><img src="{$site_url}/{$goods.default_image}" width="50" height="50" /></a>
+                        </td>
+                        <td width="100"  align="center">{$goods.add_time|date:Y-m-d H:i:s}</td>
+                       
+                        <td width="170" class="align1">
+                          <p class="ware_text"><span class="color2" ectype="editobj">{$goods.goods_name|escape}</span></p>
+                        </td>
+                        <td width="90" class="align2"><span class="color2">{$goods.cate_name|nl2br}</span></td>
+                        <td width="60" class="align2"><span class="color2" ectype="editobj">{$goods.brand|escape}</span></td>
+                        
+                        <td width="60" class="align2"><!--{if $goods.spec_qty}--><span ectype="dialog" dialog_width="430" uri="index.php?app=my_goods&amp;act=spec_edit&amp;id={$goods.goods_id}" dialog_title="{$lang.price_stock}" dialog_id="my_goods_spec_edit" class="cursor_pointer"><!--{else}--><span class="color2" ectype="editobj"><!--{/if}-->{$goods.price}</span></td>
+                        <td width="60" class="align2"><!--{if $goods.spec_qty}--><span ectype="dialog" dialog_width="430" uri="index.php?app=my_goods&amp;act=spec_edit&amp;id={$goods.goods_id}" dialog_title="{$lang.price_stock}" dialog_id="my_goods_spec_edit" class="cursor_pointer"><!--{else}--><span class="color2" ectype="editobj"><!--{/if}-->{$goods.stock}</span></td>
+                        <td width="40" class="align2"><span style="margin-left:15px;" ectype="editobj" <!--{if $goods.if_show}-->class="right_ico" status="on"<!--{else}-->class="wrong_ico" stauts="off"<!--{/if}-->></span></td>
+                        <td width="40" class="align2"><span style="margin-left:15px;" ectype="editobj" <!--{if $goods.recommended}-->class="right_ico" status="on"<!--{else}-->class="wrong_ico" stauts="off"<!--{/if}-->></span></td>
+                        <td width="40" class="align2"><span style="margin-left:15px;" <!--{if $goods.closed}-->class="no_ico"<!--{else}-->class="no_ico_disable"<!--{/if}-->></span></td>
+                        <td width="150" class="last">
+                        	<a href="javascirpt:;" ectype="dialog" dialog_id="export_ubbcode" dialog_title="{$lang.export_ubbcode}" dialog_width="380" uri="{url app=my_goods&act=export_ubbcode&id=$goods.goods_id}" class="export">{$lang.export_ubbcode}</a>
+                        	<a href="{url app=my_goods&act=edit&id=$goods.goods_id}" class="edit">{$lang.edit}</a>
+                            <a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=my_goods&amp;act=drop&id={$goods.goods_id}');" class="delete">{$lang.drop}</a>
+                        </td>
+                    </tr>
+                    <tr class="line line-blue" style="border-right:1px #D4E7FF solid;"><td colspan="12">
+                        <!--{if $goods.closed}--><font color="red">{$lang.closed_reason}:</font>{$goods.close_reason}<!--{/if}-->
+                    </td></tr>
+                    <!--{foreachelse}-->
+                    <tr>
+                        <td class="align2 member_no_records padding6" colspan="12">{$lang.$smarty.get.act}{$lang.no_records}</td>
+                    </tr>
+                    <!--{/foreach}-->
+                    <!--{if $goods_list}-->
+                    <tr class="sep-row">
+                        <td colspan="12"></td>
+                    </tr>
+                    <tr class="operations">
+                        <th colspan="12">
+                            <p class="position1 clearfix">
+                            	<input type="checkbox" id="all" class="checkall"/>
+                        		<label for="all">{$lang.checkall}</label>
+                            	<a href="javascript:void(0);" class="edit" ectype="batchbutton" uri="index.php?app=my_goods&act=batch_edit" name="id">{$lang.edit}</a>
+                            	<a href="javascript:void(0);" class="delete" ectype="batchbutton" uri="index.php?app=my_goods&act=drop" name="id" presubmit="confirm('{$lang.drop_confirm}')">{$lang.drop}</a>
+                            </p>
+                            <p class="position2 clearfix">
+                                {include file=member.page.bottom.html}
+                            </p>
+                        </th>
+                    </tr>
+                    <!--{/if}-->
+                </table>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+
+<iframe name="iframe_post" id="iframe_post" width="0" height="0"></iframe>
+{include file=footer.html}
+{if $store.enable_radar}
+<input type="hidden" id="radar_lincense_id" value="" />
+<input type="hidden" id="radar_product_key" value="ecmall" />
+<input type="hidden" id="radar_sign_key" value="" />
+<script type="text/javascript" src="http://js.sradar.cn/radarForGoodsList.js"></script>
+<script>
+radar_point_extract();
+</script>
+{/if}

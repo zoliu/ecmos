@@ -1,0 +1,197 @@
+{include file=header.html}
+<script type="text/javascript" src="{lib file=search_groupbuy.js}" charset="utf-8"></script>
+<script type="text/javascript">
+var upimg   = '{res file=images/up.gif}';
+var downimg = '{res file=images/down.gif}';
+imgUping = new Image();
+imgUping.src = upimg;
+
+$(function (){
+
+    var order = '{$smarty.get.order}';
+    var css = '';
+    
+    <!--{if $smarty.get.order}-->
+    order_arr = order.split(' ');
+    
+    switch (order_arr[1]){
+        case 'desc' : 
+            css = 'con-on  con';
+        break;
+        case 'asc' :
+            css = 'con-on  con-up';
+        break;
+        default : 
+            css = 'con';
+    }
+    $('.condition-bar a[id ='+order_arr[0]+']').attr('class','con '+css);
+    <!--{/if}-->
+    
+    $(".condition-bar a").click(function(){
+        if(this.id==''){
+            dropParam('order');// default order
+            return false;
+        }
+        else
+        {
+            dd = " desc";
+            if(order != '') {
+                order_arr = order.split(' ');
+                if(order_arr[0]==this.id && order_arr[1]=="desc")
+                    dd = " asc";
+                else dd = " desc";
+            }
+            replaceParam('order', this.id+dd);
+            return false;
+        }
+    });
+});
+</script>
+
+<!--主体-->
+<div class="jim-main">
+    <div class="w1200 clearfix">
+      <!--左侧-->
+        <div class="left">
+
+            <div class="shoprec mt10">
+                 <div class="leftLoop2">
+                        <div class="hd">
+                            <a class="next"></a>
+                            <a class="prev"></a>
+                        </div>
+                        <div class="bd">
+                            <ul class="picList2 clearfix">
+                        <!--{foreach from=$recomd_store item=store name=fe_store}-->
+                        <!-- {if $smarty.foreach.fe_brand.iteration le 10} -->
+                                <li>
+                                    <div class="pic"><a href="{url app=store&id=$store.store_id}"><img src="{$store.store_logo|escape}" width="50" height="50" alt="{$store.store_name|escape}" /></a></div>
+                                    <div class="shoptit"><strong>{$store.store_name|escape|truncate:20}</strong><p> {$store.business_scope|escape|truncate:30}</p></div>
+                                </li>
+                        <!-- {/if} -->
+                        <!--{/foreach}-->
+                            </ul>
+                        </div>
+                   </div>
+            </div>
+          <div class="select">
+              <strong>按条件筛选</strong>
+              <ul class="condition">
+                  <li><b>{$lang.group_state}：</b>
+                    <a href="javascript:void(0);" ectype="state" id="" {if $smarty.get.state eq ''}class="act"{/if}>{$lang.no_limit}</a>
+                    <a href="javascript:void(0);" ectype="state" id="on" {if $smarty.get.state eq 'on'}class="act"{/if}>{$lang.group_on}</a>
+                    <a href="javascript:void(0);" ectype="state" id="end" {if $smarty.get.state eq 'end'}class="act"{/if}>{$lang.group_end}</a>
+                    <a href="javascript:void(0);" ectype="state" id="finished" {if $smarty.get.state eq 'finished'}class="act"{/if}>{$lang.group_finished}</a>
+                    <a href="javascript:void(0);" ectype="state" id="canceled" {if $smarty.get.state eq 'canceled'}class="act"{/if}>{$lang.group_canceled}</a>
+                    
+                  </li>
+                  <li><b>{$lang.group_recommend}：</b>
+
+                    <a href="javascript:void(0);" ectype="recommend" {if $smarty.get.recommend eq ''}class="act"{/if} id=''
+                    >{$lang.no_limit}</a>
+                    <a href="javascript:void(0);" ectype="recommend" {if $smarty.get.recommend eq '1'}class="act"{/if} id='1'
+                    >{$lang.yes}</a>
+                    <a href="javascript:void(0);" ectype="recommend" {if $smarty.get.recommend eq '0'}class="act"{/if} id='0'
+                    >{$lang.no}</a>
+
+                  </li>
+                </ul>
+            </div>
+            <div class="search-type mt10 clearfix">
+                <div class="float-left btn-type" style="margin-bottom: 0px;">
+                    <a href="{url app=search}">搜索商品</a>
+                    <a href="{url app=search&act=store}">搜索店铺</a>
+                    <a href="{url app=search&act=groupbuy}" class="current">搜索团购</a>
+                </div>
+            </div>
+          <!--排序-->
+          
+          <div class="condition-bar">
+            <a class="con con-on" id="group_id" href="javascript:;">{$lang.default_order}</a>
+            <a class="con" id="views" href="javascript:;">{$lang.views}<b></b></a>
+            <a class="con" id="end_time" href="javascript:;">{$lang.lefttime}<b></b></a>
+            
+          </div>
+          <!--团购列表-->
+          <!-- {if $groupbuy_list} -->
+          <div class="grid clearfix"> 
+              <!-- {foreach from=$groupbuy_list item=group} -->
+              <div class="product">
+                <a href="{url app=groupbuy&id=$group.group_id}">                    
+                    <h2 style="font-weight: bold;">{$group.group_name|escape}</h2>
+                    <img src="{$group.default_image}" alt="{$group.group_name|escape}" class="product-img" width="223" height="223" alt="">
+                </a>
+                <div class="group-price">
+                    <strong>{$group.group_price|price}</strong><del>{$group.price}</del>
+                    <a href="{url app=groupbuy&id=$group.group_id}">参加团购</a>
+                </div>
+                <div class="group-info">
+                    <span>{$group.quantity}{$lang.man_join}</span>
+                    <span>{$lang.lefttime}{$lang.colon}{$group.lefttime}</span>
+                </div>
+                  
+              </div>
+              <!--{/foreach}-->
+          </div>
+          <!-- {else} -->
+          <div id="no_results">{$lang.no_records}</div>
+          <!-- {/if} -->
+          <!--团购列表 END-->
+
+          <!--分页-->
+          {include file=page.bottom.html}
+          <!--分页 END-->
+        </div>
+      <!--左侧 END-->
+
+      <!--侧边栏-搜索推荐-->
+      <!--{if $recommended_groupbuy}-->
+        <div class="side mt10">
+            <div class="side-tit"><strong>{$lang.recommended_groupbuy}</strong></div>
+            <div class="side-txt">
+                <ul class="side-list">
+            <!--{foreach from=$recommended_groupbuy item=group name=fe_group}-->
+                <!--{if $smarty.foreach.fe_group.index lt 7}-->
+                    <li><a href="{url app=groupbuy&id=$group.group_id}" title="" target="_blank"><img src="{$group.default_image}" width="168" height="168" alt="{$group.group_name|escape}"></a><h3><a title="{$group.group_name|escape}" target="_blank" href="{url app=groupbuy&id=$group.group_id}">{$group.group_name|escape|truncate:58}</a></h3><p><b>{$group.price|price}</b><span>{$group.lefttime}</span></p></li>
+                <!--{/if}-->
+            <!--{/foreach}-->
+                </ul>
+            </div>
+        </div>
+      <!--{/if}-->
+      <!--侧边栏-搜索推荐 END-->
+      <div class="clr"></div>
+
+      <!--最新参与的团购-->      
+      <!--{if $last_join_groupbuy}-->
+      <div class="mt30" style="border:1px solid #e5e5e5;">        
+        <div class="side-tit"><strong>{$lang.last_groupbuy}</strong></div>
+      <ul class="ohterproduct clearfix">
+        <!--{foreach from=$last_join_groupbuy item=group name=fe_group}-->
+           <!--{if $smarty.foreach.fe_group.index lt 5}-->
+          <li><a target="_blank" href="{url app=groupbuy&id=$group.group_id}" ><img src="{$group.default_image}" alt="{$group.group_name|escape}" width="200" height="200" alt=""><p style="width:200px;text-overflow: ellipsis;white-space:nowrap;overflow:hidden;margin-left: 5px;">{$group.group_name|escape|truncate:58}</p></a>
+            <p><b>{$group.price|price}</b><span>{$group.add_time|date:Y-m-d}</span></p>
+          </li>
+          <!--{/if}-->
+        <!--{/foreach}-->
+      </ul>
+      </div>
+      <!--{/if}-->
+      <!--最新参与的团购 END-->
+    </div>
+</div>
+<!--主体 END-->
+<!--底部-->
+  {include file=footer.html}
+<!--底部 END-->
+</body>
+
+<script src="{lib file=jquery-1.9.1.min.js}"></script>
+<script src="{lib file=jim-focus.js}"></script>
+<script src="{lib file=jq_scroll.js}"></script>
+<script src="{lib file=jquery.SuperSlide.js}"></script>
+<script type="text/javascript">
+jQuery(".leftLoop2").slide({ mainCell:".bd ul",effect:"leftLoop",vis:3,scroll:3,autoPlay:false});
+</script>
+
+</html>
