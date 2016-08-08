@@ -82,6 +82,7 @@ class RecommendModel extends BaseModel
 
         return $goods_list;
     }
+    
     function _get_recomm_goods($recomm_id,$cate_id,$num)
     {
          $goods_list = array();
