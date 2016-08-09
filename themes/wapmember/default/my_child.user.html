@@ -30,6 +30,7 @@ $(function() {
                         <span>用户名：</span>
                         <input class="queryInput" name="user_name" value="{$query.user_name}" type="text" />
                         
+                        <br/>
                         <span>手机号：</span>
                         <input class="queryInput" name="phone_mob" value="{$query.phone_mob}" type="text" />
                         
@@ -37,45 +38,32 @@ $(function() {
                     </form>
                 </div>
 
-                <table>
-                    {if $user_list}
-                    <tr class="line gray">
-                        <th>用户名|昵称</th>
-                        <th style="width: 12em;">手机号</th>
-                        <th style="width: 12em;">用户等级</th>
-                        <th style="width: 12em;">注册时间</th>
-                    </tr>
-                    {/if}
-
-                    {foreach from=$user_list item=data}
-                    <tr class="line_bold" align="center">
-                        <td>{$data.user_name}|{$data.real_name}</td>
-                        <td>{$data.phone_mob}</td>
-                        <td>{$data.grade_name}</td>
-                        <td>{$data.reg_time|date}</td>
-                    </tr>
-                    {foreachelse}
-                    <tr>
-                        <td colspan="5" class="member_no_records padding6">没有符合条件的记录</td>
-                    </tr>
-                    {/foreach}
-                </table>
+                {foreach from=$user_list item=data}
+                <ul class="am-list">
+                    <li>
+                        <span>用户名|昵称: </span>
+                        <span>{$data.user_name}|{$data.real_name}</span>
+                    </li>
+                    <li>
+                        <span>手机号: </span>
+                        <span>{$data.phone_mob}</span>
+                    </li>
+                    <li>
+                        <span>用户等级: </span>
+                        <span>{$data.grade_name}</span>
+                    </li>
+                    <li>
+                        <span>注册时间: </span>
+                        <span>{$data.reg_time|date}</span>
+                    </li>
+                </ul>
+                {/foreach}
 
                 {include file="member.page.bottom.html"}
             </div>
-            <div class="wrap_bottom"></div>
         </div>
-
-        <div class="clear"></div>
-        <div class="adorn_right1"></div>
-        <div class="adorn_right2"></div>
-        <div class="adorn_right3"></div>
-        <div class="adorn_right4"></div>
     </div>
-    <div class="clear"></div>
 </div>
-
-<div class="clear"></div>
 
 <iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
 

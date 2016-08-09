@@ -29,7 +29,7 @@ $(function() {
                 
                         <span>店铺名称：</span>
                         <input class="queryInput" name="store_name" value="{$query.store_name}" type="text" />
-                        
+                        <br/>
                         <span>联系电话：</span>
                         <input class="queryInput" name="tel" value="{$query.tel}" type="text" />
                         
@@ -37,47 +37,36 @@ $(function() {
                     </form>
                 </div>
 
-                <table>
-                    {if $store_list}
-                    <tr class="line gray">
-                        <th style="width: 12em;">店铺名称</th>
-                        <th style="width: 12em;">店铺所属人</th>
-                        <th style="width: 12em;">联系电话</th>
-                        <th style="width: 12em;">开店时间</th>
-                        <th>店铺地址</th>
-                    </tr>
-                    {/if}
-
-                    {foreach from=$store_list item=data}
-                    <tr class="line_bold" align="center">
-                        <td>{$data.store_name}</td>
-                        <td>{$data.owner_name}</td>
-                        <td>{$data.tel}</td>
-                        <td>{$data.add_time|date}</td>
-                        <td>{$data.region_name}{$data.address}</td>
-                    </tr>
-                    {foreachelse}
-                    <tr>
-                        <td colspan="5" class="member_no_records padding6">没有符合条件的记录</td>
-                    </tr>
-                    {/foreach}
-                </table>
+                {foreach from=$store_list item=data}
+                <ul class="am-list">
+                    <li>
+                        <span>店铺名称: </span>
+                        <span>{$data.store_name}</span>
+                    </li>
+                    <li>
+                        <span>店铺所属人: </span>
+                        <span>{$data.owner_name}</span>
+                    </li>
+                    <li>
+                        <span>联系电话: </span>
+                        <span>{$data.tel}</span>
+                    </li>
+                    <li>
+                        <span>开店时间: </span>
+                        <span>{$data.add_time|date}</span>
+                    </li>
+                    <li>
+                        <span>店铺地址: </span>
+                        <span>{$data.region_name}{$data.address}</span>
+                    </li>
+                </ul>
+                {/foreach}
 
                 {include file="member.page.bottom.html"}
             </div>
-            <div class="wrap_bottom"></div>
         </div>
-
-        <div class="clear"></div>
-        <div class="adorn_right1"></div>
-        <div class="adorn_right2"></div>
-        <div class="adorn_right3"></div>
-        <div class="adorn_right4"></div>
     </div>
-    <div class="clear"></div>
 </div>
-
-<div class="clear"></div>
 
 <iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
 

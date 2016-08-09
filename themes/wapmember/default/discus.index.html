@@ -1,10 +1,39 @@
+
 {include file=member.header.html}
 
+<!-- www.360cd.cn  Mosquito -->
+
+<!-- <div class="u_order">
+
+    {foreach from=$order_list item=order}
+    <div class="orderbox">
+        <h2><span><i></i>{$order.seller_name|escape}</span><b>{$lang.order_status}:<font style="color:#b20005;">{$order.status|modifier:order_status}{if $order.evaluation_status},&nbsp;{$lang.already_evaluate}{/if}</font></b></h2>
+        {foreach from=$order.goods_list item=goods}
+        <div class="detail">
+            <a href="{url app=goods&id=$goods.goods_id}"> <img src="{$goods.goods_image}" /></a>
+            <p class="title">{$goods.goods_name|escape}</p>
+            <p>​{$goods.specification|escape}​</p>​
+            <p class="title"><span style="float: right;">价格：<strong>{$goods.price|price}</strong></span><span>数量：{$goods.quantity}</span></p>
+            <p>
+                <span>买家: </span>​
+                <span>{$order.buyer_real_name}</span>
+            </p>​
+            <p>
+                <span>卖家: </span>​
+                <span>{$order.seller_real_name}</span>
+            </p>​
+            <p>
+                <label>{$lang.add_time}：</label><span>{$order.add_time|date:Y-m-d H:i:s}</span></p>
+        </div>
+        {/foreach}
+        <p class="opr">
+        </p>
+    </div>
+    {/foreach}
+</div> -->
 
 
 <div class="content">
-
-    <div class="totline"></div><div class="botline"></div>
 
     {include file=member.menu.html}
 
@@ -13,8 +42,6 @@
         {include file=member.submenu.html}
 
         <div class="wrap">
-
-    
 
         <div class="public table">
 
@@ -57,11 +84,7 @@
                <th align="left" class="align1" width="120">{$lang.status}</th>
 
                <th align="left" class="align1" width="120">{$lang.admin_addtime}</th>
-
-                  
-
                     <th width=80>{$lang.handle}</th>
-
                 </tr>
 
                 <!--{/if}-->
@@ -134,25 +157,11 @@
 
             </div>
 
-            <div class="wrap_bottom"></div>
-
         </div>
 
         <iframe name="pop_warning" style="display:none"></iframe>
 
-        <div class="clear"></div>
-
-        <div class="adorn_right1"></div>
-
-        <div class="adorn_right2"></div>
-
-        <div class="adorn_right3"></div>
-
-        <div class="adorn_right4"></div>
-
     </div>
-
-    <div class="clear"></div>
 
     </div>
 
