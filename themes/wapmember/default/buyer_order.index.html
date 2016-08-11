@@ -1,4 +1,47 @@
 {include file=member.header.html}
+
+<script type="text/javascript">
+$(function(){
+    $('#add_time_from').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#add_time_to').datepicker({dateFormat: 'yy-mm-dd'});
+});
+</script>
+
+<div id="page-my-address" class="mb10">
+    <div class="page-body my-address pb20">
+        <form method="get">
+            <input type="hidden" name="app" value="buyer_order" />
+            <input type="hidden" name="act" value="index" />
+            <dl style="margin-bottom:15px;" class="inclusive-box f66">
+                <dd>
+                    <label>{$lang.add_time}: </label>
+                    <span>
+                        <input type="text" class="text1 width2" name="add_time_from" id="add_time_from" value="{$query.add_time_from}" />
+                        <input type="text" class="text1 width2" name="add_time_to" id="add_time_to" value="{$query.add_time_to}" />
+                    </span>
+                </dd>
+                <dd>
+                    <label>{$lang.order_sn}: </label>
+                    <span>
+                    	<input type="text" class="text1 width_normal" name="order_sn" value="{$query.order_sn|escape}">
+                    </span>
+                </dd>
+                <dd>
+                    <label>{$lang.order_status}: </label>
+                    <span>
+                        <select name="type">
+                            {html_options options=$types selected=$type}
+                        </select>
+                    </span>
+                </dd>
+                <dd>
+                    <input type="submit" class="btn" value="查询" />
+                </dd>
+            </dl>
+        </form>
+    </div>
+</div>
+
 <div id="page-buyer-order">
 	<div class="buyer-order-body page-body"> 
 		<!--{foreach from=$orders item=order}-->

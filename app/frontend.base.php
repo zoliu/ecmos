@@ -675,6 +675,7 @@ class MemberbaseApp extends MallbaseApp {
 				$this->assign('member_role', 'seller_admin');
 			}
 		}
+
 		$this->assign('_member_menu', $member_menu);
 		$this->assign('_curitem', $item);
 	}
@@ -814,14 +815,12 @@ class MemberbaseApp extends MallbaseApp {
 					'icon' => 'ico20' 
 				),
 				// 360cd.cn
-				
 				'my_discus' => array(
 					'text' => Lang::get('my_discus'),
 					'url' => 'index.php?app=my_discus',
 					'name' => 'my_discus',
 					'icon' => 'ico16' 
 				)
-				 
 			) 
 		);
 		
@@ -840,9 +839,11 @@ class MemberbaseApp extends MallbaseApp {
 			 * 'name' => 'apply_store',
 			 * );
 			 */
-			$menu['overview'] = array(
+			$menu['im_buyer']['submenu']['apply'] = array(
 				'text' => Lang::get('apply_store'),
-				'url' => 'index.php?app=apply' 
+				'url' => 'index.php?app=apply',
+				'name' => 'apply',
+				'icon' => 'ico18',
 			);
 		}
 		if ($this->visitor->get('manage_store')) {

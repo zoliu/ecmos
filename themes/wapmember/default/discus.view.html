@@ -1,0 +1,56 @@
+{include file=member.header.html}
+
+<div class="refund_form">
+    <div class="table-list">
+        <ul>
+            <li class="first clearfix">
+                <span class="th float-left"><em>{$lang.buyer_info}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.buyer_type}</em></span>
+                <span class="td float-left"><em>{$lang[$discus.buyer_type]}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.buyer_remark}</em></span>
+                <span class="td float-left"><em>{$discus.buyer_remark}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.buyer_addtime}</em></span>
+                <span class="td float-left"><em>{$discus.buyer_addtime|date:Y-m-d H:i:s}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.seller_info}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.seller_type}</em></span>
+                <span class="td float-left"><em>{$lang[$discus.seller_type]}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.seller_remark}</em></span>
+                <span class="td float-left"><em>{$discus.seller_remark}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.seller_addtime}</em></span>
+                <span class="td float-left"><em>{if $discus.seller_addtime }{$discus.seller_addtime|date:Y-m-d H:i:s}{/if}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.admin_info}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.status}</em></span>
+                <span class="td float-left"><em>{$discus_status[$discus.status]}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.admin_remark}</em></span>
+                <span class="td float-left"><em>{$discus.admin_remark}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.admin_addtime}</em></span>
+                <span class="td float-left"><em>{if $discus.seller_addtime }{$discus.admin_addtime|date:Y-m-d H:i:s}{/if}</em></span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{include file=page.bottom.html}
+{include file=footer.html}

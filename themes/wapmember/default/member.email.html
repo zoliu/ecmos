@@ -1,4 +1,39 @@
 {include file=member.header.html}
+
+<script>
+$(function(){ 
+
+    $("#tel_captcha").click(function(){       
+
+
+        $.getJSON('index.php?act=sms_captcha&code=modify_email', function(data) {
+            if(data == 1)
+            {
+                alert('验证码已发送成功！');
+                $("#valid_desc").show();
+            }else{
+                alert('验证码发送失败，请联系管理员');
+                $("#valid_desc").hide();
+            }
+            });
+        
+    }); 
+}); 
+</script>
+
+<div id="page-member">
+    <div class="main">
+        <div class="fun-list">
+            <ul class="clearfix">
+                <li><a href="{url app=member&act=profile}">基本信息</a></li>
+                <li><a href="{url app=member&act=password}">修改密码</a></li>
+                <li><a href="{url app=member&act=email}">修改电子邮箱</a></li>
+                <li><a href="{url app=member&act=edit_phone_mob}">修改手机</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <div id="page-my-password">
 	<div class="page-body my-password add-address mt10">
 		<form class="J_AjaxForm" method="post">
@@ -8,10 +43,15 @@
                 <input type="text"  class="J_AjaxFormFields input" name="email" id="email" placeholder="{$lang.new_email}"/>
             </li>
             <li>
+            	<input type="text"  class="J_AjaxFormFields input" id="captcha" name="captcha" placeholder="{$lang.captcha}" />
+            	<input name='tel_captcha' id='tel_captcha' type="button" value="{$lang.send_captcha}" /><br/><br/>
+            </li>
+            <li>
 				<input type="submit" class="J_AjaxFormSubmit btn-alipay" value="{$lang.submit}" />
 			</li>
 		</ul>
 	   </form>
 	</div>
 </div>
+
 {include file=footer.html}

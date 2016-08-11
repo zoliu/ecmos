@@ -26,7 +26,7 @@
                 	<td align="center">{$sgrade.space_limit}</td>
                     <td align="center">{$sgrade.skin_limit}</td>
                     <td align="center">{$sgrade.charge}</td>
-                    <td align="center"><!--{if $sgrade.need_confirm}--><img src="{res file=images}/unusable.gif" align="absMiddle"/><!--{else}--><img src="{res file=images}/usable.gif" align="absMiddle" /><!--{/if}--></td>
+                    <td align="center"><!--{if !$sgrade.need_confirm}--><img src="{res file=images}/unusable.gif" align="absMiddle"/><!--{else}--><img src="{res file=images}/usable.gif" align="absMiddle" /><!--{/if}--></td>
                 </tr>
                 <tr>
                     <td colspan="5">

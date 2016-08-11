@@ -84,6 +84,10 @@ class My_discusApp extends MemberbaseApp
         $this->assign('page_info', $page);  
 
         $this->assign('discus_list', $discus_list);
+
+        /*print_r('<pre>');
+        print_r($discus_list);
+        print_r('</pre>');*/
         
         /* 当前位置 */
 
@@ -167,12 +171,6 @@ class My_discusApp extends MemberbaseApp
 
         ));
 
-
-
-
-
-
-
         $this->assign('filtered', $conditions? 1 : 0); //是否有查询条件
 
         //将分页信息传递给视图，用于形成分页条
@@ -188,26 +186,13 @@ class My_discusApp extends MemberbaseApp
 
 
     function view()
-
     {
-
         $id = empty($_GET['id']) ? 0 : intval($_GET['id']);
-
-       
-
         if (!$id)
-
         {
-
             echo Lang::get('no_such_discus');
-
-
-
             return;
-
         }
-
-
 
            $discus_item = $this->_discus_mod->get(
 
@@ -470,7 +455,7 @@ class My_discusApp extends MemberbaseApp
 
             $rows && $this->_clear_cache();
 
-            $this->show_message('ok','back_list','index.php?app=my_discus');
+            $this->show_message('操作成功','back_list','index.php?app=my_discus');
 
         }
 

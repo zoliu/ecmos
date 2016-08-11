@@ -1,0 +1,63 @@
+
+{include file=member.header.html} 
+
+<script type="text/javascript">
+$(function() {
+
+    $('#discus_form').validate({
+        errorPlacement: function(error, element) {
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+
+        },
+        success: function(label) {
+            label.addClass('right').text('OK!');
+        },
+        onkeyup: false,
+        rules: {
+            sort_order: {
+                number: true
+            }
+        },
+        messages: {
+            sort_order: {
+                number: '{$lang.number_only}'
+            }
+        }
+    });
+});
+</script>
+
+<style>
+.refund_form {margin:10px 0 10px 0; padding:10px;}
+.refund_form dd, .refund_form dt{margin-bottom:10px}
+</style>
+
+<div id="page-deposit-refund-form" class=" clearfix">
+    <div class="refund_form">
+        <form id="refund_form" method="post" enctype="multipart/form-data">
+            <div>
+                <dl>
+                    <dt>{$lang.buyer_type}</dt>
+                    <dd>
+                        <select name="buyer_type" class="input-s1">
+                            <option value="0">{$lang.select_pls}</option>
+                            {html_options options=$options.buyer_type selected=$discus.buyer_type}
+                        </select>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>{$lang.buyer_remark}</dt>
+                    <dd>
+                        <textarea name="buyer_remark" id="buyer_remark" class="input-s1" cols="80" rows="5" >{$discus.buyer_remark}</textarea>
+                    </dd>
+                </dl>
+            </div>
+            <div class="mt10">
+                <input type="submit" class="btn-alipay" value="{$lang.submit}" />
+            </div>
+        </form>
+    </div>
+</div>
+
+{include file=footer.html} 

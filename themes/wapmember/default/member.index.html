@@ -9,146 +9,130 @@
 	<div class="main">
     	<div class="relative top-info">
             <h3 class="member-banner"></h3>
-            <!-- <div class="right-top-po clearfix">
-                <a class="set-btn" href="{url app=member&act=setting}">设置</a>
-                <a href="{url app=message&act=newpm}" class="new-message"><ins>{$new_message}</ins></a>
-            </div> -->
             <div class="user-photo"><img src="{$user.portrait}" width="70" height="70"/></div>
-            <div class="user-name"><em> {$user.user_name|escape} </em><a href="{url app=member&act=logout}">退出</a></div>
+            <div class="user-name"><em> {$user.user_name|escape} </em></div>
         </div>
+
         <div class="top-menu mb10">
-       		<ul class="clearfix">
-            	<li>
-                
-                </li>
-            	<li>
-                   <a href="{url app=my_favorite&type=store}">
-                       <span>{$user.count_collect_store|default:0}</span><br />
-                       <span>收藏的店铺</span>
-                   </a>
+            <ul class="clearfix">
+                <li></li>
+                <li>
+                    <br/><a href="{url app=buyer_admin}">
+                        <span>我是买家</span>
+                    </a>
                 </li>
                 <li>
-                   <a href="{url app=my_favorite}">
-                      <span>{$user.count_collect_goods|default:0}</span><br />
-                      <span>收藏的宝贝</span>
-                   </a>
+                    <br/><a href="{url app=seller_admin}">
+                        <span>我是卖家</span>
+                    </a>
                 </li>
                 <li>
-                   <a href="{url app=my_integral}">
-                      <span>{$user.integral|default:0}</span><br />
-                      <span>我的积分</span>
-                   </a>
-               </li>
+                    <br/><a href="{url app=member&act=logout}">退出</a>
+                </li>
             </ul>
         </div>
+
         <div class="fun-list">
-        	<!--{if $member_role eq 'buyer_admin'}-->
-        	<ul class="clearfix">
-            	<li class="order-status-1">
-                	<a href="{url app=buyer_order&type=pending}">
-                    	{if $buyer_stat.pending}<ins>{$buyer_stat.pending}</ins>{/if}
-                    	<i>&#xe673;</i>
+            <!--{if $member_role eq 'buyer_admin'}-->
+            <ul class="clearfix">
+                <li class="order-status-1">
+                    <a href="{url app=buyer_order&type=pending}">
+                        {if $buyer_stat.pending}<ins>{$buyer_stat.pending}</ins>{/if}
+                        <i>&#xe673;</i>
                         <span>待付款</span>
                     </a>
                 </li>
                 <li class="order-status-2">
-                	<a href="{url app=buyer_order&type=accepted}">
-                    	{if $buyer_stat.accepted}<ins>{$buyer_stat.accepted}</ins>{/if}
-                    	<i>&#xe675;</i>
+                    <a href="{url app=buyer_order&type=accepted}">
+                        {if $buyer_stat.accepted}<ins>{$buyer_stat.accepted}</ins>{/if}
+                        <i>&#xe675;</i>
                         <span>待发货</span>
                     </a>
                 </li>
                 <li class="order-status-3">
-                	<a href="{url app=buyer_order&type=shipped}">
-                    	{if $buyer_stat.shipped}<ins>{$buyer_stat.shipped}</ins>{/if}
-                    	<i>&#xe671;</i>
+                    <a href="{url app=buyer_order&type=shipped}">
+                        {if $buyer_stat.shipped}<ins>{$buyer_stat.shipped}</ins>{/if}
+                        <i>&#xe671;</i>
                         <span>待收货</span>
                     </a>
                 </li>
                 <li class="order-status-4">
-                	<a href="{url app=buyer_order&type=finished}">
-                    	{if $buyer_stat.finished}<ins>{$buyer_stat.finished}</ins>{/if}
-                    	<i>&#xe672;</i>
+                    <a href="{url app=buyer_order&type=finished}">
+                        {if $buyer_stat.finished}<ins>{$buyer_stat.finished}</ins>{/if}
+                        <i>&#xe672;</i>
                         <span>待评价</span>
                     </a>
                 </li>
                 <li class="order-status-5">
-                	<a href="{url app=refund&status=on}">
-                    	{if $buyer_stat.refund}<ins>{$buyer_stat.refund}</ins>{/if}
-                    	<i>&#xe6ac;</i>
-                        <span>退款</span>
-                    </a>
-                </li>
-            </ul>
-            <!--{/if}-->
-            <!--{if $member_role eq 'seller_admin'}-->
-        	<ul class="clearfix">
-            	<li class="order-status-1">
-                	<a href="{url app=seller_order&type=pending}">
-                    	{if $seller_stat.pending}<ins>{$seller_stat.pending}</ins>{/if}
-                    	<i>&#xe673;</i>
-                        <span>待付款</span>
-                    </a>
-                </li>
-                <li class="order-status-2">
-                	<a href="{url app=seller_order&type=accepted}">
-                    	{if $seller_stat.accepted}<ins>{$seller_stat.accepted}</ins>{/if}
-                    	<i>&#xe675;</i>
-                        <span>待发货</span>
-                    </a>
-                </li>
-                <li class="order-status-3">
-                	<a href="{url app=seller_order&type=shipped}">
-                    	{if $seller_stat.shipped}<ins>{$seller_stat.shipped}</ins>{/if}
-                    	<i>&#xe671;</i>
-                        <span>待收货</span>
-                    </a>
-                </li>
-                <li class="order-status-4">
-                	<a href="{url app=seller_order&type=finished}">
-                    	{if $seller_stat.finished}<ins>{$seller_stat.finished}</ins>{/if}
-                    	<i>&#xe672;</i>
-                        <span>待评价</span>
-                    </a>
-                </li>
-                <li class="order-status-5">
-                	<a href="{url app=refund&act=receive&status=on}">
-                    	{if $seller_stat.refund}<ins>{$seller_stat.refund}</ins>{/if}
-                    	<i>&#xe6ac;</i>
+                    <a href="{url app=my_discus}">
+                        {if $buyer_stat.refund}<ins>{$buyer_stat.refund}</ins>{/if}
+                        <i>&#xe6ac;</i>
                         <span>退款</span>
                     </a>
                 </li>
             </ul>
             <!--{/if}-->
 
-            <!--{foreach from=$_member_menu item=item name=fe_item}-->
-            <!--{foreach from=$item.submenu item=subitem k=k}-->
+            <!--{if $member_role eq 'seller_admin'}-->
+            <ul class="clearfix">
+                <li class="order-status-1">
+                    <a href="{url app=seller_order&type=pending}">
+                        {if $seller_stat.pending}<ins>{$seller_stat.pending}</ins>{/if}
+                        <i>&#xe673;</i>
+                        <span>待付款</span>
+                    </a>
+                </li>
+                <li class="order-status-2">
+                    <a href="{url app=seller_order&type=accepted}">
+                        {if $seller_stat.accepted}<ins>{$seller_stat.accepted}</ins>{/if}
+                        <i>&#xe675;</i>
+                        <span>待发货</span>
+                    </a>
+                </li>
+                <li class="order-status-3">
+                    <a href="{url app=seller_order&type=shipped}">
+                        {if $seller_stat.shipped}<ins>{$seller_stat.shipped}</ins>{/if}
+                        <i>&#xe671;</i>
+                        <span>待收货</span>
+                    </a>
+                </li>
+                <li class="order-status-4">
+                    <a href="{url app=seller_order&type=finished}">
+                        {if $seller_stat.finished}<ins>{$seller_stat.finished}</ins>{/if}
+                        <i>&#xe672;</i>
+                        <span>待评价</span>
+                    </a>
+                </li>
+                <li class="order-status-5">
+                    <a href="{url app=discus}">
+                        {if $seller_stat.refund}<ins>{$seller_stat.refund}</ins>{/if}
+                        <i>&#xe6ac;</i>
+                        <span>退款</span>
+                    </a>
+                </li>
+            </ul>
+            <!--{/if}-->
+
+            <!--{foreach from=$_member_menu key=item_key item=item name=fe_item}-->
+            <div class="fun-row">
+                <p class="float-left title">{$item.text}</p>
+            </div>
+            <!--{foreach from=$item.submenu item=subitem key=k}-->
+            {if $subitem.name neq 'overview' && $subitem.name neq 'friend'}
             <div class="fun-row {$subitem.margin}">
             	<a href="{$subitem.url}" class="clearfix block">
-                    <p class="float-left title {$subitem.name}"><i></i>{$subitem.text}</p>
+                    <p class="float-left title {$subitem.name}">
+                        <i></i>{$subitem.text}
+                        {if $subitem.name eq 'message'}
+                        <ins> ({$new_message}) </ins>
+                        {/if}
+                    </p>
                     <p class="float-right view mr10">{$subitem.sub_text}</p>  
                 </a>
             </div>
+            {/if}
             <!--{/foreach}-->
             <!--{/foreach}-->
-
-            <!--{if $_member_menu.overview}-->
-            <div class="fun-row {$subitem.margin}">
-            	<a href="{$_member_menu.overview.url}" class="clearfix block">
-                    <p class="float-left title {$_member_menu.overview.name}"><i></i>{$_member_menu.overview.text}</p>
-                    <p class="float-right view mr10"></p>  
-                </a>
-            </div>
-            <!--{/if}-->
-
-            <!--{if $member_role eq 'seller_admin'}-->
-            <div class="fun-row {$subitem.margin}">
-            	<a href="{url app=store&id=$store.store_id}" class="clearfix block">
-                    <p class="float-left title im_seller"><i></i>我的店铺</p>
-                    <p class="float-right view mr10">到我的店铺看看</p>  
-                </a>
-            </div>
-            <!--{/if}-->
         </div>
     </div>
 </div>

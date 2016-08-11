@@ -1,0 +1,64 @@
+{include file=member.header.html}
+<div class="refund-index">
+    <!--{foreach from=$discus_list item=discus}-->
+    <div class="table-list mb10">
+        <ul>
+            <li class="first clearfix">
+                <span class="th float-left"><em>{$lang.order_sn}</em></span>
+                <span class="td float-left"><em>{$discus.order_sn}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.buyer_name}</em></span>
+                <span class="td float-left"><em>{$discus.buyer_name}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.buyer_type}</em></span>
+                <span class="td float-left"><em>{$lang[$discus.buyer_type]}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.buyer_addtime}</em></span>
+                <span class="td float-left"><em>{$discus.buyer_addtime|date:Y-m-d}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.seller_name}</em></span>
+                <span class="td float-left"><em>{$discus.seller_name}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.seller_type}</em></span>
+                <span class="td float-left"><em>{$lang[$discus.seller_type]}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.seller_addtime}</em></span>
+                <span class="td float-left"><em>{$discus.seller_addtime|date:Y-m-d}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.status}</em></span>
+                <span class="td float-left"><em>{$discus_status[$discus.status]}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.admin_addtime}</em></span>
+                <span class="td float-left"><em>{if $discus.admin_addtime}{$discus.admin_addtime|date:Y-m-d}{/if}</em></span>
+            </li>
+            <li class="clearfix">
+                <span class="th float-left"><em>{$lang.handle}</em></span>
+                <span class="td float-left">
+                    <em>
+                        {if $discus.status < 2}
+                        <a href="index.php?app=my_discus&act=edit&id={$discus.id}" uri="" class="">{$lang.edit}</a>
+                        {/if}
+                        <a href="index.php?app=my_discus&act=view&id={$discus.id}">{$lang.view}</a>
+                    </em>
+                </span>
+            </li>
+        </ul>
+    </div>
+    <!-- {foreachelse} -->
+    <div class="notice-word mt10">
+        <p>{$lang.no_records}</p>
+    </div>
+    <!--{/foreach}-->
+</div>
+
+{include file=page.bottom.html}
+
+{include file=footer.html}

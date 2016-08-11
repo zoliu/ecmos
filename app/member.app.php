@@ -609,7 +609,7 @@ class MemberApp extends MemberbaseApp
                 'script' => 'jquery.plugins/jquery.validate.js',
             ));
 
-            $this->display("edit.phone.html");
+            $this->display("member.phone.html");
         }else{
             $password  = $_POST['password'];
             //$vcode  = intval($_POST['vcode']);

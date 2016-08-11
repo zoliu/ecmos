@@ -1,8 +1,35 @@
 {include file=member.header.html}
+
+<div id="page-member">
+    <div class="main">
+        <div class="fun-list">
+            <ul class="clearfix">
+                <li><a href="{url app=member&act=profile}">基本信息</a></li>
+                <li><a href="{url app=member&act=password}">修改密码</a></li>
+                <li><a href="{url app=member&act=email}">修改电子邮箱</a></li>
+                <li><a href="{url app=member&act=edit_phone_mob}">修改手机</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <div id="page-my-profile">
 	<div class="page-body my-profile add-address mt10">
 		<form class="J_AjaxForm" action="index.php?app=member&act=profile" method="post">
 			<ul class="padding10">
+				<li>
+					<input disabled="disabled" type="text" class="J_AjaxFormFields input" placeholder="{$lang.user_name}" value="{$profile.user_name|escape}" />
+				</li>
+				<li>
+					<input disabled="disabled" type="text" class="J_AjaxFormFields input" placeholder="{$lang.email}" value="{$profile.email}" />
+				</li>
+				<li>
+					<input disabled="disabled" type="text" class="J_AjaxFormFields input" placeholder="{$lang.phone_mob}" value="{$profile.phone_mob}" />
+				</li>
+
+				<li>
+					<input type="text" class="J_AjaxFormFields input" name="real_name" id="real_name" value="{$profile.real_name|escape}" placeholder="{$lang.real_name}"/>
+				</li>
 				<li>
 					<label>{$lang.gender}: </label>
 					<label>
@@ -16,9 +43,6 @@
 						{$lang.female} </label>
 				</li>
 				<li class="mt20">
-					<input type="text" class="J_AjaxFormFields input" name="real_name" id="real_name" value="{$profile.real_name|escape}" placeholder="{$lang.real_name}"/>
-				</li>
-				<li>
 					<input type="text" class="J_AjaxFormFields input" placeholder="{$lang.birthday}" id="birthday" name="birthday" value="{$profile.birthday|escape}" />
 				</li>
 				<li>
@@ -31,4 +55,5 @@
 		</form>
 	</div>
 </div>
+
 {include file=footer.html} 
