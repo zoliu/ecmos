@@ -1,59 +1,102 @@
 {include file=member.header.html}
+
+<div id="page-my-address" class="mb10">
+    <div class="page-body my-address pb20">
+        <form method="get">
+            <input type="hidden" name="app" value="seller_order" />
+            <input type="hidden" name="act" value="index" />
+            <dl style="margin-bottom:15px;" class="inclusive-box f66">
+            	<dd>
+                    <label>{$lang.buyer_name}: </label>
+                    <span>
+                        <input class="text_normal" type="text" name="buyer_name" value="{$query.buyer_name|escape}" />
+                    </span>
+                </dd>
+                <dd>
+                    <label>{$lang.add_time}: </label>
+                    <span>
+                        <input type="text" class="text1 width2" name="add_time_from" id="add_time_from" value="{$query.add_time_from}" />
+                        <input type="text" class="text1 width2" name="add_time_to" id="add_time_to" value="{$query.add_time_to}" />
+                    </span>
+                </dd>
+                <dd>
+                    <label>{$lang.order_sn}: </label>
+                    <span>
+                    	<input type="text" class="text1 width_normal" name="order_sn" value="{$query.order_sn|escape}">
+                    </span>
+                </dd>
+                <dd>
+                    <label>{$lang.order_status}: </label>
+                    <span>
+                        <select name="type">
+                            {html_options options=$types selected=$type}
+                        </select>
+                    </span>
+                </dd>
+                <dd>
+                    <input type="submit" class="btn" value="查询" />
+                </dd>
+            </dl>
+        </form>
+    </div>
+</div>
+
 <div id="page-buyer-order">
-	<div class="buyer-order-body page-body"> 
-		<!--{foreach from=$orders item=order}-->
-		<div class="order-form mb10">
-			<h2 class="clearfix">
+    <div class="buyer-order-body page-body">
+        <!--{foreach from=$orders item=order}-->
+        <div class="order-form mb10">
+            <h2 class="clearfix">
 				<p class="name"><span class="member-ico pl20 ml10" >{$order.buyer_name|escape}</span></p>
 				<p class="num ml10">{$lang.order_sn}: {$order.order_sn}{if $order.extension eq 'groupbuy'}<span class="color8">[{$lang.groupbuy}]</span>{/if}</p>
 			</h2>
-			
-			<!--{foreach from=$order.order_goods item=goods name=fe_goods}-->
-			<div class="con clearfix">
-				<div class="pic"><a href="{url app=goods&id=$goods.goods_id}" ><img src="{$goods.goods_image}" width="50" height="50" /></a></div>
-				<div class="txt"> 
-					<p><a href="{url app=seller_order&act=view&order_id=$order.order_id}">{$goods.goods_name|escape}</a></p>
-					{if $goods.specification}<span class="attr mt5">{$goods.specification|escape}</span><br />
-					{/if} <span class="order-amount mt5">实付:{$order.order_amount|price}</span><br />
-					<span class="mt5">共 {$goods.quantity} 件</span><br />
-				</div>
-			</div>
-			<!--{/foreach}-->
-			<p class="status"> <em>{$order.status|modifier:order_status}<!--{if $order.evaluation_status}-->&nbsp;{$lang.already_evaluate}<!--{/if}--></em> 
-				<!--{if $order.refund_status eq 'SUCCESS'}--> 
-				<span class="ml10" style="color:#096;">退款成功</span> 
-				<!--{elseif $order.refund_status eq 'CLOSED'}--> 
-				<span class="ml10 gray">退款关闭</span> 
-				<!--{elseif $order.refund_status}--> 
-				<span class="ml10 f60">退款中</span> 
-				<!--{/if}--> 
-			</p>
-			<div class="operate-btn pt10">
-				<a href="{url app=seller_order&amp;act=received_pay&amp;order_id=$order.order_id}" class="btn1 mr10" {if $order.status neq ORDER_PENDING} style="display:none"{/if}>{$lang.received_pay}</a>
-				<a href="{url app=seller_order&amp;act=confirm_order&amp;order_id=$order.order_id}" class="btn1 mr10" {if $order.status neq ORDER_SUBMITTED} style="display:none"{/if} >{$lang.confirm_cod_order}</a>
-				<a href="{url app=seller_order&amp;act=adjust_fee&amp;order_id=$order.order_id}" class="btn1 mr10" {if $order.status neq ORDER_PENDING and $order.status neq ORDER_SUBMITTED} style="display:none"{/if}>{$lang.adjust_fee}</a>
-				<a href="{url app=seller_order&amp;act=shipped&amp;order_id=$order.order_id}" {if $order.status neq ORDER_ACCEPTED} style="display:none"{/if} class="btn1 mr10">{$lang.shipped_order}</a>
-				<a href="{url app=seller_order&amp;act=finished&order_id=$order.order_id}" {if $order.payment_code neq 'cod' or $order.status neq ORDER_SHIPPED} style="display:none"{/if} class="btn1 mr10">{$lang.finish_order}</a>
-				<a href="{url app=seller_order&amp;act=shipped&amp;order_id=$order.order_id}" {if $order.status neq ORDER_SHIPPED} style="display:none"{/if} class="btn1 mr10">{$lang.edit_invoice_no}</a>
-				<a href="{url app=seller_order&amp;act=cancel_order&order_id=$order.order_id}" {if $order.status eq ORDER_CANCELED or $order.status eq ORDER_FINISHED} style="display:none"{/if} class="btn1 mr10">{$lang.cancel_order}</a>
-				<a href="{url app=seller_order&act=view&order_id=$order.order_id}" class="btn1 mr10">{$lang.view_order}</a> 
-				
-				<!--{if $order.refund_status}-->
-				<a class="btn1 mr10" href="{url app=refund&act=view&refund_id=$order.refund_id}">退款详情</a> 
-				<!--{/if}--> 
-				
-				<!--{if $enable_express}--> 
-				<a class="btn1 mr10" href="{url app=order_express&amp;order_id=$order.order_id}" {if $order.status neq ORDER_SHIPPED && $order.status neq ORDER_FINISHED} style="display:none"{/if}>{$lang.view_delivery_track}</a> 
-				<!--{/if}--> 
-	
-			</div>
-		</div>
-		<!--{foreachelse}-->
-		<div class="no-record"> <span>{$lang.no_records}</span> </div>
-		<!--{/foreach}--> 
-	</div>
-	<!--{if $orders}--> 
-	{include file=page.bottom.html} 
-	<!--{/if}--> 
+            <!--{foreach from=$order.order_goods item=goods name=fe_goods}-->
+            <div class="con clearfix">
+                <div class="pic">
+                    <a href="{url app=goods&id=$goods.goods_id}"><img src="{$goods.goods_image}" width="50" height="50" /></a>
+                </div>
+                <div class="txt">
+                    <p><a href="{url app=seller_order&act=view&order_id=$order.order_id}">{$goods.goods_name|escape}</a></p>
+                    {if $goods.specification}<span class="attr mt5">{$goods.specification|escape}</span>
+                    <br /> {/if} <span class="order-amount mt5">实付:{$order.order_amount|price}</span>
+                    <br />
+                    <span class="mt5">共 {$goods.quantity} 件</span>
+                    <br />
+                </div>
+            </div>
+            <!--{/foreach}-->
+            <p class="status"> <em>{$order.status|modifier:order_status}<!--{if $order.evaluation_status}-->&nbsp;{$lang.already_evaluate}<!--{/if}--></em>
+                <!--{if $order.refund_status eq 'SUCCESS'}-->
+                <span class="ml10" style="color:#096;">退款成功</span>
+                <!--{elseif $order.refund_status eq 'CLOSED'}-->
+                <span class="ml10 gray">退款关闭</span>
+                <!--{elseif $order.refund_status}-->
+                <span class="ml10 f60">退款中</span>
+                <!--{/if}-->
+            </p>
+            <div class="operate-btn pt10">
+                <a href="{url app=seller_order&amp;act=received_pay&amp;order_id=$order.order_id}" class="btn1 mr10" {if $order.status neq ORDER_PENDING} style="display:none" {/if}>{$lang.received_pay}</a>
+                <a href="{url app=seller_order&amp;act=confirm_order&amp;order_id=$order.order_id}" class="btn1 mr10" {if $order.status neq ORDER_SUBMITTED} style="display:none" {/if}>{$lang.confirm_cod_order}</a>
+                <a href="{url app=seller_order&amp;act=adjust_fee&amp;order_id=$order.order_id}" class="btn1 mr10" {if $order.status neq ORDER_PENDING and $order.status neq ORDER_SUBMITTED} style="display:none" {/if}>{$lang.adjust_fee}</a>
+                <a href="{url app=seller_order&amp;act=shipped&amp;order_id=$order.order_id}" {if $order.status neq ORDER_ACCEPTED} style="display:none" {/if} class="btn1 mr10">{$lang.shipped_order}</a>
+                <a href="{url app=seller_order&amp;act=finished&order_id=$order.order_id}" {if $order.payment_code neq 'cod' or $order.status neq ORDER_SHIPPED} style="display:none" {/if} class="btn1 mr10">{$lang.finish_order}</a>
+                <a href="{url app=seller_order&amp;act=shipped&amp;order_id=$order.order_id}" {if $order.status neq ORDER_SHIPPED} style="display:none" {/if} class="btn1 mr10">{$lang.edit_invoice_no}</a>
+                <a href="{url app=seller_order&amp;act=cancel_order&order_id=$order.order_id}" {if $order.status eq ORDER_CANCELED or $order.status eq ORDER_FINISHED} style="display:none" {/if} class="btn1 mr10">{$lang.cancel_order}</a>
+                <a href="{url app=seller_order&act=view&order_id=$order.order_id}" class="btn1 mr10">{$lang.view_order}</a>
+                <!--{if $order.refund_status}-->
+                <a class="btn1 mr10" href="{url app=refund&act=view&refund_id=$order.refund_id}">退款详情</a>
+                <!--{/if}-->
+                <!--{if $enable_express}-->
+                <a class="btn1 mr10" href="{url app=order_express&amp;order_id=$order.order_id}" {if $order.status neq ORDER_SHIPPED && $order.status neq ORDER_FINISHED} style="display:none" {/if}>{$lang.view_delivery_track}</a>
+                <!--{/if}-->
+            </div>
+        </div>
+        <!--{foreachelse}-->
+        <div class="no-record"> <span>{$lang.no_records}</span> </div>
+        <!--{/foreach}-->
+    </div>
+    <!--{if $orders}-->
+    {include file=page.bottom.html}
+    <!--{/if}-->
 </div>
-{include file=footer.html} 
+
+{include file=footer.html}

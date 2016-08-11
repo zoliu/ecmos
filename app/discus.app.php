@@ -323,11 +323,13 @@ class DiscusApp extends StoreadminbaseApp
             $rows = $this->_discus_mod->edit($id, $data);
 
             if ($this->_discus_mod->has_error())
-
             {
-
-                $this->pop_warning($this->_discus_mod->get_error());
-
+                if ($_SESSION['ECMALL_WAP'] == 1) {
+                    $this->show_warning($this->_discus_mod->get_error());
+                }
+                else {
+                    $this->pop_warning($this->_discus_mod->get_error());
+                }
                 return;
 
             }
@@ -335,9 +337,12 @@ class DiscusApp extends StoreadminbaseApp
             /* 清除缓存 */
 
             $rows && $this->_clear_cache();
-
-            $this->pop_warning('ok', 'discus_edit');
-
+            if ($_SESSION['ECMALL_WAP'] == 1) {
+                $this->show_message('操作成功', '返回列表', 'index.php?app=discus');
+            }
+            else {
+                $this->pop_warning('操作成功', '返回列表', 'index.php?app=discus');
+            }
         }
 
     }

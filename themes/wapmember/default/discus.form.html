@@ -1,96 +1,63 @@
-<style type="text/css">
 
-.editor { margin:0px 22px 0px 125px; }
-
-.info_table_wrap .submit { width:720px; }
-
-.info_table { width:720px; }
-
-.info_table li { width:720px; }
-
-</style>
+{include file=member.header.html} 
 
 <script type="text/javascript">
-
-$(function(){
+$(function() {
 
     $('#discus_form').validate({
-
-        errorPlacement: function(error, element){
-
+        errorPlacement: function(error, element) {
             $(element).next('.field_notice').hide();
-
             $(element).after(error);
 
         },
-
-        success       : function(label){
-
+        success: function(label) {
             label.addClass('right').text('OK!');
-
         },
-
-        onkeyup    : false,
-
-        rules : {
-
-            sort_order : {
-
-                number   : true
-
+        onkeyup: false,
+        rules: {
+            sort_order: {
+                number: true
             }
-
         },
-
-        messages : {
-
-            
-
-            sort_order  : {
-
-                number   : '{$lang.number_only}'
-
+        messages: {
+            sort_order: {
+                number: '{$lang.number_only}'
             }
-
         }
-
     });
-
 });
-
 </script>
 
-<style type="text/css">
-
-.padding2{padding-left:25px;}
-
+<style>
+.refund_form {margin:10px 0 10px 0; padding:10px;}
+.refund_form dd, .refund_form dt{margin-bottom:10px}
 </style>
 
-<div class="eject_con" style="width: 720px;">
-    <div class="adds">
-        <div id="warning"></div>
-         <form method="post" action="index.php?app=discus&amp;act={$smarty.get.act}&amp;id={$id}" target="pop_warning" name="discus_form" id="discus_form" enctype="multipart/form-data">
-
-            <ul>
-                <li>
-                    <h3>{$lang.seller_type}:</h3>
-                    <p>
-                        <select name="seller_type" class="text width_normal">
-                          <option value="0">{$lang.select_pls}</option>
-                          {html_options options=$options.seller_type selected=$discus.seller_type}
+<div id="page-deposit-refund-form" class=" clearfix">
+    <div class="refund_form">
+        <form id="refund_form" method="post" enctype="multipart/form-data">
+            <div>
+                <dl>
+                    <dt>{$lang.seller_type}</dt>
+                    <dd>
+                        <select name="seller_type" class="input-s1">
+                            <option value="0">{$lang.select_pls}</option>
+                            {html_options options=$options.seller_type selected=$discus.seller_type}
                         </select>
-                    </p>
-                </li>
-                <li>
-                    <h3>{$lang.seller_remark}:</h3>
-                    <p>
-                        <textarea name="seller_remark"  class="text width_normal"  id="seller_remark" style="width:300px;height:90px;">{$discus.seller_remark}</textarea>
-                    </p>
-                </li>
-            </ul>
-
-        <div class="submit"><input type="submit" class="btn" value="{$lang.submit}" /></div>
-        
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>{$lang.seller_remark}</dt>
+                    <dd>
+                        <textarea name="seller_remark" id="seller_remark" class="input-s1" cols="80" rows="5" >{$discus.seller_remark}</textarea>
+                    </dd>
+                </dl>
+            </div>
+            <div class="mt10">
+                <input type="submit" class="btn-alipay" value="{$lang.submit}" />
+            </div>
         </form>
     </div>
 </div>
+
+{include file=footer.html} 
