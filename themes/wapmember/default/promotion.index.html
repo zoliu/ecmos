@@ -1,0 +1,158 @@
+{include file=top.html} 
+<script type="text/javascript">
+$(function(){
+	$("img.lazyload").lazyLoad();
+});
+</script>
+<div id="main"> 
+	<!--common bar start-->
+	<div class="bar-wrap">
+        <div class="top-bar"> <a href="javascript:pageBack();" class="pageback"><span></span></a>
+			<h2 class="yahei">{$curlocal_title}</h2>
+			<a href="javascript:;" class="pagemore J_pagemore"><span></span></a> 
+        </div>
+		<div class="eject-tab J_eject_tab w-full clearfix hidden"> <a href="index.php"> <span></span>
+			<p>首页</p>
+			</a> <a href="{url app=search}"> <span class="icon2"></span>
+			<p>分类搜索</p>
+			</a> <a href="{url app=cart}"> <span class="icon3"></span>
+			<p>购物车</p>
+			</a> <a href="{url app=member}"> <span class="icon4"></span>
+			<p>用户中心</p>
+			</a> </div>
+	</div>
+	<!--common bar end-->
+	<div id="page-search-goods">
+		<div class="search-goods page-body"> 
+			<!--{if $goods_list}-->
+			<!--
+			<div class="attr">
+				<div class="cons">
+					<ul class="display-order clearfix">
+						<li {if $smarty.get.order eq ''}class="current"{/if}><span>综合</span></li>
+						<li id="add_time"><span>新品</span></li>
+						<li id="sales"><span>销量</span></li>
+						<li id="price"><span>价格</span></li>
+					</ul>
+				</div>
+			</div>
+			-->
+			<ul class="{$display_mode} " ectype="current_display_mode">
+				<!--{foreach from=$goods_list item=goods name=fe_goods}-->
+				<li class="clearfix" {if $smarty.foreach.fe_goods.last}style="border-bottom:0px;"{/if}> <a href="{url app=goods&id=$goods.goods_id}">
+					<div class="pic"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$site_url}/{$goods.default_image}" /></div>
+					<div class="info">
+						<h2>{$goods.goods_name|escape}</h2>
+						<div class="price mt5">{$goods.pro_price|price}<del style="margin-left:5px; color:#666; font-size:12px;font-weight:normal">{$goods.price|price}</del></div>
+						<div class="sales mt5">已售 {$goods.sales|default:0} 件</div>
+						<div class="store mt5"> <span>{$goods.store_name|escape}</span> </div>
+					</div>
+					</a> </li>
+				<!--{/foreach}-->
+			</ul>
+			<div class="pageinfo pt10">{include file=page.bottom.html}</div>
+			<!--{else}-->
+			<div class="pb20 pt20 center">{$lang.no_records}</div>
+			<!--{/if}--> 
+		</div>
+	</div>
+</div>
+<div id="pageslide" class="J_masker"></div>
+<div id="cate-model" class="J_hide_box">
+	<div class="screen-height wrap"> 
+		<!--{if $filters}-->
+		<div class="selected-attr title mb20"> <strong class="block mt10">{$lang.your_selected}{$lang.colon}</strong> 
+			<!--{foreach from=$filters item=filter}--> 
+			<a class="mt10" href="javascript:;" id="{$filter.key}">{$filter.name}{$lang.colon}{$filter.value} x</a> 
+			<!--{/foreach}--> 
+		</div>
+		<!--{/if}--> 
+		<!--{if $categories}-->
+		<ul class="cates">
+			<li class="J_tit tit"><a>{$lang.gcategory}</a></li>
+			<li ectype="ul_cate" class="con">
+				<ul class="list">
+					<!--{foreach from=$categories item=gcategory name=fe_gcategory}-->
+					<li><a id="{$gcategory.cate_id}"  href="javascript:void(0);">{$gcategory.cate_name}({$gcategory.count})</a></li>
+					<!--{/foreach}-->
+				</ul>
+			</li>
+		</ul>
+		<!--{/if}--> 
+		<!--{if $brands && !$filters.brand}-->
+		<ul class="cates">
+			<li class="J_tit tit"><a>{$lang.brand}</a></li>
+			<li ectype="ul_brand" class=" con">
+				<ul class="list">
+					<!--{foreach from=$brands item=row name=fe_row}-->
+					<li><a href="javascript:void(0);" title="{$row.brand}" id="{$row.brand|escape:url}">{$row.brand|escape}({$row.count})</a></li>
+					<!--{/foreach}-->
+				</ul>
+			</li>
+		</ul>
+		<!--{/if}--> 
+		<!--{if $price_intervals && !$filters.price}-->
+		<ul class="cates">
+			<li class="J_tit tit"><a>{$lang.price}</a></li>
+			<li ectype="ul_price" class="con">
+				<ul class="list">
+					<!--{foreach from=$price_intervals item=row name=fe_row}-->
+					<li><a href="javascript:void(0);" id="{$row.min} - {$row.max}">{$row.min|price} - {$row.max|price}({$row.count})</a></li>
+					<!--{/foreach}-->
+				</ul>
+			</li>
+		</ul>
+		<!--{/if}--> 
+		
+		<!--{if $wholesale && !$filters.wholesale}-->
+		<ul class="cates">
+			<li class="J_tit tit"><a>{$lang.by_wholesale}</a></li>
+			<li ectype="ul_wholesale" class="con">
+				<ul class="list">
+					<!--{foreach from=$wholesale item=row key=key name=fe_row}-->
+					<li><a href="javascript:void(0);" id="{$key}" >{$row}</a></li>
+					<!--{/foreach}-->
+				</ul>
+			</li>
+		</ul>
+		<!--{/if}--> 
+		
+		<!--{if $regions && !$filters.region_id}-->
+		<ul class="cates">
+			<li class="J_tit tit"><a>{$lang.region}</a></li>
+			<li ectype="ul_region" class="con">
+				<ul class="list">
+					<!--{foreach from=$regions item=row name=fe_row}-->
+					<li><a href="javascript:void(0);"  id="{$row.region_id}">{$row.region_name|escape}({$row.count})</a></li>
+					<!--{/foreach}-->
+				</ul>
+			</li>
+		</ul>
+		<!--{/if}-->
+		<p class="close"></p>
+	</div>
+</div>
+<script type="text/javascript">
+	var closeBtnTop =  window.screen.availHeight/2-50;
+	$('#cate-model .close').css('top',closeBtnTop+'px');
+	$('#cate-model .close').click(function(){
+		closePageSlide();
+	});
+	$('.J_masker').click(function(){
+		closePageSlide();
+	});
+	$('.J_filter').click(function(){
+		$('.J_masker').animate({right:'0'});
+		$('.J_hide_box').show().animate({right:'0'},800);;
+	});
+	$('.J_hide_box .J_tit').click(function(){
+		$(this).parent('ul').parent('.wrap').find('.con').hide();
+		$(this).next('.con').show();
+	})
+	function closePageSlide()
+	{
+		$('.J_masker').animate({right:'-1699px'});
+		$('.J_hide_box').animate({right:'-100%'},800).hide();
+	}
+</script> 
+{include file=footer.html} 

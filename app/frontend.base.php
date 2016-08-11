@@ -112,8 +112,12 @@ class FrontendApp extends ECBaseApp {
 		
 		$mall_template_name = Conf::get('template_name') ? Conf::get('template_name'):'default';
 		$mall_style_name    = Conf::get('style_name') ? Conf::get('style_name'):'default';
+		
 		// 该赋值便于在店铺模板中调用商城模板的CSS,JS路径
 		$this->assign('mall_theme_root', site_url() . '/themes/mall/' . $mall_template_name . '/styles/'. $mall_style_name);
+
+		//---www.360cd.cn Mosquito---
+		$this->assign('wapmall_theme_root', site_url() . '/themes/wapmall/' . $mall_template_name . '/styles/'. $mall_style_name);
 	}
 
 	function display($tpl) {

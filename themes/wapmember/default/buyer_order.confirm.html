@@ -1,39 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<script type="text/javascript">
-$(function(){
-    $('#confirm_cancel').click(function(){
-        DialogManager.close('buyer_order_confirm_order');
-    });
-});
-</script>
-<style>
-.dialog_body{ overflow:hidden; padding: 9px;}
-.dialog_content .tab{line-height:28px;}
-.dialog_content .content1{ margin-top:5px;}
-.dialog_content .content1 h1{ font-size:16px;font-weight:normal;}
-.dialog_content .content1 .li{ margin-top:5px;}
-.dialog_content .content1 .li input{vertical-align:middle;}
-.dialog_content .content1 dl{margin:5px 0;}
-.dialog_content .content1 .btn1{ width:49%;padding:8px 0;float:left; margin-right:2%;}
-.dialog_content .content1 .btn2{ width:49%;padding:8px 0;float:left;}
-.clue_on{margin:5px 0;}
-</style>
-<ul class="tab">
-    <li class="active">{$lang.confirm_order}</li>
-</ul>
-<div class="content1">
-<div id="warning"></div>
-<form action="index.php?app=buyer_order&act=confirm_order&order_id={$order.order_id}&ajax" method="post" target="iframe_post">
-    <h1>{$lang.confirm_order_confirm}</h1>
-    <p>{$lang.order_sn}:<span>{$order.order_sn}</span></p>
-    <div class="clue_on">
-        {$lang.notice}&nbsp;:&nbsp;{$lang.confirm_order_notice}
-    </div>
-    <div class="btn">
-        <input type="submit" id="confirm_yes" class="red_btn btn1" value="{$lang.confirm}" />
-        <input type="button" id="confirm_cancel" class="white_btn btn2" value="{$lang.cancel}" />
-    </div>
-</form>
+{include file=member.header.html}
+<div id="page-buyer-order">
+	<div class="confirm-order">
+		<form class="J_AjaxForm" method="post">
+			<ul>
+				<li>{$lang.confirm_order_confirm}<br />
+					{$lang.order_sn}:<span>{$order.order_sn}</span></li>
+				<li class="gray" style="border:0">{$lang.notice}&nbsp;:&nbsp;{$lang.confirm_order_notice}</li>
+			</ul>
+			<div class="padding10 clearfix">
+				<div class="float-left" style="width:49%;">
+					<input type="submit" class="J_AjaxFormSubmit btn-alipay" value="{$lang.confirm}" />
+				</div>
+				<div class="float-right" style="width:49%;">
+					<input type="button" onclick="window.location.href='{url app=buyer_order}'" class="btn-alipay btn-alipay-gray" value="{$lang.cancel}" />
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
-
+{include file=footer.html} 

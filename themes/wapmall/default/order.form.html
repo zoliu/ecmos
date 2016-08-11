@@ -1,98 +1,18 @@
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<base href="{$site_url}/" />
-<!-- Use IE7 mode -->
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset={$charset}" />
-<meta http-equiv="Content-Type" content="text/html; charset={$charset}" />
-{$page_seo}
-
-<meta name="author" content="" />
-<meta name="generator" content="" />
-<meta name="copyright" content="" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-
-<script type="text/javascript" src="index.php?act=jslang"></script>
-<script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
-<script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
-<script type="text/javascript" src="{res file=js/nav.js}" charset="utf-8"></script>
-<link href="{res file=css/order.css}" type="text/css" rel="stylesheet" />
-<link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
-<link href="{res file=css/address.css}" type="text/css" rel="stylesheet" />
-<!--<script type="text/javascript" src="{res file=js/select.js}" charset="utf-8"></script>-->
-<script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}" charset="utf-8"></script>
-
-<script type="text/javascript">
-//<!CDATA[
-var SITE_URL = "{$site_url}";
-var REAL_SITE_URL = "{$real_site_url}";
-var PRICE_FORMAT = '{$price_format}';
-
-//]]>
-</script>
-
-
-<body class="gray">
-<form method="post" id="order_form">
-    <div class="fixed">
-        <!---头部------>
-        <div class="header header2">
-			<a href="javascript:history.back(-1);" class="back2_pre"></a>
-            确认下单
-        </div>    
-    </div>
-       {include file="order.shipping.html"}
-   
- 
-         <script type="text/javascript">
-          function postscript_activation(tt){
-          	if (!tt.name)
-          	{
-          		tt.value    = '';
-          		tt.name = 'postscript';
-          	}
-
-          }
-           </script>
- 
- <!--{foreach from=$carts item=store}-->
- 
-  <div class="orderlist store" id="{$store.store_id}">
-    <ul>
-      <li>{$lang.store}：<a href="{url app=store&id=$store.store_id}" >{$goods_info.store_name|escape}</a>
-      </li>
-      <!--{foreach from=$store.items item=goods}-->
-      <li>
-        <a  href="{url app=goods&id=$goods.goods_id}">	<img src="{$goods.goods_image}" /></a>
-        <p>  <a href="{url app=goods&id=$goods.goods_id}">{$goods.goods_name|escape}</a></p>
-        <p>单价：{$goods.price|price}</p>
-        <p>数量：{$goods.quantity}{$lang.goods_unit}<strong>{$goods.subtotal|price}</strong></p>
-      </li>
-      <!--{/foreach}-->
-      
-      <span style="margin-left:10px;"> 配送方式：</span>
-      <!--{foreach from=$store.shipping_methods item=shipping_method name=shipping_select}-->
-      <li class="shipping_item" shipping_id="{$store.amount}:{$store.quantity}:{$shipping_method.shipping_id}" store_id='{$store.store_id}'>
-        <input type="radio" checked="true" name="shipping_id[{$store.store_id}]" value="{$shipping_method.shipping_id}" shipping_fee='{$shipping_method.price}' />
-          {$shipping_method.shipping_name|escape}
-          {$lang.shipping_fee}:&nbsp;<span class="money" ectype="shipping_fee">&yen; {$shipping_method.price}</span>
-      </li>
-      <!--{/foreach}-->
-      <li>店铺合计(含运费)：<strong id="amount_{$store.store_id}" amount="{$store.amount}">{$store.amount|price}</strong></li>
-      
-      <li>{$lang.postscript}</li>
-     <li>  <textarea  class="com_text" id="postscript[{$store.store_id}]" placeholder="{$lang.postscript_desc}" onclick="postscript_activation(this);"></textarea></li>
-    </ul>
-  </div>
-  <!--{/foreach}-->
-  
-  <!--<p class="total_price">实付款：<strong id="order_amount">{$goods_info.amount|price}</strong></p>
-  <a href="javascript:void($('#order_form').submit());" class="submit_btn">提交订单</a>-->
-  <div>{include file=order.amount.html}</div>
-</form >
-
-{include file="member.footer.html"}
+{include file=header.html}
+<style type="text/css">
+.float-layer{display:none;}
+</style>
+<div id="main" class="w-full">
+<div id="page-order" class="w-full">
+   <div class="order-form">
+      <form method="post" id="order_form">
+	     {include file=order.shipping.html}
+         {include file=order.goods.html}
+         {include file=order.postscript.html}
+	     {include file=order.amount.html}
+      </form>
+   </div>
+</div>
+</div>
+<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
+{include file=footer.html}

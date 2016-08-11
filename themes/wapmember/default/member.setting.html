@@ -1,0 +1,33 @@
+{include file=member.header.html}
+<div id="page-member-setting">
+	<div class="fun-list">
+    	<div class="fun-row mt10">
+            <a href="{url app=member&amp;act=profile}" class="clearfix block">
+               <p class="float-left title basic-information"><i></i>{$lang.basic_information}</p>
+               <p class="float-right view mr10"></p>  
+           </a>
+        </div>
+         <div class="fun-row">
+            <a href="{url app=member&amp;act=password}" class="clearfix block">
+               <p class="float-left title edit-password"><i></i>{$lang.edit_password}</p>
+               <p class="float-right view mr10"></p>  
+           </a>
+        </div>
+        <div class="fun-row">
+            <a href="{url app=member&amp;act=email}" class="clearfix block">
+               <p class="float-left title edit-email"><i></i>{$lang.edit_email}</p>
+               <p class="float-right view mr10"></p>  
+           </a>
+        </div>
+        <div class="fun-row">
+            <a href="{url app=member&amp;act=phone}" class="clearfix block">
+               <p class="float-left title edit-phone"><i></i>{$lang.edit_phone}</p>
+               <p class="float-right view mr10"></p>  
+           </a>
+        </div>
+    </div>
+	<div class="margin10"><a class="btn-alipay" href="{url app=member&act=logout}">{$lang.logout_current_account}</a></div>
+</div>
+
+
+{include file=footer.html} 

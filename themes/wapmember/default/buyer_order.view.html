@@ -1,107 +1,97 @@
-{include file="member.header.html"}
-
-
-<body style="background:#eceded">
-
-<script>
-
-  
-   $(function(){  
-     var dataObj={$shipping_info};;//转换为json对象  
-  
-      var html='<li><b>';  
-    
-  
-       html+='物流状态</b><span></span> </li>';       
-    if(dataObj.status>0){                                       
-         //输出data的子对象变量      
-                       
-         $.each(dataObj.data,function(idx,item){       
-                           
-              html+='<li><b style="width:150px;">';                                                       
-              html+=item.time;// 每条数据的时间                                                     
-              html+='</b><span>';                            
-              html+=item.context;// 每条数据的状态                           
-              html+='</span></li>';                                            
-          });         
-                                 
-    }else{  
-              //查询不到                    
-              html+='<li><b></b><span>很抱歉，'+dataObj.message+'</span></li>';           
-    }  
-    $("#shipping_detail").append(html);     
-       
-});  
-  
-</script> 
-    <div class="fixed">
-        <!---头部------>
-        <div class="header header2">
-			<a href="javascript:history.back(-1);" class="back2_pre"></a>
-            订单详情
-        </div>    
-    </div>
-    
-    <div class="goods_info">
-      <!--{foreach from=$goods_list item=goods}-->
-    	<div class="goods">
-            <img src="{$goods.goods_image}" />
-            <p class="title">{$goods.goods_name|escape}</p>
-            <p>{$goods.specification|escape}</p>
-            <p>价格：<strong>{$goods.price|price}</strong>数量：{$goods.quantity}</p>
-        </div>
-          <!--{/foreach}-->
-      <p class="pay">
-         <!-- <a href="{url app=cashier&order_id=$order.order_id}" class="white_btn">现在付款</a>
-            <a href="#" class="white_btn cancel">取消订单</a>-->
-        </p>
-    </div>
-    <div class="goods_line"></div>
-    
-    <ul class="orderlist orderinfo">
-    	<li><b>订单状态</b><span>{$order.status|modifier:order_status}</span></li>
-        <li><b>订单号</b><span>{$order.order_sn}</span></li>
-                   <!--{if $order.payment_code}-->
-                        <li><b>{$lang.payment_name}</b><span>{$order.payment_name|escape}</span></li>
-                        <!--{/if}-->
-                        <!--{if $order.pay_message}-->
-                        <li><b>{$lang.pay_message}</b><span>{$order.pay_message|escape}</span></li>
-                        <!--{/if}-->
-                      
-                   <li><b>订单时间</b><span>{$order.order_add_time|date:complete}</span></li>
-                 <!--{if $order.pay_time}-->
-                        <li><b>{$lang.pay_time}</b><span>{$order.pay_time|date:complete}</span></li>
-                        <!--{/if}-->
-                        <!--{if $order.ship_time}-->
-                        <li><b>{$lang.ship_time}</b><span>{$order.ship_time|date:complete}</span></li>
-                        <!--{/if}-->
-                        <!--{if $order.finished_time}-->
-                        <li><b>{$lang.finished_time}</b><span>{$order.finished_time|date:complete}</span></li>
-                        <!--{/if}-->
-    </ul>
-    <ul class="orderlist orderinfo">
-    	<li><b>卖家ID</b><span>{$order.store_name|escape}</span></li>
-        <li><b>联系电话</b><span>{$order.tel|escape|default:-}</span></li>
-    </ul>
-    <ul class="orderlist orderinfo">
-    	<li><b>收货地址</b><span>{$order_extm.region_name|escape}&nbsp;{$order_extm.address|escape}</span></li>
-        <li><b>收货人</b><span>{$order_extm.consignee|escape}</span></li>
-       <!--{if $order_extm.phone_mob}-->   <li><b>手机号码</b><span>{$order_extm.phone_mob}</span></li><!--{/if}-->
-      <!--{if $order_extm.phone_tel}-->  <li><b>电话号码</b><span>{$order_extm.phone_tel}</span></li><!--{/if}-->
-        <!--{if $order_extm.zipcode}-->  <li><b>邮编</b><span>{$order_extm.zipcode|escape}</span></li><!--{/if}-->
-		  <!--{if $order.postscript}--><li ><b style="width:87px">{$lang.postscript}</b><span>{$order.postscript|escape}</span></li> <!--{/if}-->
-		    <!--{if $order.invoice_no}-->
-              <li > <b> {$lang.invoice_no}</b><span>{$order.invoice_no|escape}</span></li>
-                <!--{/if}-->
-    </ul>
-    
-     <ul class="orderlist orderinfo" id='shipping_detail'>
-    
-    </ul>
-    <p class="total_price">
-    	物流({$options_shipping[$order_extm.shipping_name]|escape})：<strong>{$order_extm.shipping_fee|price}</strong><br />
-        总价：<strong>{$order.order_amount|price}</strong>
-    </p>
-    <!------底部-------->
-{include file="member.footer.html"}
-
+{include file=member.header.html}
+<div id="page-order-view">
+	<div class="page-body">
+		<div class="order-goods"> 
+			<!--{foreach from=$goods_list item=goods}-->
+			<div class="list clearfix">
+				<div class="pic float-left"><a href="{url app=goods&id=$goods.goods_id}"><img src="{$goods.goods_image}" width="50" height="50" class="block" /></a></div>
+				<div class="text float-left"> <a href="{url app=goods&id=$goods.goods_id}">
+					<h3>{$goods.goods_name|escape}</h3>
+					<span>{$goods.specification|escape}</span> </a> </div>
+				<div class="pri float-right"> {$goods.price|price}<br />x {$goods.quantity} </div>
+			</div>
+			<!--{/foreach}-->
+			<div class="o-g-bt">
+				<p> 运费： <span>{$order_extm.shipping_fee|price}({$order_extm.shipping_name|escape})</span><br />
+					优惠： <span>{$order.discount|price}</span><br />
+					付款：<span>{$order.order_amount|price}</span> </p>
+				<h3>{$order.status|modifier:order_status}</h3>
+				<a href="{url app=buyer_order}" class="btn">返回订单列表</a> </div>
+		</div>
+		<div class="seller-info inclusive-box f66">
+			<dl>
+				<dt>{$lang.seller_info}</dt>
+				<dd>
+					<label>{$lang.store_name} :</label>
+					<span> {$order.store_name|escape}</span></dd>
+				<dd>
+					<label>{$lang.phone_tel} :</label>
+					<span> {$order.tel|escape|default:-}</span></dd>
+				<dd>
+					<label>{$lang.phone_mob} :</label>
+					<span> {$order.phone_mob|escape|default:-}</span></dd>
+				<dd>
+					<label>{$lang.address} :</label>
+					<span> {$order.address|escape|default:-}</span></dd>
+			</dl>
+		</div>
+		<div class="shipping-info inclusive-box f66">
+			<dl>
+				<dt>{$lang.order_info}</dt>
+				<dd>
+					<label>{$lang.order_sn} :</label>
+					<span> {$order.order_sn}</span></dd>
+				<dd>
+					<label>{$lang.payment_name} :</label>
+					<span> {$order.payment_name|escape}</span></dd>
+				<dd>
+					<label>{$lang.shipping_way} :</label>
+					<span> {$order_extm.shipping_name|escape}</span></dd>
+				<dd>
+					<label>{$lang.add_time} :</label>
+					<span> {$order.order_add_time|date:complete|default:-}</span></dd>
+				<!--{if $order.pay_time}-->
+				<dd>
+					<label>{$lang.pay_time} :</label>
+					<span> {$order.pay_time|date:complete|default:-}</span></dd>
+				<!--{/if}--> 
+				<!--{if $order.ship_time}-->
+				<dd>
+					<label>{$lang.ship_time} :</label>
+					<span> {$order.ship_time|date:complete|default:-}</span></dd>
+				<!--{/if}--> 
+				<!--{if $order.finished_time}-->
+				<dd>
+					<label>{$lang.finished_time} :</label>
+					<span> {$order.finished_time|date:complete|default:-}</span></dd>
+				<!--{/if}--> 
+				<!--{if $order.postscript}-->
+				<dd>
+					<label>{$lang.postscript} :</label>
+					<span> {$order.postscript|escape|default:-}</span></dd>
+				<!--{/if}-->
+			</dl>
+		</div>
+		<div style="margin-bottom:15px;"  class="consignee_info inclusive-box f66">
+			<dl>
+				<dt>{$lang.consignee_info}</dt>
+				<dd>
+					<label>{$lang.consignee_address} :</label>
+					<span> {$order_extm.address|escape}</span></dd>
+				<dd>
+					<label>{$lang.zipcode} :</label>
+					<span> {$order_extm.zipcode|default:-}</span></dd>
+				<dd>
+					<label>{$lang.consignee} :</label>
+					<span> {$order_extm.consignee|escape|default:-}</span></dd>
+				<dd>
+					<label>{$lang.phone_tel} :</label>
+					<span> {$order_extm.phone_tel|default:-}</span></dd>
+				<dd>
+					<label>{$lang.phone_mob} :</label>
+					<span> {$order_extm.phone_mob|default:-}</span></dd>
+			</dl>
+		</div>
+	</div>
+</div>
+{include file=footer.html} 

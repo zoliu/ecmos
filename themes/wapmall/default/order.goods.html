@@ -1,85 +1,24 @@
-
-          <h2><strong>确认订单信息</strong></h2>
-            <div class="confirm-order-th clearfix">
-                <div class="s-title fl">店铺宝贝</div>
-                <div class="s-price fl">单价(元)</div>
-                <div class="s-amount fl">数量</div>
-                <div class="s-agio fl">优惠方式(元)</div>
-                <div class="s-total fl">小计(元)</div>
-            </div>
-      <!--{foreach from=$carts item=store}-->
-        <div class="store" id="{$store.store_id}">
-            <div class="shopbar">
-                <div class="shop-info">
-                    <div class="cart-checkbox">{$lang.store}:&nbsp;<a href="{url app=store&store_id=$store.store_id}" target="_blank"><u>{$store.store_name|escape}</u></a>
-                      <a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid=1009618401&site=cntaobao&s=2&charset=utf-8" ><img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid=1009618401&site=cntaobao&s=2&charset=utf-8" alt="点击这里给我发消息" /></a>&nbsp;<a target=blank href=http://wpa.qq.com/msgrd?V=1&Uin=1009618401&Site=商城客服&Menu=yes><img border="0" SRC=http://wpa.qq.com/pa?p=1:1009618401:8 alt="点击这里给我发消息"></a>
-                    </div>
-                </div>
-              <div class="order-promot-info">满200元 ,免运费</div>
-          </div>
-        <!--{foreach from=$store.items item=goods}-->
-          <ul class="item-confirm clearfix">
-              <li class="td-s-title fl">
-                      <div class="td-inner">
-                          <div class="item-pic fl"><a href="{url app=goods&id=$goods.goods_id}" target="_blank"><img src="{$goods.goods_image}" alt="{$goods.goods_name|escape}" width="80" height="80"></a></div>
-                          <div class="item-info fl ml10">
-                              <div class="item-basic-info lineheight18"><a target="_blank" href="{url app=goods&id=$goods.goods_id}"><p style="width:300px;">{$goods.goods_name|escape}</p></a></div>
-                          </div>
-                      </div>
-                  </li>
-              <li class="td-s-price fl">{$goods.subtotal|price}</li>
-              <li class="td-s-amount fl">{$goods.quantity}</li>
-              <li class="td-s-agio fl">无优惠</li>
-              <li class="td-s-total fl"><span class="color6f0e0e fontbold fontsize14">{$goods.subtotal|price}</span></li>
-          </ul>
-          <!--{/foreach}-->
-          <div class="confirm-order-info">
-              <table width="100%">
-                  <tr>
-                    <td width="45%" rowspan="2" style="line-height: 75px;padding-left: 30px;">
-                      
-                      {include file=order.postscript.html}
-
-                    </td>
-                    <td width="45%" colspan="">{$lang.select_shipping}：
-                <div class="fashion_list">
-                    <!--{foreach from=$store.shipping_methods item=shipping_method name=shipping_select}-->
-                    <ul class="receive_add cursor" shipping_id="{$store.amount}:{$store.quantity}:{$shipping_method.shipping_id}" style="width: 600px;" store_id='{$store.store_id}'>
-                        <li class="radio"><input type="radio" name="shipping_id[{$store.store_id}]" value="{$shipping_method.shipping_id}" {if $smarty.foreach.shipping_select.first}checked{/if} shipping_fee='{$shipping_method.price}' /></li>
-                        <li class="fashion">
-                          {$options_shipping[$shipping_method.shipping_name]|escape}</li>
-                        <li class="pay">{$lang.shipping_fee}:&nbsp;<span class="money" ectype="shipping_fee">&yen; {$shipping_method.price}</span></li>
-                        <li class="explain">{$shipping_method.shipping_desc|escape}</li>
-                    </ul>
-                    <!--{/foreach}-->
-                </div></td>
-                  </tr>
-                  <!--<tr style="display: none;">
-                    <td>运费险：<input type="checkbox" />卖家已为您的运费投保，最高赔付</td>
-                    <td style="display: none;"><b class="color6f0e0e">10000.00</b></td>
-                  </tr>-->
-                  <tr>
-                    <td colspan="3" align="right">店铺合计(含运费)：<b class="color6f0e0e fontsize18" id='amount_{$store.store_id}' amount='{$store.amount}'>{$store.amount|price}</b></td>
-                  </tr>
-               </table>
-          </div>
-  <!--优惠券-->
-  <div class="make_coupon mb5 mt5" style="display: none;">
-  <p>
-    {if $store.allow_coupon}&nbsp;&nbsp;
-      <input type="button" class="btn1" value="{$lang.use_coupon}" id="use_coupon" />
-    {/if}
-  </p>
-    {if $store.allow_coupon}
-      <p class="p2">{$lang.coupon_sn}:&nbsp;
-        <input type="text" name="coupon_sn" id="coupon_sn" class="text1" />
-        <input type="hidden" name="my_coupon" id="my_coupon" value='0' />  
-        <input type="button" value="{$lang.check}" class="check" id="check_coupon" style="margin-left: 28px;" />
-        <span class="usable">{$lang.usable}</span> 
-        <span class="unusable">{$lang.unusable}</span>
-      </p>
-    {/if}
-  </div>
-  <!--优惠券  END-->
+﻿<div class="cartbox mt20">
+   <div class="title clearfix mb10">
+      <span class="col-desc">
+	  	<a href="{url app=store&id=$goods_info.store_id}">{$goods_info.store_name|escape}</a>
+		<!--{if $goods_info.store_im_qq}-->
+        <a href="http://wpa.qq.com/msgrd?V=1&amp;uin={$goods_info.store_im_qq|escape}&amp;Site={$goods_info.store_name|escape}&amp;Menu=yes" target="_blank"><img align="absmiddle" src="http://wpa.qq.com/pa?p=1:{$goods_info.store_im_qq|escape}:4" alt="qq"></a>
+        <!--{/if}-->
+	  </span>
+   </div>
+   <div class="content">
+      <div class="store-each">
+            <!--{foreach from=$goods_info.items item=goods name=fe_goods}-->
+            <dl class="goods-each clearfix" {if !$smarty.foreach.fe_goods.first} style="border-top:0;"{/if}>
+               <dd class="pic"><a class="block" href="{url app=goods&id=$goods.goods_id}" target="_blank"><img src="{$goods.goods_image}" alt="{$goods.goods_name|escape}" width="48" height="48" /></a></dd>
+               <dd class="desc">
+                  <p><a href="{url app=goods&id=$goods.goods_id}" target="_blank">{$goods.goods_name|escape}</a></p>
+                  <p class="f66">{$goods.specification|escape}</p>
+               </dd>
+               <dd class="price">{$goods.price|price} <span class="quantity">x{$goods.quantity}</span></dd>
+            </dl>
+            <!-- {/foreach} -->
+         </div>
+   </div>
 </div>
-<!--{/foreach}-->

@@ -1,71 +1,27 @@
-{include file="member.header.html"}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<base href="{$site_url}/" />
-{$page_seo}
-<link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
-<link href="{res file=css/address.css}" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="index.php?act=jslang"></script>
-<script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
-<script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
-<script type="text/javascript" src="{lib file=member.js}" charset="utf-8"></script>
-<script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
-
-
-<script type="text/javascript">
-//<!CDATA[
-var SITE_URL = "{$site_url}";
-var REAL_SITE_URL = "{$real_site_url}";
-var PRICE_FORMAT = '{$price_format}';
-//]]>
-</script>
-<!--<script>
-$(function(){
-   $(".add_address,.add_box .add_submit").click(function(){	   
-	   $(".add_box,.address_con").slideToggle(600);
-	   })
-	$(".edit_address").click(function(){
-		$(".address_con").hide(600);
-		$(".edit_box").show(600);
-		})
-	$(".edit_box .add_submit").click(function(){
-		$(".address_con").show(600);
-		$(".edit_box").hide(600);
-		})
-   })
-</script>  -->
-{$_head_tags}
-</head>
-<body style="background:#f7f7f7;">
-
-    <div class="fixed">
-        <!---头部------>
-        <div class="header header2">
-		<a href="javascript:history.go(-1);" class="back2_pre"></a>
-            收货地址
-            <a  ectype="dialog" dialog_title="{$lang.add_address}" dialog_id="my_address_add" dialog_width="100%" uri="index.php?app=my_address&act=add" class="add_address"></a>
-        </div>  
-    </div>
-	<!------收货地址------------>
-    <div class="address_con">
-       <!--{foreach from=$addresses item=address name=v}-->
-        <div class="address_box" >
-            <div class="address_info">
-                <p>{$address.consignee|escape}（<!-- {if $address.phone_tel }-->{$address.phone_tel} <!--{else}--> {$address.phone_mob}<!--{/if}--> ）</p>
-                <p>{$address.region_name|escape}</p>
-                <p>{$address.address|escape}</p>
-                <p>{$address.zipcode|escape}</p>
-            </div>
-            <p class="oprate"><a href="javascript:void(0);" ectype="dialog" dialog_id="my_address_edit" dialog_title="{$lang.edit_address}" dialog_width="100%" uri="index.php?app=my_address&act=edit&addr_id={$address.addr_id}" class="edit_address"><b></b>编辑<i></i></a><a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=my_address&amp;act=drop&addr_id={$address.addr_id}');" class="del_address"><b></b>删除</a></p>
-        </div>
-        <!--{foreachelse}-->
-          <!--{/foreach}--> 
-    </div>
-    
-    <!------底部-------->
-{include file="member.footer.html"}
+{include file=member.header.html}
+<div id="page-my-address" class="mb10">
+	<div class="page-body my-address pb20">
+		<div class="add-address clearfix mt10 mr5">
+			<a href="{url app=my_address&act=add}" class="float-right btn">{$lang.add_address}</a>
+		</div>
+		<!-- {foreach from=$addresses item=address name=v} -->
+		<dl style="margin-bottom:15px;" class="inclusive-box f66">
+			<dd><label>{$lang.consignee} :</label><span>  {$address.consignee|escape}</span></dd>
+			<dd><label>{$lang.region} :</label><span> {$address.region_name|escape}</span></dd>
+			<dd><label>{$lang.address} :</label><span>  {$address.address|escape}</span></dd>
+			<dd><label>{$lang.zipcode} :</label><span> {$address.zipcode|escape}</span></dd>
+            <dd><label>{$lang.phone} :</label><span> {$address.phone_tel} / {$address.phone_mob}</span></dd>
+		</dl> 
+		<div class="btn-box">
+		   <a href="{url app=my_address&act=edit&addr_id=$address.addr_id}">{$lang.edit}</a>
+           <a href="javascript:;" confirm="{$lang.drop_confirm}" action="{url app=my_address&act=drop&addr_id=$address.addr_id}" class="J_AjaxRequest" >{$lang.drop}</a>
+		</div>   
+		<!-- {foreachelse} -->
+        <div class="no-record">{$lang.no_records}</div>
+        <!--{/foreach}-->
+	</div>
+    <!--{if $addresses}-->
+    {include file=page.bottom.html}
+    <!--{/if}-->
+</div>  
+{include file=footer.html}

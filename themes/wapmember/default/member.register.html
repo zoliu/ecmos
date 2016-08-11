@@ -1,330 +1,97 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-        {$page_seo}
-        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
-        <link href="{res file=css/wxlog-reg.css}" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="index.php?act=jslang"></script>
-        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
-        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
-        {$_head_tags}
-    </head>
-
+{include file=header.html} 
 <script type="text/javascript">
-
-
-$(function(){
-    $('#register_form').validate({
-        errorPlacement: function(error, element){
-            var error_td = element.parent('td');
-            error_td.find('label').hide();
-            error_td.append(error);
-        },
-        success       : function(label){
-            label.addClass('validate_right').text('OK!');
-        },
-        onkeyup: false,
-        rules : {
-            user_name : {
-                required : true,
-                byteRange: [3,15,'{$charset}'],
-                charNum:true,
-                remote   : {
-                    url :'index.php?app=member&act=check_user&ajax=1',
-                    type:'get',
-                    data:{
-                        user_name : function(){
-                            var user_name=$('#user_name').val();                          
-                            return user_name;
-                        }
-                    },
-                    beforeSend:function(){
-                        var _checking = $('#checking_user');
-                        _checking.prev('.field_notice').hide();
-                        _checking.next('label').hide();
-                        $(_checking).show();
-                    },
-                    complete :function(){
-                        $('#checking_user').hide();
-                    }
-                }
-            },
-            password : {
-                required : true,
-                minlength: 6
-            },
-            password_confirm : {
-                required : true,
-                equalTo  : '#password'
-            },
-            email : {
-                required : true,
-                email    : true,
-                  remote   : {
-                    url :'index.php?app=member&act=check_email&ajax=1',
-                    type:'get',
-                    data:{
-                        email : function(){
-                            return $('#email').val();
-                        }
-                    },
-                    beforeSend:function(){
-                        var _checking = $('#checking_email');
-                        _checking.prev('.field_notice').hide();
-                        _checking.next('label').hide();
-                        $(_checking).show();
-                    },
-                    complete :function(){
-                        $('#checking_email').hide();
-                    }
-                }
-            },
-            captcha : {
-                required : true,
-                remote   : {
-                    url : 'index.php?app=captcha&act=check_captcha',
-                    type: 'get',
-                    data:{
-                        captcha : function(){
-                            return $('#captcha1').val();
-                        }
-                    }
-                }
-            },
-            agree : {
-                required : true
-            },
-            phone_mob : {
-                required : true,
-                mobile : true,
-                remote   : {
-                    url :'index.php?app=member&act=check_phone&ajax=1',
-                    type:'get',
-                    data:{
-                        phone_mob : function(){
-                            var phone_mob=$('#phone_mob').val();                           
-                            return phone_mob;
-                        }
-                    },
-                    beforeSend:function(){
-                        var _checking = $('#checking_phone_mob');
-                        _checking.prev('.field_notice').hide();
-                        _checking.next('label').hide();
-                        $(_checking).show();
-                    },
-                    complete :function(){
-                        $('#checking_phone_mob').hide();
-                    }
-                }/**/
-            },
-            tel_captcha:{
-                required:true
-            }
-        },
-        messages : {
-            user_name : {
-                required : '{$lang.user_name_required}',
-                byteRange: '{$lang.user_name_limit}',
-                remote   : '{$lang.user_already_taken}',
-                charNum :'用户名只能由字母数字下划线组成'
-            },
-            password  : {
-                required : '{$lang.password_required}',
-                minlength: '{$lang.password_length_limit}'
-            },
-            password_confirm : {
-                required : '{$lang.password_confirm_please}',
-                equalTo  : '{$lang.password_inconsistent}'
-            },
-            email : {
-                required : '{$lang.email_required}',
-                email    : '{$lang.email_invalid}',
-                remote :'{$lang.email_exitst}'
-            },
-            captcha : {
-                required : '{$lang.captcha_required}',
-                remote   : '{$lang.captcha_error}'
-            },
-            agree : {
-                required : '{$lang.agree_required}'
-            },
-            phone_mob : {
-                 required : '手机号必填',
-                 mobile : '必须为手机格式',
-                 remote:'手机号已存在',
-            },
-            tel_captcha:{
-                required : '验证码必填',
-            }
-        }
-    });
-});
-//·¢ËÍÊÖ»úÑéÖ¤Âë
-$(function(){ 
-
-    $("#tel_captcha").click(function(){ 
-        
-        var phone_mob=$('#phone_mob').val();
-
-        $.getJSON('index.php?act=sms_captcha&code=register_mobile&mobile=' + phone_mob, function(data) {
-            if(data == 1)
-            {
-                alert('验证码已发送成功！');
-                sendMessage();
-            }else if(data == -21){
-                alert('验证码发送失败，请输入正确的手机号');
-            }
-            });
-        
-    }); 
-}); 
-
-jQuery.validator.addMethod("charNum", function(value, element) {
-
-    var chrnum = /^([a-zA-Z0-9_]+)$/;
-
-    return this.optional(element) || (chrnum.test(value));
-
-}, "只能输入数字和字母(字符A-Z, a-z, 0-9)");
-jQuery.validator.addMethod("mobile", function(value, element) {
-
-    var length = value.length;
-
-    var mobile =  /^[1][3-9][0-9]{9}$/
-
-    return this.optional(element) || (length == 11 && mobile.test(value));
-
-}, "手机号码格式错误");
-
-
+	$(function(){
+		$('#send_phonecode').click(function(){
+			if($.trim($("input[name='phone_mob']").val())=='' || !is_mobile($.trim($("input[name='phone_mob']").val()))){
+				layer.open({content: "{$lang.input_phone_mob}", className:'layer-popup', time: 3});
+				return;
+			}
+			send_phonecode();
+		});
+	});
+	function time(o, wait) {
+		if (wait == 0) {
+			o.removeClass('btn_graylong_disable');
+			o.attr('disabled', false);			
+			o.val("{$lang.get_phone_captcha}");
+			wait = 120;
+		} else {
+			o.addClass('btn_graylong_disable');
+			o.attr('disabled', true);
+			o.val("{$lang.get_captcha_again}(" + wait + "{$lang.miao_hou})");
+			wait--;
+			setTimeout(function() {
+				time(o, wait)
+			},
+			1000)
+		}
+	}
+	function send_phonecode(){
+		var phone_mob = $.trim($("input[name='phone_mob']").val());
+    	$.ajax({
+        	type:"POST",
+        	url: REAL_SITE_URL + "/index.php?app=default&act=sendcode",
+			data: {from: "register", phone_mob: phone_mob},
+        	dataType:"json",
+        	success:function(data){
+           	 	if(data.done){
+					time($('#send_phonecode'), 120);
+            	}
+                layer.open({content: data.msg, className:'layer-popup', time: 3});
+        	},
+        	error: function(){
+				layer.open({content: "{$lang.mail_send_failure}", className:'layer-popup', time: 5});
+			}
+    	});
+	}
 </script>
-<script type="text/javascript">
-$(function(){
-    poshytip_message($('#user_name'));
-    poshytip_message($('#password'));
-    poshytip_message($('#password_confirm'));
-    poshytip_message($('#email'));
-    poshytip_message($('#captcha1'));
-    poshytip_message($('#phone_mob'));
-    poshytip_message($('#tel_aptcha'));
-});
-</script>
-    <body id="log-reg" class="gray">
-        <div class="fixed">
-            <div class="header header2">
-                <a href="javascript:history.back(-1);" class="back2_pre"></a>
-                用户注册
-            </div>  
-        </div>
-
-     
-        <div class="login_panel" >
-            <form class="login_box" id="register_form" method="post">
-                <h2>填写注册信息</h2>
-                <table  width="100%">
-                    <tr>
-                        <td> <input placeholder="用户名" type="text" name="user_name" class="text">
-                                <label class="field_notice"></label></td>
-                    </tr>
-                    <tr>  
-                        <td> <input placeholder="密 码"  id="password" name="password" type="password"  class="text">  
-                            <div class="clr"></div><label></label>
-                        </td>
-                    </tr>
-                    <tr> 
-                        <td>  
-                            <input placeholder="确认密码"   name="password_confirm" type="password"  class="text">  
-                                <label class="field_notice"></label></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input placeholder="{$lang.email}:{$lang.email_desc}"  id="email" name="email" type="text"  class="text">  
-                            <label class="field_notice"></label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input placeholder="{$lang.phone_mob}"  id="phone_mob" name="phone_mob" type="text"  class="text">  
-                            <label class="field_notice"></label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input placeholder="{$lang.tel_captcha}" name="tel_captcha" type="text"  class="text" style="width:40%;">
-                            <input name='telcaptcha2' class="btn" id='tel_captcha' type="button" value="{$lang.send_captcha}" onclick="" style="width:55%;height: 40px;float: right;margin: 6px auto;"/>
-                            <label class="field_notice"></label>
-                        </td>
-                    </tr>
-                    {if !$deduct_parent }
-                     <tr>
-                        <td>
-                            <input placeholder="{$lang.parent_user}"  id="parent_user" name="parent_user" type="text"  class="text">  
-                            <label class="field_notice"></label>
-                        </td>
-                    </tr>
-
-<script type="text/javascript">
-
-var InterValObj; //timer变量，控制时间
-var count = 90; //间隔函数，1秒执行
-var curCount;//当前剩余秒数
-
-function sendMessage() {
-  　curCount = count;
-　　//设置button效果，开始计时
-     $("#tel_captcha").attr("disabled", "true");
-     curCount=get_Time(curCount)
-     $("#tel_captcha").val(curCount + "s内输入验证码");
-     InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
-　　  //向后台发送处理数据
-}
-
-//timer处理函数
-function SetRemainTime() {
-    if (curCount == 0) {                
-        window.clearInterval(InterValObj);//停止计时器
-        $("#tel_captcha").removeAttr("disabled");//启用按钮
-        $("#tel_captcha").val("重新发送验证码");
-    }
-    else {
-        curCount--;
-        curCount=get_Time(curCount);
-        $("#tel_captcha").val(curCount + "s内输入验证码");
-    }
-}
-        //timer处理函数
-function get_Time(curCount) {
-    if (curCount<10) {
-        curCount="0"+curCount;
-    }
-    return curCount;
-}
-</script>
-                    {/if}
-                    <!--{if $captcha}-->
-                    <tr>
-                        <td>{$lang.captcha}:<input placeholder="{$lang.captcha_desc}" type="text" name="captcha" class="text" id="captcha1" style="width: 60%;" />
-                            <a href="javascript:change_captcha($('#captcha'));" class="renewedly"><img id="captcha" src="index.php?app=captcha&amp;{$random_number}" /></a></td>
-                    </tr>
-                    <!--{/if}-->
-
-                    <tr>
-                        <td>
-                            <input  value="立即注册"  type="submit" class=" red_btn sub_btn">
-                              <input class="input" type="hidden" id="recommender" name="recommender" title="{$lang.recommender_desc}" placeholder='{$lang.recommender_desc}' value='{$recomm_user}' />
-                        </td>
-                    </tr>
-                </table>
-                <p>已有账号？<a href="{url app=member&act=login&ret_url=$ret_url}" >直接登录</a></p>
-                <input type="hidden"  checked name="agree" value="1" value="1" > 
-            </form>
-        </div>
-
-
-
-    </body>
-</html>
+<div id="main">
+	<div id="page-auth" class="page-register page-body">
+		<form class="J_AjaxForm" method="post">
+			<dl class="form pb20">
+				<dd>
+					<input type="text" id="user_name" name="user_name" class="J_AjaxFormFields input" placeholder=" {$lang.user_name_limit}"/>
+				</dd>
+				<dd>
+					<input type="password" id="password" name="password" class="J_AjaxFormFields input" placeholder=" {$lang.password_length_limit}"/>
+				</dd>
+				<dd>
+					<input type="password" name="password_confirm" id="password_confirm" class="J_AjaxFormFields input" placeholder=" {$lang.input_comfirm_password}"/>
+				</dd>
+				<dd>
+					<input type="text" name="email" id="email" class="J_AjaxFormFields input" placeholder=" {$lang.input_email}"/>
+				</dd>
+				<dd>
+					<input type="text" name="phone_mob" id="phone_mob" class="J_AjaxFormFields input" placeholder=" {$lang.input_phone_mob}"/>
+				</dd>
+				<!--{if $phone_captcha}-->
+				<dd class="captcha-box">
+					<input type="text" name="check_code" class="J_AjaxFormFields input captcha" placeholder=" {$lang.phone_captcha}" />
+					<input id="send_phonecode" type="button" class="btn_graylong" value="{$lang.get_phone_captcha}">
+					</input>
+				</dd>
+				<!--{/if}-->
+				
+				<!--{if $captcha}-->
+				
+				<dd class="captcha-box">
+					<input type="text" name="captcha" class="J_AjaxFormFields input captcha" id="captcha1" placeholder=" {$lang.input_captcha}" />
+					<img id="captcha" src="{$real_site_url}/index.php?app=captcha&amp;{$random_number}" onclick="javascript:change_captcha($('#captcha'));" /><br />
+				</dd>
+				
+				<!--{/if}-->
+				
+				<dd class="block mb10 clearfix read-licence">
+					<input id="clause" type="checkbox"  name="agree" value="1" checked="checked" class="J_AjaxFormFields"  />
+					<label for="clause" style="color:#333;" > {$lang.i_have_read} <a href="{url app=article&act=system&code=eula}" >{$lang.mall_eula}</a> </label>
+				</dd>
+				<dd>
+					<input type="hidden" class="J_AjaxFormSuccessRet J_AjaxFormFields" name="ret_url" value="{$ret_url}"  />
+					<input type="submit" class="J_AjaxFormSubmit btn-alipay"  value="{$lang.register}" />
+					<p class="mt20"><a href="{url app=member&act=login}">{$lang.already_have_account}</a></p>
+				</dd>
+			</dl>
+		</form>
+	</div>
+</div>
+{include file=footer.html} 

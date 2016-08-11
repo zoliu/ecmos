@@ -35,11 +35,24 @@ $(function() {
 
 </script>
 
-<div class="u_order">
-	<div id="orderbox">
-		<div class="detail">
-			<div class="eject_con bgwhite">
-				<div class="add">
+<div id="page-member">
+    <div class="main">
+        <div class="fun-list">
+            <ul class="clearfix">
+                <li><a href="{url app=my_money&act=index}">总览</a></li>
+                <li><a href="{url app=my_money&act=setting}">设置</a></li>
+                <li><a href="{url app=my_money&act=log}">记录</a></li>
+                <li><a href="{url app=my_money&act=bank}">银行卡</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="deposit margin10"> 
+    <div class="deposit-account">
+        <div class="amount-overview mb10 pt10">
+            <div class="account-info">
+            	<div class="add">
 					<form id="_form_" method="post">
 						<ul>
 							{if $isset_password}
@@ -47,7 +60,6 @@ $(function() {
 								<h3>旧支付密码：</h3>
 								<p>
 									<input name="old_password" type="password" />
-									<!-- <label class="field_notice"></label> -->
 								</p>
 							</li>
 							{/if}
@@ -69,20 +81,11 @@ $(function() {
 						</div>
 					</form>
 				</div>
-			</div>
-		</div>
-		
-		<div class="clear"></div>
-		<div class="adorn_right1"></div>
-		<div class="adorn_right2"></div>
-		<div class="adorn_right3"></div>
-		<div class="adorn_right4"></div>
-	</div>
-	<div class="clear"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="clear"></div>
+<iframe id='iframe_post' name="iframe_post" src="about:blank" frameborder="0" width="0" height="0"></iframe>
 
-<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
-
-{include file=member.footer.html}
+{include file=footer.html} 

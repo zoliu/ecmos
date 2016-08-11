@@ -1,28 +1,133 @@
-{include file='header2.html'}
- <section id="wraper">
-      {include file="header.top_nav.html"}
-        <form id="searchbox">
-            <input type="text"><input type="submit" value="">
-        </form>
-        <ul class="pro-list-2">
-        <!--{foreach from=$stores item=store}-->
-        <li>
-                <figure><a href="{url app=store&id=$store.store_id}"><img src="{$store.store_logo}"   alt="{$store.store_name|escape}" title="{$store.store_name|escape}" ></a></figure>
-                <section>
-                    <h2><a href="{url app=store&id=$store.store_id}">{$store.store_name|escape}</a></h2>
-                    <p>{$store.user_name|escape}</p>
-                    <div>{$store.region_name|escape}<img src="{$store.credit_image}" style="width:17px; height:16px;" /></div>
-                </section>
-                <nav><a href="{url app=store&id=$store.store_id}">收藏店铺</a><a href="#">收藏店铺</a><a href="{url app=store&id=$store.store_id}">进入店铺</a></nav>
+{include file=top.html}
+<script type="text/javascript" src="{lib file=search_store.js}" charset="utf-8"></script>
+<script type="text/javascript">
+$(function(){
+	var order = '{$smarty.get.order}';
+	var	order_arr = order.split(' ');
+	$('#'+order_arr[0]).addClass('current');
+	var type = order_arr[0];
+	var char;
+	switch(type)
+	{
+		case 'praise_rate':
+		char = '好评率';
+		break;
+		case 'credit_value':
+		char = '信誉度';
+		break;
+		case 'add_time':
+		char = '添加时间';
+		break;
+	}
+	if(type !=="") $('#'+order_arr[0]+' span').html(order_arr[1]=="desc" ? char+"↓" : char+"↑" );
+	$(".display-order li").click(function(){
+		if(this.id==''){
+			dropParam('order');// default order
+			return false;
+		}
+		else
+		{
+			dd = " desc";
+			if(order != '') {
+				if(order_arr[0]==this.id && order_arr[1]=="desc")
+					dd = " asc";
+				else dd = " desc";
+			}
+			replaceParam('order', this.id+dd);
+			return false;
+		}
+	});
+});
+</script>
+<div id="page-search-store" class="page J_page">
+	<!--common bar start-->
+    <div class="bar-wrap">
+		<div class="top-bar"> 
+			<a href="javascript:pageBack();" class="pageback"><span></span></a>
+			<div class="search-box">
+				<form id="search-form" method="get">
+					<input type="hidden" name="app" value="search"/>
+                	<input type="hidden" name="act" value="store"/>
+					<input name="keyword"  type="text" class="kw" placeholder="请输入你要搜索的店铺名称" value="{$smarty.get.keyword}"/>
+					<input type="submit" class="submit" value="">
+				</form>
+			</div>
+			<a style="top:0px;" href="javascript:;" onclick="PsmobanShowMenu();" class="filter">筛选</a> 
+		</div>
+		
+	</div>
+    <!--common bar end-->	
+	<div class="search-store">
+    	<div class="attr">
+				<div class="cons">
+					<ul class="display-order clearfix">
+						<li {if $smarty.get.order eq ''}class="current"{/if}><span>综合</span></li>
+						<li id="credit_value"><span>{$lang.credit_grade}</span></li>
+						<li id="add_time"><span>{$lang.add_time}</span></li>
+						<li id="praise_rate"><span>{$lang.praise_rate}</span></li>
+					</ul>
+				</div>
+			</div>
+        <ul class="shop-list ml10 mr10">
+        	<!--{foreach from=$stores item=store}-->
+            <li class="mt10">
+            	<dl>
+                    <dt><a href="{url app=store&id=$store.store_id}"><img src="{$store.store_logo}" width="80" height="80" /></a></dt>
+                    <dd>
+                        <h3><a href="{url app=store&id=$store.store_id}">{$store.store_name|escape}</a></h3>
+                        <p>{$store.user_name|escape}</p>
+                        <p>{$store.region_name|escape}</p>
+                        <p>
+                            上架{$store.goods_count}件商品
+                            <i> 
+                                <!--{if $store.credit_value gt 0}-->
+                                <img src="{$store.credit_image}" />
+                                <!--{/if}-->
+                            </i>
+                        </p>
+                    </dd>
+                </dl>
             </li>
-        <!--{foreachelse}-->
-        暂无此类商品
-        <!--{/foreach}-->
-
+            <!--{foreachelse}-->
+            <div class="no-data mt20 center">搜索无结果，请重新搜搜</div>
+            <!--{/foreach}-->
+        </ul>    
+    </div>
+    {include file=page.bottom.html}
+</div>
+<div class="masker J_masker" onclick="PsmobanShowMenu();"></div>
+<div class="menus J_menus">
+  <div class="attrs" style="overflow: auto;height: 100%">
+    <div class="attr"> 
+     <div class="attrk">{$lang.region_name}</div>
+      <div class="attrv">
+        <ul class="clearfix"  ectype="ul_cate">
+          <!--{foreach from=$regions item=region_name key=region_id name=fe_region}-->
+          <li {if $smarty.foreach.fe_region.iteration gt 4}class="hidden"{/if}><a href="{url app=search&act=store&region_id=$region_id}"><span>{$region_name|escape}</span></a></li>
+          <!--{/foreach}-->
         </ul>
-        {include file='page.bottom.html'}
-     {include file='footer2.html'}
-    </section>
-    
-</body>
-</html>
+        <!--{if $category_count gt 4}-->
+        <div class="options">
+          <a class="more" href="javascript:void(0);"><span>查看更多</span><i></i></a>
+        </div>
+        <!--{/if}-->
+      </div>
+      <!--{foreach from=$scategorys item=scategory}-->
+      <div class="attrk"><a href="{url app=search&act=store&cate_id=$scategory.id}">{$scategory.value|escape}</a></div>
+      <div class="attrv">
+        <ul class="clearfix"  ectype="ul_cate">
+          <!--{foreach from=$scategory.children item=child name=fe_child}-->
+          <li {if $smarty.foreach.fe_child.iteration gt 4}class="hidden"{/if}><a href="{url app=search&act=store&cate_id=$child.id}"><span>{$child.value|escape}</span></a></li>
+          <!--{/foreach}-->
+        </ul>
+        <!--{if $scategory.count gt 4}-->
+        <div class="options">
+          <a class="more" href="javascript:void(0);"><span>查看更多</span><i></i></a>
+        </div>
+        <!--{/if}-->
+      </div>
+      <!--{/foreach}-->
+  </div>
+</div>
+</div>
+{include file=footer.html}

@@ -1,0 +1,15 @@
+{include file=header.html}
+<style type="text/css">
+.page-format {border:0px; background:none;}
+</style>
+<div id="page-goods" class="page-goods" style="margin-bottom:100px;"> 
+	{include file=goodsinfo.html}
+    <ul class="menus-tab clearfix" >
+    	<li><a href="{url app=goods&id=$goods.goods_id}#module">商品详情</a></li>
+    	<li><a href="{url app=goods&act=comments&id=$goods.goods_id}#module">商品评价</a></li>
+        <li><a href="{url app=goods&act=saleslog&id=$goods.goods_id}#module">购买记录</a></li>
+        <li class="active"><a href="{url app=goods&act=qa&id=$goods.goods_id}#module">我要咨询</a></li>
+    </ul>
+    {include file=qa.html}
+</div>
+{include file=footer.html}

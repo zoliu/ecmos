@@ -48,37 +48,35 @@ $(function() {
 
 </script>
 
-<div class="u_order">
-    <div id="orderbox">
-        <div class="detail">
-            <form id="_form_" method="post">
-                <p>充值金额：<input type="text" name="money" /> </p>
-                <div style="margin: 0.5em 0;">
-                    <p>充值方式：</p>
+<div id="page-my-address" class="mb10">
+    <div class="page-body my-address pb20">
+        <form id="_form_" method="post">
+        <dl style="margin-bottom:15px;" class="inclusive-box f66">
+            <dd>
+                <label>充值金额: </label>
+                <span>
+                    <input type="text" name="money" />
+                </span>
+            </dd>
+            <dd>
+                <label>充值方式: </label>
+                <span>
                     {foreach from=$pay_list item=data}
                     <p style="margin: 0.5em 2em 0.5em 0; display: inline-block;" onclick="$('#pay_{$data.payment_id}').attr('checked','checked')">
                         <input type="radio" id="pay_{$data.payment_id}" name="pay_id" title="{$data.payment_name}" value="{$data.payment_id}" />
                         <img src="{$site_url}/includes/payments/{$data.payment_code}/logo.gif" style="vertical-align: middle; height: 2.5em;" />
                     </p>
                     {/foreach}
-                </div>
-                <input type="submit" value="提交" style="margin-left: 2em;" />
-            </form>
-        </div>
-        
-        <div class="clear"></div>
-        <div class="adorn_right1"></div>
-        <div class="adorn_right2"></div>
-        <div class="adorn_right3"></div>
-        <div class="adorn_right4"></div>
+                </span>
+            </dd>
+            <dd>
+                <input class="my_btn" type="submit" value="提交" style="margin-left: 2em;" />
+            </dd>
+        </dl>
+        </form>
     </div>
-    <div class="clear"></div>
 </div>
 
-<div class="clear"></div>
-
-<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
-
-{include file=member.footer.html}
+{include file=footer.html}
 
 {/if}

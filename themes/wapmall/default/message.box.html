@@ -1,54 +1,30 @@
-{include file="member.header.html"}
-    <div class="user_header">
-                     
-        <div class="order_panel" style="height:60px;">
-            <ul class="orders"style="margin-left:10px;height:180px;">
-            {include file="member.submenu.html"}
-            </ul>
-            <div class="orderbox">
-            <!--{foreach from=$messages item=message name=v}-->
-            <h2><span><i></i>{$message.user_info.user_name}</span><b>{$lang.order_status}:<font style="color:#b20005;">{$order.status|modifier:order_status}<!--{if $order.evaluation_status}-->,&nbsp;{$lang.already_evaluate}<!--{/if}--></font></b></h2>
-
-            <div class="detail">
-                <a href="{url app=goods&id=$goods.goods_id}"> <img src="{$goods.goods_image}" /></a>
-                <p class="title">{$goods.goods_name|escape}</p>
-                <p>​{$goods.specification|escape}​</p>​
-                <p>价格：<strong>{$goods.price|price}</strong><span>数量：{$goods.quantity}</span></p>
-            </div>
-            <!--{/foreach}-->
-
-            <!--{if $order.payment_name}-->
-
-            <!--{/if}-->
-            <p class="opr">
-                <a class="white_btn" href="{url app=buyer_order&act=evaluate&order_id=$order.order_id}" id="order{$order.order_id}_evaluate"{if $order.status neq ORDER_FINISHED or $order.evaluation_status neq 0} style="display:none"{/if}>{$lang.evaluate}</a>
-                <a href="{url app=cashier&order_id=$order.order_id}"  id="order{$order.order_id}_action_pay"{if $order.status neq ORDER_PENDING} style="display:none"{/if} class="white_btn">{$lang.pay}</a>
-                <input type="button" value="{$lang.confirm_order}" class="white_btn" ectype="dialog" dialog_id="buyer_order_confirm_order" dialog_width="100%" dialog_title="{$lang.confirm_order}" uri="index.php?app=buyer_order&amp;act=confirm_order&order_id={$order.order_id}&ajax"  id="order{$order.order_id}_action_confirm"{if $order.status neq ORDER_SHIPPED or $order.payment_code eq 'cod'} style="display:none"{/if} />
-                       <input type="button" value="{$lang.cancel_order}" class="white_btn" ectype="dialog" dialog_width="100%" dialog_title="{$lang.cancel_order}" dialog_id="buyer_order_cancel_order" uri="index.php?app=buyer_order&amp;act=cancel_order&order_id={$order.order_id}&ajax"  id="order{$order.order_id}_action_cancel"{if $order.status neq ORDER_PENDING and $order.status neq ORDER_SUBMITTED} style="display:none"{/if} />
-                       <a href="{url app=buyer_order&act=view&order_id=$order.order_id}"  class="white_btn">{$lang.view_order}</a>
-            </p>
-        </div>  
-   		{include file="member.menu.html"}
-        <div class="adorn_bottom"></div>
-            <iframe id='iframe_post' name="iframe_post" src="about:blank" frameborder="0" width="0" height="0"></iframe>
-			{include file="member.footer.html"}
-        </div>
-
-        <div class="set_address"><a href="index.php?app=my_address" id="address_text"></a></div>
-        <script>
-            $(function() {
-                $(".set_address").click(function() {
-                    if ($('#address_text').text() == '')
-                    {
-                        $('#address_text').text('收货地址管理');
-                    } else {
-                        $('#address_text').text('');
-                    }
-                })
-            })
-        </script>
+{include file=member.header.html}
+<div id="page-message">
+	<div class="tabs">
+    	<ul class="tab-list clearfix">
+        	<li {if $smarty.get.act eq 'newpm'}class="active"{/if}><a href="{url app=message&act=newpm}">未读信息</a></li>
+        	<li {if $smarty.get.act eq 'privatepm'}class="active"{/if}><a href="{url app=message&act=privatepm}">私人信息</a></li>
+            <li {if $smarty.get.act eq 'systempm'}class="active"{/if}><a href="{url app=message&act=systempm}">系统信息</a></li>
+        </ul>
     </div>
-
-</body>
-</html>
-    
+	<div class="pm-list">
+    	<!--{if $messages}-->
+        <ul>
+    		<!--{foreach from=$messages item=message name=v}-->
+    		<li>
+            	<div class="send-user-logo">
+                	<img width="50" height="50"  src="{$message.user_info.portrait}" />
+                </div>
+            	<div class="detail" {if $smarty.foreach.v.last}style="border:0px;"{/if}>
+                	<a href="{url app=message&act=view&msg_id=$message.msg_id}">
+                        <p class="t"><span>{$message.user_info.user_name}</span><em>{$message.last_update|date:Y-m-d H:i}</em></p>
+                        <p class="d">{if $message.new}<span style="color:#FF2700;">[{$lang.new_message_mark}]</span>{/if}{$message.content}</p>
+                    </a>
+                </div>
+            </li>
+    		<!--{/foreach}--> 
+    	</ul>
+        <!--{/if}-->
+    </div>
+</div>
+{include file=footer.html} 

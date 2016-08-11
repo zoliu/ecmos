@@ -1,0 +1,28 @@
+<div class="commnent-detail mb10">
+	<ul>
+    	<!-- {foreach from=$goods_comments item=comment} -->
+		<li>
+        	<p>
+            {if $comment.evaluation gt 0}<img src="{res file=images/bit.gif}" />{/if}
+            {if $comment.evaluation gt 1}<img src="{res file=images/bit.gif}" />{/if}
+            {if $comment.evaluation gt 2}<img src="{res file=images/bit.gif}" />{/if}
+            {if $comment.evaluation lt 3}<img src="{res file=images/bit2.gif}" />{/if}
+            {if $comment.evaluation lt 2}<img src="{res file=images/bit2.gif}" />{/if}
+            {if $comment.evaluation lt 1}<img src="{res file=images/bit2.gif}" />{/if}
+            </p>
+        	<p>{$comment.comment|escape|nl2br}</p>
+            <div>
+            	<span>{$comment.evaluation_time|date:complete}</span>
+            	<em>{if $comment.anonymous}***{else}{$comment.buyer_name|escape}{/if}</em>
+            </div>
+        </li>
+        <!-- {foreachelse} -->
+        <li style="border:0px;">
+            {$lang.no_records}
+        </li>
+        <!-- {/foreach} -->  
+	</ul>
+    {include file=page.bottom.html}
+</div>
+
+

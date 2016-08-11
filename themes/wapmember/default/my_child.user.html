@@ -18,53 +18,71 @@ $(function() {
 });
 </script>
 
-<div class="u_order">
-	<div id="orderbox">
-		<div class="detail">
-            <div class="public table">
-                <div class="user_search">
-                    <form method="get">
-                        <input type="hidden" name="app" value="my_child" />
-                        <input type="hidden" name="act" value="user" />
-                
-                        <span>用户名：</span>
-                        <input class="queryInput" name="user_name" value="{$query.user_name}" type="text" />
-                        
-                        <br/>
-                        <span>手机号：</span>
-                        <input class="queryInput" name="phone_mob" value="{$query.phone_mob}" type="text" />
-                        
-                        <input type="submit" class="btn" value="查询" />
-                    </form>
-                </div>
-
-                {foreach from=$user_list item=data}
-                <ul class="am-list">
-                    <li>
-                        <span>用户名|昵称: </span>
-                        <span>{$data.user_name}|{$data.real_name}</span>
-                    </li>
-                    <li>
-                        <span>手机号: </span>
-                        <span>{$data.phone_mob}</span>
-                    </li>
-                    <li>
-                        <span>用户等级: </span>
-                        <span>{$data.grade_name}</span>
-                    </li>
-                    <li>
-                        <span>注册时间: </span>
-                        <span>{$data.reg_time|date}</span>
-                    </li>
-                </ul>
-                {/foreach}
-
-                {include file="member.page.bottom.html"}
-            </div>
+<div id="page-member">
+    <div class="main">
+        <div class="fun-list">
+            <ul class="clearfix">
+                <li><a href="{url app=my_child&act=index}">总览</a></li>
+                <li><a href="{url app=my_child&act=user}">下级会员</a></li>
+                <li><a href="{url app=my_child&act=user_order}">下级会员订单</a></li>
+                <li><a href="{url app=my_child&act=store}">下级商铺</a></li>
+                <li><a href="{url app=my_child&act=store_order}">下级商铺订单</a></li>
+            </ul>
         </div>
     </div>
 </div>
 
-<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
+<div id="page-my-address" class="mb10">
+    <div class="page-body my-address pb20">
+        <form method="get">
+            <input type="hidden" name="app" value="my_child" />
+            <input type="hidden" name="act" value="user" />
+            <dl style="margin-bottom:15px;" class="inclusive-box f66">
+                <dd>
+                    <label>用户名: </label>
+                    <span>
+                        <input class="queryInput" name="user_name" value="{$query.user_name}" type="text" />
+                    </span>
+                </dd>
+                <dd>
+                    <label>手机号: </label>
+                    <span>
+                        <input class="queryInput" name="phone_mob" value="{$query.phone_mob}" type="text" />
+                    </span>
+                </dd>
+                <dd>
+                    <input type="submit" class="btn" value="查询" />
+                </dd>
+            </dl>
+        </form>
 
-{include file=member.footer.html}
+        <!-- {foreach from=$user_list item=data} -->
+        <dl style="margin-bottom:15px;" class="inclusive-box f66">
+            <dd>
+                <label>用户名|昵称: </label>
+                <span>{$data.user_name}|{$data.real_name}</span>
+            </dd>
+            <dd>
+                <label>手机号: </label>
+                <span>{$data.phone_mob}</span>
+            </dd>
+            <dd>
+                <label>用户等级: </label>
+                <span>{$data.grade_name}</span>
+            </dd>
+            <dd>
+                <label>注册时间: </label>
+                <span>{$data.reg_time|date}</span>
+            </dd>
+        </dl> 
+        <div class="btn-box"></div>   
+        <!-- {foreachelse} -->
+        <div class="no-record">没有符合条件的记录</div>
+        <!--{/foreach}-->
+
+    </div>
+
+    {include file=page.bottom.html}
+</div>
+
+{include file=footer.html}

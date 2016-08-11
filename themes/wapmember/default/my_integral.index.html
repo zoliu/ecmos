@@ -1,0 +1,43 @@
+{include file=member.header.html}
+<div class="mt10">
+	<div class="user-integral-info clearfix">
+		<div class="valid user-integral">
+			<div class="wrap"> <b class="des">可用的积分</b> <b class="piont red">{$integral_piont|default:0}</b> </div>
+		</div>
+		<div class="invalid user-integral">
+			<div class="wrap" style="border:0px;"> <b class="des">冻结的积分</b> <b class="piont">{$frozen_integral|default:0}</b> </div>
+		</div>
+	</div>
+	<div class="integral_sort">
+		<ul class="clearfix">
+			<li><a href="{url app=my_integral}" {if $smarty.get.type eq ''}class="active"{/if}><span>所有明细</span></a></li>
+			<li><a href="{url app=my_integral&type=integral_income}" {if $smarty.get.type eq 'integral_income'}class="active"{/if}><span>收入</span></a></li>
+			<li><a href="{url app=my_integral&type=integral_pay}" {if $smarty.get.type eq 'integral_pay'}class="active"{/if}><span>支出</span></a></li>
+		</ul>
+	</div>
+	<div class="user-integral-detail pt10 bgf">
+		<div class="tt clearfix"> <span class="notes"><em>名称</em></span><span class="what"><em>积分变化</em></span><span class="when"><em>日期</em></span></div>
+		<!--{if $integral_log}-->
+		<ul class="ct">
+			<!-- {foreach from=$integral_log item=integral name=fe_log} -->
+			<li class="it clearfix" {if $smarty.foreach.fe_log.last} style="border-bottom:0;"{/if}>
+				<div class="col notes"><em>{$integral.name}</em></div>
+				<div class="col what"> <em> 
+					<!--{if $integral.integral_change > 0}--> 
+					<span class="plus">+{$integral.changes}</span> 
+					<!--{else}--> 
+					<span class="minus">{$integral.changes}</span> 
+					<!--{/if}--> 
+					</em> </div>
+				<div class="col when"><em>{$integral.add_time|date:Y-m-d H:i:s}</em></div>
+			</li>
+			<!--{/foreach}-->
+		</ul>
+		<!--{else}-->
+		<div class="notice-word mt10"><p>{$lang.no_records}</p></div>
+		<!--{/if}-->
+	</div>
+</div>
+{include file=page.bottom.html}
+{include file=footer.html}
+

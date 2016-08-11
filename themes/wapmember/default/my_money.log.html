@@ -18,75 +18,94 @@ $(function() {
 });
 </script>
 
-<div class="u_order">
-	<div id="orderbox">
-		<div class="detail">
-            <div class="public table">
-                <div class="user_search">
-                    <form method="get">
-                        <input type="hidden" name="app" value="my_money" />
-                        <input type="hidden" name="act" value="log" />
-                
-                        <span>日期：</span>
-                        <input type="text" class="text1 width2" name="start_time" id="start_time" value="{$query.start_time}" placeholder="2016-01-01" />
-                        至
-                        <input type="text" class="text1 width2" name="end_time" id="end_time" value="{$query.end_time}" placeholder="2016-01-01" />
-                        
-                        <br/>
-                        <span>类型：</span>
-                        <select name="type">
-                            <option value="">全部类型</option>
-                            {html_options options=$money_log_type_options selected=$query.type}
-                        </select>
-
-                        <input type="submit" class="btn" value="查询" />
-                    </form>
-                </div>
-
-                {foreach from=$money_log_list item=data}
-                <ul class="am-list">
-                    <li>
-                        <span>日期: </span>
-                        <span>{$data.add_time|date:complete}</span>
-                    </li>
-                    <li>
-                        <span>金额: </span>
-                        <span>
-                            <p style="color: blue; display: inline-block;">{$flow_options[$smarty.const.FLOW_IN]}: {if $data.flow eq $smarty.const.FLOW_IN}{$data.money|price}{else}{$data.money_1|price}{/if}</p>
-                            <p style="color: red; display: inline-block;">{$flow_options[$smarty.const.FLOW_OUT]}: {if $data.flow eq $smarty.const.FLOW_OUT}{$data.money|price}{else}{$data.money_1|price}{/if}</p>
-                        </span>
-                    </li>
-                    <li>
-                        <span>类型: </span>
-                        <span>{$money_log_type_options[$data.type]}</span>
-                    </li>
-                    <li>
-                        <span>交易对方: </span>
-                        <span>{$data.party_name}</span>
-                    </li>
-                    <li>
-                        <span>状态: </span>
-                        <span>
-                            {if $data.type eq $smarty.const.MONEY_L_T_CZ && $data.status eq $smarty.const.MONEY_L_S_GO}
-                            <a href="{url app=my_money&act=recharge&id=$data.id}" target="_blank">{$money_log_status_options[$data.status]}</a>
-                            {else}
-                            {$money_log_status_options[$data.status]}
-                            {/if}
-                        </span>
-                    </li>
-                    <li>
-                        <span>备注: </span>
-                        <span>{$data.user_name} {$money_log_type_options[$data.type]} {$flow_options[$data.flow]}{$data.money|price}</span>
-                    </li>
-                </ul>
-                {/foreach}
-
-                {include file="member.page.bottom.html"}
-            </div>
+<div id="page-member">
+    <div class="main">
+        <div class="fun-list">
+            <ul class="clearfix">
+                <li><a href="{url app=my_money&act=index}">总览</a></li>
+                <li><a href="{url app=my_money&act=setting}">设置</a></li>
+                <li><a href="{url app=my_money&act=log}">记录</a></li>
+                <li><a href="{url app=my_money&act=bank}">银行卡</a></li>
+            </ul>
         </div>
     </div>
 </div>
 
+<div id="page-my-address" class="mb10">
+    <div class="page-body my-address pb20">
+
+        <form method="get">
+            <input type="hidden" name="app" value="my_money" />
+            <input type="hidden" name="act" value="log" />
+            <dl style="margin-bottom:15px;" class="inclusive-box f66">
+                <dd>
+                    <label>日期: </label>
+                    <span>
+                        <input type="text" class="text1 width2" name="start_time" id="start_time" value="{$query.start_time}" />-
+                        <input type="text" class="text1 width2" name="end_time" id="end_time" value="{$query.end_time}" />
+                    </span>
+                </dd>
+                <dd>
+                    <label>类型: </label>
+                    <span>
+                        <select name="type">
+                            <option value="">全部类型</option>
+                            {html_options options=$money_log_type_options selected=$query.type}
+                        </select>
+                    </span>
+                </dd>
+                <dd>
+                    <input type="submit" class="btn" value="查询" />
+                </dd>
+            </dl>
+        </form>
+
+        <!-- {foreach from=$money_log_list item=data} -->
+        <dl style="margin-bottom:15px;" class="inclusive-box f66">
+            <dd>
+                <label>日期: </label>
+                <span>{$data.add_time|date:complete}</span>
+            </dd>
+            <dd>
+                <label>金额: </label>
+                <span>
+                    <span style="color: blue;">{$flow_options[$smarty.const.FLOW_IN]}: {if $data.flow eq $smarty.const.FLOW_IN}{$data.money|price}{else}{$data.money_1|price}{/if}</span>
+                    <span style="color: red;">{$flow_options[$smarty.const.FLOW_OUT]}: {if $data.flow eq $smarty.const.FLOW_OUT}{$data.money|price}{else}{$data.money_1|price}{/if}</span>
+                </span>
+            </dd>
+            <dd>
+                <label>类型: </label>
+                <span>{$money_log_type_options[$data.type]}</span>
+            </dd>
+            <dd>
+                <label>交易对方: </label>
+                <span>{$data.party_name}</span>
+            </dd>
+            <dd>
+                <label>状态: </label>
+                <span>
+                    {if $data.type eq $smarty.const.MONEY_L_T_CZ && $data.status eq $smarty.const.MONEY_L_S_GO}
+                    <a href="{url app=my_money&act=recharge&id=$data.id}" target="_blank">{$money_log_status_options[$data.status]}</a>
+                    {else}
+                    {$money_log_status_options[$data.status]}
+                    {/if}
+                </span>
+            </dd>
+            <dd>
+                <label>备注: </label>
+                <span>{$data.user_name} {$money_log_type_options[$data.type]} {$flow_options[$data.flow]}{$data.money|price}</span>
+            </dd>
+        </dl> 
+        <div class="btn-box"></div>   
+        <!-- {foreachelse} -->
+        <div class="no-record">没有符合条件的记录</div>
+        <!--{/foreach}-->
+
+    </div>
+
+    {include file=page.bottom.html}
+</div>
+
 <iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
 
-{include file=member.footer.html}
+{include file=footer.html}

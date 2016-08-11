@@ -1,194 +1,254 @@
 <script type="text/javascript" src="{lib file=goodsinfo.js}" charset="utf-8"></script>
-<script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
 <script type="text/javascript">
 //<!CDATA[
-    /* buy */
-    function buy()
+/* buy */
+function buy()
+{
+    if (goodsspec.getSpec() == null)
     {
-        if (goodsspec.getSpec() == null)
-        {
-            alert(lang.select_specs);
-            return;
-        }
-        var spec_id = goodsspec.getSpec().id;
+        layer.open({content:lang.select_specs, time:5});
+        return;
+    }
+    var spec_id = goodsspec.getSpec().id;
 
-        var quantity = $("#quantity").val();
-        if (quantity == '')
-        {
-            alert(lang.input_quantity);
-            return;
-        }
-        if (parseInt(quantity) < 1)
-        {
-            alert(lang.invalid_quantity);
-            return;
-        }
-
-        add_to_cart(spec_id, quantity);
+    var quantity = $("#quantity").val();
+    if (quantity == '')
+    {
+        layer.open({content:lang.input_quantity, time: 5});
+        return;
+    }
+    if (parseInt(quantity) < 1 || isNaN(quantity))
+    {
+        layer.open({content:lang.invalid_quantity, time: 5});
+        return;
     }
 
-    /* add cart */
-    function add_to_cart(spec_id, quantity)
+    add_to_cart(spec_id, quantity);
+}
+
+/* add cart */
+function add_to_cart(spec_id, quantity)
+{
+    var url = REAL_SITE_URL + '/index.php?app=cart&act=add';
+    $.getJSON(url, {'spec_id':spec_id, 'quantity':quantity}, function(data){
+    	if (data.done)
+    	{
+			$('.after_add_cart').show();
+   	 	}
+    	else
+    	{
+       		layer.open({content:data.msg, time: 5});
+    	}
+    })
+}
+/*buy_now*/
+function buy_now()
+{
+    //验证数据
+	if (goodsspec.getSpec() == null)
     {
-        var url = 'index.php?app=cart&act=add';
-
-        $.getJSON(url, {'spec_id': spec_id, 'quantity': quantity}, function(data) {
-            if (data.done)
-            {
-                $('.bold_num').text(data.retval.cart.kinds);
-                $('.bold_mly').html(price_format(data.retval.cart.amount));
-                $(".buynow .msg").slideDown().delay(5000).slideUp();
-                // $('.msg').slideDown('slow');
-                // setTimeout(slideUp_fn, 5000);
-            }
-            else
-            {
-                alert(data.msg);
-            }
-        });
+        layer.open({content:lang.select_specs, time: 5});
+        return;
     }
-
-    function to_shop()
+    var spec_id = goodsspec.getSpec().id;
+ 
+    var quantity = $("#quantity").val();
+    if (quantity == '')
     {
-        if (goodsspec.getSpec() == null)
-        {
-            alert(lang.select_specs);
-            return;
-        }
-        var spec_id = goodsspec.getSpec().id;
-
-        var quantity = $("#quantity").val();
-        if (quantity == '')
-        {
-            alert(lang.input_quantity);
-            return;
-        }
-        if (parseInt(quantity) < 1)
-        {
-            alert(lang.invalid_quantity);
-            return;
-        }
-
-        add_to_shop(spec_id, quantity);
+        layer.open({content:lang.input_quantity, time: 5});
+        return;
     }
-    function add_to_shop(spec_id, quantity)
+    if (parseInt(quantity) < 1 || isNaN(quantity))
     {
-        var url = 'index.php?app=cart&act=add';
-
-        $.getJSON(url, {'spec_id': spec_id, 'quantity': quantity}, function(data) {
-            if (data.done)
-            {
-                window.location.href = 'index.php?app=cart';
-                // $('.bold_num').text(data.retval.cart.kinds);
-                // $('.bold_mly').html(price_format(data.retval.cart.amount));
-                // $(".buynow .msg").slideDown().delay(5000).slideUp();
-            }
-            else
-            {
-                alert(data.msg);
-            }
-        });
+        layer.open({content:lang.invalid_quantity, time: 5});
+        return;
     }
+    buy_now_add_cart(spec_id, quantity);
+}
 
-
-
+/* add buy_now_add_cart */
+function buy_now_add_cart(spec_id, quantity)
+{
+    var url = REAL_SITE_URL + '/index.php?app=cart&act=add';
+    $.getJSON(url, {'spec_id':spec_id, 'quantity':quantity}, function(data){
+		if (data.done)
+        {
+			location.href= REAL_SITE_URL + '/index.php?app=order&goods=cart&store_id={$goods.store_id}';
+        }else{
+            layer.open({content:data.msg, time: 5});
+        }
+    });
+}
 var specs = new Array();
 <!--{foreach from=$goods._specs item=spec}-->
-specs.push(new spec({$spec.spec_id}, '{$spec.spec_1|escape}', '{$spec.spec_2|escape}', {$spec.price}, {$spec.stock}));
+specs.push(new spec({$spec.spec_id}, '{$spec.spec_1|escape}', '{$spec.spec_2|escape}', {$spec.price}, {$spec.stock}, {$goods.goods_id}));
 <!--{/foreach}-->
+
 var specQty = {$goods.spec_qty};
 var defSpec = {$goods.default_spec|escape};
 var goodsspec = new goodsspec(specs, specQty, defSpec);
 
-var user_level_per="{$user_info.level_discount|default:1}";//360cd.cn
-var default_price="{$goods._specs.0.price}";
-var supply_price="{$goods._specs.0.supply_price}";
-var pvprice="{$goods._specs.0.pvprice}";
-$(document).ready(function() {
-     var user_price=default_price;
-            if(user_level_per<1)
-            {
-                user_price=parseFloat(pvprice*user_level_per)+parseFloat(supply_price);
-            }
-     $("[ectype='user_price']").html(price_format(user_price));
-     //去掉PV前的￥符号 360cd.cn  seema
-     $("[ectype='goods_pvprice']").html(deal(pvprice*user_level_per));
+$(function(){
+	/* 抢购倒计时 */
+	$.each($('.countdown'),function(){
+		var theDaysBox  = $(this).find('.NumDays');
+		var theHoursBox = $(this).find('.NumHours');
+		var theMinsBox  = $(this).find('.NumMins');
+		var theSecsBox  = $(this).find('.NumSeconds');
+			
+		countdown(theDaysBox, theHoursBox, theMinsBox, theSecsBox)
+	});
+	
+	if($('#slides').children('div').length>1){
+      	$('#slides').slidesjs({
+        	width: 300,
+        	height: 300,
+			navigation: false,
+			play: {
+          		auto: false
+        	}
+      	});
+	 }
+	 $('.handle .selected').click(function(){
+		 $(this).parent().find('.J_hidden').toggle();
+		var cl = $(this).find('span').attr('class');
+		if(cl == 'icon-arr')
+		{
+			$(this).find('span').attr('class','icon-arr-on');
+		}
+		else
+		{
+			$(this).find('span').attr('class','icon-arr');
+		}
+	})
+	$('.change-quality em').click(function(){
+		var type = $(this).attr('class');
+		var _v = Number($('#quantity').val());
+		var stock = Number($('*[ectype="goods_stock"]').text());
+		if(type == 'plus')
+		{
+			if(_v > 1)
+			{
+				$('#quantity').val(_v-1);
+			}
+		}
+		else if(_v < stock) {
+			$('#quantity').val(_v+1);
+		}else{
+			layer.open({content:"{$lang.no_enough_goods}", time: 5});
+		}
+	});
+		
+	$('.change-quality #quantity').keyup(function(){
+		var _v = Number($('#quantity').val());
+		var stock = Number($('*[ectype="goods_stock"]').text());
+		if(_v > stock){ 
+			layer.open({content:"{$lang.no_enough_goods}", time: 5});
+			$(this).val(stock);
+		}
+		if(_v < 1 || isNaN(_v)) {
+			layer.open({content:lang.invalid_quantity, time: 5});
+			$(this).val(1);
+		}
+	});
+		
+	$('#J_message_box').css('left',(document.body.clientWidth-290)/2);
 });
-function deal(number){
-    number=parseFloat(number);
-    number=number*100;
-    number=Math.round(number);
-    number=number/100;
-    return number;
-  }
+	
+
 //]]>
 </script>
 
-<div class="detail_img">
-    <div id="slider" class="slider" >
-        <ul id="sliderlist" class="sliderlist" >
-            <!--{foreach from=$goods._images item=goods_image name=fe_goods_image}-->
-            <li><img src="{$goods_image.thumbnail}"></li>
-            <!--{/foreach}-->
-        </ul>
-    </div>
-    <script type="text/javascript">
-        var t2 = new TouchSlider({id: 'sliderlist', speed: 600, timeout: 3000, before: function(index) {
-            }});
-    </script>
-    <div class="fav">
-        <a href="javascript:collect_goods({$goods.goods_id});">
-            <img src="{res file=images/favorite.png}"/><span>收藏</span>
-        </a>
-    </div>
-    <p class="line"></p>
+<div class="goods-detail">
+	<div class="col-img relative">
+		<div class="scroll-wrapper">
+			<div id="slides" class="scroller" > 
+				<!--{foreach from=$goods._images item=goods_image name=fe_goods_image}-->
+				<div><img src="{$site_url}/{$goods_image.thumbnail}" /></div>
+				<!--{/foreach}--> 
+			</div>
+			<ul class="new-banner-num new-tbl-type" id="idNum">
+			</ul>
+		</div>
+	</div>
+	<div class="col-price clearfix">
+		<p class="float-left clearfix J_IsPro" {if !$goods._specs.0.pro_price}style="display:none"{/if}> <!--<em class="promo-price-type float-left ml10" title="{$goods.pro_desc}">{$goods.pro_name}</em>--> <span class="promo-price mr10 float-left ml10 yahei" ectype="goods_pro_price">{$goods._specs.0.pro_price|price}</span> <del ectype="goods_price" class="float-left fff yahei">{$goods.price|price}</del> </p>
+		<p class="float-left J_IsNotPro" {if $goods._specs.0.pro_price} style="display:none"{/if}> <span class="ml10 yahei fw-normal" ectype="goods_price">{$goods.price|price}</span> </p>
+		<span class="float-right mr10"><a href="javascript:;" class="J_AjaxRequest collect {if $goods.collects}collected{/if}" action="{url app=my_favorite&act=add&type=goods&item_id=$goods.goods_id&ajax=1}"></a></span>
+	</div>
+	
+	<!--{if $goods.lefttime}-->
+	<div class="col-title countdown-fields">
+		<div class="title">
+			<div class="J_CountDown countdown hidden"> <span><ins class="lefttime">{$goods.pro_name}：</ins></span> <span class="tm NumDays">{$goods.lefttime.d}</span><em> 天 </em> <span class="tm NumHours">{$goods.lefttime.h}</span><em> 小时 </em><span class="tm NumMins">{$goods.lefttime.m}</span><em> 分 </em><span class="tm NumSeconds">{$goods.lefttime.s}</span><em> 秒 </em></div>
+		</div>
+	</div>
+	
+	<!--{/if}--> 
+	
+	<!--{if $integral_enabled && $goods.exchange_price}-->
+	<div class="col-title">
+		<div class="title"> <span class="t">积分抵扣： </span><span class="discount-info"><b class="d-name">可使用{$goods.max_exchange} 积分 </b> <b class="d-price">抵 {$goods.exchange_price|price} 元</b></span></div>
+	</div>
+	<!--{/if}-->
+	<div class="col-title">
+		<div class="title"> <span>{$goods.goods_name|escape}</span> <font class="gray"><!--{foreach from=$goods.tags item=tag}-->{$tag}&nbsp;&nbsp;&nbsp;<!--{/foreach}--></font> </div>
+	</div>
+	<div class="line-background"></div>
+	<div class="handle"> 
+		
+		<!--{if $goods.spec_qty gt 0}-->
+		<ul class="clearfix w-full J_hidden mb5">
+			<li class="handle_title">{$goods.spec_name_1|escape}: </li>
+		</ul>
+		<!--{/if}--> 
+		<!--{if $goods.spec_qty gt 1}-->
+		<ul class="clearfix w-full J_hidden mb5">
+			<li class="handle_title">{$goods.spec_name_2|escape}: </li>
+		</ul>
+		<!--{/if}-->
+		<ul class="clearfix w-full mb5">
+			<li class="handle_title mr5">购买: </li>
+			<li class="change-quality"> <em class="plus"><b></b></em>
+				<input type="text" class="text width1" name="quantity" id="quantity" value="1" />
+				<em class="add"><b></b></em> </li>
+			<i class="gray">{$lang.left_bracket}{$lang.stock} <span class="stock gray" ectype="goods_stock">{$goods._specs.0.stock}</span>{$lang.unit}{$lang.right_bracket}</i>
+		</ul>
+		<!--{if $goods.spec_qty gt 0}-->
+		<ul  class="clearfix w-full relative selected">
+			<li class="handle_title mr5" style="width:80px;">{$lang.your_select}: </li>
+			<li class="aggregate" ectype="current_spec"></li>
+			<span class="icon-arr"></span>
+		</ul>
+		<!--{/if}--> 
+	</div>
+	<div class="line-background"></div>
+	<div class="store-info">
+		<div class="info margin10">
+			<div class="store-logo"><a href="{url app=store&id=$store.store_id}"><img width="60" height="60" src="{$store.store_logo}" /></a></div>
+			<div class="store-m-info">
+				<p class="store-name"><a href="{url app=store&id=$store.store_id}">{$store.store_name|escpae}</a></p>
+				<p class="extra"><span>好评率</span> <b>{$store.praise_rate}%</b> <span>信誉</span><span> <!--{if $store.credit_value ge 0}--><img src="{$store.credit_image}" alt="" /><!--{/if}--></span></p>
+				<p class="store-map"><a class="gray fs12 icon-position" href="{url app=store&act=map&id=$store.store_id}"><span>店铺地图</span></a></p>
+			</div>
+		</div>
+		<div class="btns clearfix pb10 pl10 pr10">
+			<p> <a href="{url app=store&act=search&id=$store.store_id}"><span><img src="static/images/TB1zhWTGFXXXXajapXXnONFGXXX-32-24.png" />全部商品</span></a> </p>
+			<p> <a style="margin-left:5px;margin-right:0px;" href="{url app=store&id=$store.store_id}"><span><img src="static/images/T11oldFCXcXXa94Hfd-32-32.png"/>进入店铺</span></a> </p>
+		</div>
+	</div>
+	<div class="line-background"></div>
 </div>
-
-<div class="detail_tit">
-    <p>{$goods.goods_name|escape}</p>
-    <p>{$lang.brand}: {$goods.brand|escape}</p>
-    <p>{$lang.price}:<strong ectype="goods_price">{$goods._specs.0.price|price}</strong></p>
-    <!--<p>{$lang.pvprice}:&nbsp;&nbsp;<strong ectype="goods_pvprice">{$goods._specs.0.pvprice}</strong></p>
-    <p>{$lang.user_price}: <strong ectype="user_price">{$goods._specs.0.price|price}</strong></p>-->
-    <p>销量：{$sales_info}{$comments}</p>
-    <p><span>所在地区：{$store.region_name|escape}</span></p>
+<div class="after_add_cart">
+	<div class="message-box" id="J_message_box">
+		<div class="tips"> <b>添加成功</b> <span>商品已成加入购物车！</span> </div>
+		<div class="continus2buy"> <a href="javascript:;" onclick="$('.after_add_cart').hide();">再逛逛</a> <a href="{url app=cart}">去购物车</a> </div>
+	</div>
+	<div class="masker"></div>
 </div>
-
-<div class="detail_size">
-    <div class="size_con">
-        <div class="handle">
-            <!--{if $goods.spec_qty gt 0}-->
-            <ul>
-                <li class="handle_title">{$goods.spec_name_1|escape}: </li><br />
-            </ul>
-            <!--{/if}-->
-            <!--{if $goods.spec_qty gt 1}-->
-            <ul>
-                <li class="handle_title">{$goods.spec_name_2|escape}: </li>
-            </ul>
-            <!--{/if}-->
-            <ul class="quantity">
-                <li class="handle_title">{$lang.quantity}: </li>
-                <li>
-                    <input type="text" class="text width1" name="" id="quantity" value="1" />
-                    {$lang.unit} {$lang.left_bracket}{$lang.stock}<span class="stock" ectype="goods_stock">{$goods._specs.0.stock}</span>{$lang.unit}{$lang.right_bracket}
-                </li>
-            </ul>
-            <!--{if $goods.spec_qty gt 0}-->
-            <ul class="selected">
-                <li class="handle_title">{$lang.your_select}: </li>
-                <li class="aggregate" ectype="current_spec"></li>
-            </ul>
-            <!--{/if}-->
-        </div>
-    </div>
-    <div class="buynow">
-        <a href="javascript:to_shop();" class="buy">立即购买</a><a href="javascript:buy();" class="add">加入购物车</a>
-        <div class="msg" style="display:none;">
-            <p><b></b>购物车内共有<span class="bold_num"></span>种商品 共计 <span class="bold_mly" style="color:#8D0303;"></span>！</p>
-            <a href="{url app=cart}" class="white_btn">查看购物车</a>
-            <a  onclick="$('.msg').css({'display': 'none'});" class="white_btn">继续购物</a>
-        </div>
-    </div>
-
+<div class="btn-fixed">
+	<div class="tbl-cell"><a  href="javascript:;" onclick="buy_now();" class="btn-buy yahei">{$lang.buy_now}</a></div>
+	<div class="tbl-cell"><a  href="javascript:;" onclick="buy();" class="btn-cart yahei">{$lang.add_to_cart}</a></div>
+	<div class="tbl-cell"><a  href="{url app=cart}" class="btn-to-cart yahei"><span></span></a></div>
 </div>
+<a name="module"></a>

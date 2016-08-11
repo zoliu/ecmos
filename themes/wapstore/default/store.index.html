@@ -1,106 +1,191 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-    <head>
-        <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" name="viewport">
-        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-        <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        {$page_seo}
-        <link type="text/css" rel="stylesheet" href="{res file=css/index.css}" />
-        <link type="text/css" rel="stylesheet" href="{res file=css/flexslider.css}" />
-        <script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
-        <script type="text/javascript" src="{res file=js/jquery.flexslider.js}"></script>
-        <script type="text/javascript" src="{res file=js/iscroll.js}"></script>
-        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
-        <script type="text/javascript">
-        var SITE_URL = "{$site_url}";
-        var REAL_SITE_URL = "{$real_site_url}";
-        var PRICE_FORMAT = '{$price_format}';
-        </script>
-    </head>
-
-    <body>
-        <script>
-            $(window).load(function() {
-                $('.flexslider').flexslider({
-                    animation: "slide"
-                });
-            });
-        </script>
-        <div class="auto">
-            {include file=header.html}
-            <!---轮播开始------>
-            <!--{if $files_belong_store}-->
-            <section class="slider">
-                <div class="flexslider">
-                    <ul class="slides">
-                        <!--{foreach from=$files_belong_store item=file}-->
-                        <li>
-                            <img src="{$file.file_path}"/>
-                        </li>
-                        <!--{/foreach}-->
-                    </ul>
-                </div>
-            </section>
-            <!--{/if}-->
-            <!-------轮播结束------------>
-
-            <!-----主分类-->
-            <div class="main_sort">
-                <ul>
-                    <li> 
-                        <a href="{url app=store&act=search&id=$store.store_id&order=add_time desc}">
-                            <img src="<!--{if $store.store_new_images}-->{$store.store_new_images} <!--{else}-->{res file=images/sort_icon1.png}<!--{/if}--> " />
-                        </a> 
-                    </li>
-
-                    <li>
-                        <a href="{url app=store&act=search&id=$store.store_id&recommended=1}">
-                            <img src="<!--{if $store.store_recommend_images}-->{$store.store_recommend_images} <!--{else}-->{res file=images/sort_icon2.png}<!--{/if}-->" />
-                        </a></li>
-                    <li>
-                        <a href="{url app=store&act=search&id=$store.store_id&order=views desc}">     	
-                            <img src="<!--{if $store.store_hot_images}-->{$store.store_hot_images} <!--{else}-->{res file=images/sort_icon3.png}<!--{/if}-->" />              
-                        </a>
-                    </li>
-                    <!--{foreach from=$store.store_gcates_image item=gcategory}-->
-                    <li><a href="{url app=store&id=$store.store_id&act=search&cate_id=$gcategory.cate_id}">
-
-                            <img  src=" <!--{if $gcategory.cate_images}-->{$gcategory.cate_images}<!--{else}-->{res file=images/sort_icon3.png}<!--{/if}-->" />
-                        </a> </li>
-                    <!--{/foreach}-->
-                </ul>
+{include file=top.html} 
+<script>
+$(function() {
+	if($('#slides').children('a').length>1){
+		$('#slides').slidesjs({
+			width: 320,
+			height: 120,
+			navigation: false,
+			play: {
+				auto: true
+			}
+		});
+	}
+});
+</script>
+<div id="page-store" class="page-store page J_page"> 
+	<!--common bar start-->
+	<div class="bar-wrap">
+		<div class="top-bar"><a href="javascript:pageBack();" class="pageback"><span></span></a>
+			<div class="search-box">
+				<form id="search-form" method="get">
+					<input type="hidden" name="app" value="store" />
+                    <input type="hidden" name="act" value="store" />
+					<input name="keyword"  type="text" class="kw" placeholder="请输入你要搜索的商品名称"/>
+					<input type="submit" class="submit" value="">
+				</form>
+			</div>
+			<a class="page-store-more" onclick="PsmobanShowMenu();"><span></span></a> </div>
+	</div>
+	<!--common bar end-->
+	<div class="store-info">
+		<!--{if $ad1.ad_image_url}-->
+        <div class="full-banner"> <a href="{$ad1.ad_link_url}"><img  src="{$ad1.ad_image_url}"/></a> </div>
+        <!--{/if}--> 
+		<div class="d-info clearfix">
+			<h3 class="float-left"><a href="{url app=store&id=$store.store_id}"><img src="{$store.store_logo}" /></a></h3>
+			<div class="name-and-credit float-left">
+				<p class="mt10 name"><a href="{url app=store&id=$store.store_id}">{$store.store_name}</a></p>
+				<p><!--{if $store.credit_value ge 0}--><img src="{$store.credit_image}" alt="" /><!--{/if}--></p>
+			</div>
+			<p class="collect-btn J_AjaxRequest" action="{url app=my_favorite&act=add&type=store&item_id=$store.store_id&ajax=1}"></p>
+		</div>
+	</div>
+	<ul class="store-statistic clearfix mb5">
+		<li>
+			<dl>
+				<dt><b>{$store.goods_count}</b></dt>
+				<dd><span>商品</span></dd>
+			</dl>
+		</li>
+		<li>
+			<dl>
+				<dt><b>{$store_static.new_count}</b></dt>
+				<dd><span>上新</span></dd>
+			</dl>
+		</li>
+		<li>
+			<dl>
+				<dt><b>{$store_static.order_count}</b></dt>
+				<dd><span>成交</span></dd>
+			</dl>
+		</li>
+		<li>
+			<dl style="border:0px;">
+				<dt><b>{$store.praise_rate}%</b></dt>
+				<dd><span>好评率</span></dd>
+			</dl>
+		</li>
+	</ul>
+    <div class="store-index-slide">
+			<div id="slides" class="scroller"> 
+				<!--{foreach from=$slides item=slide name=fe_slide}--> 
+				<!--{if $slide.ad_image_url && $slide.ad_link_url}-->
+				<a href="{$slide.ad_link_url}" class="store-banner"><img src="{$slide.ad_image_url}" /></a> 
+				<!--{/if}--> 
+				<!--{/foreach}--> 
+			</div>
+		</div>
+	<!--{if $recommended_goods}-->
+	<div class="rec-goods goods-model-si">
+		<h3>{$lang.recommended_goods}</h3>
+		<ul class="clearfix">
+			<!--{foreach from=$recommended_goods item=rg name=fe_rg}-->
+			<li class="clearfix"> 
+				<!--{foreach from=$rg item=rgoods name=fe_rgoods}-->
+				<div class="item">
+					<div {if $smarty.foreach.fe_rgoods.iteration % 2 eq 0}style="margin-left:5px;margin-right:0rem;"{/if} class="wrap">
+						<div class="wrap2">
+							<div class="pic"><a href="{url app=goods&id=$rgoods.goods_id}"><img src="{$rgoods.default_image}" /></a></div>
+							<h3><a href="{url app=goods&id=$rgoods.goods_id}">{$rgoods.goods_name|escape}</a></h3>
+							<p>￥{$rgoods.price}</p>
+						</div>
+					</div>
+				</div>
+				<!--{/foreach}--> 
+			</li>
+			<!--{/foreach}-->
+		</ul>
+	</div>
+	<!--{/if}--> 
+	<!--{if $new_goods}-->
+	<div class="new-goods goods-model-si">
+		<h3>{$lang.new_goods}</h3>
+		<ul class="clearfix">
+			<!--{foreach from=$new_goods item=ng name=fe_ng}-->
+			<li class="clearfix"> 
+				<!--{foreach from=$ng item=ngoods name=fe_ngoods}-->
+				<div class="item">
+					<div {if $smarty.foreach.fe_ngoods.iteration % 2 eq 0}style="margin-left:5px;margin-right:0rem;"{/if} class="wrap">
+						<div class="wrap2">
+							<div class="pic"><a href="{url app=goods&id=$ngoods.goods_id}"><img src="{$ngoods.default_image}" /></a></div>
+							<h3><a href="{url app=goods&id=$ngoods.goods_id}">{$ngoods.goods_name|escape}</a></h3>
+							<p>￥{$ngoods.price}</p>
+						</div>
+					</div>
+				</div>
+				<!--{/foreach}--> 
+			</li>
+			<!--{/foreach}-->
+		</ul>
+	</div>
+	<!--{/if}--> 
+	<!--{if $sales_goods}-->
+	<div class="hot-goods goods-model-si">
+		<h3>热卖</h3>
+		<ul class="clearfix">
+			<!--{foreach from=$sales_goods item=sg name=fe_sg}-->
+			<li class="clearfix"> 
+				<!--{foreach from=$sg item=sgoods name=fe_sgoods}-->
+				<div class="item">
+					<div {if $smarty.foreach.fe_sgoods.iteration % 2 eq 0}style="margin-left:5px;margin-right:0rem;"{/if} class="wrap">
+						<div class="wrap2">
+							<div class="pic"><a href="{url app=goods&id=$sgoods.goods_id}"><img src="{$sgoods.default_image}" /></a></div>
+							<h3><a href="{url app=goods&id=$sgoods.goods_id}">{$sgoods.goods_name|escape}</a></h3>
+							<p>￥{$sgoods.price}</p>
+						</div>
+					</div>
+				</div>
+				<!--{/foreach}--> 
+			</li>
+			<!--{/foreach}-->
+		</ul>
+	</div>
+	<!--{/if}--> 
+	<!--{if $hot_goods}-->
+	<div class="new-goods goods-model-si">
+		<h3>人气</h3>
+		<ul class="clearfix">
+			<!--{foreach from=$hot_goods item=hg name=fe_hg}-->
+			<li class="clearfix"> 
+				<!--{foreach from=$hg item=hgoods name=fe_hgoods}-->
+				<div class="item">
+					<div {if $smarty.foreach.fe_hgoods.iteration % 2 eq 0}style="margin-left:5px;margin-right:0rem;"{/if} class="wrap">
+						<div class="wrap2">
+							<div class="pic"><a href="{url app=goods&id=$hgoods.goods_id}"><img src="{$hgoods.default_image}" /></a></div>
+							<h3><a href="{url app=goods&id=$hgoods.goods_id}">{$hgoods.goods_name|escape}</a></h3>
+							<p>￥{$hgoods.price}</p>
+						</div>
+					</div>
+				</div>
+				<!--{/foreach}--> 
+			</li>
+			<!--{/foreach}-->
+		</ul>
+	</div>
+	<!--{/if}-->
+	<div class="view-all"> <a href="{url app=store&act=search&id=$store.store_id}"><i></i><span>全部商品</span></a> </div>
+</div>
+<div class="masker J_masker" onclick="PsmobanShowMenu();"></div>
+<div class="menus J_menus">
+    <div class="attrs" style="overflow: auto;height: 100%">
+        <!--{foreach from=$store.store_gcates item=gcategory}-->
+        <div class="attr">
+          <div class="attrk">{$gcategory.value|escape}</div>
+          <div class="attrv">
+            <ul class="clearfix">
+              <!--{foreach from=$gcategory.children item=child_gcategory name=fe_gcategory}-->
+              <li {if $smarty.foreach.fe_gcategory.iteration gt 4}class="hidden"{/if}><a href="{url app=store&id=$store.store_id&act=search&cate_id=$child_gcategory.id}">{$child_gcategory.value|escape}</a></li>
+              <!--{/foreach}-->
+            </ul>
+            <!--{if $gcategory.count gt 4}-->
+            <div class="options">
+              <a class="more" href="javascript:void(0);"><span>查看更多</span><i></i></a>
             </div>
-            <div class="border_line"></div>
-
-            <!----栏目------------->
-            <!--{if $recommended_goods}-->
-            <div class="blocks">
-                <h2>橱窗推荐</h2>
-                <ul>	
-                    <!--{foreach from=$recommended_goods item=rgoods}-->
-                    <li><a href="{url app=goods&id=$rgoods.goods_id}">
-                            <img src="{$rgoods.default_image}"></a>
-                    </li>
-                    <!-- {/foreach} -->
-
-                </ul>
-            </div>
-            <div class="border_line"></div>
             <!--{/if}-->
-
-            <!--{if $new_goods}-->
-            <div class="blocks">
-                <h2>新品上市</h2>
-                <ul>
-                    <!--{foreach from=$new_goods item=ngoods}-->
-                    <li><a href="{url app=goods&id=$ngoods.goods_id}"><img src="{$ngoods.default_image}"></a></li>
-                    <!--{/foreach}-->
-                </ul>
-            </div>
-            <!--{/if}-->
+          </div>
         </div>
-        {include file=footer.html}
-    </body>
-</html>
+        <!--{/foreach}-->
+    </div>
+</div>
+{include file=footer.html} 

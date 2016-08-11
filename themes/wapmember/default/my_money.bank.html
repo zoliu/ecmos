@@ -13,43 +13,56 @@ $(function() {
 
 </script>
 
-<div class="u_order">
-	<div id="orderbox">
-		<div class="detail">
-            <div class="eject_btn_two eject_pos1" title="新增银行卡"><b class="ico3" ectype="dialog" dialog_title="新增银行卡" dialog_id="bank_add" dialog_width="" uri="{url app=my_money&act=bank_add}" style="border: 1px outset; background: #ffffff; padding: 0.1em 0.2em;">新增银行卡</b></div>
-            <br/>
-            <div class="public table">
-                {foreach from=$bank_list item=data}
-                <ul class="am-list">
-                    <li>
-                        <span>卡号 / 账户: </span>
-                        <span>{$data.card_number}</span>
-                    </li>
-                    <li>
-                        <span>持卡人 / 姓名: </span>
-                        <span>{$data.cardholder}</span>
-                    </li>
-                    <li>
-                        <span>开户行 / 账户类型: </span>
-                        <span>{$data.bank_name}</span>
-                    </li>
-                    <li>
-                        <span>开户行地址: </span>
-                        <span>{$data.bank_address}</span>
-                    </li>
-                    <li>
-                        <span>操作: </span>
-                        <span>
-                            <a href="javascript:drop_confirm('{$lang.drop_confirm}', '{url app=my_money&act=bank_drop&id=$data.id}')" class="delete float_none">删除</a>
-                        </span>
-                    </li>
-                </ul>
-                {/foreach}
-            </div>
+<div id="page-member">
+    <div class="main">
+        <div class="fun-list">
+            <ul class="clearfix">
+                <li><a href="{url app=my_money&act=index}">总览</a></li>
+                <li><a href="{url app=my_money&act=setting}">设置</a></li>
+                <li><a href="{url app=my_money&act=log}">记录</a></li>
+                <li><a href="{url app=my_money&act=bank}">银行卡</a></li>
+            </ul>
         </div>
     </div>
 </div>
 
+<div id="page-my-address" class="mb10">
+    <div class="page-body my-address pb20">
+
+        <div class="add-address clearfix mt10 mr5">
+            <a href="{url app=my_money&act=bank_add}" class="float-right btn">新增银行卡</a>
+        </div>
+
+        <!-- {foreach from=$bank_list item=data} -->
+        <dl style="margin-bottom:15px;" class="inclusive-box f66">
+            <dd>
+                <label>卡号/账户: </label>
+                <span>{$data.card_number}</span>
+            </dd>
+            <dd>
+                <label>持卡人/姓名: </label>
+                <span>{$data.cardholder}</span>
+            </dd>
+            <dd>
+                <label>开户行/账户类型: </label>
+                <span>{$data.bank_name}</span>
+            </dd>
+            <dd>
+                <label>开户行地址: </label>
+                <span>{$data.bank_address}</span>
+            </dd>
+        </dl> 
+        <div class="btn-box">
+            <a href="javascript:drop_confirm('{$lang.drop_confirm}', '{url app=my_money&act=bank_drop&id=$data.id}')" class="delete float_none">删除</a>
+        </div>
+        <!-- {foreachelse} -->
+        <div class="no-record">没有符合条件的记录</div>
+        <!--{/foreach}-->
+    </div>
+
+    {include file=page.bottom.html}
+</div>
+
 <iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
 
-{include file=member.footer.html}
+{include file=footer.html}

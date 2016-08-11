@@ -1,52 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-        {$page_seo}
-        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
-        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
-        <script type="text/javascript" src="index.php?act=jslang"></script>
-        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
-        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
-        {$_head_tags}
-        <script type="text/javascript">
-            //<!CDATA[
-            var SITE_URL = "{$site_url}";
-            var REAL_SITE_URL = "{$real_site_url}";
-            var PRICE_FORMAT = '{$price_format}';
-            //]]>
-        </script>
-    </head>
-    <body id="log-reg" class="gray">
-        <div class="tmall-h5-v2">
-            <header class="region"> 
-                <div class="content"> 
-                    <div class="top"> <h1> <a href="{url app=default}"><img alt="{$site_title}" src="{$site_logo}"  width="144px"/></a></h1> </div> 
-                    <div id="fake-search"> 
-                        <form method="GET" action="{url app=search}">
-                            <div class="fakeInput">
-                                <input class="text" name="keyword" style="color:silver"/>
-                                <input type="submit" value="" class="search-button" />
-                                <input type="hidden" name="app" value="search" />
-                                <input type="hidden" name="act" value="index" />
-                            </div> 
-                        </form>
-                    </div> 
-                </div> 
-            </header>
-            <div class="region entry-list"> 
-                <a href="{url app=category}"><img alt="商品类目" height="29px" src="{res file=images/ico1.png}" width="29px"/><br/><span>商品类目</span></a><span class="entry-decollator"></span>
-                <a href="{url app=category&act=store}"><img alt="店铺类目" height="30px" src="{res file=images/ico2.png}" width="30px"/><br/> <span>店铺类目</span> </a><span class="entry-decollator"></span>   
-                <a href="{url app=member&act=wap_index}"><img alt="个人中心" height="31px" src="{res file=images/ico3.png}" width="31px"/><br/> <span>个人中心</span> </a><span class="entry-decollator"></span>
-                <a href="{url app=cart}"><img alt="购物车" height="31px" src="{res file=images/ico4.png}" width="37px"/><br/><span>购物车</span></a>
-
-                <!-- 为双11添加 -->     
-                <br/>
-                <a href="{url app=buyer_order}"><img alt="订单管理" height="32px" src="{res file=images/ico5.png}" width="22px"/><br/><span>订单管理</span></a><span class="entry-decollator"></span>
-                <a href="#"><img alt="活动促销" height="19px" src="{res file=images/ico6.png}" style="margin-top: 8px;margin-bottom: 8px;" width="44px"/><br/><span>活动促销</span></a><span class="entry-decollator"></span>     
-                <a href="{url app=my_favorite}"><img alt="收藏夹" height="30px" src="{res file=images/ico7.png}" width="34px"/><br/><span>收藏夹</span></a><span class="entry-decollator"></span>
-                <a href="#"><img alt="查物流" height="28px" src="{res file=images/ico8.png}"  width="34px"/><br/><span>查物流</span></a><span class="entry-decollator"></span>
-            </div>
+{include file=top.html}
+<div id="header" class="w-full"> 
+	<!--common bar start-->
+	<div class="bar-wrap">
+		<div class="top-bar"> 
+			<a href="javascript:pageBack();" class="pageback"><span></span></a>
+			<h2 class="yahei">{$curlocal_title}</h2>
+			<a href="javascript:;" class="pagemore J_pagemore"><span></span></a>
+		</div>
+		<div class="eject-tab J_eject_tab w-full clearfix hidden">
+			<a href="{$mobile_site_url}"> <span></span><p>首页</p></a>
+			<a href="{url app=search}"> <span class="icon2"></span><p>分类搜索</p></a>
+			<a href="{url app=cart}"> <span class="icon3"></span><p>购物车</p></a>
+			<a href="{url app=member}"> <span class="icon4"></span><p>用户中心</p></a>
+		</div>
+	</div>
+	<!--common bar end--> 
+</div>

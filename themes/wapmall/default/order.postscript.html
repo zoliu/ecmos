@@ -1,12 +1,119 @@
-    <script type="text/javascript">
-    function postscript_activation(tt){
-        if (!tt.name)
-        {
-            tt.value    = '';
-            tt.name = tt.id;
-            tt.style.height = '70px';
-        }
+﻿<script type="text/javascript">
+$(function(){
+	$('.J_UseCouponSelect').change(function(){
+		if($(this).val()=='') couponPrice = 0;
+		else {
+			couponPrice = number_format(parseInt($(this).find('option:selected').attr('price')),2);
+		}
+		$('.J_CouponPrice').html(couponPrice);
+		fill_order_amount();
+	});
+	
+	$('.J_UseIntegralCheckbox').click(function(){
+		$('.J_IntegralAmount').val('');
+		if($(this).prop('checked')==true) {
+			var max_integral = integral_max_exchange_init();
+			$('.J_IntegralAmount').val(max_integral);
+		}
+		$('.J_IntegralAmount').prop('disabled', $(this).prop('checked')==false);
+		fill_order_amount();
+	});
+	$('.J_IntegralAmount').keyup(function(){
+		max_integral = max_deduction = integral_max_exchange_init();
+		
+		if(isNaN($(this).val())) {
+			alert('{$lang.integral_must_num}');
+			$(this).val(0);
+			$(this).select();
+		}
+		if(parseFloat($(this).val()) < 0)
+		{
+			alert('{$lang.integral_must_gt0}');
+			$(this).val(0);  
+			$(this).select();
+		}
+		else if(parseFloat($(this).val()) > max_integral){
+			if(max_integral > {$yz_integral.your_integral}) {
+				max_deduction = {$yz_integral.your_integral};
+			}
+			alert('{$lang.order_can_use_max_integral}'+ max_deduction);
+			$(this).val(max_deduction);
+		}
+		else if(parseFloat($(this).val()) > {$yz_integral.your_integral}){
+			alert('{$lang.your_integral_not_enough}' + {$yz_integral.your_integral});
+			$(this).val({$yz_integral.your_integral});
+		}
+		
+		fill_order_amount();
+	});
+});			   
 
+function integral_max_exchange_init()
+{
+	order_amount_for_integral = {$goods_info.amount} / {$exchange_rate};
+	max_integral = order_amount_for_integral > {$yz_integral.max_exchange} ? {$yz_integral.max_exchange} : order_amount_for_integral;
+	max_integral = max_integral > {$yz_integral.your_integral} ? {$yz_integral.your_integral} : max_integral;
+	//max_integral = Math.ceil(max_integral);
+	return max_integral;
+}
+
+function postscript_activation(tt){
+	if (tt.value == '{$lang.postscript_desc}'){
+		tt.value    = '';
     }
-    </script>
-    给卖家留言：<textarea class="confirm-order-info-textarea" onclick="postscript_activation(this);" style="height: 50px;padding: 5px;line-height: 30px" id="postscript[{$store.store_id}]" >{$lang.postscript_desc}</textarea>
+	tt.name = 'postscript';
+	$(tt).addClass('max-textarea');
+}
+function postscript_blur(tt) {
+	if(!tt.value) {
+		tt.value = '{$lang.postscript}',
+		tt.name  = '';
+	}
+	$(tt).removeClass('max-textarea');
+}
+</script>
+<div class="order-confirm-extra clearfix">
+	<div id="postscript" class="postscript clearfix">
+		<div class="title hidden">{$lang.postscript}{$lang.colon}</div>
+		<div class="content"><textarea class="f66" id="postscript" onclick="postscript_activation(this)" onblur="postscript_blur(this)" placeholder="{$lang.postscript}"></textarea></div>
+	</div>
+	<div class="confirm-extra-info">
+		<div class="extra-list ship-method clearfix">
+			<div class="title float-left">{$lang.delivery_method}{$lang.colon}</div>
+			<div class="content float-left">
+				<select name="delivery_type" class="J_LogistFeesSelect">
+					<!--{foreach from=$shipping_methods item=logist key=key name=fe_logist}-->
+					<option value="{$key}" price="{$logist.logist_fees}">{$lang.$key}{$lang.colon}{$logist.logist_fees}</option>
+					<!--{/foreach}-->
+				</select>
+			</div>
+			<div class="fee float-right f66">+<em class="J_LogistFees">{$logist.logist_fees}</em></div>
+		</div>
+		<div class="extra-list use-coupon clearfix">
+			<div class="title float-left">{$lang.use_coupon}{$lang.colon}</div>
+			<div class="content float-left">
+				<select class="J_UseCouponSelect" name="coupon_sn" {if !$goods_info.allow_coupon} disabled="disabled"{/if}>
+    				<option value="">{$lang.pls_coupon}</option>
+					<!--{foreach from=$coupon_list item=coupon}-->
+ 					<option value="{$coupon.coupon_sn}" price="{$coupon.coupon_value}">SN:{$coupon.coupon_sn}</option>
+ 					<!--{/foreach}-->
+				</select>
+			</div>
+			<div class="fee float-right f66">-<em class="J_CouponPrice">0</em></div>
+		</div>
+		<div class="extra-list use-integral clearfix">
+			<div class="title float-left">{$lang.use_integral}{$lang.colon}</div>
+			<div class="content float-left">
+				<label class="mr10"><input type="checkbox" class="J_UseIntegralCheckbox" {if !$goods_info.integral_enabled || $yz_integral.goods_disable_use_integral} disabled="disabled"{/if} />{$lang.use_integral}</label>
+				<input type="text" name="exchange_integral" class="integral-input J_IntegralAmount" disabled="disabled" /> {$lang.dian}
+			</div>
+			<div class="fee float-right f66">-<em class="J_IntegralPrice">0</em></div>
+		</div>
+	</div>
+	<div class="confirm-extra-bottom clearfix">
+		<span class="price">{$lang.store_order_amount}{$lang.colon}<i class="float-right">&yen;<em class="J_OrderAmount">{$goods_info.amount}</em></i></span>
+	</div>
+</div>
+
+                    
+     

@@ -16,12 +16,9 @@
 $(function() {
     
     $('#_form_').validate({
-        errorPlacement : function(error, element){
-            $(element).next('.field_notice').hide();
-            $(element).after(error);
-        },
-        success : function(label){
-            label.addClass('validate_right').text('OK!');
+        errorPlacement: function(error, element) { 
+            element.val('');
+            element.attr('placeholder', error.html());
         },
         rules : {
             user_name : {
@@ -55,31 +52,38 @@ $(function() {
 
 </script>
 
-<div class="u_order">
-	<div id="orderbox">
-		<div class="detail">
-            <form id="_form_" method="post">
-            <div class="_info">
-                <p>可用余额：{$money_info.money}</p>
-                <p>目标用户：<input name="user_name" id="user_name" type="text" /></p>
-                <p>转出金额：<input name="money" type="text" /></p>
-                <p>支付密码：<input name="password" type="password" /></p>
-                <p><input type="submit" value="提交" style="margin-left: 2em;" /></p>
-            </div>
-            </form>
-        </div>
-        
-        <div class="clear"></div>
-        <div class="adorn_right1"></div>
-        <div class="adorn_right2"></div>
-        <div class="adorn_right3"></div>
-        <div class="adorn_right4"></div>
+<div id="page-my-address" class="mb10">
+    <div class="page-body my-address pb20">
+        <form id="_form_" method="post">
+        <dl style="margin-bottom:15px;" class="inclusive-box f66">
+            <dd>
+                <label>可用余额: </label>
+                <span>{$money_info.money}</span>
+            </dd>
+            <dd>
+                <label>目标用户: </label>
+                <span>
+                    <input name="user_name" id="user_name" type="text" />
+                </span>
+            </dd>
+            <dd>
+                <label>转出金额: </label>
+                <span>
+                    <input name="money" type="text" />
+                </span>
+            </dd>
+            <dd>
+                <label>支付密码: </label>
+                <span>
+                    <input name="password" type="password" />
+                </span>
+            </dd>
+            <dd>
+                <input class="my_btn" type="submit" value="提交" style="margin-left: 2em;" />
+            </dd>
+        </dl>
+        </form>
     </div>
-    <div class="clear"></div>
 </div>
 
-<div class="clear"></div>
-
-<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
-
-{include file=member.footer.html}
+{include file=footer.html}

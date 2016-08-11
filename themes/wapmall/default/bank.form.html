@@ -1,0 +1,69 @@
+{include file=member.header.html}
+<div class="deposit margin10">
+	<div class="bank">
+		<div class="bank-add">
+			<div class="notice-word">
+				<p>当您申请提现时平台会向您这里设置的银行卡汇款，请确保您的银行卡是正确的。</p>
+			</div>
+			<form class="J_AjaxForm" method="post">
+				<div class="form">
+					<dl class="bank-list">
+						<dt class="mb10">开户银行</dt>
+						<dd>
+							<ul class="ui-list-icons clearfix rebuildWrap">
+								<!--{foreach from=$bank_inc item=bank key=key name=fe_bank}-->
+								<li class="rebuildInput" {if $smarty.foreach.fe_bank.iteration % 2 eq 0} style="float:right"{/if}>
+									<input class="J_AjaxFormFields"  type="radio" name="short_name" id="{$key}" value="{$key}" {if $smarty.foreach.fe_bank.first}checked="checked" {/if} {if $smarty.get.short_name eq $key} checked="checked" {/if}  />
+									<label class="  icon-box current " for="{$key}" > <span class="icon-cashier icon-cashier-{$key}" title="{$bank}">&nbsp;</span> </label>
+								</li>
+								<!--{/foreach}-->
+							</ul>
+						</dd>
+					</dl>
+					<dl class="clearfix">
+						<dt>&nbsp;</dt>
+						<dd class="input-wrap">
+							<input placeholder="卡号" type="text" name="num" class="J_AjaxFormFields input-s1" value="{$card.num}" />
+						</dd>
+					</dl>
+					<dl class="clearfix">
+						<dt>&nbsp;</dt>
+						<dd class="input-wrap">
+							<input placeholder="户名" type="text" name="account_name" class="J_AjaxFormFields input-s1" value="{$card.account_name}" />
+						</dd>
+					</dl>
+					<dl class="clearfix">
+						<dt>&nbsp;</dt>
+						<dd class="input-wrap">
+							<input type="text" placeholder="开户银行 示例：XXX银行XXX支行" name="open_bank" class="J_AjaxFormFields input-s1" value="{$card.open_bank}" />
+						</dd>
+					</dl>
+					<dl class="mt10 clearfix">
+						<dt class="mb10">卡类型</dt>
+						<dd class="card-type rebuildWrap">
+							<label class="rebuildInput">
+								<input class="J_AjaxFormFields" type="radio" name="type" value="debit" {if $smarty.get.type eq 'debit' || $card.type eq 'debit'} checked="checked" {/if} />
+								储蓄卡（借记卡）</label>
+							<label class="rebuildInput">
+								<input class="J_AjaxFormFields" type="radio" name="type" value="credit" {if $smarty.get.type eq 'credit' || $card.type eq 'credit'} checked="checked" {/if} />
+								信用卡（贷记卡）</label>
+						</dd>
+					</dl>
+					<dl class="clearfix">
+						<dt>&nbsp;</dt>
+						<dd class="captcha clearfix">
+							<input placeholder="{$lang.captcha}" type="text" name="captcha" class="J_AjaxFormFields input-s1 input-s1-w1" id="captcha1" />
+							<a href="javascript:change_captcha($('#captcha'));" class="renewedly"><img id="captcha" src="index.php?app=captcha&amp;{$random_number}" /></a> </dd>
+					</dl>
+					<dl class="clearfix">
+						<dt>&nbsp;</dt>
+						<dd>
+						<input type="hidden" name="ret_url" class="J_AjaxFormFields J_AjaxFormSuccessRet" value="{url app=deposit}" />
+						<input type="submit" class="J_AjaxFormSubmit btn-alipay" value="{$lang.submit}" /></dd>
+					</dl>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{include file=footer.html} 

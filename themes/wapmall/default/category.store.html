@@ -1,33 +1,31 @@
-{include file='header2.html'}
-<style>
-  .pro-classify dt:hover, .pro-classify dt:hover a , .pro-classify .current a  {
-		color: #fff;
-	}
-</style>
-<section id="wraper">
-		{include file="header.top_nav.html"}
-		<dl class="pro-classify" id="proClassify">
-			<!--{foreach from=$scategorys item=scategory}-->		
-			<dt>
-				<a href='{url app=search&act=store&cate_id=$scategory.id}'>{$scategory.value|escape}</a>
-			</dt>
-			 <!--{foreach from=$scategory.children item=child}-->		
-			<dd>
-				<a href="{url app=search&act=store&cate_id=$child.id}">{$child.value|escape}</a>
-			</dd>
-			<!--{/foreach}-->		
-
-			<!--{foreachelse}-->		
-			<dd>暂无分类</dd>
-			<!--{/foreach}-->		
-
-		</dl>
-{include file='footer2.html'}		
-	</section>
-
-
-
+{include file=header.html}
+<div id="main">
+	<div id="page-category-goods"> 
+		<div id="gcategory">
+			<div class="gcategory">
+				<ul class="gcategory-list">
+					<!--{foreach from=$scategorys item=scategory name=fe_scategory}-->
+					<li> 
+						<a class="gcategory-value {if $smarty.foreach.fe_scategory.last}gcategory-value-last{/if}" href="{url app=search&act=store&cate_id=$scategory.id}"><i></i><span>{$scategory.value|escape}</span></a>
+						<em class="J_GcategoryLi gcategory-show-child"></em>
+                        <!--{if $scategory.children}-->
+						<div class="category-child">
+							<p> 
+								<!--{foreach from=$scategory.children item=child name=fe_child}--> 
+								<a href="{url app=search&act=store&cate_id=$child.id}" class="child-value"><span>{$child.value|escape}</span></a> 
+								<!--{if $smarty.foreach.fe_child.iteration % 2 eq 0 and !$smarty.foreach.fe_child.last}--> 
+							</p>
+							<p> 
+								<!--{/if}--> 
+								<!--{/foreach}--> 
+							</p>
+						</div>
+                        <!--{/if}-->
+					</li>
+					<!--{/foreach}-->
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
-</body>
-</html>
-
+{include file=footer.html}

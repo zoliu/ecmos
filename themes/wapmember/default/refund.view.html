@@ -1,0 +1,90 @@
+{include file=member.header.html}
+<script>
+$(function(){
+	$('#refund_form').submit(function(){
+		if($('textarea[name="content"]').val()==''){
+			layer.open({content: "留言内容不能为空！",time: 3});
+			return false;
+		}
+	});
+});
+</script>
+<div class="refund_form">
+	<div class="table-list">
+		<ul>
+			<li class="first clearfix"> <span class="th float-left"><em>退款编号</em></span> <span class="td float-left"><em>{$refund.refund_sn}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>申请时间</em></span> <span class="td float-left"><em>{$refund.created|date:Y-m-d H:i:s}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>退款状态</em></span> <span class="td float-left"> <em> {if $refund.status=='CLOSED'}退款关闭
+				{elseif $refund.status=='SUCCESS'}退款成功
+				{elseif $refund.status=='WAIT_SELLER_AGREE'}买家申请退款，等待卖家同意
+				{elseif $refund.status=='SELLER_REFUSE_BUYER'}卖家拒绝退款，等待买家修改中
+				{elseif $refund.status=='WAIT_ADMIN_AGREE'}卖家同意退款，等待管理员审核
+				{elseif $refund.status=='WAIT_SELLER_CONFIRM'}退款申请等待卖家确认中
+				{/if} </em> </span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>商品总额</em></span> <span class="td float-left"><em>{$refund.total_fee|price} <span class="gray">(含分摊的运费)</span></em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>退款总额</em></span> <span class="td float-left"><em>{$refund.refund_fee|price}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>退款金额</em></span> <span class="td float-left"> <em> {$refund.refund_goods_fee|price} <span class="gray">(商品金额：{$refund.goods_fee|price})</span> </em> </span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>退&nbsp;&nbsp;运&nbsp;&nbsp;费</em></span> <span class="td float-left"> <em>{$refund.refund_shipping_fee|price} <span class="gray">(分摊的运费：{$refund.shipping_fee|price})</span></em> </span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>收货情况</em></span> <span class="td float-left"><em> {$refund.shipped_text}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>退款原因</em></span> <span class="td float-left"><em> {$refund.refund_reason}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>退款说明</em></span> <span class="td float-left"><em> {$refund.refund_desc}</em></span> </li>
+		</ul>
+	</div>
+	<div class="refund_btn margin10 clearfix" style="border-bottom:1px #ddd solid"> 
+		<!--{if $refund.status neq 'SUCCESS' && $refund.status neq 'CLOSED' && $refund.status neq 'WAIT_ADMIN_AGREE'}--> 
+		<!--{if $refund.buyer_id==$visitor.user_id}--> 
+		<a href="javascript:;" class="J_AjaxRequest" confirm="您确定要取消退款么？" action="{url app=refund&act=cancel&refund_id=$refund.refund_id}">取消退款</a>
+		<a href="{url app=refund&act=edit&refund_id=$refund.refund_id}" class="blue">修改退款</a> 
+		<!--{else}--> 
+		<a href="javascript:;" class="J_AjaxRequest" confirm="点击【同意退款】按钮，相关货款将退还给买家，是否继续？" action="{url app=refund&act=agree&refund_id=$refund.refund_id}" >同意退款</a>
+		<a href="{url app=refund&act=refuse&refund_id=$refund.refund_id}">拒绝退款</a> 
+		<!--{/if}--> 
+		<!--{if $refund.ask_customer !=1}--> 
+		<a  href="javascript:;" style="width:140px; background:#09C" class="J_AjaxRequest" confirm="您确定需要平台客服介入处理么？" action="{url app=refund&act=ask_customer&refund_id=$refund.refund_id}">要求客服介入处理</a> 
+		<!--{else}--> 
+		<span>客服已介入处理</span> 
+		<!--{/if}--> 
+		<!--{/if}--> 
+	</div>
+	<div class="refund_message2 margin10"> 
+		<!--{if $refund.status neq 'SUCCESS' && $refund.status neq 'CLOSED'}-->
+		<form method="post" enctype="multipart/form-data" id="refund_form">
+			<ul class="message_form clearfix">
+				<li><span>
+					<textarea name="content" placeholder="拒绝理由"></textarea>
+					</span></li>
+				<li class="float-left mt10">上传凭证：
+					<input type="file" name="refund_cert" />
+				</li>
+			</ul>
+			<ul class="mb20">
+				<li>
+					<input type="submit" value="{$lang.submit}" class="btn-alipay" />
+				</li>
+			</ul>
+		</form>
+		<!--{/if}--> 
+	</div>
+	<div class="message_list mb10"> 
+		<!--{foreach from=$refund.message item=message name=fe_message}-->
+		<div class="title clearfix">
+			<h3> {if $message.owner_id==$visitor.user_id}
+				自己
+				{elseif $message.owner_role eq 'buyer'}
+				买家
+				{elseif $message.owner_role eq 'seller'}
+				卖家
+				{elseif $message.owner_role eq 'admin'}
+				商家客服
+				{/if} </h3>
+			<span>{$message.created|date:Y-m-d H:i:s}</span> </div>
+		<div class="content" {if $smarty.foreach.fe_message.last} style="border-bottom:1px #ddd solid"{/if}> {$message.content} 
+			<!--{if $message.pic_url}-->
+			<p style="margin-top:10px;"><img src="{$message.pic_url}" width="200" /></p>
+			<!--{/if}--> 
+		</div>
+		<!--{/foreach}--> 
+	</div>
+</div>
+{include file=page.bottom.html}
+{include file=footer.html} 

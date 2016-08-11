@@ -1,0 +1,38 @@
+@import url('global.css');
+
+/* psmb-header */
+
+.fixed-layer{position:fixed;right:10px;bottom:100px;z-index:990;background:url(../images/menuifxed.png) no-repeat;background-position: -42px -185px;background-size: 86px 276px;width:45px;}
+.active-fixed-layer{background-position:2px 0px;}
+.fixed-layer .menu-fixed-list{height:180px;display:none;}
+.fixed-layer .menu-fixed-list a{display: block;font-size: 0;margin-bottom: 5px;height: 42px;}
+.fixed-layer .menu-fixed-list .fore03 a {height: 41px;}
+.fixed-layer .menu-fixed-list .fore04 a {height: 40px;}
+.fixed-layer .menu-mini {height: 40px;margin-bottom:4px;}
+.fixed-layer .backtop {height: 41px;}
+.active-fixed-layer .menu-mini {margin-top:5px;}
+
+
+.top-bar{ width:100%; height:44px; background:#f23015; line-height:44px; position:relative;overflow:hidden;}
+.top-bar .pageback{ position:absolute;left:10px; top:10px; background:url(../images/icon2b.png) no-repeat scroll -120px -8px transparent;width:10px; height:21px;}
+.top-bar .category{ position:absolute;left:0px; top:-2px;background: url(../images/ico_02.png) no-repeat 50% 50%;  width: 3rem;
+ height: 3rem;display: block; -webkit-background-size: 1.8rem 1.8rem;-moz-background-size: 1.8rem 1.8rem;-o-background-size: 1.8rem 1.8rem;background-size: 1.8rem 1.8rem;}
+.top-bar .member-center{width:40px;height:40px; display: block;background: url(../images/user_btn.png) no-repeat right center;position: absolute;top:1px;right:10px;}
+.top-bar h2{text-align:center;color:#fff;font-weight:400;font-size:1.25rem;line-height:44px;}
+.top-bar .home-icon{width:40px;height: 34px;background: url(../images/bt_ico1b.png) no-repeat 0 0;background-size: contain;border: 0;font-size: 12px;position: absolute;top:5px;border: 0;right:-2px;overflow: hidden;display: inline-block;}
+.top-bar .pagemore{ position:absolute;right:10px; top:10px; background:url(../images/icon2b.png) no-repeat scroll -125px -24px transparent;width:21px; height:21px; background-size:860%}
+.top-bar .page-store-more{ position:absolute;right:10px; top:13px; display: block;width: 1.25rem;height: 1rem;background-image: url(../images/icon3.png);background-repeat: no-repeat;background-size: 100%;}
+
+
+.top-bar .search-box{margin:5px 60px 5px 40px;background:#fff;height:34px;border-radius:5px;position:relative;}
+.top-bar .search-box .kw{width:90%;position:absolute;top:4px;left:10px;height:26px;line-height:26px;border:0px;background:none;font-size:16px;}
+.top-bar .search-box .submit{position: absolute;top:5px;right: 10px;width: 1.8rem;height: 1.5rem;border: none;background: url(../images/search.png) no-repeat 50% 50%;-webkit-background-size: 1.4rem 1.4rem;-moz-background-size: 1.4rem 1.4rem;background-size: 1.4rem 1.4rem;}
+.top-bar .filter{ position:absolute;right:10px; top:8px;color:#fff;}
+
+.eject-tab{border-bottom: 1px solid #ddd;background:rgba(255,255,255,0.5);}
+.eject-tab a{width: 25%;padding: 9px 0;text-align: center;display:block;float:left;}
+.eject-tab a span{display: inline-block;width: 22px;height: 22px;background: url(../images/icon2b.png) -60px -25px no-repeat;background-size: 180px 180px;text-indent: -9999px;vertical-align: text-top;}
+.eject-tab a p{color:#666;}
+.eject-tab a span.icon2{width: 26px;background-position: 0 -25px;}
+.eject-tab a span.icon3{width: 25px;background-position: -29px -25px;}
+.eject-tab a span.icon4{width: 22px;background-position: -85px -25px;}

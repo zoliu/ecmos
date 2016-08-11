@@ -1,0 +1,54 @@
+{include file=member.header.html} 
+<script>
+$(function(){
+	$("#refund_add").submit(function(){
+		if($('#content').val()==''){
+			layer.open({content: "拒绝理由不能为空",time: 3});
+			return false;
+		}
+		if($('input[name="refund_cert"]').val()==''){
+			layer.open({content: "请上传凭证",time: 3});
+			return false;
+		}
+	});
+});
+</script>
+<div class="refund-refuse">
+	<form id="refund_add" method="post" enctype="multipart/form-data" class="margin10">
+		<ul class="message_form clearfix">
+			<li><span>
+				<textarea name="content" id="content" placeholder="拒绝理由"></textarea>
+				</span></li>
+			<li class="float-left mt10">上传凭证：
+				<input type="file" name="refund_cert"/>
+			</li>
+		</ul>
+		<ul>
+			<li class="mt10">
+				<input type="submit" value="{$lang.submit}" class="btn-alipay"/>
+			</li>
+		</ul>
+	</form>
+	<div class="table-list mt20">
+		<ul>
+			<li class="first clearfix"> <span class="th float-left"><em>退款编号</em></span> <span class="td float-left"><em>{$refund.refund_sn}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>申请时间</em></span> <span class="td float-left"><em>{$refund.created|date:Y-m-d H:i:s}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>退款状态</em></span> <span class="td float-left"><em >{if $refund.status=='CLOSED'}
+				退款关闭
+				{elseif $refund.status=='SUCCESS'}
+				退款成功
+				{elseif $refund.status=='WAIT_SELLER_AGREE'}
+				买家申请退款，等待卖家同意
+				{elseif $refund.status=='SELLER_REFUSE_BUYER'}
+				卖家拒绝退款，等待买家修改中
+				{elseif $refund.status=='WAIT_SELLER_CONFIRM'}
+				退款申请等待卖家确认中
+				{/if} </em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>交易金额</em></span> <span class="td float-left"><em>{$refund.total_fee}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>退款总额</em></span> <span class="td float-left"><em>{$refund.refund_fee}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>退款原因</em></span> <span class="td float-left"><em>{$refund.refund_reason}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>退款说明</em></span> <span class="td float-left"><em>{$refund.refund_desc}</em></span> </li>
+		</ul>
+	</div>
+</div>
+{include file=footer.html}

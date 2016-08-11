@@ -1,137 +1,249 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0,minimum-scale=1.0, maximum-scale=2.0 user-scalable=yes">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="description" content="">
-	<meta name="keywords" content="">
-	 {$page_seo}
-	<link href="{res file=css/style.css}" type="text/css" rel="stylesheet">
-	<script type="text/javascript" src="index.php?act=jslang"></script>
-    <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
-    <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
-	<script type="text/javascript" src="{res file=js/kissy/build/kissy.js}"></script>
-    <script type="text/javascript" src="{res file=js/kissy/build/switchable/switchable-pkg.js}"></script>
-
+{include file=top.html} 
+<script type="text/javascript">
+$(function(){
+	$("img.lazyload").lazyLoad();
 	
-	{$_head_tags}
-        <script type="text/javascript">
-            //<!CDATA[
-            var SITE_URL = "{$site_url}";
-            var REAL_SITE_URL = "{$real_site_url}";
-            var PRICE_FORMAT = '{$price_format}';
-            //]]>
-        </script>
+	/* 首页轮播 */
+	if($('#slide').children('li').length>1){
+		$('#slide').slidesjs({
+			width: 320,
+			height: 120,
+			navigation: false,
+			play: {
+				auto: true
+			}
+		});
+	}
+	$('.fake-search-box').find('input').click(function(){
+		$(this).parents("#page-index").hide();
+		$('.true-search-box').show();
+		$('#footer').hide();
+	})
+	
+	$('.true-search-box .close').click(function(){
+		$("#page-index").show();
+		$('.true-search-box').hide();
+		$('#footer').show();
+	})
+})
+</script>
+<div id="page-index" class="page J_page derect-left">
+	<div id="main"> 
+		<!--common bar start-->
+		<div class="bar-wrap">
+			<div style="line-height:30px;" class="top-bar"> 
+            	<a href="javascript:;" onclick="PsmobanShowMenu('left');" class="category"><span></span></a>
+				<h2 class="yahei">{$site_title}</h2>
+				<a href="javascript:;" class="pagemore J_pagemore"><span></span></a>
+            </div>
+            <div class="eject-tab J_eject_tab w-full clearfix hidden">
+			<a href="{url app=default}"> <span></span><p>首页</p></a>
+			<a href="{url app=search}"> <span class="icon2"></span><p>分类搜索</p></a>
+			<a href="{url app=cart}"> <span class="icon3"></span><p>购物车</p></a>
+			<a href="{url app=member}"> <span class="icon4"></span><p>用户中心</p></a>
+		</div>
+		</div>
 
-<style>
-figure .flexslider {height: 150px;overflow: hidden;position: relative;margin: 0;}
-.flexslider {margin: 99px auto 0;width: 100%;}
-.flexslider img{width:100%;/**/}
-figure .flexslider .ks-switchable-nav a {display: block;-webkit-box-flex: 1;height: 100%;overflow: hidden;}
-figure .flexslider .ks-switchable-nav a.ks-active {background-color: #b20000;}
-figure .flexslider ul {height: 150px;top: 0;}
-figure .flexslider .ks-switchable-nav {position: absolute;width: 100%;height: 3px;bottom: 0;background-color: rgba(51,51,51,0.5);-webkit-transform: translate3d(0,0,0);display: -webkit-box;}
-</style>
-</head>
-<body>
-	<link type="text/css" rel="stylesheet" href="{res file=css/slider.css}" />
-	<script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+		<!--common bar end-->
+		<!-- 首页幻灯 -->
+        <!-- <div class="slides">
+        	<ul id="slide" class="scroller" > 
+                {foreach from=$slides item=slide name=fe_slide}
+                {if $slide.ad_image_url && $slide.ad_link_url}
+                <li> <a href='{$slide.ad_link_url}'><img src="{$slide.ad_image_url}" /></a> </li>
+                {/if}
+                {/foreach} 
+            </ul>
+        </div> -->
+        <!-- end -->
 
-    <section id="wraper">
-		{include file="header.top_nav.html"}
-		<figure>
-		<div id="demo" class="flexslider">
-			<ul class="slides">
-				{foreach from=$nav_ads item=ads name=foreach_nav_ads}
-                    <li><a href="{$ads.url}"><img src="{$ads.logo}" /></a></li>
-				{/foreach}
+        <!-- 点击后显示真正的搜索框 -->
+        <div class="fake-search-box margin10 mt20">
+           <div class="input-wraper">
+              <p class="input-child-wraper"><input class="text-input" placeholder="请输入你要搜索的商品名称"  /></p>
+              <input type="button" class="fake-submit" value="" />
+          </div>
+        </div>
+        <!-- end -->
+		<!-- 功能菜单列表 -->
+        <div class="memnus-list pl10 mb10">
+           <ul class="clearfix">
+            	<li>
+                    <a href="{url app=category}">
+                       <p><img src="static/images/home-icon-category.png" /></p>
+                       <p>商品分类</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{url app=member}">
+                        <p><img src="static/images/home-icon-member-center.png" /></p>
+                        <p>用户中心</p>
+                    </a>
+                </li>
+                <li>
+                   <a href="{url app=member}">
+                       <p><img src="static/images/home-icon-order.png" /></p>
+                       <p>我的订单</p>
+                   </a>
+                </li>
+                <li>
+                    <a href="{url app=my_coupon}">
+                       <p><img src="static/images/home-icon-member-collect.png" /></p>
+                       <p>优惠券</p>
+                   </a>
+                </li>
+                <li>
+                   <a href="{url app=category&act=store}">
+                        <p><img src="static/images/home-icon-category-store.png" /></p>
+                        <p>店铺分类</p>
+                   </a>
+                </li>
+                <li>
+                   <a href="{url app=my_money}">
+                      <p><img src="static/images/home-icon-doposit.png" /></p>
+                      <p>我的钱包</p>
+                   </a>
+                </li>
+                <li>
+                   <a href="{url app=cart}">
+                       <p><img src="static/images/home-icon-cart.png" /></p>
+                       <p>购物车</p>
+                   </a>
+                </li>
+                <li>
+                    <a href="{url app=article&code=help}">
+                        <p><img src="static/images/home-icon-help.png" /></p>
+                        <p>帮助中心</p>
+                    </a>
+                </li>
             </ul>
         </div>
-	<script type="text/javascript" src="{res file=js/slider.js}"></script>
-	<script type="text/javascript">
-		$(function(){
+        <!-- end  -->
 
-			$('#demo').flexslider({
-				animation: "slide",
-				direction:"horizontal",
-				easing:"swing"
-			});
-		});
-	</script>
-		</figure>
-		<nav id="nav">
-			{foreach from=$nav_list item=nav name=foreach_nav_list}
-			<a href="{if $nav.url}{$nav.url}{else}{url app=search&cate_id=$nav.gcategory_id}{/if}"><i style="background-image:url('{$nav.logo}')"></i><span>{$nav.name}</span></a>
-			{if $smarty.foreach.foreach_nav_list.iteration eq 2}
-
-           <!--{if !$visitor.user_id}-->
-				<div><a href="{url app=member&act=login}"><i></i><span>登录</span></a><a href="{url app=member&act=register}"><i></i><span>注册</span></a></div>
-           <!--{else}-->
-				<div><a href="{url app=member&act=wap_index}" style="height: 96px;background-color: #f3a29a;"><i style="width: 100%;height: 70px;background-image:url('/themes/wapmall/default/styles/default/images/mem_login.png')"></i><span style="line-height: 26px;background-color: #ee7b6f;width: 100%;height: 26px;">用户中心</span></a></div>
-
-           <!--{/if}-->
-			{/if}
-			{/foreach}	
-			
-		</nav>
-		
-		{if $goods_list}
-		{foreach from=$goods_list item=items}
-		<section class="pro-list">
-			<header>
-				<a class="current" href="{if $nav.url}{$nav.url}{else}{url app=search&cate_id=$items.cate_id}{/if}">
-				<h2><i></i><span>{$items.cate_name}</span></h2>
-				<nav>					
-					<a href="{url app=search&cate_id=$items.cate_id}"></a>
-					<a href="{url app=search&cate_id=$items.cate_id}"></a></nav>
-				</a>
-			</header>
-			<ul>
-				{foreach from=$items.goods_list item=goods}	
-				<li>
-					<div>
-						<figure><a href="{url app=goods&id=$goods.goods_id}"><img src="{$goods.default_image}" title="" alt=""></a></figure>
-						<figcaption style="width:99%;text-overflow:ellipsis; overflow:hidden; white-space:nowrap; margin-left: 2px;"><a href="{url app=goods&id=$goods.goods_id}">{$goods.goods_name}</a></figcaption>
-						<p><i></i><span>{$goods.price|price}</span></p>
-					</div>
-				</li>
-				{/foreach}			
-			</ul>
-		</section>
-		{/foreach}
-		{/if}
-			<!--联系我们-->
-			<section class="pro-list" style="display: none;" id="content">
-			<header>
-				<a class="current" href="#">
-				<h2><i></i><span>联系我们</span></h2>
-				<a href="javascript:void($('#content').hide(500));" style="float: right;">
-					关闭
-				</a>
-				</a>
-			</header>
-        <dt>
-            <p>400电话：
-                <a href="#">400-567-5677</a>
-            </p>
-            <p>CEO邮箱：
-                <a href="mailto: seemazoliu.cn">seemazoliu.cn</a>
-            </p>
-            <p>客服邮箱：
-                <a href="mailto: seemazoliu.cn">seemazoliu.cn</a>
-            </p>
-            <p>招商邮箱：
-                <a href="mailto: seemazoliu.cn">seemazoliu.cn</a>
-            </p>
-        </dt>
-		</section>
-		<footer id="footer">
-			<div>客服热线：400-008-5465</div>
-			<nav><a href="{url app=article&act=view&article_id=20}">关于卓信品诚</a><i>|</i><a href="javascript:void($('#content').show(500));">联系我们</a><i>|</i><a href="#"><span>TOP</span><b></b></a></nav>
-			<p>Copyright(c)2014卓信品诚版权所有</p>
-		</footer>
-	</section>
-</body>
-</html>
+		<!-- <div class="floor floor1 J_Floor">
+			<div class="content clearfix">
+				<div class="col-1 relative">
+					<a href="{$floor_1.ads.1.ad_link_url}"><img src="{$floor_1.ads.1.ad_image_url}" /></a>
+					
+				</div>
+				<div class="col-2">
+					<div class="border-left"> <a href="{$floor_1.ads.2.ad_link_url}" class="border-bottom"><img src="{$floor_1.ads.2.ad_image_url}"  /></a> <a href="{$floor_1.ads.3.ad_link_url}"><img src="{$floor_1.ads.3.ad_image_url}" /></a> </div>
+				</div>
+			</div>
+		</div>
+		<div class="labels clearfix"> 
+			{foreach from=$floor_1.keywords item=kw1 } 
+			<span><a href="{$kw1.link}" class="yahei" res="1">{$kw1.title|escape}</a></span> 
+			{/foreach} 
+		</div>
+		<div class="floor floor2  J_Floor">
+			<div class="title yahei">{$floor_2.model_name|escape}</div>
+			<div class="content clearfix">
+				<div class="col-1"><a href="{$floor_2.ads.1.ad_link_url}"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$floor_2.ads.1.ad_image_url}" /></a></div>
+				<div class="col-2">
+					<div class="border-left"> <a href="{$floor_2.ads.2.ad_link_url}" class="border-bottom"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$floor_2.ads.2.ad_image_url}"  /></a> <a href="{$floor_2.ads.3.ad_link_url}"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$floor_2.ads.3.ad_image_url}" /></a> </div>
+				</div>
+			</div>
+			<div class="labels clearfix"> 
+				{foreach from=$floor_2.keywords item=kw2 } 
+				<span><a href="{$kw2.link}" class="yahei" res="1">{$kw2.title|escape}</a></span> 
+				{/foreach} 
+			</div>
+		</div>
+		<div class="floor floor3  J_Floor">
+			<div class="title yahei">{$floor_3.model_name|escape}</div>
+			<div class="content clearfix">
+				<div class="col-1">
+					<div class="border-right"> <a href="{$floor_3.ads.1.ad_link_url}"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$floor_3.ads.1.ad_image_url}" /></a><a href="{$floor_3.ads.2.ad_link_url}" class="border-top"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$floor_3.ads.2.ad_image_url}" /></a> </div>
+				</div>
+				<div class="col-2"> <a href="{$floor_3.ads.3.ad_link_url}"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$floor_3.ads.3.ad_image_url}" /></a> </div>
+			</div>
+		</div>
+		<div class="labels clearfix"> 
+			{foreach from=$floor_3.keywords item=kw3 } 
+			<span><a href="{$kw3.link}" class="yahei" res="1">{$kw3.title|escape}</a></span> 
+			{/foreach} 
+		</div>
+		<div class="floor floor4  J_Floor">
+			<div class="title yahei">{$floor_4.model_name|escape}</div>
+			<div class="content clearfix">
+				<div class="col-1"><a href="{$floor_4.ads.1.ad_link_url}"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$floor_4.ads.1.ad_image_url}" /></a></div>
+				<div class="col-2">
+					<div class="border-left"> <a href="{$floor_4.ads.2.ad_link_url}" class="border-bottom"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$floor_4.ads.2.ad_image_url}" /></a><a href="{$floor_4.ads.3.ad_link_url}"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$floor_4.ads.3.ad_image_url}" /></a></div>
+				</div>
+			</div>
+		</div>
+		<div class="labels clearfix"> 
+			{foreach from=$floor_4.keywords item=kw4 } 
+			<span><a href="{$kw4.link}" class="yahei" res="1">{$kw4.title|escape}</a></span> 
+			{/foreach} 
+		</div>
+		<div class="floor floor5  J_Floor">
+			<div class="title yahei">{$floor_5.model_name|escape}</div>
+			<div class="content clearfix">
+				<div class="col-1"><a href="{$floor_5.ads.1.ad_link_url}"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$floor_5.ads.1.ad_image_url}" /></a></div>
+				<div class="col-2">
+					<div class="border-left"> <a href="{$floor_5.ads.2.ad_link_url}" class="border-bottom"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$floor_5.ads.2.ad_image_url}" /></a><a href="{$floor_5.ads.3.ad_link_url}"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$floor_5.ads.3.ad_image_url}" /></a></div>
+				</div>
+			</div>
+		</div>
+		<div class="labels clearfix"> 
+			{foreach from=$floor_5.keywords item=kw5 } 
+			<span><a href="{$kw5.link}" class="yahei" res="1">{$kw5.title|escape}</a></span> 
+			{/foreach} 
+		</div>
+		<ul class="theme clearfix">
+			{foreach from=$six_images item=six_image name=fe_six_image}
+			<li><a  href="{$six_image.ad_link_url}"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$six_image.ad_image_url}" /></a></li>
+			{/foreach}
+		</ul>
+		<div class="global-image-ads"><a href="{$banner.ad_link_url}"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$banner.ad_image_url}" /></a></div>
+		        <div class="bottom-search">
+		        	<div class="search-box">
+		            	<form method="get">
+		                	<input type="hidden" name="app" value="search" />
+		                    <div class="wraper"><input name="keyword" type="text" value="" placeholder="" /></div>
+		                    <input type="submit" value="" />
+		                </form>
+		            </div>
+		        	<a href="index.php" class="home-icon"></a>
+		            <a href="javascript:scroll(0,0);" class="back-top"></a>
+		        </div> -->
+	</div>
+</div>
+<!-- 真实的购物车 -->
+<div class="true-search-box hidden">
+	<div class="top-bar">
+    	请输入你要搜索的商品名称
+        <span class="close"></span>
+    </div>
+    <div class="search-form padding10">
+        <div class="input-wraper">
+           <form method="get">
+           	   <input type="hidden" name="app" value="search" />
+               <p class="input-child-wraper"><input class="text-input" name="keyword" placeholder="请输入你要搜索的商品名称"  /></p>
+               <input type="submit" class="true-submit" value="" />
+           </form>
+        </div>
+    </div>
+    <div class="hot-search padding10 clearfix">
+    	<!--{foreach from=$keyword item=hot_search}-->
+        <a href="{url app=search&keyword=$hot_search|escape:url}">{$hot_search|escape}</a>
+        <!--{/foreach}-->
+    </div>
+</div>
+<!-----------------------------end-------------------------------->
+<!------------------------左侧弹出的分类----------------------------->
+<div class="J_masker masker" onclick="PsmobanShowMenu('left');"></div>
+<div class="J_menus menus home-category">
+	<ul>
+    	<!--{foreach from=$header_gcategories.gcategories item=gcate}-->
+    	<li>
+        	<a href="{url app=search&cate_id=$gcate.id}" class="arrow"></a>
+            <a href="{url app=search&cate_id=$gcate.id}" class="title">{$gcate.value}</a>
+        </li>
+        <!--{/foreach}-->
+    </ul>
+</div>
+<!-----------------------------end----------------------------------->
+{include file=footer.html}

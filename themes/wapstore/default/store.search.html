@@ -1,57 +1,68 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-        {$page_seo}
-        <link type="text/css" rel="stylesheet" href="{res file=css/index.css}">
-            <link href="{res file=css/common.css}" rel="stylesheet" type="text/css" />
-            <script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
-            <script type="text/javascript" src="{res file=js/jquery.flexslider.js}"></script>
-            <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
-            <script type="text/javascript" src="{res file=js/iscroll.js}"></script>
-            <script type="text/javascript">
-        var SITE_URL = "{$site_url}";
-        var REAL_SITE_URL = "{$real_site_url}";
-        var PRICE_FORMAT = '{$price_format}';
-        </script>
-    
-
-</head>
-    <body>
-        {include file=header.html}
-        <div class="paixu">
-            <span class="red_btn">排序</span>
-          <a href="{url app=store&act=search&id=$store.store_id&keyword=$keyword&cate_id=$cate_id&order=sales-desc}" class='white_btn {if "sales-desc" eq $smarty.get.order}cur{/if}'>销量<i></i></a>
-            <a href="{url app=store&act=search&id=$store.store_id&keyword=$keyword&cate_id=$cate_id&order=add_time-desc}" class="white_btn <!--{if $smarty.get.order eq 'add_time-desc'}-->cur<!--{/if}-->">新品<i></i></a>
-            <a href="{url app=store&act=search&id=$store.store_id&keyword=$keyword&cate_id=$cate_id&order=price-desc}" class="white_btn <!--{if $smarty.get.order eq 'price-desc'}-->cur<!--{/if}-->">价格<i></i></a>
-            <a href="{url app=store&act=search&id=$store.store_id&keyword=$keyword&cate_id=$cate_id&order=views-desc}" class="white_btn <!--{if $smarty.get.order eq 'views-desc'}-->cur<!--{/if}-->">人气<i></i></a>
+{include file=top.html}
+<div id="page-store" class="page-store w page J_page" style="margin-bottom:10px; "> 
+	<!--common bar start-->
+	<div class="bar-wrap">
+		<div class="top-bar">
+        	<a href="javascript:pageBack();" class="pageback"><span></span></a>
+		    <div class="search-box">
+				<form id="search-form" method="get">
+					<input type="hidden" name="app" value="search" />
+					<input name="keyword"  type="text" class="kw" placeholder="请输入你要搜索的商品名称"/>
+					<input type="submit" class="submit" value="">
+				</form>
+			</div>
+			<a  class="page-store-more" onclick="PsmobanShowMenu();"><span></span></a> 
         </div>
-        <!-----列表-->
-        <div class="lists lists1">
-            <ul>
-                <!--{if $searched_goods}-->
-                <!--{foreach from=$searched_goods item=sgoods}-->
-                <a href="{url app=goods&id=$sgoods.goods_id}">
-                    <li>
-                        <img src="{$sgoods.default_image}" />
-                        <p>{$sgoods.goods_name|escape}</p>
-                        <span>{$sgoods.price|price}</span>
-                    </li>
-                </a>
-                <!--{/foreach}-->
-                <!--{else}-->
-                {$lang.no_records}
-                <!--{/if}-->
+	</div>
+	<!--common bar end--> 
+	<!--{if $searched_goods}-->
+	<div style="border-top:0px;" class="search-goods goods-model-si">
+		<h3>{$search_name}</h3>
+		<ul class="clearfix">
+			<!--{foreach from=$searched_goods item=ng name=fe_ng}-->
+			<li> 
+				<!--{foreach from=$ng item=ngoods name=fe_ngoods}-->
+				<div class="item pb10">
+					<div {if $smarty.foreach.fe_ngoods.iteration % 2 eq 0}style="margin-left:5px;margin-right:0rem;"{/if} class="wrap">
+						<div class="wrap2">
+							<div class="pic"><a href="{url app=goods&id=$ngoods.goods_id}"><img src="{$ngoods.default_image}" /></a></div>
+							<h3><a href="{url app=goods&id=$ngoods.goods_id}">{$ngoods.goods_name|escape}</a></h3>
+							<p>￥{$ngoods.price}</p>
+						</div>
+					</div>
+				</div>
+				<!--{/foreach}--> 
+			</li>
+			<!--{/foreach}-->
+		</ul>
+	</div>
+	<div class="line-background2"></div>
+	{include file=page.bottom.html}
+	<div class="line-background2"></div>
+	<!--{else}-->
+	<div style="text-align:center;line-height:100px;font-size:14px;" class="no-goods page-body"> {$lang.no_records} </div>
+	<!--{/if}--> 
+</div>
+<div class="masker J_masker" onclick="PsmobanShowMenu();"></div>
+<div class="menus J_menus">
+    <div class="attrs" style="overflow: auto;height: 100%">
+        <!--{foreach from=$store.store_gcates item=gcategory}-->
+        <div class="attr">
+          <div class="attrk">{$gcategory.value|escape}</div>
+          <div class="attrv">
+            <ul class="clearfix">
+              <!--{foreach from=$gcategory.children item=child_gcategory name=fe_gcategory}-->
+              <li {if $smarty.foreach.fe_gcategory.iteration gt 4}class="hidden"{/if}><a href="{url app=store&id=$store.store_id&act=search&cate_id=$child_gcategory.id}">{$child_gcategory.value|escape}</a></li>
+              <!--{/foreach}-->
             </ul>
+            <!--{if $gcategory.count gt 4}-->
+            <div class="options">
+              <a class="more" href="javascript:void(0);"><span>查看更多</span><i></i></a>
+            </div>
+            <!--{/if}-->
+          </div>
         </div>
-
-        <!--------翻页-------------->
-        <div class="page">
-            {include file=page.bottom.html}
-        </div>
-        {include file=footer.html}
-    </body>
-</html>
+        <!--{/foreach}-->
+    </div>
+</div>
+{include file=footer.html}

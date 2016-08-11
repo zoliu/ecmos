@@ -1,60 +1,23 @@
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-{$page_seo}
-<link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
-<link href="{res file=css/bookmark.css}" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
-<script type="text/javascript" src="{lib file=member.js}" charset="utf-8"></script>
-<script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
-
-
-</head>
-<body class="gray">
-
-    <div class="fixed">
-        <!---头部------>
-        <div class="header header2">
-			<a href="javascript:history.back(-1);" class="back2_pre"></a>
-            我的收藏
-        </div>  
-    </div>
-  
-    <div class="mark"> 
-     <ul class="bm_tab">
-            <li class="cur"><a href="{url app=my_favorite}">收藏商品</a></li>
-            <li><a href="{url app=my_favorite&type=store}">收藏店铺</a></li>
-        </ul>
-        <!--------收藏商品-->
-        <div class="bm_con">
-            <div class="marklist">
-                <ul>
-				<!--{foreach from=$collect_goods item=goods name=v}-->
-                    <li>
-                        <a href="{url app=goods&id=$goods.goods_id}"><img src="{$goods.default_image}" /></a>
-                        <p>{$goods.goods_name|escape}</p>
-                        <p>价格：<strong>{$goods.price|price}</strong></p>
-                         <p>收藏时间：{$goods.add_time|date:complete}</p>
-                        <a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=my_favorite&amp;act=drop&type=goods&item_id={$goods.goods_id}');" class="close"><img src="{res file=images/close.jpg}" style="border:none; width:20px;height:20px;margin:0 0 5px 0;" /></a>
-                    </li>
-                     <!--{foreachelse}-->
-                     <li>{$lang.no_goods}</li>
-					 <!--{/foreach}-->
-                </ul>
-            </div>
-        </div>
-   		<!--------收藏店铺--------->
-        
-    </div>
-    
-    
-    <!--------翻页-------------->
-    <div class="page">
-      {include file=member.page.bottom.html}
-    </div>
-{include file="member.footer.html"}
+{include file=member.header.html}
+<div id="page-my-favorite" class="mb10">
+	<div class="page-body my-favorite mb10">
+		<!--{foreach from=$collect_goods item=goods name=name=fe_goods}-->
+		<dl>
+			<a href="{url app=goods&id=$goods.goods_id}"  class="attr clearfix">
+				<dt><img src="{$goods.default_image}" width="90" height="90"  /></dt>
+				<dd>
+					<h3>{$goods.goods_name|escape}</h3>
+					<p>{$goods.price|price}</p>
+				</dd>
+			</a>
+			<a href="javascript:;" class="J_AjaxRequest delete" confirm="{$lang.drop_confirm}" action="{url app=my_favorite&act=drop&item_id=$goods.goods_id&type=goods}">{$lang.drop}</a>
+		</dl>
+		<!--{foreachelse}-->
+        <div class="no-record">{$lang.no_goods}</div>
+        <!--{/foreach}-->
+	</div>
+    <!--{if $collect_goods}-->
+    {include file=page.bottom.html}
+    <!--{/if}-->
+</div>
+{include file=footer.html}

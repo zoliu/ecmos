@@ -1,33 +1,18 @@
-{include file='header2.html'}
-<style>
-  .pro-classify dt:hover, .pro-classify .current a, .pro-classify dt:hover a{
-		color: #fff;
-	}
-</style>
-
-	<section id="wraper">
-		{include file="header.top_nav.html"}
-		<dl class="pro-classify" id="proClassify">
-			<dt class='current'>
-				<a href=''>{$article.title|escape}</a>
-			</dt>
-			<dd style="display:block;">
-				{$article.content|escape:editor}
-			</dd>
-		</dl>
-
-		<div class="more_article" style="line-height: 30px;margin: 2%;">
-        	<!--{if $pre_article}--><h3>{$lang.pre_article}: <a target="{$pre_article.target}" href="{url app=article&act=view&article_id=$pre_article.article_id}">{$pre_article.title|escape}</a></h3><!--{/if}-->
-
-        	<!--{if $next_article}--><h3>{$lang.next_article}: <a target="{$next_article.target}" href="{url app=article&act=view&article_id=$next_article.article_id}">{$next_article.title|escape}</a></h3><!--{/if}-->
-    	</div>
-	 
-		{include file='footer2.html'}		
-	</section>
+{include file=header.html}
+<div id="page-article">
+	<div class="article-detail">
+    	<div class="container">
+        	<div class="list margin10 mt20">
+        		<div class="title">{$article.title|escape}</div>
+        		<div class="txt-content margin10">
+                     <!-- {if $article.store_id} -->
+                     {$article.content|escape:editor}
+                     <!-- {else} -->
+                     {$article.content}
+                     <!-- {/if} -->
+                </div>
+        	</div>
+        </div>
+   </div>
 </div>
-</body>
-</html>
-
-
-
-
+{include file=footer.html}

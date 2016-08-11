@@ -1,162 +1,156 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-        {$page_seo}
-        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
-        <link href="{res file=css/user.css}" type="text/css" rel="stylesheet" />
-        <script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
-    </head>
-    {include file=header2.html}
-    <style>
-        .wapmember{margin:1%;padding: 10px;overflow: hidden;background: #fff;border-radius: 5px;box-shadow: rgba(0,0,0,0.3) 0 0 3px;margin-bottom: 10px;position: relative;}
-        .wapmember a{padding: 5px 2%;margin: 10px 2% 0 0;width:96%;text-align: center;display: inline-block;cursor: pointer;}
-        .pro-classify dt:hover, .pro-classify .current a, .pro-classify dt:hover a{color: #fff;}
-        .oprate a{ display:block; width:50%; text-align:center; float:left; height:35px; line-height:35px;}
-        .oprate a b{background:url(../images/user_ico.png) no-repeat -57px -15px; height:25px; width:25px; display:inline-block; vertical-align:-5px; margin-right:10px;}
-        .oprate a i{border-right:#ccc solid 1px; float:right; display:block; width:1px; height:35px;}
-        .oprate a.del_address b{ background-position:-103px -15px;}
-        .hd{line-height: 30px;}
-        .buyer_remind{width: 100%;line-height: 20px;margin-left: 2%;}
-        .buyer_remind em{color: #FE5400;}
-        </style>
-    <!--{if $user}-->
-    <body class="gray" style="overflow-x:hidden;">
-    <div class="w320">
-        <div class="fixed">
-            <!---头部------>
-            <div class="header header2">
-                <a href="javascript:history.go(-1);" class="back2_pre"></a>个人中心
-                <a href="{url app=my_favorite}" class="bookmark"></a>
-            </div>
-        </div>
-        <div class="user_header">
-            <div class="user_photo">
-                <a href="{url app=member&act=wap_index}"><img src="<!--{if $portrait}-->{$portrait}?{$random_number}<!--{else}-->{$site_url}/data/system/default_user_portrait.gif<!--{/if}-->" /></a>
-            </div>
-            <span class="user_name">
-                {$visitor.user_name}您好,欢迎。<a href="index.php?app=member&act=logout" style="color:#999;margin-left:5px;">退出</a>
-            </span>
-            <div class="set_address"><a href="index.php?app=my_address" id="address_text"></a></div>
-            <script>
-                $(function() {
-                    $(".set_address").click(function() {
-                        if ($('#address_text').text() == '')
-                        {
-                            $('#address_text').text('收货地址管理');
-                        } else {
-                            $('#address_text').text('');
-                        }
-                    })
-                })
-            </script>
-        </div>
-        <div class="u_order">
-            <div class="orderbox">
-                <div class="detail">
-                    <p>{$lang.account_total_money}
-                        <span style="font-size:16px;font-weight:bold; color:#FE5400;">{$money_info.money|price}</span>&nbsp;{$lang.yuan}
-                    </p>
-                    <p>{$lang.account_freezing}
-                        <span style="color:blue;">{$money_info.money_dj|price}</span>
-                    </p>
-                    <br />
-                    <span class="oprate">
-                        <a href="{url app=my_money&act=withdrawal}" style="color:red;border: 1px solid #ccc;width: 48%;">{$lang.withdraw_cash}</a>
-                    </span>
-                    <span class="oprate" style="">
-                        <a href="{url app=my_money&act=recharge}" style="border: 1px solid #ccc;width: 48%;margin-left: 1%;">{$lang.account_recharge}</a>
-                    </span>
-                </div>
-            </div>
-            <div class="orderbox">
-                <div class="hd clearfix">
-                    <h2>{$lang.buyer_remind}</h2>
-                </div>
-                <div class="detail">
-                    {$lang.order_remind}{$lang.colon}
-                    <div class="buyer_remind">
-                        <span>
-                            {sprintf lang=order_for_pay_remind var1=buyer_stat.pending}
-                        </span>
-                    </div>
-                    <div class="buyer_remind">
-                        <span>
-                            {sprintf lang=order_for_confirm_remind var1=buyer_stat.shipped}
-                        </span>
-                    </div>
-                    <div class="buyer_remind">
-                        <span>
-                            {sprintf lang=order_for_evaluate_remind var1=buyer_stat.finished}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-            {include file='member.footer.html'}   
-    <!--{else}-->
-    <body class="gray" style="overflow-x:hidden;">
-    <div class="w320">
-        <div class="fixed">
-            <!---头部------>
-            <div class="header header2">
-                <a href="{url app=default}" class="back2_index"></a>个人中心
-                <a href="{url app=my_favorite}" class="bookmark"></a>
-            </div>
-        </div>
-    <section id="wraper">
-        <dl class="pro-classify" id="proClassify" style="width:100%;margin-top:45px;">
-            <dt>
-                <a href='#'>我的账户</a>
-            </dt>
-            <dd>
-                <a href="{url app=member&act=index}">账户概览</a>
-                <a href="{url app=member&act=profile}">个人资料</a>
-                <a href="{url app=cart}">我的购物车</a>
-            </dd>
-            
-            <!-- 钱包中心 -->
-            <dt>
-                <a href='#'>钱包中心</a>
-            </dt>
-            <dd>
-            	<a href="{url app=my_money}">总览</a>
-                <a href="{url app=my_money&act=setting}">设置</a>
-                <a href="{url app=my_money&act=log}">记录</a>
-                <a href="{url app=my_money&act=bank}">银行卡</a>
-            </dd>
-            
-            <!-- 下级管理 -->
-            <dt>
-                <a href='#'>下级管理</a>
-            </dt>
-            <dd>
-            	<a href="{url app=my_child}">总览</a>
-            	<a href="{url app=my_child&act=user}">下级会员</a>
-            	<a href="{url app=my_child&act=user_order}">下级会员订单</a>
-            	<a href="{url app=my_child&act=store}">下级商铺</a>
-            	<a href="{url app=my_child&act=store_order}">下级商铺订单</a>
-            </dd>
-            
-            <dt>
-                <a href='#'>我是买家</a>
-            </dt>
-            <dd>
-            	<a href="{url app=buyer_order}">我的订单</a>
-            	<a href="{url app=my_favorite}">我的收藏</a>
-            	<a href="{url app=my_address}">我的地址</a>
-                <a href="{url app=my_coupon}">优惠券</a>
-                <!-- <a href="{url app=my_discus}">退款/退货</a> -->
-            </dd>
-        </dl>
-        {include file='footer2.html'}       
-    </section>
+{include file=member.header.html}
 
-        <!--{/if}-->
-        </div>        
-    </body>
-</html>
+<style type="text/css">
+.bar-wrap{display:none;}
+</style>
+
+<div id="page-member">
+	<div class="main">
+    	<div class="relative top-info">
+            <h3 class="member-banner"></h3>
+            <!-- <div class="right-top-po clearfix">
+                <a class="set-btn" href="{url app=member&act=setting}">设置</a>
+                <a href="{url app=message&act=newpm}" class="new-message"><ins>{$new_message}</ins></a>
+            </div> -->
+            <div class="user-photo"><img src="{$user.portrait}" width="70" height="70"/></div>
+            <div class="user-name"><em> {$user.user_name|escape} </em><a href="{url app=member&act=logout}">退出</a></div>
+        </div>
+        <div class="top-menu mb10">
+       		<ul class="clearfix">
+            	<li>
+                
+                </li>
+            	<li>
+                   <a href="{url app=my_favorite&type=store}">
+                       <span>{$user.count_collect_store|default:0}</span><br />
+                       <span>收藏的店铺</span>
+                   </a>
+                </li>
+                <li>
+                   <a href="{url app=my_favorite}">
+                      <span>{$user.count_collect_goods|default:0}</span><br />
+                      <span>收藏的宝贝</span>
+                   </a>
+                </li>
+                <li>
+                   <a href="{url app=my_integral}">
+                      <span>{$user.integral|default:0}</span><br />
+                      <span>我的积分</span>
+                   </a>
+               </li>
+            </ul>
+        </div>
+        <div class="fun-list">
+        	<!--{if $member_role eq 'buyer_admin'}-->
+        	<ul class="clearfix">
+            	<li class="order-status-1">
+                	<a href="{url app=buyer_order&type=pending}">
+                    	{if $buyer_stat.pending}<ins>{$buyer_stat.pending}</ins>{/if}
+                    	<i>&#xe673;</i>
+                        <span>待付款</span>
+                    </a>
+                </li>
+                <li class="order-status-2">
+                	<a href="{url app=buyer_order&type=accepted}">
+                    	{if $buyer_stat.accepted}<ins>{$buyer_stat.accepted}</ins>{/if}
+                    	<i>&#xe675;</i>
+                        <span>待发货</span>
+                    </a>
+                </li>
+                <li class="order-status-3">
+                	<a href="{url app=buyer_order&type=shipped}">
+                    	{if $buyer_stat.shipped}<ins>{$buyer_stat.shipped}</ins>{/if}
+                    	<i>&#xe671;</i>
+                        <span>待收货</span>
+                    </a>
+                </li>
+                <li class="order-status-4">
+                	<a href="{url app=buyer_order&type=finished}">
+                    	{if $buyer_stat.finished}<ins>{$buyer_stat.finished}</ins>{/if}
+                    	<i>&#xe672;</i>
+                        <span>待评价</span>
+                    </a>
+                </li>
+                <li class="order-status-5">
+                	<a href="{url app=refund&status=on}">
+                    	{if $buyer_stat.refund}<ins>{$buyer_stat.refund}</ins>{/if}
+                    	<i>&#xe6ac;</i>
+                        <span>退款</span>
+                    </a>
+                </li>
+            </ul>
+            <!--{/if}-->
+            <!--{if $member_role eq 'seller_admin'}-->
+        	<ul class="clearfix">
+            	<li class="order-status-1">
+                	<a href="{url app=seller_order&type=pending}">
+                    	{if $seller_stat.pending}<ins>{$seller_stat.pending}</ins>{/if}
+                    	<i>&#xe673;</i>
+                        <span>待付款</span>
+                    </a>
+                </li>
+                <li class="order-status-2">
+                	<a href="{url app=seller_order&type=accepted}">
+                    	{if $seller_stat.accepted}<ins>{$seller_stat.accepted}</ins>{/if}
+                    	<i>&#xe675;</i>
+                        <span>待发货</span>
+                    </a>
+                </li>
+                <li class="order-status-3">
+                	<a href="{url app=seller_order&type=shipped}">
+                    	{if $seller_stat.shipped}<ins>{$seller_stat.shipped}</ins>{/if}
+                    	<i>&#xe671;</i>
+                        <span>待收货</span>
+                    </a>
+                </li>
+                <li class="order-status-4">
+                	<a href="{url app=seller_order&type=finished}">
+                    	{if $seller_stat.finished}<ins>{$seller_stat.finished}</ins>{/if}
+                    	<i>&#xe672;</i>
+                        <span>待评价</span>
+                    </a>
+                </li>
+                <li class="order-status-5">
+                	<a href="{url app=refund&act=receive&status=on}">
+                    	{if $seller_stat.refund}<ins>{$seller_stat.refund}</ins>{/if}
+                    	<i>&#xe6ac;</i>
+                        <span>退款</span>
+                    </a>
+                </li>
+            </ul>
+            <!--{/if}-->
+
+            <!--{foreach from=$_member_menu item=item name=fe_item}-->
+            <!--{foreach from=$item.submenu item=subitem k=k}-->
+            <div class="fun-row {$subitem.margin}">
+            	<a href="{$subitem.url}" class="clearfix block">
+                    <p class="float-left title {$subitem.name}"><i></i>{$subitem.text}</p>
+                    <p class="float-right view mr10">{$subitem.sub_text}</p>  
+                </a>
+            </div>
+            <!--{/foreach}-->
+            <!--{/foreach}-->
+
+            <!--{if $_member_menu.overview}-->
+            <div class="fun-row {$subitem.margin}">
+            	<a href="{$_member_menu.overview.url}" class="clearfix block">
+                    <p class="float-left title {$_member_menu.overview.name}"><i></i>{$_member_menu.overview.text}</p>
+                    <p class="float-right view mr10"></p>  
+                </a>
+            </div>
+            <!--{/if}-->
+
+            <!--{if $member_role eq 'seller_admin'}-->
+            <div class="fun-row {$subitem.margin}">
+            	<a href="{url app=store&id=$store.store_id}" class="clearfix block">
+                    <p class="float-left title im_seller"><i></i>我的店铺</p>
+                    <p class="float-right view mr10">到我的店铺看看</p>  
+                </a>
+            </div>
+            <!--{/if}-->
+        </div>
+    </div>
+</div>
+
+{include file=footer.html}

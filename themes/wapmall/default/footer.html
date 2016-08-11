@@ -1,18 +1,29 @@
-<footer class="region">
-    <section class="user-panel">
-        <p class="guest">
-            <!--{if !$visitor.user_id}-->
-            <a href="{url app=member&act=login&ret_url=$ret_url}">{$lang.login}</a>
-            <a href="{url app=member&act=register&ret_url=$ret_url}">{$lang.register}</a>
-            <!--{else}-->
-            <a href="{url app=member&act=wap_index}">{$visitor.user_name|escape}</a>
-            <a href="{url app=member&act=logout}">{$lang.logout}</a>
-            <!--{/if}--> 
-        </p>
-        <a class="fb-top" href="javascript:scroll(0,0)"></a>
-    </section>
-    <p class="version">
-       
-    </p>     
-    <p class="copyright">Copyright ©2013 京-20010325</p> 
-</footer>
+<div id="footer"> 
+	<!--{if $index}-->
+	<div class="auth">
+		<p class="clearfix web-info mt10"> <a href="index.php?device=pc"><span>电脑版</span></a> <a href="javascript:;"><span><font color="#f23015">触屏版</font></span></a> <a href="javascript:;"><span>关于我们</span></a> <a href="javascript:;"><span style="border:0px;">联系我们</span></a> </p>
+		<p class="mt10 copyright pb10">&copy; Copyright <a href="{url app=default}">ykxyn.com</a></p>
+	</div>
+	<!--{/if}--> 
+	
+	<!--{if !$index}-->
+	<div class="float-back-top" onclick="window.scroll(0,0);"></div>
+	<!--{/if}-->
+	<div class="gap"></div>
+	<!--{if !in_array($smarty.get.app, array('cart', 'order'))}-->
+	<div class="float-layer">
+		<div class="global-nav global-nav-current">
+			<div class="global-nav__nav-wrap">
+				<div class="global-nav__nav-item"> <a href="{$real_site_url}" class="global-nav__nav-link"><i class="psmb-icon-font global-nav__icon-index">&#xe6b8;</i> <span class="global-nav__nav-tit">首页</span></a> </div>
+				<div class="global-nav__nav-item"> <a href="{url app=category}" class="global-nav__nav-link"><i class="psmb-icon-font global-nav__icon-category">&#xe67c;</i> <span class="global-nav__nav-tit">分类</span></a> </div>
+				<div class="global-nav__nav-item"> <a href="{url app=search}" class="global-nav__nav-link"><i class="psmb-icon-font global-nav__icon-search">&#xe65c;</i> <span class="global-nav__nav-tit">搜索</span></a> </div>
+				<div class="global-nav__nav-item"> <a href="{url app=cart}" class="global-nav__nav-link"><i class="psmb-icon-font global-nav__icon-shop-cart">&#xe6af;</i> <span class="global-nav__nav-tit">购物车</span> <span class="global-nav__nav-shop-cart-num" id="carId">{$cart_goods_kinds}</span></a> </div>
+				<div class="global-nav__nav-item"> <a href="{url app=member}" class="global-nav__nav-link"><i class="psmb-icon-font global-nav__icon-my-yhd">&#xe686;</i> <span class="global-nav__nav-tit">用户中心</span></a> </div>
+			</div>
+			<div class="global-nav__operate-wrap"> <span class="global-nav__operate-cart-num" id="globalId">{$cart_goods_kinds}</span> </div>
+		</div>
+	</div>
+	<!--{/if}--> 
+</div>
+</body>
+</html>

@@ -3,58 +3,43 @@
 
 {include file=member.header.html}
 
-<style>
-.money_info>p {
-    font-size: 1.2em;
-}
-.money_info>p>span {
-    font-weight: bold;
-    color: red;
-}
-.money_operation {
-    margin-top: 2em;
-}
-.money_operation>input {
-    margin-right: 1em;
-    color: white;
-    padding: 0.2em 0.5em;
-}
-.recharge_btn {
-    border: 1px solid #007bcc;
-    border-radius:4px;
-    background: #007bcc;
-}
-.transfer_btn {
-    border: 1px solid #ff8000;
-    border-radius:4px;
-    background: #ff8000;
-}
-.withdrawal_btn {
-    border: 1px solid #ff8000;
-    border-radius:4px;
-    background: #ff8000;
-}
-
-</style>
-
-<div class="u_order">
-	<div id="orderbox">
-		<div class="detail">
-            <div class="money_info">
-                <p>账户总余额：<span>{$money_info.money|price}</span>&nbsp;&nbsp;&nbsp;&nbsp;总冻结：<span>{$money_info.money_dj|price}</span></p>
-                <p></p>
-            </div>
-            <div class="money_operation">
-                <input class="recharge_btn" type="button" onclick="location.href = '{url app=my_money&act=recharge}'" value="充值" />
-                <input class="transfer_btn" type="button" onclick="location.href = '{url app=my_money&act=transfer}'" value="转账" />
-                <input class="withdrawal_btn" type="button" onclick="location.href = '{url app=my_money&act=withdrawal}'" value="提现" />
-            </div>
-		</div>
-	</div>
+<div id="page-member">
+    <div class="main">
+        <div class="fun-list">
+            <ul class="clearfix">
+                <li><a href="{url app=my_money&act=index}">总览</a></li>
+                <li><a href="{url app=my_money&act=setting}">设置</a></li>
+                <li><a href="{url app=my_money&act=log}">记录</a></li>
+                <li><a href="{url app=my_money&act=bank}">银行卡</a></li>
+            </ul>
+        </div>
+    </div>
 </div>
 
-<div class="clear"></div>
+<div class="deposit margin10"> 
+    <div class="deposit-account">
+        <div class="amount-overview mb10 pt10">
+            <div class="account-info">
+                <h1>账户余额</h1>
+                <div class="balanceNum">
+                    <em>{$money_info.money|default:0}</em>元可用，<em>{$money_info.money_dj}</em>元不可用
+                    <div class="balanceBtn">
+                        <a href="{url app=my_money&act=recharge}" class="btn-alipay-solid">
+                            <span>充值</span>
+                        </a>
+                        <a href="{url app=my_money&act=withdrawal}" class="btn-alipay-solid btn-alipay-solid-white">
+                            <span>提现</span>
+                        </a>
+                        <a href="{url app=my_money&act=transfer}" class="btn-alipay-solid btn-alipay-solid-white">
+                            <span>转账</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"></iframe>
+<iframe id='iframe_post' name="iframe_post" src="about:blank" frameborder="0" width="0" height="0"></iframe>
 
-{include file=member.footer.html}
+{include file=footer.html} 

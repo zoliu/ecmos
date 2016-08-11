@@ -416,7 +416,7 @@ class My_moneyApp extends MemberbaseApp {
 	        $bank_model = &m('bank');
 	        $bank_model->add($data);
 	        
-	        show_message('操作成功');
+	        show_message('操作成功', '返回列表', 'index.php?app=my_money&act=bank');
 	    }
 	    else {
 	        $this->assign('bank_name_list', $bank_name_list);

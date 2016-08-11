@@ -1,138 +1,54 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <base href="{$site_url}/" />
-<!-- Use IE7 mode -->
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset={$charset}" />
-<meta http-equiv="Content-Type" content="text/html; charset={$charset}" />
 {$page_seo}
-
-<meta name="author" content="ecmall.shopex.cn" />
+<meta charset="{$charset}" />
+<meta name="author" content="www.psmoban.com" />
 <meta name="generator" content="ECMall {$ecmall_version}" />
 <meta name="copyright" content="ShopEx Inc. All Rights Reserved" />
-<link href="{res file=css/jimcommon.css}" rel="stylesheet" type="text/css" />
-<link href="{res file=css/jimstyle.css}" rel="stylesheet" type="text/css" />
-<link href="{res file=css/style.css}" rel="stylesheet" type="text/css" />
-
-<link href="{res file=css/user.css}" rel="stylesheet" type="text/css" />
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Expires" CONTENT="-1">
+<meta http-equiv="Cache-Control" CONTENT="no-cache">
+<meta http-equiv="Pragma" CONTENT="no-cache">
+<link type="text/css" href="{res file=css/header.css}" rel="stylesheet" />
+<link type="text/css" href="{res file=css/user.css}" rel="stylesheet"  />
+<link type="text/css" href="{res file=css/footer.css}" rel="stylesheet" />
 <script type="text/javascript" src="index.php?act=jslang"></script>
-<script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
-<script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
-<script type="text/javascript" src="{res file=js/nav.js}" charset="utf-8"></script>
 
-<script type="text/javascript" src="index.php?act=jslang"></script>
-<script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+<!-- jquery -->
+<script type="text/javascript" src="{lib file=jquery/jquery-1.12.4.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{lib file=jquery/jquery-migrate-1.4.1.js}" charset="utf-8"></script>
+
 <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
 <script type="text/javascript" src="{lib file=member.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{lib file=layer.m/layer.m.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{res file=js/main.js}" charset="utf-8"></script>
 <script type="text/javascript">
 //<!CDATA[
 var SITE_URL = "{$site_url}";
 var REAL_SITE_URL = "{$real_site_url}";
 var PRICE_FORMAT = '{$price_format}';
-
 //]]>
 </script>
-
-<style type="text/css">
-.lia{background: #88766e; color:#fff; width: 210px;}
-</style>
 {$_head_tags}
-<!--<editmode></editmode>-->
 </head>
-
 <body>
-<div class="scroll-nav">
-    <ul>      
-      <!--{foreach from=$hot_keywords item=keyword}-->
-      <li><a href="{url app=search&keyword=$keyword}" title="{$keyword}">{$keyword}</a></li>
-      <!--{/foreach}-->
-    </ul>
-</div>
-<!--顶部条-->
-  <div class="top-bg">
-      <div class="top fontsimsun clearfix">
-          <div class="login_info">{$lang.hello},{$visitor.user_name|escape}
-            <!--{if !$visitor.user_id}-->
-            [<a href="{url app=member&act=login&ret_url=$ret_url}">{$lang.login}</a>]
-            [<a href="{url app=member&act=register&ret_url=$ret_url}">{$lang.register}</a>]
-            <!--{else}-->
-            [<a href="{url app=member&act=logout}">{$lang.logout}</a>]
-            <!--{/if}--> </div>
-            <ul class="quick-menu">
-              <li class="item">
-                <div class="menu mytb"><a class="menu-hd" href="{url app=member}">{$lang.member_center}<b></b></a>
-                  <div class="menu-bd">
-                    <div class="menu-bd-panel">
-                      <div>
-                    <!--{if $visitor.store_id}-->
-                    <p><a href="{url app=my_goods}">{$lang.my_goods}</a></p>
-                    <p><a href="{url app=seller_order}">{$lang.order_manage}</a></p>
-                    <p><a href="{url app=my_qa}">{$lang.my_qa}</a></p>
-                    <!--{else}-->
-                    <p><a href="{url app=buyer_order}">{$lang.my_order}</a></p>
-                    <p><a href="{url app=buyer_groupbuy}">{$lang.my_groupbuy}</a></p>
-                    <p><a href="{url app=my_question}">{$lang.my_question}</a></p>
-                    <!--{/if}-->
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li class="service"><a href="{url app=article&code=$acc_help}" title="">{$lang.help_center}</a></li>
-              <li class="service"><a href="{url app=message&act=newpm}" title="{$lang.pm}">{$lang.pm}<!--{if $new_message}-->({$new_message})<!--{/if}--></a></li>
-              <li class="item">
-                <div class="menu favorite"><a class="menu-hd" href="{url app=my_favorite}" title="{$lang.favorite}">{$lang.favorite}<b></b></a>
-                  <div class="menu-bd">
-                    <div class="menu-bd-panel">
-                      <div>
-                        <p><a href="{url app=my_favorite&type=goods}" title="{$lang.collected_goods}">{$lang.collected_goods}</a></p>
-                        <p><a href="{url app=my_favorite&type=store}" title="{$lang.collected_store}">{$lang.collected_store}</a></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li class="service"><a href="{url app=cart}" title="">{$lang.shopping_cart}</a></li>
-            </ul>
-        </div>
+<!--common bar start-->
+<div class="bar-wrap {if $smarty.get.app eq 'member' && $smarty.get.act eq ''}w{/if}">
+	<div class="top-bar"> 
+    	<a href="{if $smarty.get.act eq '' && $smarty.get.app neq 'member'}{url app=member}{elseif $smarty.get.app eq 'member' &&  $smarty.get.act eq ''}index.php{else}javascript:pageBack();{/if}" class="pageback"><span></span></a>
+		<h2 class="yahei">{$curlocal_title}</h2>
+		<a href="javascript:;" class="pagemore J_pagemore"><span></span></a>
     </div>
-<!--顶部条 END-->
-<!--头部-->
-<div class="header" style="margin-bottom: 10px;">
-  <div class="w1200 clearfix">
-      <h1 class="logo fl mt15" title="{$site_title}"><a href="index.php"><img src="{$site_logo}" width="236" height="70" alt="{$site_title}"></a></h1>
-      <form method="GET" action="{url app=search}">
-        <div class="soso fl mt30 clearfix">
-        <div class="search-type clearfix">
-            <div class="float-left btn-type" style="margin-bottom: 0px;border-bottom: 0px;">
-                <a href="javascript:;" class="current-soso" id="index">{$lang.search_goods}</a>
-                <a href="javascript:;" id="store">{$lang.search_store}</a>
-                <a href="javascript:;" id="groupbuy">{$lang.search_groupbuy}</a>
-            </div>
-            <input type="hidden"  id="act"name="act" value="index" />
-        </div>
-            <input type="text" class="soso-input fl" value="请输入关键词" onfocus="if(this.value=='请输入关键词'){ this.value=''; }"  onblur="if(this.value==''){ this.value='请输入关键词'; }" name="keyword" style="height:31px;">
-            <input type="hidden" name="app" value="search" />
-            <input type="submit" class="soso-btn fontyahei fl" value="搜索">
-        </div>
-      </form>
-        <div class="tel fr mt25"><img src="data/files/mall/template/tel.jpg" width="225" height="59" alt=""></div>
-  </div>
-  <div class="clr" style="height:10px;"></div>
-
+	<div class="eject-tab J_eject_tab w-full clearfix hidden">
+			<a href="{$mobile_site_url}"> <span></span><p>首页</p></a>
+			<a href="{url app=search}"> <span class="icon2"></span><p>分类搜索</p></a>
+			<a href="{url app=cart}"> <span class="icon3"></span><p>购物车</p></a>
+			<a href="{url app=member}"> <span class="icon4"></span><p>用户中心</p></a>
+		</div>
 </div>
-
-<!--头部 END-->
-
-<script type="text/javascript">
-  $(document).ready(function() {
-
-    $('.search-type .float-left a').click(function(event) {
-        var act=this.id;
-        $('#act').val(act);
-        $('.search-type .float-left a').removeClass('current-soso');
-        $(this).addClass('current-soso');
-    });
-    });
-</script>
+<!--common bar end-->

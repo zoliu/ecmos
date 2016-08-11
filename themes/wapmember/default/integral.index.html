@@ -1,0 +1,101 @@
+{include file=top.html} 
+<script type="text/javascript" src="{lib file=search_goods.js}" charset="utf-8"></script> 
+<script type="text/javascript">
+$(function(){
+	$("img.lazyload").lazyLoad();
+	var order = '{$smarty.get.order}';
+	var	order_arr = order.split(' ');
+	$('#'+order_arr[0]).addClass('current');
+	var type = order_arr[0];
+	var char;
+	switch(type)
+	{
+		case 'price':
+		char = '价格';
+		break;
+		case 'sales':
+		char = '销量';
+		break;
+		case 'add_time':
+		char = '新品';
+		break;
+	}
+	if(type !=="") $('#'+order_arr[0]+' span').html(order_arr[1]=="desc" ? char+"↓" : char+"↑" );
+	$(".display-order li").click(function(){
+		if(this.id==''){
+			dropParam('order');// default order
+			return false;
+		}
+		else
+		{
+			dd = " desc";
+			if(order != '') {
+				if(order_arr[0]==this.id && order_arr[1]=="desc")
+					dd = " asc";
+				else dd = " desc";
+			}
+			replaceParam('order', this.id+dd);
+			return false;
+		}
+	});
+});
+</script>
+<div id="main"> 
+	<!--common bar start-->
+	<div class="bar-wrap">
+		<div style="line-height:30px;" class="top-bar"> <a href="javascript:pageBack();" class="pageback"><span></span></a>
+			<div class="store-search">
+				<form method="get">
+					<input type="hidden" name="app" value="integral_list" />
+					<input name="keyword" id="keyword" type="text" class="kw border-0" placeholder="请输入关键词" value="{$smarty.get.keyword|escape}" />
+					<p>
+						<input type="submit" class="submit" value="" />
+					</p>
+				</form>
+			</div>
+			<a href="{$mobile_site_url}" class="home-icon"><span></span></a> </div>
+		<div class="eject-tab J_eject_tab w-full clearfix hidden"> <a href="{$site_url}"> <span></span>
+			<p>首页</p>
+			</a> <a href="{url app=search}"> <span class="icon2"></span>
+			<p>分类搜索</p>
+			</a> <a href="{url app=cart}"> <span class="icon3"></span>
+			<p>购物车</p>
+			</a> <a href="{url app=member}"> <span class="icon4"></span>
+			<p>用户中心</p>
+			</a> </div>
+	</div>
+	<!--common bar end-->
+	<div id="page-search-goods">
+		<div class="search-goods page-body search-integral-goods"> 
+			<!--{if $goods_list}-->
+			<div class="attr">
+				<div class="cons">
+					<ul class="display-order clearfix">
+						<li {if $smarty.get.order eq ''}class="current"{/if}><span>综合</span></li>
+						<li id="add_time"><span>新品</span></li>
+						<li id="sales"><span>销量</span></li>
+						<li id="price"><span>价格</span></li>
+					</ul>
+				</div>
+			</div>
+			<ul class="squares">
+				<!--{foreach from=$goods_list item=goods name=fe_goods}-->
+				<li class="clearfix" {if $smarty.foreach.fe_goods.last}style="border-bottom:0px;"{/if}>
+					<div class="pic"><a href="{url app=goods&id=$goods.goods_id}"><img src="{res file=images/empty.gif}"  class="lazyload" initial-url="{$site_url}/{$goods.default_image}" /></a></div>
+					<div class="info">
+						<h2><a href="{url app=goods&id=$goods.goods_id}">{$goods.goods_name|escape}</a></h2>
+						<div class="price mt5 ">{$goods.price|price} <span class="pro-info"><em> + {$goods.exchange}个积分</em><i>可抵扣{$goods.exchange_price|price}元</i></span></div>
+						<div class="sales mt5">{$lang.sales}{$goods.sales|default:0} {$lang.unit} , <a href="{url app=goods&act=comments&id=$goods.goods_id}">{$goods.comments|default:0} {$lang.comment}</a></div>
+						<div class="store mt5"> <a href="{url app=store&id=$goods.store_id}">{$goods.store_name|escape}</a></span> </div>
+					</div>
+				</li>
+				<!--{/foreach}-->
+			</ul>
+			<div class="pageinfo pt10 pb10">{include file=page.bottom.html}</div>
+			<!--{else}-->
+			<div class="pb20 pt20 center">{$lang.no_records}</div>
+			<!--{/if}--> 
+		</div>
+	</div>
+</div>
+{include file=footer.html} 

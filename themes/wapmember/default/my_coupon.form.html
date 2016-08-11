@@ -1,36 +1,9 @@
-<script type="text/javascript">
-$(function(){
-    $('#coupon_form').validate({
-        errorLabelContainer: $('#warning'),
-        invalidHandler: function(form, validator) {
-               $('#warning').show();
-        },
-        onfocusout : false,
-        onkeyup    : false,
-        rules : {
-            coupon_sn : {
-                required   : true
-            }
-        },
-        messages : {
-            coupon_sn  : {
-                required   : '{$lang.coupon_sn_empty}'
-            }
-        }
-    });
-});
-</script>
-<div class="eject_con">
- <div class="adds">
-        <div id="warning"></div>
-        <form id="coupon_form" method="post" target="my_coupon" action="index.php?app=my_coupon&act=bind">
-        <ul>
-            <li>
-                <h3>{$lang.coupon_sn}:</h3>
-                <p><input class="text width14" type="text width_normal" name="coupon_sn" /></p>
-            </li>      
-        </ul>
-        <div class="submit"><input type="submit" class="btn" value="{$lang.submit}" /></div>
-        </form>
-    </div>
+{include file=member.header.html}
+<div id="page-my-coupon">
+	<div class="record-coupon page-body">
+		<form class="J_AjaxForm" method="post">
+			<input type="text" class="J_AjaxFormFields" name="coupon_sn"  id="coupon_sn" placeholder="{$lang.coupon_sn}" />
+			<input type="submit" class="J_AjaxFormSubmit btn-alipay" value="{$lang.submit}" />
+		</form>
+	</div>
 </div>

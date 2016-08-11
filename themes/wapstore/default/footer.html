@@ -1,9 +1,19 @@
-<div class="footer">
-    <p>
-        <a href="{url app=default}">商城首页</a>|
-        <a href="{url app=member&act=wap_index}">会员中心</a>|
-        <a href="{url app=article&act=view&article_id=19}">关于我们</a>
-    </p>
-    <p>Copyright &copy;2018</p>
+<div id="footer">
+	<div class="float-back-top" onclick="window.scroll(0,0);"></div>
+	<div class="gap"></div>
+	<!--{if $smarty.get.app neq 'goods'}-->
+	<div class="float-layer">
+		<div class="global-nav global-nav-current">
+			<div class="global-nav__nav-wrap">
+				<div class="global-nav__nav-item"> <a href="{$real_site_url}" class="global-nav__nav-link"><i class="psmb-icon-font global-nav__icon-index">&#xe6b8;</i> <span class="global-nav__nav-tit">首页</span></a> </div>
+				<div class="global-nav__nav-item"> <a href="{url app=category}" class="global-nav__nav-link"><i class="psmb-icon-font global-nav__icon-category">&#xe67c;</i> <span class="global-nav__nav-tit">分类</span></a> </div>
+				<div class="global-nav__nav-item"> <a href="{url app=search}" class="global-nav__nav-link"><i class="psmb-icon-font global-nav__icon-search">&#xe65c;</i> <span class="global-nav__nav-tit">搜索</span></a> </div>
+				<div class="global-nav__nav-item"> <a href="{url app=cart}" class="global-nav__nav-link"><i class="psmb-icon-font global-nav__icon-shop-cart">&#xe6af;</i> <span class="global-nav__nav-tit">购物车</span> <span class="global-nav__nav-shop-cart-num" id="carId">{$cart_goods_kinds}</span></a> </div>
+				<div class="global-nav__nav-item"> <a href="{url app=member}" class="global-nav__nav-link"><i class="psmb-icon-font global-nav__icon-my-yhd">&#xe686;</i> <span class="global-nav__nav-tit">用户中心</span></a> </div>
+			</div>
+			<div class="global-nav__operate-wrap"> <span class="global-nav__operate-cart-num" id="globalId">{$cart_goods_kinds}</span> </div>
+		</div>
+	</div>
+	<!--{/if}--> 
 </div>
-<div class="shade"></div>
+</body></html>

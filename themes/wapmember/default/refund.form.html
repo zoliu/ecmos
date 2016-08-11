@@ -1,0 +1,99 @@
+{include file=member.header.html} 
+<script>
+$(function(){
+	$("#refund_form").submit(function(){
+		var re = /^[0-9]+.?[0-9]*$/;   //判断字符串是否为数字  
+     	if (($('input[name="refund_goods_fee"]').val() !='' && !re.test($('input[name="refund_goods_fee"]').val())) || ($('input[name="refund_shipping_fee"]').val() !='' && !re.test($('input[name="refund_shipping_fee"]').val())))
+    	{
+        	layer.open({content: "{$lang.price_error}",time: 3});
+        	return false;
+     	}
+	 
+		if($('input[name="refund_goods_fee"]').val()<0 || $('input[name="refund_goods_fee"]').val()==''){
+			layer.open({content:'{$lang.refund_fee_ge0}', time: 3});
+			return false;
+		} else if($('input[name="refund_goods_fee"]').val() > {$refund.goods_fee}){
+			layer.open({content:'{$lang.refund_fee_gt_total_fee}:{$refund.goods_fee}', time:3});
+			return false;
+		}
+		if($('input[name="shipped"]:checked').val() =='' || $('input[name="shipped"]:checked').val() == undefined){
+			layer.open({content:'{$lang.select_refund_shipped}', time: 3});
+			return false;
+		}
+		if($('input[name="refund_shipping_fee"]').val()<0){
+			layer.open({content:'{$lang.refund_shipping_fee_ge0}', time:3});
+			return false;
+		} else if($('input[name="refund_shipping_fee"]').val() > {$refund.shipping_fee}){
+			layer.open({content:'{$lang.refund_shipping_fee_error}:{$refund.shipping_fee}', time: 3});
+			return false;
+		}
+		
+		if($('select[name="refund_reason"]').val()==''){
+			layer.open({content:'{$lang.select_refund_reason}', time: 3});
+			return false;
+		}
+	});	
+});
+</script>
+<style>
+.refund_form {margin:10px 0 10px 0; padding:10px;}
+.refund_form dd, .refund_form dt{margin-bottom:10px}
+</style>
+<div id="page-deposit-refund-form" class=" clearfix">
+	<div class="refund_form">
+		<form id="refund_form" method="post" enctype="multipart/form-data">
+			<div>
+				<dl>
+					<dt>退款金额<span class="gray">（最多{$refund.goods_fee|price}元）</span></dt>
+					<dd>
+						<input type="text" name="refund_goods_fee" class="input-s1" value="{$refund.refund_goods_fee}" />
+					</dd>
+				</dl>
+				<dt>收货情况</dt>
+				<dd>
+					<input type="radio" name="shipped" value="2" id="shipped-2" {if $refund.shipped eq 2} checked="checked"{/if} />
+					<label for="shipped-2">{$lang.shipped_2}</label>
+					<br />
+					<input type="radio" name="shipped" value="1" id="shipped-1" {if $refund.shipped eq 1} checked="checked"{/if}/>
+					<label for="shipped-1">{$lang.shipped_1}</label>
+					<br />
+					<input type="radio" name="shipped" value="0" id="shipped-0" {if $smarty.get.act eq 'edit' && !$refund.shipped} checked="checked"{/if}/>
+					<label for="shipped-0">{$lang.shipped_0}</label>
+				</dd>
+				</dl>
+				<dl>
+					<dt>退运费 <span class="gray">（最多{$refund.shipping_fee}元。如果不是质量问题，卖家可以拒绝）</span></dt>
+					<dd>
+						<input type="text" name="refund_shipping_fee" class="input-s1" value="{$refund.refund_shipping_fee}" />
+					</dd>
+				</dl>
+				<dl>
+					<dt>退款原因</dt>
+					<dd>
+						<select class="input-s1" name="refund_reason">
+							<option value="" selected="selected">请选择退款原因</option>
+							<option value="缺货" {if $refund.refund_reason eq '缺货'} selected="selected"{/if}>缺货</option>
+							<option value="未按约定时间发货" {if $refund.refund_reason eq '未按约定时间发货'} selected="selected"{/if}>未按约定时间发货</option>
+							<option value="收到假货" {if $refund.refund_reason eq '收到假货'} selected="selected"{/if}>收到假货</option>
+							<option value="商品有质量问题" {if $refund.refund_reason eq '商品有质量问题'} selected="selected"{/if}>商品有质量问题</option>
+							<option value="商品错发/漏发" {if $refund.refund_reason eq '商品错发/漏发'} selected="selected"{/if}>商品错发/漏发</option>
+							<option value="收到的商品破损" {if $refund.refund_reason eq '收到的商品破损'} selected="selected"{/if}>收到的商品破损</option>
+							<option value="收到的商品描述不符" {if $refund.refund_reason eq '收到的商品描述不符'} selected="selected"{/if}>收到的商品描述不符</option>
+							<option value="其他" {if $refund.refund_reason eq '其他'} selected="selected"{/if}>其他</option>
+						</select>
+					</dd>
+				</dl>
+				<dl>
+					<dt>退款说明</dt>
+					<dd>
+						<textarea name="refund_desc" class="input-s1" cols="80" rows="5" >{$refund.refund_desc}</textarea>
+					</dd>
+				</dl>
+			</div>
+			<div class="mt10">
+				<input type="submit" value="{if $smarty.get.act eq 'edit'}修改{else}提交{/if}申请" class="btn-alipay" />
+			</div>
+		</form>
+	</div>
+</div>
+{include file=footer.html} 

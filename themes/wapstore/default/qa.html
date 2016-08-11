@@ -1,0 +1,56 @@
+<div class="qas padding10"> 
+	<!--{foreach from=$qa_info item=qainfo name=fe_qa}-->
+	<div  class="list">
+		<div {if $smarty.foreach.fe_qa.last}style="border:0px;"{/if} class="it">
+			<dl>
+				<dt>{$lang.question_content}</dt>
+				<dd class="qa-content mt5">{$qainfo.question_content|escape|nl2br}</dd>
+				<p class="mt5 w-full clearfix"> <span><!-- {if $qainfo.user_name} -->{$qainfo.user_name}<!--{else}-->{$lang.guest}<!-- {/if} --></span><em>{$qainfo.time_post|date:complete}</em> </p>
+			</dl>
+			<!-- {if $qainfo.reply_content} -->
+			<dl class="mt10">
+				<dt class="store-replay">{$lang.store_reply}: </dt>
+				<dd class="mt5">{$qainfo.reply_content|escape|nl2br}</dd>
+				<p class="mt5"> <span>{$qainfo.time_reply|date:complete}</span> </p>
+			</dl>
+			<!-- {/if} --> 
+		</div>
+	</div>
+	<!-- {foreachelse} -->
+	<div class="list padding10">{$lang.no_records}</div>
+	<!--{/foreach}--> 
+	{if $qa_info}{include file=page.bottom.html}{/if} </div>
+<!--{if $smarty.get.app eq 'goods'}-->
+<div class="fill_in pl10 pr10 pb10">
+	<form class="J_AjaxForm" method="post">
+		<p style="border:1px solid #ddd;background:#fff;height:100px;margin-bottom:10px;border-radius:5px;">
+			<textarea name="content" id="content" class="J_AjaxFormFields textarea" style="border:none;width:100%;height:100%;background:none;"></textarea>
+		</p>
+		<p> 
+			<!--{if !$guest_comment_enable and !$visitor.user_id}--> 
+			{$lang.login_to_comment} 
+			<!--{else}--> 
+			<span>
+			<input type="text" class="J_AjaxFormFields input" id="email" name="email" value="{$email}"  placeholder="请输入电子邮箱"/>
+			</span> 
+			<!--{if $captcha}--> 
+			<span>
+			<input type="text" class="J_AjaxFormFields input captcha" id="captcha2" name="captcha" placeholder="请输入验证码"/>
+			</span> <span><a href="javascript:;"><img id="captcha" onclick="javascript:change_captcha($('#captcha'));"  src="{url app=captcha&$random_number}" /></a></span> 
+			<!--{/if}--> 
+			<!--{if $smarty.session.user_info}-->
+		<p>
+			<label>
+				<input type="checkbox" class="J_AjaxFormFields" name="hide_name" id="hide_name" value="hide" />
+				{$lang.hide_name}</label>
+		</p>
+		<!--{/if}--> 
+		<!--{/if}-->
+		</p>
+		<p class="mt10">
+			<input type="hidden" class="J_AjaxFormSuccessRet" name="ret_url" value="{url app=goods&act=qa&id=$smarty.get.id}" />
+			<input type="submit" class="J_AjaxFormSubmit btn-alipay" value="{$lang.submit_message}" name="qa" />
+		</p>
+	</form>
+</div>
+<!--{/if}--> 

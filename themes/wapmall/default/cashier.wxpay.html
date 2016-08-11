@@ -1,0 +1,80 @@
+{include file=header.html} 
+<script type="text/javascript">
+$(function(){
+	$('.J_WxPaySubmit').click(function(){
+		callpay();
+	});
+});
+
+//调用微信JS api 支付
+function jsApiCall()
+{
+	WeixinJSBridge.invoke(
+		'getBrandWCPayRequest', {$payform.params.jsApiParameters}, function(res){
+			//WeixinJSBridge.log(res.err_msg);
+			if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+				layer.open({content:"支付成功！", time: 5, end: function(){
+						location.href = "{$redirect_uri}";
+					}
+				});
+			}
+			else if(res.err_msg == "get_brand_wcpay_request:cancel") {
+				layer.open({content:"您已取消支付", time: 5});
+			}
+			//else if(res.err_msg == "get_brand_wcpay_request:fail") {
+			else {
+				layer.open({content:"支付失败,原因是：" + res.err_msg, time: 5});
+			}
+		}
+	);
+}
+
+function callpay()
+{
+	if (typeof WeixinJSBridge == "undefined"){
+		if( document.addEventListener ){
+			document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+		}else if (document.attachEvent){
+			document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+			document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+		}
+	}else{
+		jsApiCall();
+	}
+}
+</script>
+<div id="page-cashier">
+	<div class="page-main wxpay">
+		<div class="payment-desc">
+			<div class="title">
+				<p class="gray">付款金额</p>
+				<p class="price">{$payform.params.order.order_amount|price}</p>
+			</div>
+			<div class="detail yahei padding10 mt10">
+				<dl class="mb5 clearfix mb10 hidden">
+					<dt class="float-left">收款方</dt>
+					<dd class="float-right">{$site_title}</dd>
+				</dl>
+				<!--{if $payform.params.order.seller_name}-->
+				<dl class="mb10 clearfix">
+					<dt class="float-left">商<s style="padding:0 8px 0 8px;"></s>家</dt>
+					<dd class="float-right">{$payform.params.order.seller_name}</dd>
+				</dl>
+				<!--{else}-->
+				<dl class="mb10 clearfix">
+					<dt class="float-left">商<s style="padding:0 8px 0 8px;"></s>品</dt>
+					<dd class="float-right">{$lang.recharge}</dd>
+				</dl>
+				<!--{/if}-->
+				<dl class="clearfix">
+					<dt class="float-left">订单号</dt>
+					<dd class="float-right">{$payform.params.order.order_sn}</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="margin10">
+			<input type="button" class="J_WxPaySubmit btn-alipay" value="使用微信支付" />
+		</div>
+	</div>
+</div>
+{include file=footer.html} 

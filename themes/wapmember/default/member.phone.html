@@ -1,0 +1,17 @@
+{include file=member.header.html}
+<div id="page-my-password">
+	<div class="page-body my-password add-address mt10">
+		<form class="J_AjaxForm" method="post">
+		<ul class="padding10">
+			<li><input type="password"  class="J_AjaxFormFields input" name="orig_password" id="orig_password"  placeholder="{$lang.orig_password}"/></li>
+            <li>
+                <input type="text"  class="J_AjaxFormFields input" name="phone" id="phone" placeholder="{$lang.phone_mob}"value="{$phone_mob}"/>
+            </li>
+            <li>
+				<input type="submit" class="J_AjaxFormSubmit btn-alipay" value="{$lang.submit}" />
+			</li>
+		</ul>
+	   </form>
+	</div>
+</div>
+{include file=footer.html}

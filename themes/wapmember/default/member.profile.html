@@ -1,114 +1,34 @@
-{include file="member.header.html"}
-{$_head_tags}
-{assign var='curr_nav' value='个人资料'}
-    <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
-    <link href="{res file=css/address.css}" type="text/css" rel="stylesheet" />
-<style>
-</style>
-<script type="text/javascript">
-
-$(function(){
-    $('#profile_form').validate({
-        errorPlacement: function(error, element){
-            $(element).next('.field_notice').hide();
-            $(element).after(error);
-        },
-        success       : function(label){
-            label.addClass('validate_right').text('OK!');
-        },
-        rules : {
-            birthday : {
-                dateISO:true
-            },
-            im_qq      : {
-                digits:true
-            },
-            im_msn      : {
-                email:true
-            },
-            phone_tel      : {
-                checkTel     : true
-            },
-            portrait : {
-                accept   : 'gif|jpe?g|png'
-            }
-        },
-        messages : {
-            birthday  : {
-                dateISO   : '{$lang.test_birthday}'
-            },
-            im_qq      : {
-                digits:'{$lang.verify_qq}'
-            },
-            im_msn      : {
-                email:'{$lang.verify_msn}'
-            },
-            phone_tel      : {
-                checkTel   : '{$lang.verify_tel}'
-            },
-            portrait  : {
-                accept   : '{$lang.avatar}'
-            }
-        }
-    });
-
-   
-
-});
-</script>
- 
-<!--设置页-->
-<div class="address_con">
-    <div class="address_box" >
-        <div class="address_info">
-            <p><span>{$lang.user_name}：{$profile.user_name|escape}</span></p>
-            <p>{$lang.email}：<span>&nbsp;{$profile.email|escape}</span></p>
-            <p>{$lang.phone_mob}：<span>{$profile.phone_mob|escape}</span></p>
-        </div>
-        <p class="oprate" style="height:30px;"></p>
-    </div>
-    <div class="address_box" >
-        <form method="post" enctype="multipart/form-data" id="profile_form">
-            <div class="address_info">
-                <p><span>{$lang.real_name}：</span>
-                    <input type="text" name="real_name" value="{$profile.real_name|escape}">&nbsp; 
-                <p><span>{$lang.gender}：</span>
-                    <span style="width: 25%;">
-                       <input type="radio" name="gender" value="0" {if $profile.gender eq 0}checked="checked"{/if} />{$lang.unknown}  </span>
-                        <span style="width: 25%;">
-                        <input type="radio" name="gender" value="1" {if $profile.gender eq 1}checked="checked"{/if} />{$lang.male}   </span>
-                        <span style="width: 25%;">
-                        <input type="radio" name="gender" value="2" {if $profile.gender eq 2}checked="checked"{/if} />{$lang.female} </span>&nbsp; 
-                </p>
-                <p><span>{$lang.birthday}：</span>
-                    <input type="text" name="birthday" id="birthday" value="{$val.birthday}">
-                    &nbsp;<label></label>
-                </p>
-                <p><span>{$lang.im_qq}：</span>
-                    <input type="text" name="im_qq"  id="im_qq" value="{$val.im_qq}">&nbsp;
-                </p>
-                <p><span>{$lang.im_msn}：</span>
-                    <input type="text" name="im_msn" id="im_msn" value="{$val.im_msn}">&nbsp;
-                </p>
-                <p><span>{$lang.phone_tel}：</span>
-                    <input name="phone_tel" type="text" id="phone_tel" value="{$profile.phone_tel|escape}" />&nbsp;
-                </p>
-                <!--{if $edit_avatar}-->
-                <p><span>{$lang.portrait}：</span>
-                    <span>{$edit_avatar}</span>
-                </p>
-                <!--{/if}-->
-            </div>
-                <input type="submit" style="background-color: #f0f0f0;border:#ddd solid 1px;width: 94%;margin: 10px auto;font-size: 14px;" dialog_width="90%" class="add_submit" value="{$lang.save_edit}" />
-            </form>
-        </div>
-    </div>
-
-        <div class="adorn_bottom"></div>
-            <iframe id='iframe_post' name="iframe_post" src="about:blank" frameborder="0" width="0" height="0"></iframe>
-			{include file="member.footer.html"}
-        </div>
-
-</body>
-</html>
-    
+{include file=member.header.html}
+<div id="page-my-profile">
+	<div class="page-body my-profile add-address mt10">
+		<form class="J_AjaxForm" action="index.php?app=member&act=profile" method="post">
+			<ul class="padding10">
+				<li>
+					<label>{$lang.gender}: </label>
+					<label>
+						<input type="radio" class="J_AjaxFormFields" name="gender" value="0" {if $profile.gender eq 0}checked="checked"{/if} />
+						{$lang.unknown} </label>
+					<label>
+						<input type="radio" class="J_AjaxFormFields" name="gender" value="1" {if $profile.gender eq 1}checked="checked"{/if} />
+						{$lang.male} </label>
+					<label>
+						<input type="radio" class="J_AjaxFormFields" name="gender" value="2" {if $profile.gender eq 2}checked="checked"{/if} />
+						{$lang.female} </label>
+				</li>
+				<li class="mt20">
+					<input type="text" class="J_AjaxFormFields input" name="real_name" id="real_name" value="{$profile.real_name|escape}" placeholder="{$lang.real_name}"/>
+				</li>
+				<li>
+					<input type="text" class="J_AjaxFormFields input" placeholder="{$lang.birthday}" id="birthday" name="birthday" value="{$profile.birthday|escape}" />
+				</li>
+				<li>
+					<input type="text" class="J_AjaxFormFields input" id="im_qq" name="im_qq" value="{$profile.im_qq|escape}" placeholder="{$lang.im_qq}"/>
+				</li>
+				<li>
+					<input type="submit" class="J_AjaxFormSubmit btn-alipay" value="{$lang.save_edit}" />
+				</li>
+			</ul>
+		</form>
+	</div>
+</div>
+{include file=footer.html} 

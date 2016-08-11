@@ -1,22 +1,17 @@
-
 <!--{if $page_info.page_count gt 1}-->
-<div class="shop_list_page">
-    <div class="page">
-    <!--{if $page_info.prev_link}-->
-    <a href="{$page_info.prev_link}" class="next">上一页</a>
-    <!--{/if}-->
-        <a class="stat">{sprintf lang=total_item var1=page_info.item_count}</a>
-        <!--{if $page_info.prev_link}-->
-        <a class="former" href="{$page_info.prev_link}#module"></a>
+<div class="page-format">
+	<div class="wrap">
+		<a href="javascript:;" class="page-num">{$page_info.curr_page} / {$page_info.page_count}<i></i></a>
+		<!--{if $page_info.prev_link}-->
+        <a class="former" href="{$real_site_url}/{$page_info.prev_link}#module">{$lang.prev_page}</a>
         <!--{else}-->
-        <span class="former_no"></span>
+        <span class="former">{$lang.prev_page}</span>
         <!--{/if}-->
-        <a class="nonce">{$page_info.curr_page} / {$page_info.page_count}</a>
-        <!--{if $page_info.next_link}-->
-        <a class="down" href="{$page_info.next_link}#module">{$lang.next_page}</a>
+		<!--{if $page_info.next_link}-->
+        <a class="down" href="{$real_site_url}/{$page_info.next_link}#module">{$lang.next_page}</a>
         <!--{else}-->
-        <span class="down_no">{$lang.next_page}</span>
+        <span class="down">{$lang.next_page}</span>
         <!--{/if}-->
-    </div>
+	</div>
 </div>
 <!--{/if}-->

@@ -1,0 +1,26 @@
+{include file=member.header.html}
+<div class="public_index table express">
+  <div class="express-info mt10">
+    <p>{$lang.express_company}{$lang.colon}<span>{$kuaidi_info.express_company}</span></p>
+    <p>{$lang.express_num}{$lang.colon}<span>{$kuaidi_info.express_num}</span></p>
+  </div>
+  
+  <!--{if $kuaidi_info.status==1}-->
+  <div class="express-body">
+    <dl class="title">
+      <dt><strong>{$lang.process}</strong></dt>
+    </dl>
+    <!--{foreach from=$kuaidi_info.data item=kuaidi name=fe_kuaidi}-->
+    <dl {if $smarty.foreach.fe_kuaidi.first} style="color:{if $kuaidi_info.state==3}#1B730C{else}#FF6600{/if}"{/if}>
+      <dt>{$kuaidi.time}</dt>
+      <dd>{$kuaidi.context}</dd>
+    </dl>
+    <!--{/foreach}--> 
+  </div>
+  <!--{elseif $kuaidi_info.url}--> 
+  <div class="api-no-data"><a href="{$kuaidi_info.url}">{$lang.api_no_data}</a></div>
+  <!--{else}-->
+  <div class="api-no-data">{$kuaidi_info.message}</div>
+  <!--{/if}--> 
+</div>
+{include file=footer.html} 

@@ -1,0 +1,36 @@
+{include file=member.header.html}
+<div class="refund-receive"> 
+	<!--{if $refunds}--> 
+	<!--{foreach from=$refunds item=refund}-->
+	<div class="table-list mb10">
+		<ul>
+			<li class="first clearfix"> <span class="th float-left"><em>退款编号</em></span> <span class="td float-left"><em>{$refund.refund_sn}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em class="two-col">订单编号/宝贝信息</em></span> <span class="td float-left"><em class="two-col">{$refund.order_sn}<br />
+				<a href="{url app=seller_order&act=view&order_id=$refund.order_id}">{$refund.goods_name}</a></em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>卖家</em></span> <span class="td float-left"><em ><a href="{url app=store&id=$refund.seller_id}">{$refund.store_name}</a><span class="gray"> ({$refund.user_name})</span></em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>交易金额</em></span> <span class="td float-left"><em>{$refund.total_fee}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>退款总额</em></span> <span class="td float-left"><em>{$refund.refund_fee}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>申请时间</em></span> <span class="td float-left"><em class="gray">{$refund.created|date:Y-m-d H:i:s}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>退款状态</em></span> <span class="td float-left"><em style="color:#FF4F01">{if $refund.status=='CLOSED'} <span style="color:gray">退款关闭</span> {elseif $refund.status=='SUCCESS'} <span style="color:#62B44B">退款成功</span> {elseif $refund.status=='WAIT_SELLER_AGREE'}
+				买家申请退款，等待卖家同意
+				{elseif $refund.status=='SELLER_REFUSE_BUYER'}
+				卖家拒绝退款，等待买家修改中
+				{elseif $refund.status=='WAIT_ADMIN_AGREE'}
+				卖家同意退款，等待管理员审核
+				{elseif $refund.status=='WAIT_SELLER_CONFIRM'}
+				退款申请等待卖家确认中
+				{/if}	
+				{if $refund.status!='CLOSED' && $refund.status!='SUCCESS' && $refund.status!='WAIT_ADMIN_AGREE' && $refund.ask_customer==1}<span style="color:#62B44B">（客服已介入处理）</span>{/if}</em></span> </li>
+			<li class="clearfix"> <span class="th float-left"><em>操作</em></span> <span class="td float-left"><em><a href="{url app=refund&act=view&refund_id=$refund.refund_id}">查看</a></em></span> </li>
+		</ul>
+	</div>
+	<!--{/foreach}--> 
+	
+	<!--{else}-->
+	<div class="notice-word mt10">
+		<p>{$lang.no_records}</p>
+	</div>
+	<!--{/if}--> 
+</div>
+{include file=page.bottom.html}
+{include file=footer.html}

@@ -1,9 +1,9 @@
 <?php
 
 return array(
-    'name'      => 'pink',
+    'name'      => '',
     'version'   => '1.0',
-    'author'    => 'ECMall TEAM',
+    'author'    => 'PSMOBAN TEAM',
     'description'=> 'style',
 );
 

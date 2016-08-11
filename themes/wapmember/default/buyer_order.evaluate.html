@@ -1,60 +1,88 @@
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-{$page_seo}
-<link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
-<link href="{res file=css/comment.css}" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
-  <script type="text/javascript">
-//<!CDATA[
-var SITE_URL = "{$site_url}";
-var REAL_SITE_URL = "{$real_site_url}";
-var PRICE_FORMAT = '{$price_format}';
-//]]>
-</script>
-<script type="text/javascript" src="index.php?act=jslang"></script>
-<script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
-<script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
-<script type="text/javascript" src="{lib file=member.js}" charset="utf-8"></script>
-</head>
-<body>
-
-    <div class="fixed">
-        <!---头部------>
-        <div class="header header2">
-			<a href="javascript:history.back(-1);" class="back2_pre"></a>
-			{$lang.credit_evaluate}
-        </div>  
-    </div>
-      <form method="POST">
-    <!---------评价----------->
-    <div class="comment">
-      <!--{foreach from=$goods_list item=goods}-->
-    	<div class="goods_info">
-        	<img src="{$goods.goods_image}" />
-            p class="title">{$goods.goods_name|escape}</p>
-            <p>{$goods.specification|escape}</p>
-            <p>{$lang.quantity}:{$goods.quantity}</p>
-            <p>{$lang.price}:{$goods.price|price}</p>
-            <p>卖家：<a href="{url app=store&id=$order.seller_id}">{$order.seller_name|escape}</a></p>
-        </div>
-            <!--{/foreach}-->
-        <div class="comment_box">
-        	<p>
-            	<label><input type="radio" id="g{$goods.rec_id}_op1" name="evaluations[{$goods.rec_id}][evaluation]" value="3" checked/><i class="good"></i>好评</label>
-            	<label><input type="radio" id="g{$goods.rec_id}_op2" name="evaluations[{$goods.rec_id}][evaluation]" value="2" /><i class="mid"></i>中评</label>
-            	<label><input type="radio" id="g{$goods.rec_id}_op3" name="evaluations[{$goods.rec_id}][evaluation]" value="1"/><i class="bad"></i>差评</label>
-           </p>
-           <textarea  name="evaluations[{$goods.rec_id}][comment]" class="com_text"></textarea>
-        </div>
-         <input type="submit" value="提交评论" class="submit_btn red_btn" style="width:100%" />
-       
-    </div>
-     </form>
-    <!------底部-------->
-  {include file="member.footer.html"}
+{include file=member.header.html}
+<div id="page-buyer-order">
+	<div class="page-body">
+		<form method="POST" id="evaluation">
+			<!--{foreach from=$goods_list item=goods name=fe_goods}-->
+			<div class="order-goods">
+				<div class="list clearfix">
+					<div class="pic float-left"><img class="block" src="{$goods.goods_image}" width="50" height="50"  /></div>
+					<div class="text float-left"> {if !$group_id}<a href="{url app=goods&id=$goods.goods_id}">
+						<h3>
+						{else} <a target="_blank" href="{url app=groupbuy&id=$group_id}">
+						<h3><strong>[{$lang.groupbuy}] </strong>{/if}{$goods.goods_name|escape}</h3>
+						<span>{$goods.specification|escape}</span> </a> </div>
+					<div class="pri float-right"> {$goods.price|price} x {$goods.quantity} </div>
+				</div>
+				<div class="comment-box">
+					<h4 class="mt10 fs14">{$lang.total_evaluation}</h4>
+					<div class="radio-box pt10 pb10"> <b>
+						<label for="g{$goods.rec_id}_op1">
+							<input id="g{$goods.rec_id}_op1" type="radio" name="evaluations[{$goods.rec_id}][evaluation]" value="3" checked  />
+							<span>{$lang.evaluation_good}</span></label>
+						</b> <b>
+						<label for="g{$goods.rec_id}_op2">
+							<input id="g{$goods.rec_id}_op2" type="radio" name="evaluations[{$goods.rec_id}][evaluation]" value="2" />
+							<span>{$lang.evaluation_acceptable}</span></label>
+						</b> <b>
+						<label for="g{$goods.rec_id}_op3">
+							<input id="g{$goods.rec_id}_op3" type="radio" name="evaluations[{$goods.rec_id}][evaluation]" value="1" />
+							<span>{$lang.evaluation_bad}</span></label>
+						</b> </div>
+					<div class="textarea">
+						<textarea name="evaluations[{$goods.rec_id}][comment]"></textarea>
+					</div>
+				</div>
+				<div class="fill_in">
+					<h4 class="mt10 mb10 fs14">{$lang.store_evaluation}</h4>
+					<ul class="raty pb10">
+						<script type="text/javascript">
+                                     $(function() {
+                                          $('#precision-g-{$smarty.foreach.fe_goods.iteration}').raty({
+											hints: ['很不满意', '不满意', '一般', '满意', '非常满意'],
+                                            target    : '#precision-hint-g-{$smarty.foreach.fe_goods.iteration}',
+                                            click: function(score, evt) {
+                                              $('#v-g-{$smarty.foreach.fe_goods.iteration}').val(score);
+                                            }
+											
+                                          });
+										  $('#precision-sv-{$smarty.foreach.fe_goods.iteration}').raty({
+											hints: ['很不满意', '不满意', '一般', '满意', '非常满意'],
+                                            target    : '#precision-hint-sv-{$smarty.foreach.fe_goods.iteration}',
+                                            click: function(score, evt) {
+                                              $('#v-sv-{$smarty.foreach.fe_goods.iteration}').val(score);
+                                            }
+                                          });
+										  $('#precision-sh-{$smarty.foreach.fe_goods.iteration}').raty({
+											hints: ['很不满意', '不满意', '一般', '满意', '非常满意'],
+                                            target    : '#precision-hint-sh-{$smarty.foreach.fe_goods.iteration}',
+                                            click: function(score, evt) {
+                                              $('#v-sh-{$smarty.foreach.fe_goods.iteration}').val(score);
+                                            }
+                                          });
+                                     });
+                                    </script>
+						<li class="mb10 w-full clearfix"> <span  class="float-left mr10 t">{$lang.goods_evaluation}：</span> <span id="precision-g-{$smarty.foreach.fe_goods.iteration}" class="float-left mr10"></span> <span id="precision-hint-g-{$smarty.foreach.fe_goods.iteration}" class="float-left hint"></span>
+							<input type="hidden" name="evaluations[{$goods.rec_id}][goods_evaluation]" id="v-g-{$smarty.foreach.fe_goods.iteration}" value="5"/>
+						</li>
+						<li class="mb10 w-full clearfix"> <span class="float-left mr10 t">{$lang.service_evaluation}：</span> <span id="precision-sv-{$smarty.foreach.fe_goods.iteration}" class="float-left mr10"></span> <span id="precision-hint-sv-{$smarty.foreach.fe_goods.iteration}" class="float-left hint"></span>
+							<input type="hidden" name="evaluations[{$goods.rec_id}][service_evaluation]" id="v-sv-{$smarty.foreach.fe_goods.iteration}" value="5"/>
+						</li>
+						<li class="mb10 w-full clearfix"> <span class="float-left mr10 t">{$lang.shipped_evaluation}：</span> <span id="precision-sh-{$smarty.foreach.fe_goods.iteration}" class="float-left mr10"></span> <span id="precision-hint-sh-{$smarty.foreach.fe_goods.iteration}" class="float-left hint"></span>
+							<input type="hidden" name="evaluations[{$goods.rec_id}][shipped_evaluation]" id="v-sh-{$smarty.foreach.fe_goods.iteration}" value="5"/>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!--{/foreach}-->
+			<div class="padding10 clearfix">
+				<div class="float-left" style="width:49%;">
+					<input type="submit" class="btn-alipay" value="{$lang.submit}" />
+				</div>
+				<div class="float-right" style="width:49%;">
+					<input type="button" onclick="window.location.href='{url app=buyer_order}'" class="btn-alipay btn-alipay-gray" value="{$lang.evaluate_later}" />
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+{include file=footer.html} 

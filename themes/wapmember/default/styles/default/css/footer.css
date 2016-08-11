@@ -1,0 +1,33 @@
+#footer{text-align:center;overflow:hidden;}
+#footer .auth{font-size:0.875rem;}
+#footer .auth .web-info a{width:25%;display:block;float:left;}
+#footer .auth .web-info a span{display:block;height:14px;line-height:14px;border-right:1px solid #9b9b9b;color:#666;}
+#footer .auth .gotop{line-height:20px;margin-right:10px;padding:5px 10px 5px 10px;}
+#footer .copyright{ font-family:"Segoe UI","Segoe WP",Arial,sans-serif; font-size:11px;  color:#666;}
+
+
+#footer .float-back-top{position: fixed;z-index: 89;right:5px;bottom:150px;font-size: 0;width:38px;height:38px;border-radius: .125rem 0 0 .125rem;background-color: rgba(0,0,0,.4);border-radius:25px;cursor:pointer;}
+#footer .float-back-top:after{background: url(../images/shanggou_m_icons.png) no-repeat;background-size: 125px auto;content: "\20";display: block;width:22px;height:22px;background-position: -102px 0;position: absolute;top:9px;left:9px;}
+
+#footer .gap{height:57px;width:100%;}
+
+.global-nav{position: fixed;left: -100%;bottom: 0;z-index: 900;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;width: 100%;-webkit-transition: all .5s ease;transition: all .5s ease;}
+.global-nav__nav-wrap{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1;height: 57px;border-top: 1px solid #e5e5e5;background-color: #fff;background-color:rgba(255, 255, 255, 0.95);}
+.global-nav__nav-item{-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1;overflow: hidden;}
+.global-nav__nav-link{position: relative;display: block;width: 62px;height: 50px;linse-height: 24px;padding-top: 7px;text-align: center;white-space: nowrap;color: #666;}
+.global-nav__nav-link:active{color: #ff7171;}
+.psmb-icon-font{font-family:"psmb-icon-font";font-size:24px;font-style:normal;}
+.global-nav__nav-tit{display: block;font-size: 12px;}
+.global-nav__nav-shop-cart-num,.global-nav__operate-cart-num{position: absolute;height: 16px;line-height: 16px;padding: 0 5px;border-radius: 8px;background-color: #fd4609;color: #fff;font-size: 12px;}
+.global-nav__nav-shop-cart-num{right: 7px;top:4px;}
+.global-nav__operate-wrap{position: relative;width: 20px/*62px*/;height: 58px;background-color: rgba(153,153,153,.75);right: -20px/*-62px*/;-webkit-transition: all .5s ease;transition: all .5s ease;}
+.global-nav__operate-wrap:before,.global-nav__operate-wrap:after{content: '';position: absolute;top: 24px;width: 7px;height: 7px;border-top:2px solid #fff;border-right: 2px solid #fff;}
+.global-nav__operate-wrap:before{display: none;right: 3px;-webkit-transform: rotate(-135deg);transform: rotate(-135deg);}
+.global-nav__operate-wrap:after{right: 7px;-webkit-transform: rotate(45deg);transform: rotate(45deg);}
+.global-nav__operate-cart-num{right: -8px;top: -8px;-webkit-transition: opacity .5s ease;transition: opacity .5s ease;}
+.global-nav-current{left:0;}
+.global-nav-current .global-nav__operate-wrap{width: 20px;right: 0;}
+.global-nav-current .global-nav__operate-cart-num{opacity: 0;}
+.global-nav-current .global-nav__operate-wrap:before{display: block;}
+.global-nav-current .global-nav__operate-wrap:after{display: none;}
+
