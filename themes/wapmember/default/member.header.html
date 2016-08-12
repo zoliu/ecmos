@@ -54,7 +54,7 @@ var PRICE_FORMAT = '{$price_format}';
 	<div class="top-bar"> 
     	<a href="{if $smarty.get.act eq '' && $smarty.get.app neq 'member'}{url app=member}{elseif $smarty.get.app eq 'member' &&  $smarty.get.act eq ''}{url app=default}{else}javascript:pageBack();{/if}" class="pageback"><span></span></a>
 		<h2 class="yahei">{$curlocal_title}</h2>
-		<a href="javascript:;" class="pagemore J_pagemore"><span></span></a>
+		<a href="{url app=default}" class="pagemore J_pagemore"><span></span></a>
     </div>
 	<div class="eject-tab J_eject_tab w-full clearfix hidden">
 			<a href="{url app=default}"> <span></span><p>首页</p></a>

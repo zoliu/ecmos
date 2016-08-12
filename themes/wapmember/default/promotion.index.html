@@ -9,17 +9,14 @@ $(function(){
 	<div class="bar-wrap">
         <div class="top-bar"> <a href="javascript:pageBack();" class="pageback"><span></span></a>
 			<h2 class="yahei">{$curlocal_title}</h2>
-			<a href="javascript:;" class="pagemore J_pagemore"><span></span></a> 
+			<a href="{url app=default}" class="pagemore J_pagemore"><span></span></a> 
         </div>
-		<div class="eject-tab J_eject_tab w-full clearfix hidden"> <a href="index.php"> <span></span>
-			<p>首页</p>
-			</a> <a href="{url app=search}"> <span class="icon2"></span>
-			<p>分类搜索</p>
-			</a> <a href="{url app=cart}"> <span class="icon3"></span>
-			<p>购物车</p>
-			</a> <a href="{url app=member}"> <span class="icon4"></span>
-			<p>用户中心</p>
-			</a> </div>
+		<div class="eject-tab J_eject_tab w-full clearfix hidden">
+			<a href="{url app=default}"> <span></span><p>首页</p></a>
+			<a href="{url app=search}"> <span class="icon2"></span><p>分类搜索</p></a>
+			<a href="{url app=cart}"> <span class="icon3"></span><p>购物车</p></a>
+			<a href="{url app=member}"> <span class="icon4"></span><p>用户中心</p></a>
+		</div>
 	</div>
 	<!--common bar end-->
 	<div id="page-search-goods">
