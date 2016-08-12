@@ -20,7 +20,9 @@ $(function() {
 			<div class="search-box">
 				<form id="search-form" method="get">
 					<input type="hidden" name="app" value="store" />
-                    <input type="hidden" name="act" value="store" />
+                    <input type="hidden" name="act" value="search" />
+                    <input type="hidden" name="id" value="{$store.store_id}" />
+
 					<input name="keyword"  type="text" class="kw" placeholder="请输入你要搜索的商品名称"/>
 					<input type="submit" class="submit" value="">
 				</form>
@@ -76,13 +78,12 @@ $(function() {
 				<!--{/foreach}--> 
 			</div>
 		</div>
-	<!--{if $recommended_goods}-->
+	<!--{if $recommended_good}-->
 	<div class="rec-goods goods-model-si">
 		<h3>{$lang.recommended_goods}</h3>
 		<ul class="clearfix">
-			<!--{foreach from=$recommended_goods item=rg name=fe_rg}-->
 			<li class="clearfix"> 
-				<!--{foreach from=$rg item=rgoods name=fe_rgoods}-->
+				<!--{foreach from=$recommended_good item=rgoods name=fe_rgoods}-->
 				<div class="item">
 					<div {if $smarty.foreach.fe_rgoods.iteration % 2 eq 0}style="margin-left:5px;margin-right:0rem;"{/if} class="wrap">
 						<div class="wrap2">
@@ -94,17 +95,16 @@ $(function() {
 				</div>
 				<!--{/foreach}--> 
 			</li>
-			<!--{/foreach}-->
 		</ul>
 	</div>
 	<!--{/if}--> 
-	<!--{if $new_goods}-->
+
+	<!--{if $new_good}-->
 	<div class="new-goods goods-model-si">
 		<h3>{$lang.new_goods}</h3>
 		<ul class="clearfix">
-			<!--{foreach from=$new_goods item=ng name=fe_ng}-->
 			<li class="clearfix"> 
-				<!--{foreach from=$ng item=ngoods name=fe_ngoods}-->
+				<!--{foreach from=$new_good item=ngoods name=fe_ngoods}-->
 				<div class="item">
 					<div {if $smarty.foreach.fe_ngoods.iteration % 2 eq 0}style="margin-left:5px;margin-right:0rem;"{/if} class="wrap">
 						<div class="wrap2">
@@ -116,59 +116,15 @@ $(function() {
 				</div>
 				<!--{/foreach}--> 
 			</li>
-			<!--{/foreach}-->
 		</ul>
 	</div>
 	<!--{/if}--> 
-	<!--{if $sales_goods}-->
-	<div class="hot-goods goods-model-si">
-		<h3>热卖</h3>
-		<ul class="clearfix">
-			<!--{foreach from=$sales_goods item=sg name=fe_sg}-->
-			<li class="clearfix"> 
-				<!--{foreach from=$sg item=sgoods name=fe_sgoods}-->
-				<div class="item">
-					<div {if $smarty.foreach.fe_sgoods.iteration % 2 eq 0}style="margin-left:5px;margin-right:0rem;"{/if} class="wrap">
-						<div class="wrap2">
-							<div class="pic"><a href="{url app=goods&id=$sgoods.goods_id}"><img src="{$sgoods.default_image}" /></a></div>
-							<h3><a href="{url app=goods&id=$sgoods.goods_id}">{$sgoods.goods_name|escape}</a></h3>
-							<p>￥{$sgoods.price}</p>
-						</div>
-					</div>
-				</div>
-				<!--{/foreach}--> 
-			</li>
-			<!--{/foreach}-->
-		</ul>
-	</div>
-	<!--{/if}--> 
-	<!--{if $hot_goods}-->
-	<div class="new-goods goods-model-si">
-		<h3>人气</h3>
-		<ul class="clearfix">
-			<!--{foreach from=$hot_goods item=hg name=fe_hg}-->
-			<li class="clearfix"> 
-				<!--{foreach from=$hg item=hgoods name=fe_hgoods}-->
-				<div class="item">
-					<div {if $smarty.foreach.fe_hgoods.iteration % 2 eq 0}style="margin-left:5px;margin-right:0rem;"{/if} class="wrap">
-						<div class="wrap2">
-							<div class="pic"><a href="{url app=goods&id=$hgoods.goods_id}"><img src="{$hgoods.default_image}" /></a></div>
-							<h3><a href="{url app=goods&id=$hgoods.goods_id}">{$hgoods.goods_name|escape}</a></h3>
-							<p>￥{$hgoods.price}</p>
-						</div>
-					</div>
-				</div>
-				<!--{/foreach}--> 
-			</li>
-			<!--{/foreach}-->
-		</ul>
-	</div>
-	<!--{/if}-->
+
 	<div class="view-all"> <a href="{url app=store&act=search&id=$store.store_id}"><i></i><span>全部商品</span></a> </div>
 </div>
 <div class="masker J_masker" onclick="PsmobanShowMenu();"></div>
 <div class="menus J_menus">
-    <div class="attrs" style="overflow: auto;height: 100%">
+    <div class="attrs" >
         <!--{foreach from=$store.store_gcates item=gcategory}-->
         <div class="attr">
           <div class="attrk">{$gcategory.value|escape}</div>
@@ -188,4 +144,5 @@ $(function() {
         <!--{/foreach}-->
     </div>
 </div>
+
 {include file=footer.html} 

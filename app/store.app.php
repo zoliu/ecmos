@@ -15,7 +15,11 @@ class StoreApp extends StorebaseApp
         $this->set_store($id);
         $store = $this->get_store_data();
         $this->assign('store', $store);
-        //var_dump($store);exit();
+
+        /*print_r('<pre>');
+        print_r($store);
+        print_r('</pre>');*/
+
         /* 取得友情链接 */
         $this->assign('partners', $this->_get_partners($id));
 
@@ -23,8 +27,15 @@ class StoreApp extends StorebaseApp
         $this->assign('recommended_good', $this->_get_recommended_goods($id, 8));
         $this->assign('new_groupbuy', $this->_get_new_groupbuy($id, 12));
 
+        /*header("content-type:text/html; charset=utf-8");
+        print_r('<pre>');
+        print_r($this->_get_recommended_goods($id, 8));
+        print_r('</pre>');*/
+
         /* 取得最新商品 */
         $this->assign('new_good', $this->_get_new_goods($id));
+
+        $this->assign('store_static',$this->store_static($id));
 
         /* 当前位置 */
         $this->_curlocal(LANG::get('all_stores'), 'index.php?app=search&amp;act=store', $store['store_name']);
@@ -33,6 +44,15 @@ class StoreApp extends StorebaseApp
         /* 配置seo信息 */
         $this->_config_seo($this->_get_seo_info($store));
         $this->display('store.index.html');
+    }
+
+    function store_static($id)
+    {
+        $goods_mod =& bm('goods', array('_store_id' => $id));
+        $new_count =count($goods_mod->find(array('conditions'=>'add_time > '.strtotime(date('Y-M-01')))));
+        $order_mod = &m('order');
+        $order_count = count($order_mod->find('seller_id = '.$id.' AND finished_time > 0'));
+        return array('new_count' => $new_count,'order_count' => $order_count);
     }
 
     function search()

@@ -6,7 +6,10 @@
         	<a href="javascript:pageBack();" class="pageback"><span></span></a>
 		    <div class="search-box">
 				<form id="search-form" method="get">
-					<input type="hidden" name="app" value="search" />
+					<input type="hidden" name="app" value="store" />
+                    <input type="hidden" name="act" value="search" />
+                    <input type="hidden" name="id" value="{$store.store_id}" />
+                    
 					<input name="keyword"  type="text" class="kw" placeholder="请输入你要搜索的商品名称"/>
 					<input type="submit" class="submit" value="">
 				</form>
@@ -19,9 +22,8 @@
 	<div style="border-top:0px;" class="search-goods goods-model-si">
 		<h3>{$search_name}</h3>
 		<ul class="clearfix">
-			<!--{foreach from=$searched_goods item=ng name=fe_ng}-->
 			<li> 
-				<!--{foreach from=$ng item=ngoods name=fe_ngoods}-->
+				<!--{foreach from=$searched_goods item=ngoods name=fe_ngoods}-->
 				<div class="item pb10">
 					<div {if $smarty.foreach.fe_ngoods.iteration % 2 eq 0}style="margin-left:5px;margin-right:0rem;"{/if} class="wrap">
 						<div class="wrap2">
@@ -33,7 +35,6 @@
 				</div>
 				<!--{/foreach}--> 
 			</li>
-			<!--{/foreach}-->
 		</ul>
 	</div>
 	<div class="line-background2"></div>

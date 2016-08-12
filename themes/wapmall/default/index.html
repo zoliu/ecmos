@@ -46,15 +46,13 @@ $(function(){
 
 		<!--common bar end-->
 		<!-- 首页幻灯 -->
-        <!-- <div class="slides">
+        <div class="slides">
         	<ul id="slide" class="scroller" > 
-                {foreach from=$slides item=slide name=fe_slide}
-                {if $slide.ad_image_url && $slide.ad_link_url}
-                <li> <a href='{$slide.ad_link_url}'><img src="{$slide.ad_image_url}" /></a> </li>
-                {/if}
+                {foreach from=$nav_ads item=slide name=fe_slide}
+                <li> <a href='{$slide.url}'><img src="{$slide.logo}" /></a> </li>
                 {/foreach} 
             </ul>
-        </div> -->
+        </div>
         <!-- end -->
 
         <!-- 点击后显示真正的搜索框 -->
