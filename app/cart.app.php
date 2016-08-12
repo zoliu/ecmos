@@ -90,10 +90,19 @@ class CartApp extends MallbaseApp {
 				return;
 			}
 		}
+
+		// ---www.360cd.cn Mosquito---
+		$user_id = $this->visitor->get('user_id');
+		$conditions = ' 1 = 1';
+		if ($user_id) {
+			$conditions .= " AND user_id = {$user_id}";
+		} else {
+			$conditions .= " AND session_id = '" . SESS_ID . "'";
+		}
 		
 		/* 是否添加过 */
 		$model_cart = & m('cart');
-		$item_info = $model_cart->get("spec_id={$spec_id} AND session_id='" . SESS_ID . "'");
+		$item_info = $model_cart->get("spec_id={$spec_id} AND " . $conditions);
 		if (!empty($item_info)) {
 			$this->json_error('goods_already_in_cart');
 			
@@ -151,9 +160,18 @@ class CartApp extends MallbaseApp {
 			return;
 		}
 		
+
+		$user_id = $this->visitor->get('user_id');
+		$conditions = ' 1 = 1';
+		if ($user_id) {
+			$conditions .= " AND user_id = {$user_id}";
+		} else {
+			$conditions .= " AND session_id = '" . SESS_ID . "'";
+		}
+
 		/* 从购物车中删除 */
 		$model_cart = & m('cart');
-		$droped_rows = $model_cart->drop('rec_id=' . $rec_id . ' AND session_id=\'' . SESS_ID . '\'', 'store_id');
+		$droped_rows = $model_cart->drop('rec_id=' . $rec_id . ' AND ' . $conditions, 'store_id');
 		if (!$droped_rows) {
 			return;
 		}
@@ -179,6 +197,7 @@ class CartApp extends MallbaseApp {
 	function update() {
 		$spec_id = isset($_GET['spec_id']) ? intval($_GET['spec_id']) : 0;
 		$quantity = isset($_GET['quantity']) ? intval($_GET['quantity']) : 0;
+
 		if (!$spec_id || !$quantity) {
 			/* 不合法的请求 */
 			return;
@@ -198,18 +217,26 @@ class CartApp extends MallbaseApp {
 			$this->json_error('no_enough_goods');
 			return;
 		}
-		
+
 		/* 修改数量 */
-		$where = "spec_id={$spec_id} AND session_id='" . SESS_ID . "'";
-		$model_cart = & m('cart');
-		
+		$user_id = $this->visitor->get('user_id');
+		$conditions = ' 1 = 1';
+		if ($user_id) {
+			$conditions .= " AND user_id = {$user_id}";
+		} else {
+			$conditions .= " AND session_id = '" . SESS_ID . "'";
+		}
+
+		$where = "spec_id={$spec_id} AND " . $conditions;
+		$model_cart = &m('cart');
+
 		/* 获取购物车中的信息，用于获取价格并计算小计 */
 		$cart_spec_info = $model_cart->get($where);
 		if (empty($cart_spec_info)) {
 			/* 并没有添加该商品到购物车 */
 			return;
 		}
-		
+
 		$store_id = $cart_spec_info['store_id'];
 		
 		/* 修改数量 */
@@ -285,10 +312,10 @@ class CartApp extends MallbaseApp {
 		$carts = array();
 		
 		/* 获取所有购物车中的内容 */
-		$where_store_id = $store_id ? ' AND cart.store_id=' . $store_id : '';
+		$where_store_id = $store_id ? ' AND store_id=' . $store_id : '';
 		
 		/* 只有是自己购物车的项目才能购买 */
-		$where_user_id = $this->visitor->get('user_id') ? " AND cart.user_id=" . $this->visitor->get('user_id') : '';
+		$where_user_id = $this->visitor->get('user_id') ? " AND user_id=" . $this->visitor->get('user_id') : '';
 		
 		// ---www.360cd.cn Mosquito---
 		$conditions = ' 1 = 1';
