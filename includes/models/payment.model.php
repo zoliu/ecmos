@@ -102,10 +102,20 @@ class PaymentModel extends BaseModel
      */
     function get_enabled($store_id)
     {
-        return $this->find(array(
-            'conditions'    => "store_id={$store_id} AND enabled=1 AND payment_code" . db_create_in($this->get_white_list()),
-            'order'         => 'sort_order',
-        ));
+        /*$store_model = &m('store');
+        $store_info = $store_model->get($this->_store_id);
+        if ($store_info['is_open_pay']) {
+            return $this->find(array(
+                'conditions'    => "store_id={$store_id} AND enabled=1 AND payment_code" . db_create_in($this->get_white_list()),
+                'order'         => 'sort_order',
+            ));
+        }
+        else*/ {
+            return $this->find(array(
+                'conditions'    => "store_id=0 AND enabled=1 AND payment_code" . db_create_in($this->get_white_list()),
+                'order'         => 'sort_order',
+            ));
+        }
     }
 
     /*---------对内置支付方式的操作---------*/

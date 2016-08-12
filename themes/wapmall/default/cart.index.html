@@ -1,53 +1,85 @@
-{include file=header.html} 
+{include file=header.html}
+
 <style type="text/css">
-.float-layer{display:none;}
+.float-layer {
+    display: none;
+}
 </style>
+
 <script type="text/javascript" src="{lib file=cart.js}" charset="utf-8"></script>
 <script type="text/javascript">
-$(function(){
-	$('#selected-store strong').html($('#cart'+$('input:radio:checked').val()+'_amount').html());
-	$('input:radio').change(function(){
-		$('#selected-store strong').html($('#cart'+$(this).val()+'_amount').html());
-	})
+$(function() {
+    $('#selected-store strong').html($('#cart' + $('input:radio:checked').val() + '_amount').html());
+    $('input:radio').change(function() {
+        $('#selected-store strong').html($('#cart' + $(this).val() + '_amount').html());
+    })
 })
-function go2order()
-{
-	window.location.href='{$real_site_url}/index.php?app=order&goods=cart&store_id='+$('input:radio:checked').val();
+
+function go2order() {
+    window.location.href = '{$real_site_url}/index.php?app=order&goods=cart&store_id=' + $('input:radio:checked').val();
 }
 </script>
+
 <div id="main">
-  <div id="page-cart" class="page-cart page-body">
-  <!--{foreach from=$carts item=cart key=store_id name=fe_carts}-->
-  <div class="cart-it mt10 cart-it-{$store_id}">
-    <div class="store-info clearfix ">
-      <div class="myscb relative">
-        <input class="rebuild-checkbox"  name="store_id" type="radio"  id="{$store_id}" {if $smarty.foreach.fe_carts.first}checked="checked"{/if} value="{$store_id}"/>
-      </div>
-      <div class="info">
-          <h3><span><label for="{$store_id}">{$cart.store_name|escape}</label></span><span class="ml20 hidden">{$lang.goods_amount}:&nbsp;&nbsp;<strong  id="cart{$store_id}_amount">{$cart.amount|price}</strong></span></h3>      
-      </div>
+    <div id="page-cart" class="page-cart page-body">
+        <form method="get" enctype="multipart/form-data" id="_form_">
+            <input type="hidden" name="app" value="order" />
+            <input type="hidden" name="goods" value="cart" />
+
+            <!--{foreach from=$carts item=cart key=store_id name=fe_carts}-->
+            <div class="cart-it mt10 cart-it-{$store_id}">
+                <div class="store-info clearfix ">
+                    <!-- <div class="myscb relative">
+                        <input class="rebuild-checkbox" name="store_id" type="radio" id="{$store_id}" {if $smarty.foreach.fe_carts.first}checked="checked" {/if} value="{$store_id}" />
+                    </div> -->
+                    <div class="info">
+                        <h3>
+                            <span>
+                                <label for="{$store_id}">{$cart.store_name|escape}</label>
+                            </span>
+                            <!-- <span class="ml20 hidden">{$lang.goods_amount}:&nbsp;&nbsp;
+                                <strong  id="cart{$store_id}_amount">{$cart.amount|price}</strong>
+                            </span> -->
+                        </h3>
+                    </div>
+                </div>
+                <ul>
+                    <!--{foreach from=$cart.goods item=goods name=fe_goods}-->
+                    <input type="hidden" name="rec_id[{$goods.rec_id}]" value="{$store_id}:{$goods.rec_id}:{$goods.goods_id}">
+                    <li id="cart_item_{$goods.rec_id}">
+                        <div class="it clearfix">
+                            <a href="{url app=goods&id=$goods.goods_id}" class="pic">
+                                <img src="{$goods.goods_image}" alt="{$goods.goods_name|escape}" />
+                            </a>
+                            <div class="detail">
+                                <a href="{url app=goods&id=$goods.goods_id}" class="desc">
+                                    <h4>{$goods.goods_name|escape}</h4>
+                                </a>
+                                <p class="props">{$goods.specification|escape}</p>
+                                <div class="price clearfix">
+                                    <em class="J_ItemPrice-{$goods.rec_id} float-left">{$goods.price|price} x </em>
+                                    <span class="txt ml5 float-left">
+                                    <i onclick="decrease_quantity({$goods.rec_id});" style="left:-26px;">
+                                    <svg class="eleme-svg svg-icon-cart-minus ng-scope" viewBox="0 0 51 51"><g id="svg-icon-cart-minus"><g transform="translate(1.000000, 1.000000)"><g><circle stroke="#3199E8" stroke-width="2" fill="#FFFFFF" cx="24.5" cy="24.5" r="24.5"></circle><rect fill="#3199E8" x="11" y="23" width="27" height="3"></rect></g></g></g></svg></i><input id="input_item_{$goods.rec_id}" type="text" value="{$goods.quantity}" orig="{$goods.quantity}" changed="{$goods.quantity}" onkeyup="change_quantity({$store_id}, {$goods.rec_id}, {$goods.spec_id}, this);"/><i onclick="add_quantity({$goods.rec_id});" style="right:-28px;"><svg class="eleme-svg svg-icon-cart-add ng-scope" viewBox="0 0 51 51"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g><g><rect x="0" y="0" width="51" height="51"></rect><g transform="translate(1.000000, 1.000000)"><circle stroke="#3199E8" stroke-width="2" fill="#3199E8" cx="24.5" cy="24.5" r="24.5"></circle><rect fill="#FFFFFF" x="11" y="23" width="27" height="3"></rect><rect fill="#FFFFFF" transform="translate(24.500000, 24.500000) rotate(-90.000000) translate(-24.500000, -24.500000) " x="11" y="23" width="27" height="3"></rect></g></g></g></g></svg></i>
+                                    </span>
+                                </div>
+                                <a class="del" href="javascript:drop_cart_item({$store_id}, {$goods.rec_id});" onclick="javascript:return confirm('{$lang.drop_confirm}');">{$lang.drop}</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!--{/foreach}-->
+                </ul>
+            </div>
+            <!--{/foreach}-->
+            <div class="go2order clearfix">
+                <!-- <span class="float-left ml10" id="selected-store">
+                {$lang.goods_amount}{$lang.colon}
+                <strong>{$cart.amount|price}</strong>
+                </span> -->
+                <a href="javascript:;" onclick="$('#_form_').submit();" class="btn float-right">去结算</a>
+            </div>
+        </form>
     </div>
-    <ul>
-      <!--{foreach from=$cart.goods item=goods name=fe_goods}-->
-      <li id="cart_item_{$goods.rec_id}">
-        <div class="it clearfix"> <a  href="{url app=goods&id=$goods.goods_id}" class="pic"><img src="{$goods.goods_image}" alt="{$goods.goods_name|escape}" /></a>
-          <div class="detail"> <a href="{url app=goods&id=$goods.goods_id}" class="desc">
-            <h4>{$goods.goods_name|escape}</h4>
-            </a>
-            <p class="props">{$goods.specification|escape}</p>
-            <div class="price clearfix"> <em class="J_ItemPrice-{$goods.rec_id} float-left">{$goods.price|price} x </em>  
-              <span class="txt ml5 float-left">
-              	<i onclick="decrease_quantity({$goods.rec_id});" style="left:-26px;"><svg class="eleme-svg svg-icon-cart-minus ng-scope" viewBox="0 0 51 51"><g id="svg-icon-cart-minus"><g transform="translate(1.000000, 1.000000)"><g><circle stroke="#3199E8" stroke-width="2" fill="#FFFFFF" cx="24.5" cy="24.5" r="24.5"></circle><rect fill="#3199E8" x="11" y="23" width="27" height="3"></rect></g></g></g></svg></i><input id="input_item_{$goods.rec_id}" type="text" value="{$goods.quantity}" orig="{$goods.quantity}" changed="{$goods.quantity}" onkeyup="change_quantity({$store_id}, {$goods.rec_id}, {$goods.spec_id}, this);"/><i onclick="add_quantity({$goods.rec_id});" style="right:-28px;"><svg class="eleme-svg svg-icon-cart-add ng-scope" viewBox="0 0 51 51"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g><g><rect x="0" y="0" width="51" height="51"></rect><g transform="translate(1.000000, 1.000000)"><circle stroke="#3199E8" stroke-width="2" fill="#3199E8" cx="24.5" cy="24.5" r="24.5"></circle><rect fill="#FFFFFF" x="11" y="23" width="27" height="3"></rect><rect fill="#FFFFFF" transform="translate(24.500000, 24.500000) rotate(-90.000000) translate(-24.500000, -24.500000) " x="11" y="23" width="27" height="3"></rect></g></g></g></g></svg></i>
-              </span> </div>
-            <a class="del" href="javascript:drop_cart_item({$store_id}, {$goods.rec_id});" onclick="javascript:return confirm('{$lang.drop_confirm}');">{$lang.drop}</a> 
-          </div>
-        </div>
-      </li>
-      <!--{/foreach}-->
-    </ul>
-  </div>
-  <!--{/foreach}-->
-  <div class="go2order clearfix"><span class="float-left ml10" id="selected-store">{$lang.goods_amount}{$lang.colon}<strong>{$cart.amount|price}</strong></span> <a  href="javascript:;"  onclick="go2order();"  class="btn float-right">去结算</a> </div>
-  </div>
 </div>
-{include file=footer.html} 
+
+{include file=footer.html}

@@ -8,26 +8,13 @@
             <script type="text/javascript">
                 var shippings = {$shippings};
                 var addresses = {$addresses};
-                //var goods_amount = {$store.amount};
-                
-                //var goods_quantity = {$store.quantity};
                 var order_amount=0;
+
                 $(function(){
+
                     regionInit("region");
                     set_amount();
-                    /*$('ul[shipping_id]').each(function(){
-                        //var shipping=$(this).attr('shipping_id').split(":");
-                        
-                        //var _shipping_fee = get_shipping_fee(shipping[1],shipping[2]);
-                        //$(this).find('[ectype="shipping_fee"]').html(price_format(_shipping_fee));
-                    }).click(function(){
-                        var shipping_fe=$(this).attr('shipping_id').split(":");
 
-                        
-                        set_order_amount(shipping_fe[0],shipping_fe[1],shipping_fe[2]);
-                    });*/
-                    //select first
-                    //$($('ul[shipping_id]')[0]).click();
                     $('ul[shipping_id]').click(function(event) {
                         var store_id=$(this).attr('store_id');
                         var this_radio=$(this).find('input[name="shipping_id['+store_id+']"]');
@@ -35,7 +22,19 @@
                         
                         set_amount();
                     });
+
+                    $('.address_item').click(function(){
+                        
+                        $(this).find("input[name='address_options']").prop('checked', true);
+                        $('.address_item').removeClass('address-on');
+                        $(this).addClass('address-on');
+                        set_address();
+                    });
+
+                    //init
+                    set_address();
                 });
+
                 function set_amount(){
                     var _amount=0;
                     var shipping_fee=0;
@@ -58,40 +57,15 @@
                     order_amount=_amount;
                     $('#order_amount').html(price_format(_amount));
                 }
-                /*function get_shipping_fee(quantity,shipping_id){
-                    var shipping_data = shippings[shipping_id];
-                    //alert(shippings);
-                    var first_price   = Number(shipping_data['first_price']);
-                    var step_price   = Number(shipping_data['step_price']);
-                    var goods_quantity=quantity;
 
-                    return first_price + (goods_quantity - 1) * step_price;
-                }*/
                 function check_phone(){
                     return ($('#phone_tel').val() == '' && $('#phone_mob').val() == '');
                 }
+
                 function hide_error(){
                     $('#region').find('.error').hide();
                 }
-                    
-                </script>
-                <script type="text/javascript">
-                //<![CDATA[
-                $(function(){
-                    //$("input[name='address_options']").click(set_address);
-                    $('.address_item').click(function(){
-                        
-                        $(this).find("input[name='address_options']").prop('checked', true);
-                        //alert(1);
-                        $('.address_item').removeClass('address-on');
-                        //alert(2);
-                        $(this).addClass('address-on');
-                        //alert(3);
-                        set_address();
-                    });
-                    //init
-                    set_address();
-                });
+
                 function set_address(){
                         
                     var addr_id = $("input[name='address_options']:checked").val();
@@ -118,6 +92,7 @@
                         fill_address_form(addr_id);
                     }
                 }
+
                 function fill_address_form(addr_id){
                     var addr_data = addresses[addr_id];
                     var html_address;
@@ -147,8 +122,19 @@
                         $('#s-address').html(html_address);
                         $('#s-name').html(html_name);
                 }
-                //]]>
-                </script>
+
+                function set_default(addr_id){
+                    $.getJSON('index.php?app=my_address&act=set_default&addr_id=' + addr_id, function(result){
+
+                        if(result){
+                            //alert('设置成功！');
+                            window.location.reload();    //刷新
+                        }else{
+                            alert('设置失败！');
+                        }
+                    });
+                }
+            </script>
                 <!--{if $my_address}-->
             <ul class="address-list mt20 cursor">
               <!--{foreach from=$my_address item=address name=address_select}-->
@@ -164,21 +150,6 @@
               <!--{/foreach}-->
             </ul>
 
-<script type="text/javascript">
-function set_default(addr_id){
-    $.getJSON('index.php?app=my_address&act=set_default&addr_id=' + addr_id, function(result){
-
-        if(result){
-            //alert('设置成功！');
-            window.location.reload();    //刷新
-        }else{
-            alert('设置失败！');
-
-        }
-    });
-
-}
-</script>
             <!--{/if}-->
             <div class="new-address mt10 ml20 address_item">
                 <input type="radio" name="address_options" id="use_new_address" value="0" /><a href="javascript:void(0);"><img src="data/files/mall/template/new-address.png" style="vertical-align:text-bottom;" /></a>

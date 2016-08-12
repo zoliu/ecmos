@@ -2,6 +2,46 @@
 <script type="text/javascript">
 //<!CDATA[
 /* buy */
+
+function to_shop()
+{
+    if (goodsspec.getSpec() == null)
+    {
+        alert(lang.select_specs);
+        return;
+    }
+    var spec_id = goodsspec.getSpec().id;
+
+    var quantity = $("#quantity").val();
+    if (quantity == '')
+    {
+        alert(lang.input_quantity);
+        return;
+    }
+    if (parseInt(quantity) < 1)
+    {
+        alert(lang.invalid_quantity);
+        return;
+    }
+
+    add_to_shop(spec_id, quantity);
+}
+
+function add_to_shop(spec_id, quantity)
+{
+    var url = 'index.php?app=cart&act=add';
+
+    $.getJSON(url, {'spec_id': spec_id, 'quantity': quantity}, function(data) {
+        if (data.done) {
+            window.location.href = 'index.php?app=cart';
+        }
+        else
+        {
+            alert(data.msg);
+        }
+    });
+}
+
 function buy()
 {
     if (goodsspec.getSpec() == null)
@@ -247,7 +287,7 @@ $(function(){
 	<div class="masker"></div>
 </div>
 <div class="btn-fixed">
-	<div class="tbl-cell"><a  href="javascript:;" onclick="buy_now();" class="btn-buy yahei">{$lang.buy_now}</a></div>
+	<div class="tbl-cell"><a  href="javascript:;" onclick="to_shop();" class="btn-buy yahei">{$lang.buy_now}</a></div>
 	<div class="tbl-cell"><a  href="javascript:;" onclick="buy();" class="btn-cart yahei">{$lang.add_to_cart}</a></div>
 	<div class="tbl-cell"><a  href="{url app=cart}" class="btn-to-cart yahei"><span></span></a></div>
 </div>

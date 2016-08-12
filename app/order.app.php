@@ -85,16 +85,17 @@ class OrderApp extends ShoppingbaseApp {
 			
 			// 得到所有配送信息
 			$this->assign('shippings', $order_lib->_get_shipping_json());
-			// var_dump($order_lib->_get_shipping_json());exit();
+			
 			$this->_curlocal(LANG::get('create_order'));
 			$this->_config_seo('title', Lang::get('confirm_order') . ' - ' . Conf::get('site_title'));
+			
 			// $this->assign('goods_info', $goods_info);
 			// $this->assign($form['data']);
 			
-			/* header('content-type:text/html; charset=utf8');
-			print_r("<pre>");
-			print_r($carts);
-			print_r("</pre>"); */
+			// header('content-type:text/html; charset=utf8');
+			// print_r("<pre>");
+			// print_r($order_lib->_get_shipping_json());
+			// print_r("</pre>"); 
 			
 			$this->assign('carts', $carts);
 			$this->assign($address['data']);
@@ -166,21 +167,6 @@ class OrderApp extends ShoppingbaseApp {
 				}
 				$orders[$order_id] = $order_id;
 				
-				/* 检查是否添加收货人地址 */
-				if (isset($_POST['save_address']) && (intval(trim($_POST['save_address'])) == 1)) {
-					$data = array(
-						'user_id' => $this->visitor->get('user_id'),
-						'consignee' => trim($_POST['consignee']),
-						'region_id' => $_POST['region_id'],
-						'region_name' => $_POST['region_name'],
-						'address' => trim($_POST['address']),
-						'zipcode' => trim($_POST['zipcode']),
-						'phone_tel' => trim($_POST['phone_tel']),
-						'phone_mob' => trim($_POST['phone_mob']) 
-					);
-					$model_address = & m('address');
-					$model_address->add($data);
-				}
 				/* 下单完成后清理商品，如清空购物车，或将团购拍卖的状态转为已下单之类的 */
 				$this->_clear_goods($order_id);
 				
@@ -236,6 +222,23 @@ class OrderApp extends ShoppingbaseApp {
 				$model_goodsstatistics->edit($goods_ids, 'orders=orders+1');
 			}
 			// 360cd.cn
+			// 
+			
+			//检查是否添加收货人地址
+			if (isset($_POST['save_address']) && (intval(trim($_POST['save_address'])) == 1)) {
+				$data = array(
+					'user_id' => $this->visitor->get('user_id'),
+					'consignee' => trim($_POST['consignee']),
+					'region_id' => $_POST['region_id'],
+					'region_name' => $_POST['region_name'],
+					'address' => trim($_POST['address']),
+					'zipcode' => trim($_POST['zipcode']),
+					'phone_tel' => trim($_POST['phone_tel']),
+					'phone_mob' => trim($_POST['phone_mob']) 
+				);
+				$model_address = &m('address');
+				$model_address->add($data);
+			}
 			
 			$my_money = isset($_POST['my_money']) && !empty($_POST['my_money']) ? floatval($_POST['my_money']) : 0;
 			

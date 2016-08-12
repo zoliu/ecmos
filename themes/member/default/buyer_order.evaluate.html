@@ -1,92 +1,120 @@
 {include file="header1.html"}
 
+<link href="{res file=css/global.css}" rel="stylesheet" type="text/css" />
+<link href="{res file=css/footer.css}" rel="stylesheet" type="text/css" />
+<link href="{res file=css/user.css}" rel="stylesheet" type="text/css" />
+
 <!--头部-->
 <div class="header">
     <div class="w1200 clearfix">
         <h1 class="logo fl mt15" title="{$site_title}"><a href="index.php"><img src="{$site_logo}" width="236" height="70" alt="{$site_title}"></a></h1>
         <ul class="steps fr clearfix mt30">
-            <li class="step-off"><span>1</span><p class="step-off-txt">{$lang.curlocal_my_cart}</p></li>
-            <li class="step-off"><span>2</span><p class="step-off-txt">{$lang.curlocal_do_order}</p></li>
-            <li class="step-off"><span>3</span><p class="step-off-txt">{$lang.curlocal_payment}</p></li>
-            <li class="step-off"><span>4</span><p class="step-off-txt">{$lang.curlocal_order_confirm}</p></li>
-            <li class="step-on"><span class="fontbold">5</span><p class="step-on-txt">{$lang.curlocal_my_evaluate}</p></li>
+            <li class="step-off"><span>1</span>
+                <p class="step-off-txt">{$lang.curlocal_my_cart}</p>
+            </li>
+            <li class="step-off"><span>2</span>
+                <p class="step-off-txt">{$lang.curlocal_do_order}</p>
+            </li>
+            <li class="step-off"><span>3</span>
+                <p class="step-off-txt">{$lang.curlocal_payment}</p>
+            </li>
+            <li class="step-off"><span>4</span>
+                <p class="step-off-txt">{$lang.curlocal_order_confirm}</p>
+            </li>
+            <li class="step-on"><span class="fontbold">5</span>
+                <p class="step-on-txt">{$lang.curlocal_my_evaluate}</p>
+            </li>
         </ul>
     </div>
-    
     <div class="clr"></div>
 </div>
 <!--头部 END-->
-<style>
-#header,.w,.particular{width:1200px;}
-.particular .particular_wrap,.particular .ware_line{width:1138px}
-.evaluate_footer{ text-align:left;padding-left:40px;padding-top:0;}
-</style>
+
+<!-- <style>
+#header,
+.w,
+.particular {
+    width: 1200px;
+}
+
+.particular .particular_wrap,
+.particular .ware_line {
+    width: 1138px
+}
+
+.evaluate_footer {
+    text-align: left;
+    padding-left: 40px;
+    padding-top: 0;
+}
+</style> -->
+
 <div class="main" class="w-full" style="margin-top: 30px;">
-<div id="page-cart" class="w auto clearfix">
-   <div class="particular">
-        <div class="particular_wrap">
-            <form method="POST">
-            <h2>{$lang.credit_evaluate}</h2>
-            <!--{foreach from=$goods_list item=goods}-->
-            <div class="evaluate_obj">
-                <dl class="info">
-                    <dt>{$lang.evaluate_goods}</dt>
-                    <dd>{$lang.store_name}: <a href="{url app=store&id=$order.seller_id}">{$order.seller_name|escape}</a></dd>
-                </dl>
-
-                <div class="ware_line">
-                    <div class="ware">
-                        <div class="ware_list">
-                            <div class="ware_pic"><img src="{$goods.goods_image}" width="50" height="50"  /></div>
-                            <div class="ware_text">
-                                <div class="ware_text4">
-                                    <a href="{url app=goods&id=$goods.goods_id}">{$goods.goods_name|escape}</a><br />
-                                    <span>{$goods.specification|escape}</span>
-                                </div>
-                                <div class="ware_text3">
-                                    <span>{$lang.quantity}&nbsp;:&nbsp;<strong>{$goods.quantity}</strong></span>
-                                    <span>{$lang.price}&nbsp;:&nbsp;<strong>{$goods.price|price}</strong></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="evaluate_wrap">
-                    <div class="my_evaluate">
-                        <div class="fill_in">
-                            <h4>{$lang.my_evaluation}</h4>
-                            <div>
-                                <b><label for="g{$goods.rec_id}_op1"><input id="g{$goods.rec_id}_op1" type="radio" name="evaluations[{$goods.rec_id}][evaluation]" value="3" checked  />{$lang.evaluation_good}<span>({$lang.increase_credit})</span></label></b>
-                                <b><label for="g{$goods.rec_id}_op2"><input id="g{$goods.rec_id}_op2" type="radio" name="evaluations[{$goods.rec_id}][evaluation]" value="2" /> {$lang.evaluation_acceptable}<span>({$lang.no_increase_credit})</span></label></b>
-                                <b><label for="g{$goods.rec_id}_op3"><input id="g{$goods.rec_id}_op3" type="radio" name="evaluations[{$goods.rec_id}][evaluation]" value="1" /> {$lang.evaluation_bad}<span>({$lang.decrease_credit})</span></label></b>
-                            </div>
-                            <div class="textarea"><textarea name="evaluations[{$goods.rec_id}][comment]"></textarea></div>
-                        </div>
-                        <dl>
-                            <dt>{$lang.notice}&nbsp;:&nbsp;</dt>
-                            <dd>
-                                {$lang.evaluate_notice}
-                            </dd>
+    <div id="page-cart" class="w auto clearfix">
+        <div class="particular">
+            <div class="particular_wrap">
+                <form method="POST">
+                    <h2>{$lang.credit_evaluate}</h2>
+                    <!--{foreach from=$goods_list item=goods}-->
+                    <div class="evaluate_obj">
+                        <dl class="info">
+                            <dt>{$lang.evaluate_goods}</dt>
+                            <dd>{$lang.store_name}: <a href="{url app=store&id=$order.seller_id}">{$order.seller_name|escape}</a></dd>
                         </dl>
+                        <div class="ware_line">
+                            <div class="ware">
+                                <div class="ware_list">
+                                    <div class="ware_pic"><img src="{$goods.goods_image}" width="50" height="50" /></div>
+                                    <div class="ware_text">
+                                        <div class="ware_text4">
+                                            <a href="{url app=goods&id=$goods.goods_id}">{$goods.goods_name|escape}</a>
+                                            <br />
+                                            <span>{$goods.specification|escape}</span>
+                                        </div>
+                                        <div class="ware_text3">
+                                            <span>{$lang.quantity}&nbsp;:&nbsp;<strong>{$goods.quantity}</strong></span>
+                                            <span>{$lang.price}&nbsp;:&nbsp;<strong>{$goods.price|price}</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="evaluate_wrap">
+                            <div class="my_evaluate">
+                                <div class="fill_in">
+                                    <h4>{$lang.my_evaluation}</h4>
+                                    <div>
+                                        <b><label for="g{$goods.rec_id}_op1"><input id="g{$goods.rec_id}_op1" type="radio" name="evaluations[{$goods.rec_id}][evaluation]" value="3" checked  />{$lang.evaluation_good}<span>({$lang.increase_credit})</span></label></b>
+                                        <b><label for="g{$goods.rec_id}_op2"><input id="g{$goods.rec_id}_op2" type="radio" name="evaluations[{$goods.rec_id}][evaluation]" value="2" /> {$lang.evaluation_acceptable}<span>({$lang.no_increase_credit})</span></label></b>
+                                        <b><label for="g{$goods.rec_id}_op3"><input id="g{$goods.rec_id}_op3" type="radio" name="evaluations[{$goods.rec_id}][evaluation]" value="1" /> {$lang.evaluation_bad}<span>({$lang.decrease_credit})</span></label></b>
+                                    </div>
+                                    <div class="textarea">
+                                        <textarea name="evaluations[{$goods.rec_id}][comment]"></textarea>
+                                    </div>
+                                </div>
+                                <dl>
+                                    <dt>{$lang.notice}&nbsp;:&nbsp;</dt>
+                                    <dd>
+                                        {$lang.evaluate_notice}
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <!--{/foreach}-->
+                    <div class="evaluate_footer">
+                        <input type="submit" value="{$lang.submit}" class="btn1" />
+                        <input type="button" onclick="window.close();" value="{$lang.evaluate_later}" class="btn2" />
+                    </div>
+                    <div class="particular_bottom"></div>
+                </form>
             </div>
-            <!--{/foreach}-->
-            <div class="evaluate_footer">
-                <input type="submit" value="{$lang.submit}" class="btn1" />
-                <input type="button" onclick="window.close();" value="{$lang.evaluate_later}" class="btn2" />
-            </div>
-            <div class="particular_bottom"></div>
-            </form>
+            <div class="clear"></div>
+            <div class="adorn_right1"></div>
+            <div class="adorn_right2"></div>
+            <div class="adorn_right3"></div>
+            <div class="adorn_right4"></div>
         </div>
-
-        <div class="clear"></div>
-        <div class="adorn_right1"></div>
-        <div class="adorn_right2"></div>
-        <div class="adorn_right3"></div>
-        <div class="adorn_right4"></div>
     </div>
-</div>
 </div>
 {include file="footer.html"}
