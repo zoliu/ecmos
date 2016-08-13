@@ -65,6 +65,7 @@
                     <p class="explain">{$lang.epay_desc}</p>
                 </li>
             </ul>
+
             <!--{if $payments.online}-->
             <ul class="payment">
                 <div class="defray">{$lang.online_payment}</div>
@@ -77,18 +78,20 @@
                 <!--{/foreach}-->
             </ul>
             <!--{/if}-->
-            <!--{if $payments.offline}-->
+
+            <!-- {if $payments.offline}
             <ul class="payment">
                 <div class="defray">{$lang.offline_payment}</div>
-                <!--{foreach from=$payments.offline item=payment}-->
+                {foreach from=$payments.offline item=payment}
                 <li>
                     <p class="radio"><input type="radio" id="payment_{$payment.payment_code}" name="payment_id" value="{$payment.payment_id}" /></p>
                     <p class="logo"><label for="payment_{$payment.payment_code}"><img alt="{$payment.payment_name|escape}-{$payment.payment_desc|escape}" title="{$payment.payment_name|escape}-{$payment.payment_desc|escape}" src="{$site_url}/includes/payments/{$payment.payment_code}/logo.gif" width="125" height="47" /></label></p>
                     <p class="explain">{$payment.payment_desc|escape}</p>
                 </li>
-                <!--{/foreach}-->
+                {/foreach}
             </ul>
-            <!--{/if}-->
+            {/if} -->
+
             <ul class="payment">
                 <div class="defray">{$lang.confirm_pay}</div>
                 <div class="backindex"><a href="javascript:$('#goto_pay').submit();">{$lang.confirm_pay}</a></div>

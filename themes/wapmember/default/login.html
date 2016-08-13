@@ -4,19 +4,19 @@
 		<form class="J_AjaxForm" method="POST">
 			<dl class="form pb20">
 				<dd>
-					<input type="text" id="user_name" name="user_name" class="J_AjaxFormFields input" placeholder=" {$lang.input_user_name}" />
+					<input type="text" id="user_name" name="user_name" class="J_AjaxFormFields input" placeholder="用户名" />
 				</dd>
 				<dd>
-					<input type="password" name="password" id="password" class="J_AjaxFormFields input" placeholder=" {$lang.input_password}" />
+					<input type="password" name="password" id="password" class="J_AjaxFormFields input" placeholder="密码" />
 				</dd>
 				<!--{if $captcha}-->
 				<dd class="captcha-box">
-					<input type="text" name="captcha" class="J_AjaxFormFields input captcha" id="captcha1" placeholder=" {$lang.input_captcha}" />
+					<input type="text" name="captcha" class="J_AjaxFormFields input captcha" id="captcha1" placeholder="验证码" />
 					<img id="captcha" src="{url app=captcha&amp;$random_number}" onclick="javascript:change_captcha($('#captcha'));"  /><br />
 				</dd>
 				<!--{/if}-->
 				<dd>
-					<label><input type="checkbox" name="AutoLogin" id="AutoLogin" class="J_AjaxFormFields" value="1" />{$lang.7autologin}</label>
+					<label><input type="checkbox" name="AutoLogin" id="AutoLogin" class="J_AjaxFormFields" value="1" />7天自动登录</label>
 				</dd>
 				<dd>
 					<input type="hidden" class="J_AjaxFormSuccessRet J_AjaxFormFields" name="ret_url" value="{$ret_url}" />
@@ -25,11 +25,11 @@
 				</dd>
 			</dl>
 		</form>
-		<div class="pb20 ml10 partner"> 
+		<!-- <div class="pb20 ml10 partner"> 
 			<a href="{url app=qqconnect&act=login}"><img src="{$real_site_url}/static/images/qq.png" /></a> 
-			<!--{if !$isWeixin}--><a href="{url app=alipayconnect&act=login}"><img src="{$real_site_url}/static/images/alipay.png" /></a><!--{/if}--> 
+			{if !$isWeixin}<a href="{url app=alipayconnect&act=login}"><img src="{$real_site_url}/static/images/alipay.png" /></a>{/if} 
 			<a href="{url app=xwbconnect&act=login}"><img src="{$real_site_url}/static/images/weibo.png" /></a> 
-		</div>
+		</div> -->
 	</div>
 </div>
 {include file=footer.html}

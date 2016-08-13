@@ -1,7 +1,10 @@
+
 {include file=header.html}
+
 <style type="text/css">
 .float-layer{display:none;}
 </style>
+
 <script type="text/javascript">
 	$(function(){
 		$('.buy .defray dd p label').click(function(){
@@ -10,23 +13,45 @@
 		})
 	})
 </script>
+
 <div id="page-cashier">
 	<div class="page-main margin10">
 		<form action="{url app=cashier&act=goto_pay&order_id=$order.order_id}" method="POST" id="goto_pay">
+			
+			<!--{if $order.order_merge}-->
+			<div class="success-anounce">
+				<div class="anounce-txt">
+					<h4>{$lang.order_created}</h4>
+					<h3>{$lang.order_sn}&nbsp;:&nbsp;{$order.order_sn_num}<br />{$lang.order_amount}&nbsp;:&nbsp;{$order.order_amount|price}</h3>
+					<p><a href="{url app=buyer_order}" target="_blank">{$lang.member_view_order}</a></p>
+				</div>
+			</div>
+			<!--{else}-->
 			<div class="success-anounce">
 				<div class="anounce-txt">
 					<h4>{$lang.order_created}</h4>
 					<h3>{$lang.order_sn}&nbsp;:&nbsp;{$order.order_sn}<br />{$lang.order_amount}&nbsp;:&nbsp;{$order.order_amount|price}</h3>
-					<p>{$lang.member_view_order}</p>
+					<p><a href="{url app=buyer_order}" target="_blank">{$lang.member_view_order}</a></p>
 				</div>
 			</div>
+			<!--{/if}-->
+
 			<div class="buy">
 				<h3>{$lang.select_payment}</h3>
+
 				<dl class="defray mb10">
+					<!-- epay -->
+					<dd class="webkit-box pt10 pb10">
+						<label for="payment_epay">
+							<input id="payment_epay" type="radio" name="payment_id" value="0"  checked="checked" />
+							<img src="{res file=images/yeb.jpg}" width="125" height="47" style="vertical-align:middle" />
+						</label>
+					</dd>
+
 					<!--{foreach from=$payments.online item=payment name=fe_payment}-->
 					<dd class="webkit-box pt10 pb10">
 						<label for="payment_{$payment.payment_code}">
-							<input id="payment_{$payment.payment_code}" type="radio" name="payment_id" value="{$payment.payment_id}" {if $smarty.foreach.fe_payment.first} checked="checked"{/if} />
+							<input id="payment_{$payment.payment_code}" type="radio" name="payment_id" value="{$payment.payment_id}" />
 							<img src="{$site_url}/includes/payments/{$payment.payment_code}/logo.gif" width="125" height="47" style="vertical-align:middle" />
 						</label>
 					</dd>
@@ -39,4 +64,5 @@
 		</form>
 	</div>
 </div>
+
 {include file=footer.html}

@@ -1,15 +1,38 @@
-﻿<div class="cartbox mt20">
+﻿
+<script type="text/javascript">
+
+function postscript_activation(tt){
+    if (tt.value == '{$lang.postscript_desc}'){
+        tt.value    = '';
+    }
+    tt.name = 'postscript';
+    $(tt).addClass('max-textarea');
+}
+
+function postscript_blur(tt) {
+    if(!tt.value) {
+        tt.value = '',
+        tt.name  = '';
+    }
+    $(tt).removeClass('max-textarea');
+}
+</script>
+
+<!--{foreach from=$carts item=store}-->
+
+<div class="cartbox mt20">
    <div class="title clearfix mb10">
       <span class="col-desc">
-	  	<a href="{url app=store&id=$goods_info.store_id}">{$goods_info.store_name|escape}</a>
-		<!--{if $goods_info.store_im_qq}-->
-        <a href="http://wpa.qq.com/msgrd?V=1&amp;uin={$goods_info.store_im_qq|escape}&amp;Site={$goods_info.store_name|escape}&amp;Menu=yes" target="_blank"><img align="absmiddle" src="http://wpa.qq.com/pa?p=1:{$goods_info.store_im_qq|escape}:4" alt="qq"></a>
+	  	<a href="{url app=store&id=$store.store_id}">{$store.store_name|escape}</a>
+		<!--{if $store.store_im_qq}-->
+        <a href="http://wpa.qq.com/msgrd?V=1&uin={$store.store_im_qq|escape}&Site={$store.store_name|escape}&Menu=yes" target="_blank"><img align="absmiddle" src="http://wpa.qq.com/pa?p=1:{$store.store_im_qq|escape}:4" alt="qq"></a>
         <!--{/if}-->
 	  </span>
    </div>
+
    <div class="content">
       <div class="store-each">
-            <!--{foreach from=$goods_info.items item=goods name=fe_goods}-->
+            <!--{foreach from=$store.items item=goods}-->
             <dl class="goods-each clearfix" {if !$smarty.foreach.fe_goods.first} style="border-top:0;"{/if}>
                <dd class="pic"><a class="block" href="{url app=goods&id=$goods.goods_id}" target="_blank"><img src="{$goods.goods_image}" alt="{$goods.goods_name|escape}" width="48" height="48" /></a></dd>
                <dd class="desc">
@@ -22,3 +45,70 @@
          </div>
    </div>
 </div>
+
+<div class="order-confirm-extra clearfix store" id="{$store.store_id}">
+
+    <div id="postscript" class="postscript clearfix">
+        <div class="title">{$lang.postscript}{$lang.colon}</div>
+        <div class="content">
+            <textarea class="f66" id="postscript[{$store.store_id}]" onclick="postscript_activation(this)" onblur="postscript_blur(this)" placeholder="{$lang.postscript_desc}"></textarea>
+        </div>
+    </div>
+
+    <div class="confirm-extra-info">
+        <div class="extra-list ship-method clearfix">
+            <div class="title float-left">配送方式{$lang.colon}</div>
+            <div class="content float-left">
+                <!-- <select name="delivery_type" class="J_LogistFeesSelect">
+                    {foreach from=$store.shipping_methods item=shipping_method name=shipping_select}
+                    <option value="{$key}" price="{$logist.logist_fees}">{$lang.$key}{$lang.colon}{$logist.logist_fees}</option>
+                    {/foreach}
+                </select> -->
+
+                <!--{foreach from=$store.shipping_methods item=shipping_method name=shipping_select}-->
+                <ul class="receive_add cursor" shipping_id="{$store.amount}:{$store.quantity}:{$shipping_method.shipping_id}" style="width: 600px;" store_id='{$store.store_id}'>
+                    <li class="radio" style="margin: 0.5em 0.5em;">
+                        <input type="radio" name="shipping_id[{$store.store_id}]" value="{$shipping_method.shipping_id}" 
+                        {if $smarty.foreach.shipping_select.first}
+                         checked="checked" 
+                        {/if} 
+                        shipping_fee='{$shipping_method.price}' />
+                        {$shipping_method.shipping_name}: <span class="money" ectype="shipping_fee">&yen; {$shipping_method.price}</span>
+                    </li>
+                </ul>
+                <!--{/foreach}-->
+            </div>
+        </div>
+
+        <!-- <div class="extra-list use-coupon clearfix make_coupon" >
+            <p>
+                {if $store.allow_coupon}&nbsp;&nbsp;
+                <input type="button" class="btn1" value="{$lang.use_coupon}" id="use_coupon" />
+                {/if}
+            </p>
+            {if $store.allow_coupon}
+            <p class="p2">{$lang.coupon_sn}:&nbsp;
+                <input type="text" name="coupon_sn" id="coupon_sn" class="text1" />
+                <input type="hidden" name="my_coupon" id="my_coupon" value='0' />
+                <input type="button" value="{$lang.check}" class="check" id="check_coupon" style="margin-left: 28px;" />
+                <span class="usable">{$lang.usable}</span>
+                <span class="unusable">{$lang.unusable}</span>
+            </p>
+            {/if}
+        </div> -->
+        
+        <!-- <div class="extra-list use-integral clearfix">
+            <div class="title float-left">{$lang.use_integral}{$lang.colon}</div>
+            <div class="content float-left">
+                <label class="mr10"><input type="checkbox" class="J_UseIntegralCheckbox" {if !$goods_info.integral_enabled || $yz_integral.goods_disable_use_integral} disabled="disabled"{/if} />{$lang.use_integral}</label>
+                <input type="text" name="exchange_integral" class="integral-input J_IntegralAmount" disabled="disabled" /> {$lang.dian}
+            </div>
+            <div class="fee float-right f66">-<em class="J_IntegralPrice">0</em></div>
+        </div> -->
+    </div>
+    <div class="confirm-extra-bottom clearfix">
+        <span class="price">店铺合计(含运费){$lang.colon}<i class="float-right"><em class="J_OrderAmount" id='amount_{$store.store_id}' amount='{$store.amount}'>{$store.amount|price}</em></i></span>
+    </div>
+</div>
+
+<!--{/foreach}-->

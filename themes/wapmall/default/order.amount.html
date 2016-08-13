@@ -1,11 +1,15 @@
-﻿<div class="w-full clearfix">
+﻿
+<div class="w-full clearfix">
 	<div class="make_sure clearfix">
 		<div class="realPay float-left"> 
-			<strong>{$lang.real_amount}{$lang.colon}</strong>
-			<span class="price"><i>&yen;</i><em class="J_OrderAmount">{$goods_info.amount}</em></span>
+			<strong>实付款{$lang.colon}</strong>
+			<span class="price">
+				<i></i>
+				<em class="J_OrderAmount" id="order_amount">{$goods_info.amount|price}</em>
+			</span>
 		</div>
 		<p class="btn-next float-right">
-			<a href="javascript:void($('#order_form').submit());" class="btn-step fff center strong fs14 ml20 J_SubmitOrder">{$lang.submit_order}</a>
+			<a href="javascript:void($('#order_form').submit());" id="submit" class="btn-step fff center strong fs14 ml20 J_SubmitOrder">{$lang.submit_order}</a>
 		</p>
 	</div>
 </div>

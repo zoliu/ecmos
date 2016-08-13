@@ -1,4 +1,4 @@
-﻿<script type="text/javascript">
+﻿<!-- <script type="text/javascript">
 $(function(){
 	$('.J_UseCouponSelect').change(function(){
 		if($(this).val()=='') couponPrice = 0;
@@ -82,9 +82,9 @@ function postscript_blur(tt) {
 			<div class="title float-left">{$lang.delivery_method}{$lang.colon}</div>
 			<div class="content float-left">
 				<select name="delivery_type" class="J_LogistFeesSelect">
-					<!--{foreach from=$shipping_methods item=logist key=key name=fe_logist}-->
+					{foreach from=$shipping_methods item=logist key=key name=fe_logist}
 					<option value="{$key}" price="{$logist.logist_fees}">{$lang.$key}{$lang.colon}{$logist.logist_fees}</option>
-					<!--{/foreach}-->
+					{/foreach}
 				</select>
 			</div>
 			<div class="fee float-right f66">+<em class="J_LogistFees">{$logist.logist_fees}</em></div>
@@ -94,9 +94,9 @@ function postscript_blur(tt) {
 			<div class="content float-left">
 				<select class="J_UseCouponSelect" name="coupon_sn" {if !$goods_info.allow_coupon} disabled="disabled"{/if}>
     				<option value="">{$lang.pls_coupon}</option>
-					<!--{foreach from=$coupon_list item=coupon}-->
+					{foreach from=$coupon_list item=coupon}
  					<option value="{$coupon.coupon_sn}" price="{$coupon.coupon_value}">SN:{$coupon.coupon_sn}</option>
- 					<!--{/foreach}-->
+ 					{/foreach}
 				</select>
 			</div>
 			<div class="fee float-right f66">-<em class="J_CouponPrice">0</em></div>
@@ -116,4 +116,4 @@ function postscript_blur(tt) {
 </div>
 
                     
-     
+      -->

@@ -8,14 +8,18 @@
 </form>
 <script type="text/javascript">
       document.getElementById('payform').submit();
-  </script> 
+</script> 
+
 {else}
+
 {include file=header.html}
+
 <style>
 .payment-desc h3{ font-weight:normal; font-size:16px; line-height:22px;}
 #pay_message_form table{border:1px solid #eee;background:#fff;margin-top:10px;padding:10px;}
 #pay_message_form td textarea{width:97%;border:1px #eee solid;padding:5px;margin:5px 0; border-radius:4px; height:50px;}
 </style>
+
 <div id="page-cashier">
 	<div class="page-main">
 		<div class="payment-desc margin10">
@@ -35,5 +39,6 @@
 		</form>
 	</div>
 </div>
+
 {include file=footer.html} 
 <!--{/if}--> 
