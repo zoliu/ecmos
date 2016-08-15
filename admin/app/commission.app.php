@@ -72,7 +72,7 @@ class CommissionApp extends BackendApp {
 			$this->assign('config', $this->config);
 			
 			$gcategory_model = &m('gcategory');
-			$this->assign('gcate_options', $gcategory_model->get_options(0));
+			$this->assign('gcate_options', $gcategory_model->get_options(0, false, 'store_id = 0'));
 			
 			$sgrade_model = &m('sgrade');
 			$this->assign('sgrade_options', $sgrade_model->get_options());
