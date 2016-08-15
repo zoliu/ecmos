@@ -52,11 +52,12 @@ class GcategoryModel extends BaseModel
      * @param bool $shown 只取要显示的分类
      * @return array
      */
-    function get_list($parent_id = -1, $shown = false)
+    function get_list($parent_id = -1, $shown = false, $cdt = '')
     {
         $conditions = "1 = 1";
         $parent_id >= 0 && $conditions .= " AND parent_id = '$parent_id'";
         $shown && $conditions .= " AND if_show = 1";
+        $cdt &&  $conditions .= " AND {$cdt}";
 
         return $this->find(array(
             'conditions' => $conditions,
@@ -64,10 +65,10 @@ class GcategoryModel extends BaseModel
         ));
     }
 
-    function get_options($parent_id = -1, $shown = false)
+    function get_options($parent_id = -1, $shown = false, $cdt = '')
     {
         $options = array();
-        $rows = $this->get_list($parent_id, $shown);
+        $rows = $this->get_list($parent_id, $shown, $cdt);
         foreach ($rows as $row)
         {
             $options[$row['cate_id']] = $row['cate_name'];

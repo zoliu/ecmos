@@ -119,6 +119,7 @@
             </div>
             <!--{foreach from=$item.submenu item=subitem key=k}-->
             {if $subitem.name neq 'overview' && $subitem.name neq 'friend'}
+            {if $item.name neq 'im_seller' || $item.name eq 'im_seller' && ($subitem.name eq 'my_qa' || $subitem.name eq 'order_manage' || $subitem.name eq 'discus')}
             <div class="fun-row {$subitem.margin}">
             	<a href="{$subitem.url}" class="clearfix block">
                     <p class="float-left title {$subitem.name}">
@@ -130,6 +131,7 @@
                     <p class="float-right view mr10">{$subitem.sub_text}</p>  
                 </a>
             </div>
+            {/if}
             {/if}
             <!--{/foreach}-->
             <!--{/foreach}-->
