@@ -91,3 +91,30 @@ var PRICE_FORMAT = '{$price_format}';
         </div>
     </div>
 <!--顶部条 END-->
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".tiao1").mouseover(function() {
+          $(this).find('.allcate').show();
+      });
+
+      $(".tiao1").mouseout(function() {
+          $(this).find('.allcate').hide();
+      });
+      $('.allcate li').mouseover(function() {
+        $(this).find('.sub-allcate').show();
+        $(this).find(".ali1").addClass("lia");
+      });
+      $('.allcate li').mouseout(function() {
+        $(this).find('.sub-allcate').hide();
+        $(this).find(".ali1").removeClass("lia");
+      });
+    $('.search-type .float-left a').click(function(event) {
+        var act=this.id;
+        
+        $('#act').val(act);
+        $('.search-type .float-left a').removeClass('current-soso');
+        $(this).addClass('current-soso');
+    });
+    });
+</script>
