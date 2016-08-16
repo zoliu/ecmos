@@ -137,10 +137,10 @@ tr.no_data td{color: #444444; padding-top: 60px; text-align:center; font-weight:
 .paddingT15 {padding-top: 10px;}
 .ptb20 {padding: 20px 0;}
     .infoTable {width: 100%; background: #fbfdff; color: #444;}
-    .infoTableInput, .infoTableInput2, .infoTableFile, .infoTableFile2{height:17px; line-height:17px;}
+    .infoTableInput, .infoTableInput2, .infoTableFile, .infoTableFile2{line-height:17px;}
     .infoTableInput {width:255px;}
     .infoTableFile {width:331px; height:20px;}
-    .infoTableInput2 {width:125px;}
+    /*.infoTableInput2 {width:125px;}*/
     .infoTableFile2 {width:201px; height:20px;}
     .infoTable textarea {width:255px; height:100px; font-size:12px}
     .infoTable select {font-size:12px}

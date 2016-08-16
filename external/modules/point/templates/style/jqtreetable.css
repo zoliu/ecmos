@@ -1,0 +1,21 @@
+@charset "utf-8";
+/* 
+Copyright: Paul Hanlon
+
+Released under the MIT/BSD licence which means you can do anything you want 
+with it, as long as you keep this copyright notice on the page 
+*/
+.collapsed { display: none; }
+.tablemain {background-color:#ccf;border-collapse: collapse; border: solid 1px #447; padding: 0px; text-align: left; }
+.tablemain td {margin-left:3px;}
+#treet1 {background-color:#fff}
+#treet2 {background-color:#ffc}
+
+#treet2 td { font: normal 10pt Arial; padding: 0px 2px 0px 0px; cursor: pointer;}
+.adeimg, .ttimage, .parimg, .preimg { border: none; margin: 0px; padding: 0px; vertical-align: bottom;}
+.adeimg, .parimg {cursor: pointer; }
+.even { background-color: #ddd; }
+.over { background-color: #66f; }
+
+#treet1 tr td.node{ padding-left:0px;}
+.node_name{ padding-left:10px; }

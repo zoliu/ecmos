@@ -238,6 +238,11 @@ class FrontendApp extends ECBaseApp {
 				/* 同步登陆外部系统 */
 				$synlogin = $ms->user->synlogin($user_id);
 			}
+
+			//360cd.cn
+            $point = &m("point_set");
+            $point->loginPoint($user_id);
+            //360cd.cn
 			
 			$this->show_message(Lang::get('login_successed') . $synlogin, 'back_before_login', rawurldecode($_POST['ret_url']), 'enter_member_center', 'index.php?app=member');
 		}
@@ -762,13 +767,12 @@ class MemberbaseApp extends MallbaseApp {
 			        'name' => 'my_child',
 			        'icon' => 'ico13'
 			    ),
-				
-                /*
-                'my_credit'  => array(
-                    'text'  => Lang::get('my_credit'),
-                    'url'   => 'index.php?app=member&act=credit',
-                    'name'  => 'my_credit',
-                ),*/
+			    'point_logs' => array(
+			    	'text' => '积分中心',
+			    	'url' => 'index.php?app=point_logs',
+			    	'name' => 'point',
+			    	'icon' => 'ico13',
+		    	),
             ) 
 		);
 		
@@ -826,19 +830,6 @@ class MemberbaseApp extends MallbaseApp {
 		
 		if (!$this->visitor->get('has_store') && Conf::get('store_allow')) {
 			/* 没有拥有店铺，且开放申请，则显示申请开店链接 */
-			/*
-			 * $menu['im_seller'] = array(
-			 * 'name' => 'im_seller',
-			 * 'text' => Lang::get('im_seller'),
-			 * 'submenu' => array(),
-			 * );
-			 *
-			 * $menu['im_seller']['submenu']['overview'] = array(
-			 * 'text' => Lang::get('apply_store'),
-			 * 'url' => 'index.php?app=apply',
-			 * 'name' => 'apply_store',
-			 * );
-			 */
 			$menu['im_buyer']['submenu']['apply'] = array(
 				'text' => Lang::get('apply_store'),
 				'url' => 'index.php?app=apply',

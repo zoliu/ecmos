@@ -245,6 +245,11 @@ class Seller_orderApp extends StoreadminbaseApp
                 return;
             }
 
+            //360cd.cn
+            $point = &m("point_set");
+            $point->buyerPoint($this->visitor->get('user_id'),$order_info['order_amount']);
+            //360cd.cn
+
             /* 记录订单操作日志 */
             $order_log =& m('orderlog');
             $order_log->add(array(

@@ -1,0 +1,22 @@
+<?php
+return array(
+	'credits_shop'=>'积分商城',
+	'all'=>"全部",
+	'need_point'=>'需要积分',
+	'prize_name'=>'奖品',
+	'goods_id_not_empty'=>'非法攻击',
+	'goods_no_exists'=>'奖品不存在',
+	'goods_price'=>'商品价格：',
+	'get_need_point'=>'兑换所需积分：',
+	'stock'=>'剩余数量：',
+	'used_stock'=>'已兑数量：',
+	'desc'=>'商品描述：',
+	'id_is_null'=>'ID不能为空',
+	'num_is_null'=>'数量不能为空',
+	'user_or_goods_no_exists'=>'用户不存在或商品不存在',
+	'stock_no_yes'=>'库存不足',
+	'point_no_yes'=>'可用积分不足',
+	'buy_num_is_more'=>'超过每人最多限购',
+	'success'=>'兑换成功',
+	);
+?>

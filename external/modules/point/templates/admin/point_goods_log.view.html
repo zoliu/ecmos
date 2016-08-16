@@ -1,0 +1,102 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function() {
+    $('#point_goods_form').validate({
+        errorPlacement: function(error, element) {
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success: function(label) {
+            label.addClass('right').text('OK!');
+        },
+        onkeyup: false,
+        rules: {
+            sort_order: {
+                number: true
+            }
+        },
+        messages: {
+
+            sort_order: {
+                number: '{$lang.number_only}'
+            }
+        }
+    });
+});
+</script>
+{$build_editor_goods_content}
+<div id="rightTop">
+    <p>积分商品</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?module=point&act=point_goods">{$lang.point_goods}</a></li>
+        <li><a class="btn1" href="index.php?module=point&act=point_goods_log">{$lang.point_goods_log}</a> </li>
+        <li><span>兑换详情</span></li>
+        <li><a class="btn1" href="index.php?module=point">{$lang.point_logs}</a></li>
+        <li><a class="btn1" href="index.php?module=point&act=point_set">{$lang.point_set}</a></li>
+        <li><a class="btn1" href="index.php?module=member_ext">{$lang.member_ext}</a></li>
+    </ul>
+</div>
+<div class="info">
+    <form method="post" enctype="multipart/form-data" id="point_goods_form">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">
+                    {$lang.goods_name}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    {$data.goods_name}
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.goods_num}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    {$data.goods_num}
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.need_point}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    {$data.total_point}
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.user_name}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    {$data.user_name}
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.email}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    {$data.email}
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.real_name}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    {$data.real_name}
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.phone_tel}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    {$data.phone_tel}
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.phone_mob}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    {$data.phone_mob}
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+{include file="footer.html"}
