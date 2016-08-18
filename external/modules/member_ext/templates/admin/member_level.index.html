@@ -3,6 +3,8 @@
     <p>会员等级</p>
     <ul class="subnav">
         <li><span>等级管理</span></li>
+        <li><a class="btn1" href="index.php?module=member_ext&act=add_member_level">新增等级</a></li>
+        <li><a class="btn1" href="index.php?module=member_ext&act=setting_member_level">等级设置</a></li>
         <li><a class="btn1" href="index.php?module=member_ext">扩展管理</a></li>
         <li><a class="btn1" href="index.php?module=point">积分中心</a></li>
     </ul>
@@ -13,34 +15,37 @@
 <div class="tdare">
     <table width="100%" cellspacing="0" class="dataTable">
         <!--{if $data}-->
-        <tr class="tatr1">
-            <td width="20" class="firstCell">
+        <tr class="tatr1" style="text-align: left;">
+            <th style="width:2em;" class="firstCell">
                 <input type="checkbox" class="checkall" />
-            </td>
-            <td align='left'>{$lang.level_name}</td>
-            <!-- <td align='left'>{$lang.level_code}</td> -->
-            <td align='left'>{$lang.level_discount}</td>
-            <td align='left'>{$lang.level_cost}</td>
-            <td align='left'>{$lang.start_point}</td>
-            <td align='left'>{$lang.end_point}</td>
-            <td align='left'>{$lang.sort}</td>
-            <td class="handler">{$lang.handler}</td>
+            </th>
+            <th >{$lang.level_name}</th>
+            <th>优先级</th>
+            <th>升级需求</th>
+            <th>提成相关</th>
+            <th>购物折扣</th>
+            <th class="handler" style="width:12em;">{$lang.handler}</th>
         </tr>
         <!--{/if}-->
         <!--{foreach from=$data item=items}-->
         <tr class="tatr2">
             <td class="firstCell">
-                <input value="{$items.id}" class='checkitem' type="checkbox" />
+                <input value="{$items.grade_id}" class='checkitem' type="checkbox" />
             </td>
-            <td align='left'>{$items.level_name}</td>
-            <!-- <td align='left'>{$items.level_code}</td> -->
-            <td align='left'>{$items.level_discount}</td>
-            <td align='left'>{$items.level_cost}</td>
-            <td align='left'>{$items.start_point}</td>
-            <td align='left'>{$items.end_point}</td>
-            <td align='left'>{$items.sort}</td>
-            <td class="handler"> 
-                <a href="index.php?module=member_ext&amp;act=edit_member_level&amp;id={$items.id}">{$lang.edit}</a>
+            <td >{$items.grade_name}</td>
+            <td >{$items.priority}</td>
+            <td>
+                <p>推荐会员累计购物: <span>{$items.upgrade_buy|price}</span></p>
+                <p>累计积分: <span>{$items.upgrade_integral}</span></p>
+            </td>
+            <td>
+                <p>推荐会员购物提成: <span>{$items.buy_tc}</span></p>
+                <p>推荐商家销售提成: <span>{$items.sell_tc}</span></p>
+            </td>
+            <td>{$items.discount}</td>
+            <td class="handler">
+                <a href="index.php?module=member_ext&amp;act=edit_member_level&amp;id={$items.grade_id}">{$lang.edit}</a>
+                <a href="javascript:drop_confirm('是否确认删除', 'index.php?module=member_ext&amp;act=drop_member_level&amp;id={$items.grade_id}');" >{$lang.drop}</a>
             </td>
         </tr>
         <!--{foreachelse}-->
@@ -49,8 +54,16 @@
         </tr>
         <!--{/foreach}-->
     </table>
+    {if $data}
     <div id="dataFuncs">
-        <div class="pageLinks">{if $data} {include file=page.bottom.html} {/if} </div>
+        <div id="batchAction" class="left paddingT15">
+            &nbsp;&nbsp;
+            <input class="formbtn batchButton" type="button" value="删除" name="id" uri="index.php?module=member_ext&amp;act=drop_member_level" presubmit="confirm('是否确认删除');" />
+        </div>
+        <div class="pageLinks">
+        {include file=page.bottom.html}</div>
         <div class="clear"></div>
     </div>
-    {include file="footer.html"}
+    {/if}
+</div>
+{include file="footer.html"}

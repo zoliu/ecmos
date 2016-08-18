@@ -161,14 +161,6 @@ return array(
                 'text' => Lang::get('money'),
                 'url'  => 'index.php?app=money',
             ),
-            'user_grade' => array(
-                'text' => Lang::get('user_grade'),
-                'url'  => 'index.php?app=user_grade',
-            ),
-        	'commission' => array(
-        		'text' => '佣金管理',
-        		'url' => 'index.php?app=commission',
-        	),
         ),
     ),
     // 交易

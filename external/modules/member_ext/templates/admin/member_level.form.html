@@ -1,4 +1,11 @@
 {include file="header.html"}
+
+<style>
+td>p {
+    margin: 1em 0em;
+}
+</style>
+
 <script type="text/javascript">
 $(function() {
     $('#member_level_form').validate({
@@ -37,7 +44,12 @@ $(function() {
     <p>会员等级</p>
     <ul class="subnav">
         <li><a class="btn1" href="index.php?module=member_ext&act=level_index">等级管理</a></li>
+        {if $data.grade_id}
+        <li><a class="btn1" href="index.php?module=member_ext&act=add_member_level">新增等级</a></li>
         <li><span>编辑等级</span></li>
+        {else}
+        <li><span>新增等级</span></li>
+        {/if}
         <li><a class="btn1" href="index.php?module=member_ext">扩展管理</a></li>
         <li><a class="btn1" href="index.php?module=point">积分中心</a></li>
     </ul>
@@ -48,52 +60,36 @@ $(function() {
             <tr>
                 <th class='paddingT15'>{$lang.level_name}:</th>
                 <td class='paddingT15 wordSpacing5'>
-                    <input class='infoTableFile2' disabled="" id='level_name' type='input' name='level_name' value="{$data.level_name}" />
-                    <label class='field_notice'></label>
-                </td>
-            </tr>
-            <!-- <tr>
-                <th class='paddingT15'>{$lang.level_code}:</th>
-                <td class='paddingT15 wordSpacing5'>
-                    <input class='infoTableFile2' id='level_code' type='input' name='level_code' value="{$data.level_code}" />
-                    <label class='field_notice'></label>
-                </td>
-            </tr> -->
-            <tr>
-                <th class='paddingT15'>{$lang.level_discount}:</th>
-                <td class='paddingT15 wordSpacing5'>
-                    <input class='infoTableFile2' id='level_discount' type='input' name='level_discount' value="{$data.level_discount}" />
+                    <input class='infoTableFile2' id='level_name' type='input' name='grade_name' value="{$data.grade_name}" />
                     <label class='field_notice'></label>
                 </td>
             </tr>
             <tr>
-                <th class='paddingT15'>{$lang.start_point}:</th>
-                <td class='paddingT15 wordSpacing5'>
-                    <input class='infoTableFile2' id='start_point' type='input' name='start_point' value="{$data.start_point}" />
-                    <label class='field_notice'></label>
+                <th class="paddingT15">优先级 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" type="text" name="priority" value="{if $data.priority}{$data.priority}{else}{$priority}{/if}" />
                 </td>
             </tr>
             <tr>
-                <th class='paddingT15'>{$lang.end_point}:</th>
-                <td class='paddingT15 wordSpacing5'>
-                    <input class='infoTableFile2' id='end_point' type='input' name='end_point' value="{$data.end_point}" />
-                    <label class='field_notice'></label>
+                <th class="paddingT15">升级需求 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <p><span>推荐会员累计购物：</span><input name="upgrade_buy" value="{$data.upgrade_buy}" type="text" class="infoTableInput2" /></p>
+                    <p><span>累计积分：</span><input name="upgrade_integral" value="{$data.upgrade_integral}" type="text" class="infoTableInput2" /></p>
                 </td>
             </tr>
             <tr>
-                <th class='paddingT15'>{$lang.level_cost}:</th>
-                <td class='paddingT15 wordSpacing5'>
-                    <input class='infoTableFile2' id='level_cost' type='input' name='level_cost' value="{$data.level_cost}" />
-                    <label class='field_notice'></label>
+                <th class="paddingT15">提成相关 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <p><span>推荐会员购物提成：</span><input name="buy_tc" value="{$data.buy_tc}" type="text" class="infoTableInput2" /></p>
+                    <p><span>推荐商家销售提成：</span><input name="sell_tc" value="{$data.sell_tc}" type="text" class="infoTableInput2" /></p>
                 </td>
             </tr>
-            <!-- <tr>
-                <th class='paddingT15'>{$lang.sort}:</th>
-                <td class='paddingT15 wordSpacing5'>
-                    <input class='infoTableFile2' id='sort' type='input' name='sort' value="{$data.sort}" />
-                    <label class='field_notice'></label>
+            <tr>
+                <th class="paddingT15">购物折扣 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" type="text" name="discount" value="{$data.discount}" />
                 </td>
-            </tr> -->
+            </tr>
             <tr>
                 <th class="paddingT15"> </th>
                 <td class="ptb20">

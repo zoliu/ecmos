@@ -1,12 +1,16 @@
 <?php
 return array (
-  'mall_c_rate' => 0.2,
+  'upgrade_type' => 1,
+  'order_rate' => 0.2,
   'tc_layer' => 3,
+  'tc' => 
+  array (
+    'mall_ratio' => 0.2,
+    'buy_ratio' => 0.4,
+    'sell_ratio' => 0.4,
+  ),
   'gcate' => 
   array (
-    1200 => 0.25,
-    1204 => 0,
-    1207 => 0.2,
     1 => 0,
     21 => 0,
     73 => 0,
@@ -22,8 +26,7 @@ return array (
   ),
   'sgrade' => 
   array (
-    1 => 0.01,
-    2 => 0.02,
+    1 => 0,
+    2 => 0,
   ),
 );
-?>

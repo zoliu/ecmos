@@ -8,7 +8,7 @@ $(function() {
     <p>会员扩展</p>
     <ul class="subnav">
         <li><a class="btn1" href="index.php?module=member_ext">扩展管理</a></li>
-        <li><span>审核等级</span></li>
+        <li><span>修改等级</span></li>
         <li><a class="btn1" href="index.php?module=member_ext&act=level_index">会员等级</a></li>
         <li><a class="btn1" href="index.php?module=point">积分中心</a></li>
     </ul>
@@ -19,26 +19,16 @@ $(function() {
             <tr>
                 <th class='paddingT15'>{$lang.user_name}:</th>
                 <td class='paddingT15 wordSpacing5'>
-                    <input class='infoTableFile2' type='text' value="{$data.user_name}" />
-                    <input class='infoTableFile2' id='user_id' type='hidden' name='user_id' value="{$data.user_id}" />
+                    <input class='infoTableFile2' type='text' value="{$data.user_name}" disabled="" />
                     <label class='field_notice'></label>
                 </td>
             </tr>
             <tr>
                 <th class='paddingT15'>{$lang.level_name}:</th>
                 <td class='paddingT15 wordSpacing5'>
-                    <select name='user_level_id'>
+                    <select name='grade_id'>
                         <option>{$lang.select_pls}</option>
-                        {html_options options=$options selected=$data.user_level_id}
-                    </select>
-                    <label class='field_notice'></label>
-                </td>
-            </tr>
-            <tr>
-                <th class='paddingT15'>{$lang.status}:</th>
-                <td class='paddingT15 wordSpacing5'>
-                    <select name='status'>
-                        {html_options options=$status selected=$data.status}
+                        {html_options options=$options selected=$data.grade_id}
                     </select>
                     <label class='field_notice'></label>
                 </td>

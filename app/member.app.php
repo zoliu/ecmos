@@ -41,10 +41,10 @@ class MemberApp extends MemberbaseApp
         //360cd.cn
         $this->assign('user_info', $info);
         $member_ext_mod = &m('member_ext');
-        $user_ext       = $member_ext_mod->registerUserToExt($user['user_id']);
+        $user_ext       = $member_ext_mod->get($user['user_id']);
         $this->assign('user_ext', $user_ext);
-        $member_level      = &m('member_level');
-        $member_level_info = $member_level->get_options();
+        $member_level      = &m('member_grade');
+        $member_level_info = $member_level->getOptions();
         $this->assign('options_user_level', $member_level_info);
         //360cd.cn
 

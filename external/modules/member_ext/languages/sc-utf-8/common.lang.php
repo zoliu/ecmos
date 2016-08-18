@@ -4,7 +4,7 @@ return array(
    'end_point'=>'结束积分',
    'curr_user_point'=>'当前积分',
    'subtract'=>'减少',
-   'member_ext'=>'卓流应用-会员分级',
+   'member_ext'=>'卓流应用-会员扩展',
    'add_level'=>'添加等级',
    'member_ext_desc'=>'会员信息扩展',
    'member_ext_manage'=>'会员扩展管理',

@@ -27,37 +27,32 @@
 <div class="tdare">
     <table width="100%" cellspacing="0" class="dataTable">
         <!--{if $data}-->
-        <tr class="tatr1">
-            <td width="20" class="firstCell">
+        <tr class="tatr1" style="text-align: left;">
+            <th width="2em" class="firstCell">
                 <input type="checkbox" class="checkall" />
-            </td>
-            <td align='left'>{$lang.user_name} | {$lang.real_name}</td>
-            <td align='left'>{$lang.email}</td>
-            <td align='left'>{$lang.level_name}</td>
-            <td align='left'>{$lang.point}</td>
-            <!-- <td align='left'>{$lang.status}</td> -->
-            <td class="handler" width=260>{$lang.handler}</td>
+            </th>
+            <th style="width: 12em;">{$lang.user_name} | {$lang.real_name}</th>
+            <th style="width: 12em;">{$lang.email}</th>
+            <th style="width: 10em;">{$lang.level_name}</th>
+            <th style="width: 8em;">{$lang.point}</th>
+            <th class="handler" style="width:12em;">{$lang.handler}</th>
         </tr>
         <!--{/if}-->
         <!--{foreach from=$data item=items}-->
         <tr class="tatr2">
             <td class="firstCell">
-                <input value="{$items.ext_id}" class='checkitem' type="checkbox" />
+                <input value="{$items.user_id}" class='checkitem' type="checkbox" />
             </td>
-            <td align='left'>{$items.user_name} | {$items.real_name}</td>
-            <td align='left'>{$items.email}</td>
-            <td align='left'>{if $items.level_name}{$items.level_name}{else}{$lang.reg_vip}{/if}</td>
-            <td align='left'>{$items.user_point}</td>
-            <!-- <td align='left'>
+            <td>{$items.user_name} | {$items.real_name}</td>
+            <td>{$items.email}</td>
+            <td>{if $items.grade_name}{$items.grade_name}{else}{$lang.reg_vip}{/if}</td>
+            <td>{$items.integral}</td>
+            <!-- <td >
                 {if $items.status eq '0' } {$lang.waitAudting} {elseif $items.status eq '1' } {$lang.Audted} {elseif $items.status eq '-1'} {$lang.noAudted} {else} {$lang.noAudte} {/if}
             </td> -->
             <td class="handler">
-                <!-- {if $items.ext_id }
-                <a href="index.php?module=member_ext&amp;act=edit_member_ext&amp;id={$items.ext_id}">{$lang.audit_member_ext}</a>&nbsp;
-                {else}
-                <a href="index.php?module=member_ext&amp;act=add_member_ext&amp;id={$items.user_id}">{$lang.assign_level}</a>
-                {/if}  -->
-                &nbsp;<a href="index.php?module=member_ext&amp;act=change_point&amp;&user_id={$items.user_id}">{$lang.change_point}</a>
+                <a href="index.php?module=member_ext&amp;act=edit_member_ext&amp;id={$items.user_id}">修改等级</a>&nbsp; &nbsp;
+                <a href="index.php?module=member_ext&amp;act=change_point&amp;&user_id={$items.user_id}">{$lang.change_point}</a>
             </td>
         </tr>
         <!--{foreachelse}-->
@@ -68,10 +63,9 @@
     </table>
     <!--{if $data}-->
     <div id="dataFuncs">
-        <div id="batchAction" class="left paddingT15"> &nbsp;&nbsp; &nbsp;&nbsp;
-        </div>
-        <!--{/if}-->
         <div class="pageLinks">{if $data} {include file=page.bottom.html} {/if} </div>
         <div class="clear"></div>
     </div>
-    {include file="footer.html"}
+    <!--{/if}-->
+</div>
+{include file="footer.html"}
