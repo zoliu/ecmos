@@ -48,6 +48,7 @@ class Point_logsModel extends BaseModel
             $user_data = array('integral' => 0);
         }
         if ($type) {
+            $user_ext->edit(' user_id=' . $user_id, "total_integral = total_integral + {$point}");
             $point = $user_data['integral'] + $point;
         } else {
             $point = $user_data['integral'] - $point;

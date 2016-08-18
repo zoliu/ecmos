@@ -102,19 +102,6 @@ class Member_gradeModel extends BaseModel
      */
     public function updateGrade($user_id)
     {
-        //需要更新用户的信息
-        $member_ext_model = &m('member_ext');
-        $member_info  = $member_ext_model->get("user_id = {$user_id}");
-        if (!$member_info) {
-            return 0;
-        }
-
-        //得到用户下一等级级信息
-        $next_grade_info = $this->getNextGrade($member_info['grade_id']);
-        if (!$next_grade_info) {
-            return 0;
-        }
-
         //判断升级类型
         import('zllib/methods.lib');
         $filename = ROOT_PATH . '/data/member_level.inc.php';
@@ -122,7 +109,25 @@ class Member_gradeModel extends BaseModel
 
         switch ($upgrade_type) {
         	case 1:
-		        //累计购物模式
+        		//需要更新用户的信息
+		        $member_ext_model = &m('member_ext');
+		        $member_info  = $member_ext_model->get("user_id = {$user_id}");
+		        if (!$member_info) {
+		            return 0;
+		        }
+
+		        $member_info  = $member_ext_model->get("user_id = {$member_info['parent_id']}");
+		        if (!$member_info) {
+		            return 0;
+		        }
+
+		        //得到用户下一等级级信息
+		        $next_grade_info = $this->getNextGrade($member_info['grade_id']);
+		        if (!$next_grade_info) {
+		            return 0;
+		        }
+
+		        //推荐累计购物模式
 		        $joinstr = $member_ext_model->parseJoin('user_id', 'user_id', 'member');
 		        $total_buy = $member_ext_model->get(array(
 		        	'joinstr' => $joinstr,
@@ -133,27 +138,43 @@ class Member_gradeModel extends BaseModel
 		        if ($total_buy['buy'] < $next_grade_info['upgrade_buy']) {
 		            return -1;
 		        }
+
+		        //达到条件，更新等级
+        		$member_ext_model->edit($member_info['user_id'], "grade_id = {$next_grade_info['grade_id']}");
         		break;
     		case 2:
+    			//需要更新用户的信息
+		        $member_ext_model = &m('member_ext');
+		        $member_info  = $member_ext_model->get("user_id = {$user_id}");
+		        if (!$member_info) {
+		            return 0;
+		        }
+
+		        //得到用户下一等级级信息
+		        $next_grade_info = $this->getNextGrade($member_info['grade_id']);
+		        if (!$next_grade_info) {
+		            return 0;
+		        }
+
     			//累计积分模式
     			$joinstr = $member_ext_model->parseJoin('user_id', 'user_id', 'member');
 		        $total_buy = $member_ext_model->get(array(
 		        	'joinstr' => $joinstr,
 		            'fields'     => 'SUM(total_integral) AS integral',
-		            'conditions' => "parent_id = {$member_info['user_id']}",
+		            'conditions' => "member_ext.user_id = {$member_info['user_id']}",
 		        ));
 
 		        if ($total_buy['integral'] < $next_grade_info['upgrade_integral']) {
 		            return -1;
 		        }
+
+		        //达到条件，更新等级
+        		$member_ext_model->edit($member_info['user_id'], "grade_id = {$next_grade_info['grade_id']}");
         		break;
         	default:
         		return 0;
         		break;
         }
-
-        //达到条件，更新等级
-        $member_ext_model->edit($member_info['user_id'], "grade_id = {$next_grade_info['grade_id']}");
 
         return 1;
     }

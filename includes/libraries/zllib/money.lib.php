@@ -587,15 +587,15 @@ class Money {
     		$this->pay_seller_add($order_info['seller_id'], $order_info['buyer_id'], $order_info['order_amount'] - $money, $order_info['order_id']);
     	}
         
-        //更新用户购物总额与销售总额
-        $this->member_model->edit($buyer_id, "total_buy = total_buy + {$order_info['order_amount']}");
-        $this->member_model->edit($seller_id, "total_sell = total_sell + {$order_info['order_amount']}");
-    
+        //更新用户购物总额
+        $member_ext_model = &m('member_ext');
+        $member_ext_model->edit($buyer_id, "total_buy = total_buy + {$order_info['order_amount']}");
+        
         //更新相关用户的等级
         import('zllib/user.lib');
         $buyer_info = $this->member_model->get($buyer_id);
         $member_grade_model = &m('member_grade');
-        $member_grade_model->updateGrade($buyer_info['parent_id']);
+        $member_grade_model->updateGrade($buyer_id);
     
         //更新提成相关
         $this->buy_tc($buyer_id, $money * $config['tc']['buy_ratio'], $config['tc_layer']);

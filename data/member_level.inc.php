@@ -1,6 +1,6 @@
 <?php
 return array (
-  'upgrade_type' => 1,
+  'upgrade_type' => 2,
   'order_rate' => 0.2,
   'tc_layer' => 3,
   'tc' => 
@@ -30,3 +30,4 @@ return array (
     2 => 0,
   ),
 );
+?>
