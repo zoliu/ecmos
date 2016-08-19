@@ -1,61 +1,59 @@
 {include file=header.html}
 <script type="text/javascript" src="{lib file=search_goods.js}" charset="utf-8"></script>
 <script type="text/javascript">
-var upimg   = '{res file=images/up.gif}';
+var upimg = '{res file=images/up.gif}';
 var downimg = '{res file=images/down.gif}';
 imgUping = new Image();
 imgUping.src = upimg;
-    
-  $(function( ){
-    //调整排序
-    var order = '{$smarty.get.order}'; 
-    var css = '';
-      <!--{if $smarty.get.order}--> 
-      
-    order_arr = order.split(' ');
-    switch (order_arr[1]){
-      case 'desc' :
-        css = 'con-on  con';
-      break;
-      case 'asc' :
-        css = 'con-on  con-up';
-      break;
-      default :
-        css = ' con';
-    }
-    $('.condition-bar a[ectype =' +  order_arr[0]  + ']').attr('class', 'con ' + css);
-      <!--{/if}-->
 
-    $(".condition-bar a").click(function(){
-      if(this.id==''){
-            dropParam('order');// default order
+$(function() {
+    //调整排序
+    var order = '{$smarty.get.order}';
+    var css = '';
+    <!--{if $smarty.get.order}--> 
+
+    order_arr = order.split(' ');
+    switch (order_arr[1]) {
+        case 'desc':
+            css = 'con-on  con';
+            break;
+        case 'asc':
+            css = 'con-on  con-up';
+            break;
+        default:
+            css = ' con';
+    }
+    $('.condition-bar a[ectype =' + order_arr[0] + ']').attr('class', 'con ' + css);
+    <!--{/if}-->
+
+    $(".condition-bar a").click(function() {
+        if (this.id == '') {
+            dropParam('order'); // default order
             return false;
-          }
-          else
-          {
-              dd = " desc";
-              if(order != '') {
-                  order_arr = order.split(' ');
-                  if(order_arr[0]==this.id && order_arr[1]=="desc")
-                          dd = " asc";
-                  else dd = " desc";
-              }
-              replaceParam('order', this.id+dd);
-              return false;
-          }
+        } else {
+            dd = " desc";
+            if (order != '') {
+                order_arr = order.split(' ');
+                if (order_arr[0] == this.id && order_arr[1] == "desc")
+                    dd = " asc";
+                else dd = " desc";
+            }
+            replaceParam('order', this.id + dd);
+            return false;
+        }
     });
     //调整价格
-      <!--{if $smarty.get.price}-->
+    <!--{if $smarty.get.price}-->
     var filter_price = '{$smarty.get.price}';
     filter_price = filter_price.split('-');
-    $('input[name="start_price"]').val(number_format(filter_price[0],0));
-    $('input[name="end_price"]').val(number_format(filter_price[1],0));
-      <!--{/if}-->
-  //展开/收起条件
-    
-    $('.condition .show-more').click(function(){
+    $('input[name="start_price"]').val(number_format(filter_price[0], 0));
+    $('input[name="end_price"]').val(number_format(filter_price[1], 0));
+    <!--{/if}-->
+    //展开/收起条件
+
+    $('.condition .show-more').click(function() {
         $(this).parent().parent().find('.toggle').toggle();
-        if($(this).find('span').html()=='{$lang.expand}'){
+        if ($(this).find('span').html() == '{$lang.expand}') {
             $(this).find('span').html('{$lang.fold}');
             $(this).find('b').attr('class', 'hide-more');
         } else {
@@ -63,110 +61,108 @@ imgUping.src = upimg;
             $(this).find('b').attr('class', '');
         }
     });
-  });
+});
 </script>
-
 <!--360cd.cn  seema-->
 <script>
 /* add cart */
-function add_to_cart(spec_id, quantity)
-{
+function add_to_cart(spec_id, quantity) {
     var url = SITE_URL + '/index.php?app=cart&act=add';
-    $.getJSON(url, {'spec_id':spec_id, 'quantity':quantity}, function(data){
-        if (data.done)
-        {
-          alert('购物车加入成功！');
-        }
-        else
-        {
+    $.getJSON(url, {
+        'spec_id': spec_id,
+        'quantity': quantity
+    }, function(data) {
+        if (data.done) {
+            alert('购物车加入成功！');
+        } else {
             alert(data.msg);
         }
     });
 }
 </script>
-
 <!--主体-->
 <div class="jim-main">
     <div class="w1200 clearfix">
-      <!--左侧-->
-    	<div class="left">
-      		<div class="navbar fontsimsun mt20 clearfix">
-              {include file=curlocal.html}
-        			<div class="sreach-data fr">共 <span class="color02">{$goods.goods_list_count}</span>  件宝贝</div>
-      		</div>
-
-      		<div class="shoprec mt10">
-      			 <div class="leftLoop2">
-    				    <div class="hd">
-    				        <a class="next"></a>
-    				        <a class="prev"></a>
-    				    </div>
-    				    <div class="bd">
-    				        <ul class="picList2 clearfix">
-                        <!--{foreach from=$recomd_store item=store name=fe_store}-->
-                        <!-- {if $smarty.foreach.fe_brand.iteration le 10} -->
-    				            <li>
-    				            	<div class="pic"><a href="{url app=store&id=$store.store_id}"><img src="{$store.store_logo|escape}" width="50" height="50" alt="{$store.store_name|escape}" /></a></div>
-    				            	<div class="shoptit"><strong>{$store.store_name|escape|truncate:20}</strong><p> {$store.business_scope|escape|truncate:30}</p></div>
-    				            </li>
-                        <!-- {/if} -->
-                        <!--{/foreach}-->
-    				        </ul>
-    				    </div>
-  				   </div>
-      		</div>
-      		<div class="doyoufind mt10" style="display: none;">
-      			<strong>您是不是要找：</strong><a href="#">苹果4s</a><a href="#">苹果5s</a><a href="#">苹果6</a><a href="#">预定苹果5</a><a href="#">苹果4</a><a href="#">苹果4s</a> 
-      		</div>
-          <div class="select">
-              <strong>按条件筛选</strong>
-              <ul class="condition">
-                <!--{if $by_category.stats}-->
-                  <li class="scate" ectype="ul_cate"><b>{$lang.by_category}:</b>
-                    <!--{foreach from=$by_category.stats item=category name=fe_category}-->
-                    <a href="javascript:void(0);" id="{$category.cate_id}" class='{if $smarty.foreach.fe_category.iteration ge 10}toggle hidden{/if}'>{$category.cate_name|escape}({$category.count})</a>
-                    <!--{/foreach}-->
-                  </li>
-                  <!--{/if}-->
-                <!-- {if $by_brand.stats && !$filters.brand} -->
-                  <li class="scate" ectype="ul_brand"><b>{$lang.by_brand}:</b>
-                    <!--{foreach from=$by_brand.stats item=row name=fe_brand}-->
-                    <a href="javascript:void(0);" title="{$row.brand}" id="{$row.brand|escape:url}" class='{if $smarty.foreach.fe_brand.iteration ge 10}toggle hidden{/if}'>{$row.brand|escape}({$row.count})</a>
-                    <!--{/foreach}-->
-                <!-- {/if} -->
-                
-                <!--{if $by_price.stats && !$filters.price}-->
-                  </li>
-                  <li ectype="ul_price"><b>{$lang.by_price}：</b>
-                    <!--{foreach from=$by_price.stats item=row}-->
-                    <a href="javascript:void(0);" title="{$row.min} - {$row.max}" id="{$row.min} - {$row.max}">{$row.min|price} - {$row.max|price}({$row.count})</a>
-                    <!--{/foreach}-->
-                  </li>
-                  <!--{/if}-->
-
-                <!--{if $by_region.stats && !$filters.region_id}-->
-                  <li class="scate" ectype="ul_region"><b>{$lang.by_region}：</b>
-                      <!--{foreach from=$by_region.stats item=row name=fe_region}-->
-                    <a href="javascript:void(0);" id="{$row.region_id}" title="{$row.region_name}" class="{if $smarty.foreach.fe_region.iteration ge 10}toggle hidden{/if}">{$row.region_name|escape}({$row.count})</a>
-                    <!--{/foreach}-->
-                  </li>
-                <!-- {/if} -->
-                <div class="show-more">
-                  <ins></ins>
-                  <b><span>展开</span>分类<i></i></b>
+        <!--左侧-->
+        <div class="left">
+            <div class="navbar fontsimsun mt20 clearfix">
+                {include file=curlocal.html}
+                <div class="sreach-data fr">共 <span class="color02">{$goods.goods_list_count}</span> 件宝贝</div>
+            </div>
+            <div class="shoprec mt10">
+                <div class="leftLoop2">
+                    <div class="hd">
+                        <a class="next"></a>
+                        <a class="prev"></a>
+                    </div>
+                    <div class="bd">
+                        <ul class="picList2 clearfix">
+                            <!--{foreach from=$recomd_store item=store name=fe_store}-->
+                            <!-- {if $smarty.foreach.fe_brand.iteration le 10} -->
+                            <li>
+                                <div class="pic">
+                                    <a href="{url app=store&id=$store.store_id}"><img src="{$store.store_logo|escape}" width="50" height="50" alt="{$store.store_name|escape}" /></a>
+                                </div>
+                                <div class="shoptit"><strong>{$store.store_name|escape|truncate:20}</strong>
+                                    <p> {$store.business_scope|escape|truncate:30}</p>
+                                </div>
+                            </li>
+                            <!-- {/if} -->
+                            <!--{/foreach}-->
+                        </ul>
+                    </div>
                 </div>
-              </ul>
-              <!--{if $filters}-->
-              <strong>您已选择</strong>
-              <ul class="condition">
-                  <li class="selected-attr"><b>{$lang.by_category}:</b>
-                    <!--{foreach from=$filters item=filter}-->
-                    <a href="javascript:;" id="{$filter.key}" title="点击删除条件"><b>{$filter.name}{$lang.colon}</b>{$filter.value}<span></span></a>
-                    <!--{/foreach}-->
-                  </li>
-              </ul>
-              <!--{/if}-->
-          </div>
+            </div>
+            <div class="doyoufind mt10" style="display: none;">
+                <strong>您是不是要找：</strong><a href="#">苹果4s</a><a href="#">苹果5s</a><a href="#">苹果6</a><a href="#">预定苹果5</a><a href="#">苹果4</a><a href="#">苹果4s</a>
+            </div>
+            <div class="select">
+                <strong>按条件筛选</strong>
+                <ul class="condition">
+                    <!--{if $by_category.stats}-->
+                    <li class="scate" ectype="ul_cate"><b>{$lang.by_category}:</b>
+                        <!--{foreach from=$by_category.stats item=category name=fe_category}-->
+                        <a href="javascript:void(0);" id="{$category.cate_id}" class='{if $smarty.foreach.fe_category.iteration ge 10}toggle hidden{/if}'>{$category.cate_name|escape}({$category.count})</a>
+                        <!--{/foreach}-->
+                    </li>
+                    <!--{/if}-->
+                    <!-- {if $by_brand.stats && !$filters.brand} -->
+                    <li class="scate" ectype="ul_brand"><b>{$lang.by_brand}:</b>
+                        <!--{foreach from=$by_brand.stats item=row name=fe_brand}-->
+                        <a href="javascript:void(0);" title="{$row.brand}" id="{$row.brand|escape:url}" class='{if $smarty.foreach.fe_brand.iteration ge 10}toggle hidden{/if}'>{$row.brand|escape}({$row.count})</a>
+                        <!--{/foreach}-->
+                        <!-- {/if} -->
+                        <!--{if $by_price.stats && !$filters.price}-->
+                    </li>
+                    <li ectype="ul_price"><b>{$lang.by_price}：</b>
+                        <!--{foreach from=$by_price.stats item=row}-->
+                        <a href="javascript:void(0);" title="{$row.min} - {$row.max}" id="{$row.min} - {$row.max}">{$row.min|price} - {$row.max|price}({$row.count})</a>
+                        <!--{/foreach}-->
+                    </li>
+                    <!--{/if}-->
+                    <!--{if $by_region.stats && !$filters.region_id}-->
+                    <li class="scate" ectype="ul_region"><b>{$lang.by_region}：</b>
+                        <!--{foreach from=$by_region.stats item=row name=fe_region}-->
+                        <a href="javascript:void(0);" id="{$row.region_id}" title="{$row.region_name}" class="{if $smarty.foreach.fe_region.iteration ge 10}toggle hidden{/if}">{$row.region_name|escape}({$row.count})</a>
+                        <!--{/foreach}-->
+                    </li>
+                    <!-- {/if} -->
+                    <div class="show-more">
+                        <ins></ins>
+                        <b><span>展开</span>分类<i></i></b>
+                    </div>
+                </ul>
+                <!--{if $filters}-->
+                <strong>您已选择</strong>
+                <ul class="condition">
+                    <li class="selected-attr"><b>{$lang.by_category}:</b>
+                        <!--{foreach from=$filters item=filter}-->
+                        <a href="javascript:;" id="{$filter.key}" title="点击删除条件"><b>{$filter.name}{$lang.colon}</b>{$filter.value}<span></span></a>
+                        <!--{/foreach}-->
+                    </li>
+                </ul>
+                <!--{/if}-->
+            </div>
             <div class="search-type mt10 clearfix">
                 <div class="float-left btn-type" style="margin-bottom: 0px;">
                     <a href="{url app=search}" class="current">搜索商品</a>
@@ -174,92 +170,114 @@ function add_to_cart(spec_id, quantity)
                     <a href="{url app=search&act=groupbuy}">搜索团购</a>
                 </div>
             </div>
-          <!--排序-->
-          <div class="condition-bar">
-              <!--{foreach from=$orders item=order key=k name=fe_order}-->
+            <!--排序-->
+            <div class="condition-bar">
+                <!--{foreach from=$orders item=order key=k name=fe_order}-->
                 <!--{if !$k}-->
                 <a id="{$k}" href="javascript:;" class="con con-on" style="padding-right: 5px;">{$order}</a>
                 <!--{else}-->
                 <a ectype="{$k}" id="{$k}" href="javascript:;" class="con">{$order}<b></b></a>
                 <!--{/if}-->
-              <!--{/foreach}-->
-              <div class="price-area">价格
-                <input type="text" class="con" style="width: 42px;" name="start_price" maxlength="6" value="">
-                <i>-</i>
-                <input type="text" class="con" style="width: 42px;" name="end_price" maxlength="6" value="">
-                <input type="submit" class="con-btn" value="确定" />
-              </div>
-          </div>
-          <!--产品列表-->
-          <!-- {if $goods_list} -->
-          <div class="grid clearfix"> 
-              <!--{foreach from=$goods_list item=goods}-->
-              <div class="product">
-                <a href="{url app=goods&id=$goods.goods_id}" title="" target="_blank">
-                  <img src="{$goods.default_image}" class="product-img" width="223" height="223" alt="">
-                  <div class="price"><strong>{$goods.price|price}</strong><del>{$goods.market_price|price}</del></div>
-                  <h2>{$goods.goods_name|escape}</h2>
-                </a>
-                <ul class="product-info"><a onclick="collect_goods('{$goods.goods_id}')" href="javascript:void(0);"><li><img src="themes/mall/default/styles/default/images/star.png">收藏 <span class="color6f0e0e">({$goods.collects|default:0})</span></li></a><a href="javascript:add_to_cart({$goods.spec_id},1);"><li style="border:none;">加入购物车</li></a></ul>
-              </div>
-              <!--{/foreach}-->
-          </div>
-          <!-- {else} -->
-          <div id="no_results">{$lang.no_records}</div>
-          <!-- {/if} -->
-          <!--产品列表 END-->
-          <!--分页-->
-          {include file=page.bottom.html}
-          <!--分页 END-->
-    	</div>
-      <!--左侧 END-->
-
-      <!--侧边栏-搜索推荐-->
-      <!--{if $statist_views_goods}-->
-    	<div class="side mt10">
-    		<div class="side-tit"><strong>搜索推荐</strong></div>
-    		<div class="side-txt">
-    			<ul class="side-list">
-            <!--{foreach from=$statist_views_goods item=goods name=fe_goods}-->
-           <!--{if $smarty.foreach.fe_goods.index lt 7}-->
-    				<li><a href="{url app=goods&id=$goods.goods_id}" title="" target="_blank"><img src="{$goods.default_image}" width="168" height="168" alt=""></a><h3><a href="{url app=goods&id=$goods.goods_id}">{$goods.goods_name|escape|truncate:58}</a></h3><p><b>{$goods.price|price}</b><del>{$goods.market_price|price}</del></p></li>
-            <!--{/if}-->
-            <!--{/foreach}-->
-    			</ul>
-    		</div>
-    	</div>
-      <!--{/if}-->
-      <!--侧边栏-搜索推荐 END-->
-	  <div class="clr"></div>
-
-      <!--热卖推荐-->
-      <!--{if $statist_sales_goods}-->
-      <div class="mt30" style="border:1px solid #e5e5e5;">        
-        <div class="side-tit"><strong>热卖推荐</strong></div>
-      <ul class="ohterproduct clearfix">
-        <!--{foreach from=$statist_sales_goods item=goods name=fe_goods}-->
-           <!--{if $smarty.foreach.fe_goods.index lt 5}-->
-          <li><a href="{url app=goods&id=$goods.goods_id}" target="_blank"><img src="{$goods.default_image}" width="200" height="200" alt=""><p style="width:200px;text-overflow: ellipsis;white-space:nowrap;overflow:hidden;margin-left: 5px;">{$goods.goods_name|escape}</p></a></li>
-          <!--{/if}-->
-        <!--{/foreach}-->
-      </ul>
-      </div>
-      <!--{/if}-->
-      <!--热卖推荐 END-->
+                <!--{/foreach}-->
+                <div class="price-area">价格
+                    <input type="text" class="con" style="width: 42px;" name="start_price" maxlength="6" value="">
+                    <i>-</i>
+                    <input type="text" class="con" style="width: 42px;" name="end_price" maxlength="6" value="">
+                    <input type="submit" class="con-btn" value="确定" />
+                </div>
+            </div>
+            <!--产品列表-->
+            <!-- {if $goods_list} -->
+            <div class="grid clearfix">
+                <!--{foreach from=$goods_list item=goods}-->
+                <div class="product">
+                    <a href="{url app=goods&id=$goods.goods_id}" title="" target="_blank">
+                        <img src="{$goods.default_image}" class="product-img" width="223" height="223" alt="">
+                        <div class="price"><strong>{$goods.price|price}</strong>
+                            <del>{$goods.market_price|price}</del>
+                        </div>
+                        <h2>{$goods.goods_name|escape}</h2>
+                    </a>
+                    <ul class="product-info">
+                        <a onclick="collect_goods('{$goods.goods_id}')" href="javascript:void(0);">
+                            <li><img src="themes/mall/default/styles/default/images/star.png">收藏 <span class="color6f0e0e">({$goods.collects|default:0})</span></li>
+                        </a>
+                        <a href="javascript:add_to_cart({$goods.spec_id},1);">
+                            <li style="border:none;">加入购物车</li>
+                        </a>
+                    </ul>
+                </div>
+                <!--{/foreach}-->
+            </div>
+            <!-- {else} -->
+            <div id="no_results">{$lang.no_records}</div>
+            <!-- {/if} -->
+            <!--产品列表 END-->
+            <!--分页-->
+            {include file=page.bottom.html}
+            <!--分页 END-->
+        </div>
+        <!--左侧 END-->
+        <!--侧边栏-搜索推荐-->
+        <!--{if $statist_views_goods}-->
+        <div class="side mt10">
+            <div class="side-tit"><strong>搜索推荐</strong></div>
+            <div class="side-txt">
+                <ul class="side-list">
+                    <!--{foreach from=$statist_views_goods item=goods name=fe_goods}-->
+                    <!--{if $smarty.foreach.fe_goods.index lt 7}-->
+                    <li>
+                        <a href="{url app=goods&id=$goods.goods_id}" title="" target="_blank"><img src="{$goods.default_image}" width="168" height="168" alt=""></a>
+                        <h3><a href="{url app=goods&id=$goods.goods_id}">{$goods.goods_name|escape|truncate:58}</a></h3>
+                        <p><b>{$goods.price|price}</b>
+                            <del>{$goods.market_price|price}</del>
+                        </p>
+                    </li>
+                    <!--{/if}-->
+                    <!--{/foreach}-->
+                </ul>
+            </div>
+        </div>
+        <!--{/if}-->
+        <!--侧边栏-搜索推荐 END-->
+        <div class="clr"></div>
+        <!--热卖推荐-->
+        <!--{if $statist_sales_goods}-->
+        <div class="mt30" style="border:1px solid #e5e5e5;">
+            <div class="side-tit"><strong>热卖推荐</strong></div>
+            <ul class="ohterproduct clearfix">
+                <!--{foreach from=$statist_sales_goods item=goods name=fe_goods}-->
+                <!--{if $smarty.foreach.fe_goods.index lt 5}-->
+                <li>
+                    <a href="{url app=goods&id=$goods.goods_id}" target="_blank"><img src="{$goods.default_image}" width="200" height="200" alt="">
+                        <p style="width:200px;text-overflow: ellipsis;white-space:nowrap;overflow:hidden;margin-left: 5px;">{$goods.goods_name|escape}</p>
+                    </a>
+                </li>
+                <!--{/if}-->
+                <!--{/foreach}-->
+            </ul>
+        </div>
+        <!--{/if}-->
+        <!--热卖推荐 END-->
     </div>
 </div>
 <!--主体 END-->
 <!--底部-->
-  {include file=footer.html}
+{include file=footer.html}
 <!--底部 END-->
 </body>
-
 <script src="{lib file=jquery-1.9.1.min.js}"></script>
 <script src="{lib file=jim-focus.js}"></script>
 <script src="{lib file=jq_scroll.js}"></script>
 <script src="{lib file=jquery.SuperSlide.js}"></script>
 <script type="text/javascript">
-jQuery(".leftLoop2").slide({ mainCell:".bd ul",effect:"leftLoop",vis:3,scroll:3,autoPlay:false});
+jQuery(".leftLoop2").slide({
+    mainCell: ".bd ul",
+    effect: "leftLoop",
+    vis: 3,
+    scroll: 3,
+    autoPlay: false
+});
 </script>
 
 </html>

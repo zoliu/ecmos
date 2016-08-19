@@ -123,7 +123,7 @@ class point_goodsModel extends BaseModel
     	$user_info=$user_ext->get('user_id='.$user_id);
     	if($user_info)
     	{
-    		return $user_info['user_point'];
+    		return $user_info['integral'];
     	}
     	return 0;
     }

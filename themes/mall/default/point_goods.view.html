@@ -1,189 +1,52 @@
+
 {include file="header.html"}
-<div class="main">
-    <div class="mainC">
-        <div class="area lheight20 black6 mgt10 mgb10">
-            {include file="curlocal.html"}
-        </div>
-        <div class="maintop">
-            <div class="maintoppic">
-                <img src="{$data.default_image}" />
-            </div>
-            <div class="maintopfont">
-                <div class="details_info">
-                    <p class="titt">{$data.goods_name}</p>
-                    <p>
-                        市场价：
-                        <span>{$data.goods_price}</span> 元
+
+<link href="{res file=css/vip_index.css}" rel="stylesheet" type="text/css">
+<link href="{res file=css/vip_integral.css}" rel="stylesheet" type="text/css">
+<link href="{res file=css/vip_mall.css}" rel="stylesheet" type="text/css">
+
+<div class="content w mb20 mt20">
+
+    {include file="curlocal.html"}
+
+    <div class="choice">
+        <div class="choice_L">
+            <div class="coupon">
+                <h2><a href="index.php?app=point&act=view&id={$data.id}" target="_blank">{$data.goods_name}</a></h2>
+                <p class="coupon_L"><img src="{$data.default_image}" alt="{$data.goods_name}" height="281" width="398"></p>
+                <div class="coupon_R">
+                    {if $data.point_type eq 1}{else}
+                    <p class="price">{$lang.goods_price}{$data.goods_price}&nbsp;元</p>{/if}
+                    <p class="price">{if $data.point_type eq 1}{$lang.donate_need_point}:{else}{$lang.get_need_point}{/if}<span>{$data.need_point}</span>&nbsp;积分</p>
+                    <!--p class="time">有效时间：<span></span></p-->
+                    {if $data.point_type eq 1}
+                    <p class="time"><span>友情提醒:捐赠积分的份数是起始积分的倍数</span></p>{else}
+                    <p class="time">{$lang.stock}<span>{$data.stock}&nbsp;份</span>&nbsp;&nbsp; {if $data.max_num}<span>友情提醒: 该商品一个用户累计兑换数量不得超过{$data.max_num}件</span>{/if}
+                    </p>{/if}
+                    <p class="time"> {if $data.point_type eq 1}{$lang.donate_used_stock}{else}{$lang.used_stock}{/if}<span>{$data.used_stock|modifier:intval}&nbsp;份</span>
                     </p>
-                    <p>
-                        所需积分：
-                        <span class="num">{$data.need_point}</span> 分（剩余{$data.stock|modifier:intval}件）
+                    <p class="time"> {if $data.point_type eq 1}{$lang.donate_desc}{else}{$lang.desc}{/if}<span>{$data.goods_desc}</span>
                     </p>
-                    <p>
-                        {$lang.stock}：
-                        <span class="blue">{$data.stock|modifier:intval}</span>
-                        <p>{$lang.used_stock}{$data.used_stock|modifier:intval}&nbsp;份</p>
-                        <p class="btnbox">
-                            <form name="dpfrmnew" id="dpfrmnew_b" action="index.php" method="get">
+                    <div class="want">
+                        <form name="dpfrmnew" id="dpfrmnew_b" action="index.php" method="get">
+                            <div>
                                 <input type="hidden" name="app" value="point">
                                 <input type="hidden" name="act" value="buy">
                                 <input type="hidden" name="id" value="{$data.id}">
-                                <input name="prizenum" value="1" type="text" style="width: 50px;height: 33px;">
-                                <input type="button" class="btn_red" id="btnSubmit" value="立即兑换">
-                                <span class="btnlogin">
-                                {if !$userinfo}
-                                请先 <a href="{url app=member&act=login}" ><font class="orange">登录</font></a>
-                                ，然后再进行兑换！
-                                {else}
-                                用户名:{$userinfo.user_name}&nbsp;&nbsp;
-                                可用积分:{$userinfo.user_point}
-                                {/if}
-                            </span>
-                            </form>
-                            <script>
-                            $(document).ready(function() {
-                                $("#btnSubmit").click(function(event) {
-                                    /* Act on the event */
-                                    if (confirm('是否确定兑换？')) {
-                                        $("#dpfrmnew_b").submit();
-                                    }
-                                });
-                            });
-                            </script>
-                        </p>
-                </div>
-                <div class="xh_boxinfo">
-                    <p class="font_bold">提示：</p>
-                    <p>
-                        {if $data.max_num}该商品一个用户累计兑换数量不得超过{$data.max_num}件{/if}
-                        <br/>
-                    </p>
+                                <p><span>{if $data.point_type eq 1}我要捐赠：{else}我要兑换：{/if}</span>
+                                    <input name="prizenum" value="1" type="text"><span>份</span></p>
+                                <p><a style="cursor: pointer;" onclick="document.getElementById('dpfrmnew_b').submit()">{if $data.point_type eq 1}点击捐赠{else}点击兑换{/if}</a></p>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="leftBA">
-            <div class="tita">热门兑换</div>
-            <!--{foreach from=$hot_list item=hot}-->
-            <div class="rmdh">
-                <img src="{$hot.default_image}" />
-                <div class="deta">{$hot.goods_name}</div>
-                <font class="orange">{$hot.need_point}积分</font>
-            </div>
-            <!--{/foreach}-->
-        </div>
-        <div class="rightBA">
-            <div class="modeA">
-                <div class="titB">礼品详情</div>
-                <div class="conB">
+            <div class="commodity">
+                <h2>{if $data.point_type eq 1}捐赠详情{else}商品详情{/if}</h2>
+                <div>
                     {$data.goods_content}
                 </div>
             </div>
-            <div class="modeA">
-                <div class="titB">注意事项</div>
-                <div class="conB">
-                    {$data.goods_desc}
-                </div>
-            </div>
-            <div class="modeA">
-                <div class="titB">兑换记录</div>
-                <ul>
-                    <!--{foreach from=$change_list item=change}-->
-                    <li>
-                        <span>{$change.addtime|date:Y-m-d H:i:s} 兑换</span> {$change.user_name}({$change.goods_name})
-                    </li>
-                    <!--{/foreach}-->
-                </ul>
-            </div>
-        </div>
-        <div class="gifts">
-            <div class="giftsT integralT">
-                <h2>
-                        <span></span>
-                        <a name="integrals" id="integrals"></a>
-                        可获积分区
-                    </h2>
-                <a href="getscore.htm" target="_blank">查看所有积分规则</a>
-            </div>
-            <dl class="integral">
-                <dt>
-                    <a href="mstmap50007/g_bus_all.jsp?g_mapid=21" target="_blank">
-                        <img src="http://img3.ddmapimg.com/topic/1375199090006.gif" width="90" height="90" />
-                    </a>
-                </dt>
-                <dd>
-                    <a href="mstmap50007/g_bus_all.jsp?g_mapid=21" target="_blank">线路投票</a>
-                </dd>
-            </dl>
-            <dl class="integral">
-                <dt>
-                    <a href="mstmap50007/g_bus_all.jsp?g_mapid=21" target="_blank">
-                        <img src="http://img1.ddmapimg.com/topic/1375199182025.gif" width="90" height="90" />
-                    </a>
-                </dt>
-                <dd>
-                    <a href="mstmap50007/g_bus_all.jsp?g_mapid=21" target="_blank">线路评论</a>
-                </dd>
-            </dl>
-            <dl class="integral">
-                <dt>
-                    <a href="map/21--------/" target="_blank">
-                        <img src="http://img1.ddmapimg.com/topic/1375199228153.gif" width="90" height="90" />
-                    </a>
-                </dt>
-                <dd>
-                    <a href="map/21--------/" target="_blank">领取签证</a>
-                </dd>
-            </dl>
-            <dl class="integral">
-                <dt>
-                    <a href="mstmap50007/operation/index.jsp" target="_blank">
-                        <img src="http://img1.ddmapimg.com/topic/1375199249866.gif" width="90" height="90" />
-                    </a>
-                </dt>
-                <dd>
-                    <a href="mstmap50007/operation/index.jsp" target="_blank">商户点评</a>
-                </dd>
-            </dl>
-            <dl class="integral">
-                <dt>
-                    <a href="http://c.ddmap.com/" target="_blank">
-                        <img src="http://img3.ddmapimg.com/topic/1375199271586.gif" width="90" height="90" />
-                    </a>
-                </dt>
-                <dd>
-                    <a href="http://c.ddmap.com/" target="_blank">发布帖子</a>
-                </dd>
-            </dl>
-            <dl class="integral">
-                <dt>
-                    <a href="http://c.ddmap.com/" target="_blank">
-                        <img src="http://img3.ddmapimg.com/topic/1375199292689.gif" width="90" height="90" />
-                    </a>
-                </dt>
-                <dd>
-                    <a href="http://c.ddmap.com/" target="_blank">回复帖子</a>
-                </dd>
-            </dl>
-            <dl class="integral">
-                <dt>
-                    <a href="bdlist/21" target="_blank">
-                        <img src="http://img1.ddmapimg.com/topic/1375199320953.gif" width="90" height="90" />
-                    </a>
-                </dt>
-                <dd>
-                    <a href="bdlist/21" target="_blank">发表榜单</a>
-                </dd>
-            </dl>
-            <dl class="integral">
-                <dt>
-                    <a href="http://c.ddmap.com/groupactivity/21" target="_blank">
-                        <img src="http://img4.ddmapimg.com/topic/1375199345014.gif" width="90" height="90" />
-                    </a>
-                </dt>
-                <dd>
-                    <a href="http://c.ddmap.com/groupactivity/21" target="_blank">参加活动</a>
-                </dd>
-            </dl>
         </div>
     </div>
 </div>

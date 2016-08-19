@@ -178,7 +178,7 @@ class pointApp extends MallbaseApp
         $user_id=isset($this->visitor) && $this->visitor->get('user_id')? $this->visitor->get('user_id'):0;
         if(!$user_id)
         {   
-             $this->show_warning('login_please');
+             $this->show_warning('login_please', '前往登录', 'index.php?app=member&act=login');
              return;
         }
         $num=isset($_GET['prizenum'])?intval($_GET['prizenum']):0;
@@ -213,6 +213,6 @@ class pointApp extends MallbaseApp
             return;
         }
 
-        $this->show_message('success','index.php?app=point_logs&act=point_goods');
+        $this->show_message('success', '返回', 'index.php?app=point_logs&act=point_goods');
     }
 }
