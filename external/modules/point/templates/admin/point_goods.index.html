@@ -53,7 +53,7 @@
             <td class="firstCell">
                 <input value="{$point_goods.id}" class='checkitem' type="checkbox" />
             </td>
-            <td align="left">{if $point_goods.default_image }<img src='{$point_goods.default_image}' width=120 height=75 />{/if}&nbsp;</td>
+            <td align="left">{if $point_goods.default_image }<img src='/{$point_goods.default_image}' width=120 height=75 />{/if}&nbsp;</td>
             <td align="left">{$point_goods.goods_name}</td>
             <td align="left">{$point_goods.goods_price}</td>
             <td align="left">{$point_goods.stock|modifier:intval}</td>

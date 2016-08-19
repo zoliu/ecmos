@@ -5,7 +5,7 @@
  */
 
 /* 下面的代码不是必需的，只是作为示例 */
-$db=&db();
+/*$db=&db();
 $db->query("DROP TABLE IF EXISTS `".DB_PREFIX."point_set`;");
 $db->query("CREATE TABLE  `".DB_PREFIX."point_set` (
 `id` INT NOT NULL AUTO_INCREMENT ,
@@ -25,7 +25,7 @@ $db->query("CREATE TABLE  `".DB_PREFIX."point_logs` (
 `type` char(20) ,
 PRIMARY KEY (  `id` )
 ) ENGINE = MYISAM ;
-");
+");*/
 include("fileAssign.php");
 install(ROOT_PATH.'/external/modules/point/source/');
 
