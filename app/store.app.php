@@ -20,6 +20,11 @@ class StoreApp extends StorebaseApp
         print_r($store);
         print_r('</pre>');*/
 
+        //360cd.cn born statics
+        $statics_model=&m('statics');
+        $statics_model->update($id,'visits',1);
+        //360cd.cn
+
         /* 取得友情链接 */
         $this->assign('partners', $this->_get_partners($id));
 
@@ -67,6 +72,11 @@ class StoreApp extends StorebaseApp
         $this->set_store($id);
         $store = $this->get_store_data();
         $this->assign('store', $store);
+
+        //360cd.cn born statics
+        $statics_model=&m('statics');
+        $statics_model->update($id,'visits',1);
+        //360cd.cn
 
         /* 搜索到的商品 */
         $this->_assign_searched_goods($id);

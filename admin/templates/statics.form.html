@@ -1,0 +1,253 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function(){
+    $('#statics_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('right').text('OK!');
+        },
+        onkeyup    : false,
+        rules : {
+            sort_order : {
+                number   : true
+            }
+        },
+        messages : {
+            
+            sort_order  : {
+                number   : '{$lang.number_only}'
+            }
+        }
+    });
+});
+</script>
+<div id="rightTop">
+    <p>{$lang.statics}</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?app=statics">{$lang.manage}</a></li>
+        {if $statics.id}
+        <li><a class="btn1" href="index.php?app=statics&amp;act=add">{$lang.add}</a></li>
+        {else}
+        <li><span>{$lang.add}</span></li>
+        {/if}
+    </ul>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data" id="statics_form">
+        <table class="infoTable">
+                                                                 
+             <tr>
+                <th class="paddingT15">
+                    {$lang.store_id}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                        <input class="infoTableInput2" id="store_id" type="text" name="store_id" value="{$statics.store_id|escape}" />
+                        <label class="field_notice">{$lang.store_id}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                    
+             <tr>
+                <th class="paddingT15">
+                    {$lang.store_name}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                        <input class="infoTableInput2" id="store_name" type="text" name="store_name" value="{$statics.store_name|escape}" />
+                        <label class="field_notice">{$lang.store_name}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                    
+             <tr>
+                <th class="paddingT15">
+                    {$lang.sumdate}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                        <input class="infoTableInput2" id="sumdate" type="text" name="sumdate" value="{$statics.sumdate|escape}" />
+                        <label class="field_notice">{$lang.sumdate}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                    
+             <tr>
+                <th class="paddingT15">
+                    {$lang.stype}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                      <select name="stype">
+                          <option value="0">{$lang.select_pls}</option>
+                          {html_options options=$options.stype selected=$statics.stype}                          
+                      </select>
+                      <label class="field_notice">{$lang.stype}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                    
+             <tr>
+                <th class="paddingT15">
+                    {$lang.sales}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                        <input class="infoTableInput2" id="sales" type="text" name="sales" value="{$statics.sales|escape}" />
+                        <label class="field_notice">{$lang.sales}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                    
+             <tr>
+                <th class="paddingT15">
+                    {$lang.collects}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                        <input class="infoTableInput2" id="collects" type="text" name="collects" value="{$statics.collects|escape}" />
+                        <label class="field_notice">{$lang.collects}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                    
+             <tr>
+                <th class="paddingT15">
+                    {$lang.carts}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                        <input class="infoTableInput2" id="carts" type="text" name="carts" value="{$statics.carts|escape}" />
+                        <label class="field_notice">{$lang.carts}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                    
+             <tr>
+                <th class="paddingT15">
+                    {$lang.visits}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                        <input class="infoTableInput2" id="visits" type="text" name="visits" value="{$statics.visits|escape}" />
+                        <label class="field_notice">{$lang.visits}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                    
+             <tr>
+                <th class="paddingT15">
+                    {$lang.cancels}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                        <input class="infoTableInput2" id="cancels" type="text" name="cancels" value="{$statics.cancels|escape}" />
+                        <label class="field_notice">{$lang.cancels}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                    
+             <tr>
+                <th class="paddingT15">
+                    {$lang.comments}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                        <input class="infoTableInput2" id="comments" type="text" name="comments" value="{$statics.comments|escape}" />
+                        <label class="field_notice">{$lang.comments}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                    
+             <tr>
+                <th class="paddingT15">
+                    {$lang.goodcomments}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                        <input class="infoTableInput2" id="goodcomments" type="text" name="goodcomments" value="{$statics.goodcomments|escape}" />
+                        <label class="field_notice">{$lang.goodcomments}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                    
+             <tr>
+                <th class="paddingT15">
+                    {$lang.normalcomments}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                        <input class="infoTableInput2" id="normalcomments" type="text" name="normalcomments" value="{$statics.normalcomments|escape}" />
+                        <label class="field_notice">{$lang.normalcomments}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                    
+             <tr>
+                <th class="paddingT15">
+                    {$lang.badcomments}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                        <input class="infoTableInput2" id="badcomments" type="text" name="badcomments" value="{$statics.badcomments|escape}" />
+                        <label class="field_notice">{$lang.badcomments}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                    
+             <tr>
+                <th class="paddingT15">
+                    {$lang.refunds}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                        <input class="infoTableInput2" id="refunds" type="text" name="refunds" value="{$statics.refunds|escape}" />
+                        <label class="field_notice">{$lang.refunds}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                    
+             <tr>
+                <th class="paddingT15">
+                    {$lang.moneys}:</th>
+                <td class="paddingT15 wordSpacing5">
+             
+                        <input class="infoTableInput2" id="moneys" type="text" name="moneys" value="{$statics.moneys|escape}" />
+                        <label class="field_notice">{$lang.moneys}</label>
+
+                                      
+                </td>
+            </tr>
+
+                                                                                       
+
+            <tr>
+            <th></th>
+            <td class="ptb20">
+                <input class="formbtn" type="submit" name="Submit"style="cursor: pointer;" value="{$lang.submit}" />
+                <input class="formbtn" type="reset" name="Submit2"style="cursor: pointer;" value="{$lang.reset}" />
+            </td>
+        </tr>
+        </table>
+    </form>
+</div>
+
+{include file="footer.html"}

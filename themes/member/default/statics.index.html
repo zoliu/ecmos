@@ -1,0 +1,107 @@
+{include file=member.header.html}
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <div class="public table">
+                <div class="mrightTop">
+                    <div class="fontl">
+                        {if !$noshow}
+                        <form method="get">
+                            <div style="float: left;">
+                                <input type="hidden" name="app" value="statics" />
+                                <input type="hidden" name="act" value="index" /> {$lang.stype}:
+                                <select class="querySelect" name="stype">
+                                    <option value="-1">{$lang.select_pls}</option>
+                                    {html_options options=$options.stype selected=$query.stype}
+                                </select>
+                                <input type="submit" class="formbtn" style="cursor: pointer;" value="{$lang.search}" />
+                            </div>
+                            <!--{if $filtered}-->
+                            <a class="formbtn1" href="index.php?app=statics">{$lang.cancel_query}</a>
+                            <!--{/if}-->
+                            <span></span>
+                        </form>
+                        {/if}
+                    </div>
+                </div>
+                <table class="table_head_line">
+                    <!--{if $statics_list}-->
+                    <tr class="line_bold">
+                        <th class="width1">
+                        </th>
+                        <th class="align1" colspan="14">
+                        </th>
+                    </tr>
+                    <tr class="gray">
+                        <td align="left" class="align1" width="300">{$lang.sumdate}</td>
+                        <td align="left" class="align1" width="100">{$lang.stype}</td>
+                        <td align="left" class="align1" width="100">{$lang.sales}</td>
+                        <td align="left" class="align1" width="100">{$lang.collects}</td>
+                        <td align="left" class="align1" width="100">{$lang.carts}</td>
+                        <td align="left" class="align1" width="80">{$lang.visits}</td>
+                        <td align="left" class="align1" width="80">{$lang.cancels}</td>
+                        <td align="left" class="align1" width="80">{$lang.comments}</td>
+                        <td align="left" class="align1" width="80">{$lang.goodcomments}</td>
+                        <td align="left" class="align1" width="80">{$lang.normalcomments}</td>
+                        <td align="left" class="align1" width="80">{$lang.badcomments}</td>
+                        <td align="left" class="align1" width="80">{$lang.refunds}</td>
+                        <td align="left" class="align1" width="80">{$lang.moneys}</td>
+                    </tr>
+                    <!--{/if}-->
+                    <!-- {foreach from=$statics_list item=statics name=v} -->
+                    <!--{if $smarty.foreach.v.last}-->
+                    <tr class="line_bold">
+                        <!--{else}-->
+                        <tr class="line">
+                            <!--{/if}-->
+                            <td align="left">{$statics.sumdate|modifier:sumdate}</td>
+                            <td align="left">{$options.stype[$statics.stype]}</td>
+                            <td align="left">{$statics.sales}</td>
+                            <td align="left">{$statics.collects}</td>
+                            <td align="left">{$statics.carts}</td>
+                            <td align="left">{$statics.visits}</td>
+                            <td align="left">{$statics.cancels}</td>
+                            <td align="left">{$statics.comments}</td>
+                            <td align="left">{$statics.goodcomments}</td>
+                            <td align="left">{$statics.normalcomments}</td>
+                            <td align="left">{$statics.badcomments}</td>
+                            <td align="left">{$statics.refunds}</td>
+                            <td align="left">{$statics.moneys}</td>
+                            </td>
+                        </tr>
+                        <!-- {foreachelse} -->
+                        <tr>
+                            <td colspan="5" class="member_no_records padding6">{$lang.no_records}</td>
+                        </tr>
+                        <!--{/foreach}-->
+                        <!--{if $statics_list}-->
+                        <tr>
+                            <th align=left>
+                                <a href="{url app=statics&act=export&stype=$smarty.get.stype}">导出</a>
+                            </th>
+                            <th colspan="14">
+                                <p class="position1">
+                                </p>
+                                <p class="position2">{include file=member.page.bottom.html}</p>
+                            </th>
+                        </tr>
+                        <!--{/if}-->
+                </table>
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+        <iframe name="pop_warning" style="display:none"></iframe>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+</div>
+{include file=footer.html}

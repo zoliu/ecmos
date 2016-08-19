@@ -924,6 +924,12 @@ class MemberbaseApp extends MallbaseApp {
 				'name' => 'discus',
 				'icon' => 'ico18' 
 			);
+			$menu['im_seller']['submenu']['statics'] = array(
+                'text' => Lang::get('statics_details') ,
+                'url' => 'index.php?app=statics',
+                'name' => 'statics',
+                'icon' => 'ico18',
+            );
 		}
 		
 		return $menu;

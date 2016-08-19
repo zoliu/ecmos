@@ -281,6 +281,11 @@ class GoodsApp extends StorebaseApp
         $this->assign('sales_info', sprintf(LANG::get('sales'), $goods['sales'] ? $goods['sales'] : 0));
         $this->assign('comments', sprintf(LANG::get('comments'), $goods['comments'] ? $goods['comments'] : 0));
 
+        //360cd.cn born statics
+        $statics_model=&m('statics');
+        $statics_model->update($data['store_data']['store_id'],'visits',1);
+        //360cd.cn
+
         /* 店铺信息 */
         $this->assign('store', $data['store_data']);
 
