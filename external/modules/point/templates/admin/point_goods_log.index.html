@@ -1,0 +1,77 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>积分商品</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?module=point&act=point_goods">{$lang.point_goods}</a></li>
+        <li><span>{$lang.point_goods_log}</span></li>
+        <li><a class="btn1" href="index.php?module=point">{$lang.point_logs}</a></li>
+        <li><a class="btn1" href="index.php?module=point&act=point_set">{$lang.point_set}</a></li>
+        <li><a class="btn1" href="index.php?module=member_ext">{$lang.member_ext}</a></li>
+    </ul>
+</div>
+<div class="mrightTop">
+    <div class="fontl">
+        <form method="get">
+            <div class="left">
+                <input type="hidden" name="module" value="point" />
+                <input type="hidden" name="act" value="point_goods_log" /> {$lang.user_name}:
+                <input class="queryInput" type="text" name="user_name" value="{$query.user_name|escape}" /> {$lang.goods_name}:
+                <input class="queryInput" type="text" name="goods_name" value="{$query.goods_name|escape}" /> {$lang.type}:
+                <select class="querySelect" name="point_type">
+                    <option value="">{$lang.select_pls}</option>
+                    {html_options options=$options_type selected=$smarty.get.point_type}
+                </select>
+                <input type="submit" class="formbtn" value="{$lang.query}" />
+            </div>
+            <!--{if $filtered}-->
+            <a class="left formbtn1" href="index.php?module=point&act=index">{$lang.cancel_query}</a>
+            <!--{/if}-->
+        </form>
+    </div>
+    <div class="fontr"> {if $data}{include file=page.top.html}{/if} </div>
+</div>
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!--{if $data}-->
+        <tr class="tatr1">
+            <td width="20" class="firstCell">
+                <input type="checkbox" class="checkall" />
+            </td>
+            <td align='left'>{$lang.user_name}</td>
+            <td align='left'>{$lang.goods_name}</td>
+            <td align='left'>{$lang.addtime}</td>
+            <td align='left'>{$lang.type}</td>
+            <td align='left'>{$lang.goods_num}</td>
+            <td align='left'>{$lang.sell_point}</td>
+            <td class="handler" width=180>{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$data item=items}-->
+        <tr class="tatr2">
+            <td class="firstCell">
+                <input value="{$items.id}" class='checkitem' type="checkbox" />
+            </td>
+            <td align='left'>{$items.user_name}</td>
+            <td align='left'>{$items.goods_name}</td>
+            <td align='left'>{$items.addtime|date:Y-m-d H:i:s}</td>
+            <td align='left'>{$options_type[$items.status]}
+            </td>
+            <td align='left'>{$items.goods_num}</td>
+            <td align='left'>{$items.total_point}</td>
+            <td class="handler"><a name="drop" href="javascript:drop_confirm('{$lang.status_confirm}', 'index.php?module=point&amp;act=apply_point_goods&amp;id={$items.id}&status={$items.status}');">{if $items.status eq 'applying'}{$lang.passport}{else}{$lang.cancel}{/if}</a> | <a href="index.php?module=point&amp;act=view_log&amp;id={$items.id}&user_id={$items.user_id}">{$lang.view}</a> </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="10">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <!--{if $data}-->
+    <div id="dataFuncs">
+        <div id="batchAction" class="left paddingT15"> &nbsp;&nbsp;
+        </div>
+        <!--{/if}-->
+        <div class="pageLinks">{if $data} {include file=page.bottom.html} {/if} </div>
+        <div class="clear"></div>
+    </div>
+    {include file="footer.html"}

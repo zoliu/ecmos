@@ -1,0 +1,88 @@
+{include file=member.header.html}
+
+<script type="text/javascript">
+$(function() {
+    $('#add_time_from').datepicker({
+        dateFormat: 'yy-mm-dd'
+    });
+    $('#add_time_to').datepicker({
+        dateFormat: 'yy-mm-dd'
+    });
+});
+</script>
+
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <div class="public table">
+                <div class="user_search">
+                    <form method="get">
+                        <span>{$lang.time}: </span>
+                        <input type="text" class="text1 width2" name="add_time_from" id="add_time_from" value="{$query.add_time_from}" /> &#8211;
+                        <input type="text" class="text1 width2" name="add_time_to" id="add_time_to" value="{$query.add_time_to}" />
+
+                        <span>商品名称: </span>
+                        <input class="queryInput" type="text" name="goods_name" value="{$query.goods_name|escape}" />
+                        
+                        <span>类型: </span>
+                        <select class="querySelect" name="point_type">
+                            <option value="">{$lang.select_pls}</option>
+                            {html_options options=$options_type selected=$smarty.get.point_type}
+                        </select>
+
+                        <input type="hidden" name="app" value="point_logs" />
+                        <input type="hidden" name="act" value="point_goods" />
+
+                        <input type="submit" class="btn" value="{$lang.so_so}" />
+                        <!--{if $query.add_time_from or $query.add_time_to }-->
+                        <a class="detlink float_right" href="{url app=point_logs&act=index}">{$lang.cancel_query}</a>
+                        <!--{/if}-->
+                    </form>
+                </div>
+                <table>
+                    <!--{if $data}-->
+                    <tr class="line gray">
+                        <th>图片</th>
+                        <th>商品名称</th>
+                        <th>时间</th>
+                        <th>类型</th>
+                        <th>数量</th>
+                        <th>积分</th>
+                    </tr>
+                    <!--{/if}-->
+
+                    <!--{foreach from=$data item=val name=v}-->
+                    <tr class="line_bold">
+                        <td><img src="{$val.default_image}" width=100 height=100 /></td>
+                        <td>{$val.goods_name}</td>
+                        <td>{$val.addtime|date:Y-m-d H:i:s}</td>
+                        <td>{$options_type[$val.status]}</td>
+                        <td>{$val.goods_num}</td>
+                        <td>{$val.total_point}</td>
+                    </tr>
+                    <!--{foreachelse}-->
+                    <tr>
+                        <td colspan="5" class="member_no_records padding6">{$lang.$smarty.get.act}{$lang.no_records}</td>
+                    </tr>
+                    <!--{/foreach}-->
+
+                </table>
+                {include file="member.page.bottom.html"}
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>
+<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0">
+</iframe>
+{include file=footer.html}

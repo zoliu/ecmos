@@ -414,6 +414,8 @@ return array(
 	//---www.360cd.cn  Mosquito---
 	'my_money' => '钱包中心',
     'my_child' => '下级管理',
+
+    'statics_details' => '全统计',
 );
 
 ?>

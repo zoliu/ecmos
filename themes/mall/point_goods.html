@@ -1,0 +1,544 @@
+{include file="header.html"}
+<div class="main">
+	<div class="mainC">
+		<div class="content">
+			<!--焦点图-->
+			<div class="focusL">
+				<ul class="focus" id="show_pic" style="left:0;">
+					<li>
+						<a href="scoreshow.htm" target="_blank">
+							<img src="http://img2.ddmapimg.com/topic/1377506406598.gif}" width="708" height="288"/>
+						</a>
+					</li>
+					<li>
+						<a href="mstmap50007/ddmall/prize_detail.jsp?prizeid=404" target="_blank">
+							<img src="http://img4.ddmapimg.com/topic/1389000005093.gif}" width="708" height="288"/>
+						</a>
+					</li>
+					<li>
+						<a href="mstmap50007/ddmall/prize_detail.jsp?prizeid=402" target="_blank">
+							<img src="http://img1.ddmapimg.com/topic/1388999978962.gif}" width="708" height="288"/>
+						</a>
+					</li>
+					<li>
+						<a href="mstmap50007/ddmall/prize_detail.jsp?prizeid=404" target="_blank">
+							<img src="http://img4.ddmapimg.com/topic/1389000005093.gif}" width="708" height="288"/>
+						</a>
+					</li>
+					<li>
+						<a href="scoreshow.htm" target="_blank">
+							<img src="http://img3.ddmapimg.com/topic/1389000031114.gif}" width="708" height="288"/>
+						</a>
+					</li>
+				</ul>
+				<ul class="btn" id="top_btn">
+					<li class="active"></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li style="width:10px;margin-right:0;"></li>
+				</ul>
+			</div>
+			<!--右侧登录信息-->
+			<div class="rightbar">
+				<div class="loginnew">
+					<div class="loginnewT">
+						优课网积分商城登陆
+						<div>
+							<span class="loin">
+								<a href="{url app=member&act=login}">登录</a>
+							</span>
+							<span class="lore">
+								<a href="{url app=member&act=register}">免费注册</a>
+							</span>
+						</div>
+					</div>
+					登陆后，可查看您的积分余额，用积分兑换商品，参与抽奖。
+				</div>
+			</div>
+			<div class="helpR">
+				<ul>
+					<li class="helpR1">
+						<a href="getscore.htm" target="_blank"></a>
+						如何获得积分
+					</li>
+					<li class="helpR2">
+						<a href="getscore.htm" target="_blank"></a>
+						如何获得金币
+					</li>
+					<li class="helpR3">
+						<a href="getscore.htm" target="_blank"></a>
+						如何兑换礼品
+					</li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+
+			<!---积分商城奖品部分-->
+			<div class="gifts" id="prize_list">
+				<a name="gifts" id="gifts"></a>
+				<a name="gifts" id="gifts"></a>
+				<div class="giftsT">
+					<h2>
+						<span></span>
+						超值礼品
+					</h2>
+				</div>
+		
+			<!--{foreach from=$data item=d}-->
+				<div class="giftsL">
+					<dl>
+						<dt>
+							<a href="index.php?app=point&act=view&id={$d.id}" target="_blank" rel="nofollow">{$d.goods_name}</a>
+						</dt>
+
+						<dd>
+							<a href="index.php?app=point&act=view&id={$d.id}" target="_blank" rel="nofollow">
+								<img src="{$d.default_image}" width="223" height="149"/>
+							</a>
+						</dd>
+					</dl>
+					<ul class="giftsJf">
+						<li class="jf"> <strong>{$d.need_point}</strong>
+							积分
+						</li>
+						<li>
+							<img src="{res file=images/icon_or.gif}" width="26" height="26"/>
+						</li>
+						<!--<li class="jb"> <strong>5</strong>
+							金币
+						</li>-->
+					</ul>
+					<p class="giftsJf_h">
+						<a href="index.php?app=point&act=view&id={$d.id}" target="_blank" rel="nofollow">
+							<img src="{res file=images/ljdh.gif}" width="83" height="20"/>
+						</a>
+					</p>
+				</div>
+
+	<!--{/foreach}-->
+
+		
+				
+
+	<script type="text/javascript"> 
+	 $(function(){
+	   
+	   $(".giftsL,.v_shopsL").mouseover(function(){
+		  $(this).find(".giftsJf_h").show(); 
+		 }).mouseout(function(){	
+		 $(this).find(".giftsJf_h").hide();
+		 });
+	
+	});
+	
+	//加载奖品列表
+	function loadPrizeList(g_type) {
+		if(g_type==0){
+			$('#loginY21').html("<a href='javascript:void(0);' onClick='loadPrizeList(1);' rel='nofollow'><img src='{res file=images/vip_khlpV2.gif}' width='118' height='42'/></a><a href='vip/getcoin' target='_blank' rel='nofollow'><img src='{res file=images/vip_dhjb.gif}' width='108' height='42'/></a>");
+		}else if(g_type==1){
+			$('#loginY21').html("<a href='javascript:void(0);' onClick='loadPrizeList(0);' rel='nofollow'><img src='{res file=images/vip_khlp.gif}' width='118' height='42'/></a><a href='vip/getcoin' target='_blank' rel='nofollow'><img src='{res file=images/vip_dhjb.gif}' width='108' height='42'/></a>");
+		}
+		var url = "/mstmap50007/ddmall/ajax_prize_list.jsp?g_type="+g_type;
+		$.ajax({
+			type: "POST",
+			url: url,
+			dataType: "html",
+			success: function(msg) {
+				$('#prize_list').html(msg);
+			}
+		});
+	}
+
+</script>
+
+			</div>
+
+			<!--积分动态-->
+			<div class="vip_score">
+				<marquee align="left" behavior="scroll" direction="up" loop="-1" onMouseOut="this.start()" onMouseOver="this.stop()" scrollamount="1" scrolldelay="0" height="45" vspace="0" >
+					<ul>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+						<li>
+							<span class="black3">钟雯668</span>
+							兑换了春节限定Rody小马随机摆件
+						</li>
+					</ul>
+				</marquee>
+			</div>
+			<!--积分动态-->
+
+			<!--cpacps产品展示-->
+			<div class="v_shops" id="shop_list">
+				<a name="v_shops" id="v_shops"></a>
+				<a name="v_shops" id="v_shops"></a>
+				<div class="v_shopsT">
+					<h2>
+						<span class="czsp"></span>
+						超值商品
+					</h2>
+					<p>
+						共 <em>909</em>
+						个商品
+					</p>
+					<div class="v_shopsTr">
+						<select id="strType">
+							<option>选择分类</option>
+							<option value="1"  >母婴</option>
+							<option value="2"  >医疗健康</option>
+							<option value="3"  >汽车服务</option>
+							<option value="4"  >教育培训</option>
+						</select>
+						<select id="strOrder">
+							<option>选择排序方式</option>
+							<option value="1" >按价格从高到低</option>
+							<option value="2" >按价格从低到高</option>
+							<option value="3" >按返金币从多到少</option>
+							<option value="4" >按返金币从少到多</option>
+						</select>
+						<input type="button" onClick="loadShopList(1);"/>
+					</div>
+				</div>
+						<!--{foreach from=$data item=d}-->
+				<div class="giftsL">
+					<dl>
+						<dt>
+							<a href="index.php?app=point&act=view&id={$d.id}" target="_blank" rel="nofollow">{$d.goods_name}</a>
+						</dt>
+
+						<dd>
+							<a href="index.php?app=point&act=view&id={$d.id}" target="_blank" rel="nofollow">
+								<img src="{$d.default_image}" width="223" height="149"/>
+							</a>
+						</dd>
+					</dl>
+					<ul class="giftsJf">
+						<li class="jf"> <strong>{$d.need_point}</strong>
+							积分
+						</li>
+						<li>
+							<img src="{res file=images/icon_or.gif}" width="26" height="26"/>
+						</li>
+						<!--<li class="jb"> <strong>5</strong>
+							金币
+						</li>-->
+					</ul>
+					<p class="giftsJf_h">
+						<a href="index.php?app=point&act=view&id={$d.id}" target="_blank" rel="nofollow">
+							<img src="{res file=images/ljdh.gif}" width="83" height="20"/>
+						</a>
+					</p>
+				</div>
+
+	<!--{/foreach}-->
+
+				<div class="clear"></div>
+
+				<!--更多-->
+				<div class="more_shops" id="more_shops1" onClick="loadShopListMore(2,'1');">
+					<span>点击查看更多</span>
+					<img src="{res file=images/more_arrow.gif}" width="11" height="6" />
+				</div>
+				<div class="more_shops" id="more_loading" style="display:none;">
+					<span>Loading...</span>
+					<img src="{res file=images/more_arrow.gif}" width="11" height="6" />
+				</div>
+				<script type="text/javascript">
+	 $(function(){
+		/*
+		 $(".more_shops").toggle( 
+		  function(){
+			$('.more_list').show();  
+			$('.more_shops img').attr('src','styles/default/images/more_arrowU.gif}'); 
+			$('.more_shops span').html("点击隐藏更多");
+		 
+		 },
+		 function(){
+			$('.more_list').hide();  
+			$('.more_shops img').attr('src','styles/default/images/more_arrow.gif}');
+			$('.more_shops span').html("点击查看更多");
+			 
+		 }
+		)
+	   */
+	   
+	   $(".giftsL,.v_shopsL").mouseover(function(){
+		  $(this).find(".giftsJf_h").show(); 
+		 }).mouseout(function(){	
+		 $(this).find(".giftsJf_h").hide();
+		 });
+	
+	});
+	//加载商品列表
+	function loadShopList(strCurPage) {
+		var strType = $('#strType').val();
+		var strOrder = $('#strOrder').val();
+		var url = "/mstmap50007/ddmall/ajax_shop_list.jsp?strType="+strType+"&strOrder="+strOrder+"&curpage="+strCurPage;
+		$.ajax({
+			type: "POST",
+			url: url,
+			dataType: "html",
+			success: function(msg) {
+				$('#shop_list').html(msg);
+			}
+		});
+	}
+	function loadShopListMore(strCurPage,strMore) {
+		//alert(strCurPage);
+		$('#more_shops'+(strCurPage-1)).remove();
+		$('#more_loading').show();
+		
+		var strType = $('#strType').val();
+		var strOrder = $('#strOrder').val();
+		var url = "/mstmap50007/ddmall/ajax_shop_list.jsp?strType="+strType+"&strOrder="+strOrder+"&curpage="+strCurPage+"&strMore="+strMore;
+		$.ajax({
+			type: "POST",
+			url: url,
+			dataType: "html",
+			success: function(msg) {
+				$('#more_loading').remove();
+				$('#shop_list').append(msg);
+			}
+		});
+		
+	}	
+
+</script>
+
+			</div>
+
+			<!--后台推送可获积分区-->
+			<div class="gifts">
+				<div class="giftsT integralT">
+					<h2>
+						<span></span>
+						<a name="integrals" id="integrals"></a>
+						可获积分区
+					</h2>
+					<a href="getscore.htm" target="_blank">查看所有积分规则</a>
+				</div>
+				<dl class="integral">
+					<dt>
+						<a href="mstmap50007/g_bus_all.jsp?g_mapid=21" target="_blank">
+							<img src="http://img3.ddmapimg.com/topic/1375199090006.gif}" width="90" height="90"/>
+						</a>
+					</dt>
+					<dd>
+						<a href="mstmap50007/g_bus_all.jsp?g_mapid=21" target="_blank">线路投票</a>
+					</dd>
+				</dl>
+				<dl class="integral">
+					<dt>
+						<a href="mstmap50007/g_bus_all.jsp?g_mapid=21" target="_blank">
+							<img src="http://img1.ddmapimg.com/topic/1375199182025.gif}" width="90" height="90"/>
+						</a>
+					</dt>
+					<dd>
+						<a href="mstmap50007/g_bus_all.jsp?g_mapid=21" target="_blank">线路评论</a>
+					</dd>
+				</dl>
+				<dl class="integral">
+					<dt>
+						<a href="map/21--------/" target="_blank">
+							<img src="http://img1.ddmapimg.com/topic/1375199228153.gif}" width="90" height="90"/>
+						</a>
+					</dt>
+					<dd>
+						<a href="map/21--------/" target="_blank">领取签证</a>
+					</dd>
+				</dl>
+				<dl class="integral">
+					<dt>
+						<a href="mstmap50007/operation/index.jsp" target="_blank">
+							<img src="http://img1.ddmapimg.com/topic/1375199249866.gif}" width="90" height="90"/>
+						</a>
+					</dt>
+					<dd>
+						<a href="mstmap50007/operation/index.jsp" target="_blank">商户点评</a>
+					</dd>
+				</dl>
+				<dl class="integral">
+					<dt>
+						<a href="http://c.ddmap.com/" target="_blank">
+							<img src="http://img3.ddmapimg.com/topic/1375199271586.gif}" width="90" height="90"/>
+						</a>
+					</dt>
+					<dd>
+						<a href="http://c.ddmap.com/" target="_blank">发布帖子</a>
+					</dd>
+				</dl>
+				<dl class="integral">
+					<dt>
+						<a href="http://c.ddmap.com/" target="_blank">
+							<img src="http://img3.ddmapimg.com/topic/1375199292689.gif}" width="90" height="90"/>
+						</a>
+					</dt>
+					<dd>
+						<a href="http://c.ddmap.com/" target="_blank">回复帖子</a>
+					</dd>
+				</dl>
+				<dl class="integral">
+					<dt>
+						<a href="bdlist/21" target="_blank">
+							<img src="http://img1.ddmapimg.com/topic/1375199320953.gif}" width="90" height="90"/>
+						</a>
+					</dt>
+					<dd>
+						<a href="bdlist/21" target="_blank">发表榜单</a>
+					</dd>
+				</dl>
+				<dl class="integral">
+					<dt>
+						<a href="http://c.ddmap.com/groupactivity/21" target="_blank">
+							<img src="http://img4.ddmapimg.com/topic/1375199345014.gif}" width="90" height="90"/>
+						</a>
+					</dt>
+					<dd>
+						<a href="http://c.ddmap.com/groupactivity/21" target="_blank">参加活动</a>
+					</dd>
+				</dl>
+			</div>
+
+		</div>
+		<!--content end-->
+		<!---锚点-->
+		<div id="Float">
+			<ul>
+				<li>
+					<a href="#gifts">
+						<img src="{res file=images/czlpR.gif}" width="31" height="33"/>
+					</a>
+				</li>
+				<li>
+					<a href="#v_shops">
+						<img src="{res file=images/thspR.gif}" width="31" height="33"/>
+					</a>
+				</li>
+				<li class="integrals">
+					<a href="#integrals">
+						<img src="{res file=images/hqjfR.gif}" width="31" height="33"/>
+					</a>
+				</li>
+				<li id="back-to-top">
+					<a href="#top">
+						<img src="{res file=images/v_top.gif}" width="62" height="15"/>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<!--焦点图-->
+		<script type="text/javascript"  src="includes/libraries/javascript/jf_focus.js"></script>
+		<script type="text/javascript">		 
+	//右侧锚点
+$.fn.smartFloat = function() {
+    var position = function(element) {
+        var top = element.position().top,
+	  pos = element.css("position");
+         window.onscroll=function(){
+		     var scrolls = $(this).scrollTop();
+            if (scrolls > top - 200) {
+                if (window.XMLHttpRequest) {
+                    element.css({
+                        position: "fixed",
+                        top: "80px",
+						left: "50%",
+						marginLeft:"520px"
+                    });
+                } else {
+                    element.css({
+                        top: scrolls + 50
+                    });
+                }
+            } else {
+                element.css({
+                    position: pos,
+                    top: top,
+					marginLeft:"520px"
+                });
+            }
+		 }
+    };
+    return $(this).each(function() {
+        position($(this));
+    });
+};
+$("#Float").smartFloat();
+
+	$("#back-to-top").click(function() {
+        $('body,html').animate({
+            scrollTop: 0
+        },
+        1000);
+        return false;
+    });
+</script>
+	</div>
+</div>
+{include file=footer.html}

@@ -1,0 +1,53 @@
+
+{include file="header.html"}
+
+<link href="{res file=css/vip_index.css}" rel="stylesheet" type="text/css">
+<link href="{res file=css/vip_integral.css}" rel="stylesheet" type="text/css">
+<link href="{res file=css/vip_mall.css}" rel="stylesheet" type="text/css">
+
+<div class="content w mb20 mt20">
+
+    {include file="curlocal.html"}
+
+    <div class="choice">
+        <div class="choice_L">
+            <div class="coupon">
+                <h2><a href="index.php?app=point&act=view&id={$data.id}" target="_blank">{$data.goods_name}</a></h2>
+                <p class="coupon_L"><img src="{$data.default_image}" alt="{$data.goods_name}" height="281" width="398"></p>
+                <div class="coupon_R">
+                    {if $data.point_type eq 1}{else}
+                    <p class="price">{$lang.goods_price}{$data.goods_price}&nbsp;元</p>{/if}
+                    <p class="price">{if $data.point_type eq 1}{$lang.donate_need_point}:{else}{$lang.get_need_point}{/if}<span>{$data.need_point}</span>&nbsp;积分</p>
+                    <!--p class="time">有效时间：<span></span></p-->
+                    {if $data.point_type eq 1}
+                    <p class="time"><span>友情提醒:捐赠积分的份数是起始积分的倍数</span></p>{else}
+                    <p class="time">{$lang.stock}<span>{$data.stock}&nbsp;份</span>&nbsp;&nbsp; {if $data.max_num}<span>友情提醒: 该商品一个用户累计兑换数量不得超过{$data.max_num}件</span>{/if}
+                    </p>{/if}
+                    <p class="time"> {if $data.point_type eq 1}{$lang.donate_used_stock}{else}{$lang.used_stock}{/if}<span>{$data.used_stock|modifier:intval}&nbsp;份</span>
+                    </p>
+                    <p class="time"> {if $data.point_type eq 1}{$lang.donate_desc}{else}{$lang.desc}{/if}<span>{$data.goods_desc}</span>
+                    </p>
+                    <div class="want">
+                        <form name="dpfrmnew" id="dpfrmnew_b" action="index.php" method="get">
+                            <div>
+                                <input type="hidden" name="app" value="point">
+                                <input type="hidden" name="act" value="buy">
+                                <input type="hidden" name="id" value="{$data.id}">
+                                <p><span>{if $data.point_type eq 1}我要捐赠：{else}我要兑换：{/if}</span>
+                                    <input name="prizenum" value="1" type="text"><span>份</span></p>
+                                <p><a style="cursor: pointer;" onclick="document.getElementById('dpfrmnew_b').submit()">{if $data.point_type eq 1}点击捐赠{else}点击兑换{/if}</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="commodity">
+                <h2>{if $data.point_type eq 1}捐赠详情{else}商品详情{/if}</h2>
+                <div>
+                    {$data.goods_content}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="footer.html"}

@@ -1,0 +1,235 @@
+<style type="text/css">
+.editor { margin:0px 22px 0px 125px; }
+.info_table_wrap .submit { width:720px; }
+.info_table { width:720px; }
+.info_table li { width:720px; }
+</style>
+<script type="text/javascript">
+$(function(){
+    $('#statics_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('right').text('OK!');
+        },
+        onkeyup    : false,
+        rules : {
+            sort_order : {
+                number   : true
+            }
+        },
+        messages : {
+            
+            sort_order  : {
+                number   : '{$lang.number_only}'
+            }
+        }
+    });
+});
+</script>
+<style type="text/css">
+.padding2{padding-left:25px;}
+</style>
+<ul class="tab">
+    <li class="active"><!--{if $smarty.get.act eq edit}-->{$lang.edit_statics}<!--{else}-->{$lang.add_statics}<!--{/if}--></li>
+</ul>
+
+
+<div class="eject_con" style="width: 720px;">
+ <div class="adds">
+        <div id="warning"></div>
+         <form method="post" action="index.php?app=statics&amp;act={$smarty.get.act}&amp;id={$id}" target="pop_warning" name="statics_form" id="statics_form" enctype="multipart/form-data">
+
+        <ul>      
+                                                    
+            <li>
+                <h3>{$lang.store_id}:</h3>
+       
+                    
+            
+             
+                        <p><input type="text" class="text width_normal" name="store_id" value="{$statics.store_id|escape}"/></p>
+
+                                      
+                </li>   
+
+                                        
+            <li>
+                <h3>{$lang.store_name}:</h3>
+       
+                    
+            
+             
+                        <p><input type="text" class="text width_normal" name="store_name" value="{$statics.store_name|escape}"/></p>
+
+                                      
+                </li>   
+
+                                        
+            <li>
+                <h3>{$lang.sumdate}:</h3>
+       
+                    
+            
+             
+                        <p><input type="text" class="text width_normal" name="sumdate" value="{$statics.sumdate|escape}"/></p>
+
+                                      
+                </li>   
+
+                                        
+            <li>
+                <h3>{$lang.stype}:</h3>
+       
+                    
+            
+             
+                        <p>
+                            <select name="stype" class="text width_normal">
+                              <option value="0">{$lang.select_pls}</option>
+                              {html_options options=$options.stype selected=$statics.stype}                          
+                            </select>
+                        </p>
+
+                                      
+                </li>   
+
+                                        
+            <li>
+                <h3>{$lang.sales}:</h3>
+       
+                    
+            
+             
+                        <p><input type="text" class="text width_normal" name="sales" value="{$statics.sales|escape}"/></p>
+
+                                      
+                </li>   
+
+                                        
+            <li>
+                <h3>{$lang.collects}:</h3>
+       
+                    
+            
+             
+                        <p><input type="text" class="text width_normal" name="collects" value="{$statics.collects|escape}"/></p>
+
+                                      
+                </li>   
+
+                                        
+            <li>
+                <h3>{$lang.carts}:</h3>
+       
+                    
+            
+             
+                        <p><input type="text" class="text width_normal" name="carts" value="{$statics.carts|escape}"/></p>
+
+                                      
+                </li>   
+
+                                        
+            <li>
+                <h3>{$lang.visits}:</h3>
+       
+                    
+            
+             
+                        <p><input type="text" class="text width_normal" name="visits" value="{$statics.visits|escape}"/></p>
+
+                                      
+                </li>   
+
+                                        
+            <li>
+                <h3>{$lang.cancels}:</h3>
+       
+                    
+            
+             
+                        <p><input type="text" class="text width_normal" name="cancels" value="{$statics.cancels|escape}"/></p>
+
+                                      
+                </li>   
+
+                                        
+            <li>
+                <h3>{$lang.comments}:</h3>
+       
+                    
+            
+             
+                        <p><input type="text" class="text width_normal" name="comments" value="{$statics.comments|escape}"/></p>
+
+                                      
+                </li>   
+
+                                        
+            <li>
+                <h3>{$lang.goodcomments}:</h3>
+       
+                    
+            
+             
+                        <p><input type="text" class="text width_normal" name="goodcomments" value="{$statics.goodcomments|escape}"/></p>
+
+                                      
+                </li>   
+
+                                        
+            <li>
+                <h3>{$lang.normalcomments}:</h3>
+       
+                    
+            
+             
+                        <p><input type="text" class="text width_normal" name="normalcomments" value="{$statics.normalcomments|escape}"/></p>
+
+                                      
+                </li>   
+
+                                        
+            <li>
+                <h3>{$lang.badcomments}:</h3>
+       
+                    
+            
+             
+                        <p><input type="text" class="text width_normal" name="badcomments" value="{$statics.badcomments|escape}"/></p>
+
+                                      
+                </li>   
+
+                                        
+            <li>
+                <h3>{$lang.refunds}:</h3>
+       
+                    
+            
+             
+                        <p><input type="text" class="text width_normal" name="refunds" value="{$statics.refunds|escape}"/></p>
+
+                                      
+                </li>   
+
+                                        
+            <li>
+                <h3>{$lang.moneys}:</h3>
+       
+                    
+            
+             
+                        <p><input type="text" class="text width_normal" name="moneys" value="{$statics.moneys|escape}"/></p>
+
+                                      
+                </li>   
+
+                                                                                   </ul>
+        <div class="submit"><input type="submit" class="btn" value="{$lang.submit}" /></div>
+        </form>
+    </div>
+</div>

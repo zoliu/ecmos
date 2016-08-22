@@ -216,6 +216,8 @@ return array(
     //---www.360cd.cn  Mosquito---
     'money' => '钱包中心',
     'user_grade' => '会员等级管理',
+
+    'statics_details' => '全统计',
 );
 
 ?>

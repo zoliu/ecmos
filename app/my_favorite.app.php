@@ -51,6 +51,11 @@ class My_favoriteApp extends MemberbaseApp
         }
         elseif ($type == 'store')
         {
+            //360cd.cn born statics
+            $statics_model=&m('statics');
+            $statics_model->update($item_id,'collects',1);
+            //360cd.cn 
+            
             $this->_add_collect_store($item_id, $keyword);
         }
     }

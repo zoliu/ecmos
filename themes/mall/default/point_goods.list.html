@@ -1,0 +1,95 @@
+{include file="header.html"}
+<style>
+.donate {
+    float: right;
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #E6E6E6;
+    margin: 0 0px 0px 0;
+}
+
+.donate h2 {
+    font-size: 14px;
+}
+
+.donate b {
+    font-size: 14px;
+    color: red;
+}
+
+.donate_list {
+    padding-top: 8px;
+}
+
+.donate dd {
+    line-height: 16px;
+    margin: 10px 0px;
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 8px;
+}
+</style>
+<link href="{res file=css/vip_index.css}" rel="stylesheet" type="text/css">
+<link href="{res file=css/vip_integral.css}" rel="stylesheet" type="text/css">
+
+<div class="w mb20 mt20">
+    {include file=curlocal.html}
+    <div class="manner">
+        <ul>
+            <li class="showred">{$lang.credits_shop}</li>
+            <li class="{if $smarty.get.all}manner_A{/if}">
+                <a href="index.php?app=point&amp;point_type=0&amp;all=1">{$lang.all}</a>
+                <a href="index.php?app=point&amp;to_jifen=0&amp;from_jifen=10000">0-10000分</a>
+                <a href="index.php?app=point&amp;to_jifen=10001&amp;from_jifen=50000">10001-50000分</a>
+                <a href="index.php?app=point&amp;to_jifen=50001">50001分已上</a>
+            </li>
+            {foreach from=$point_type item=type key=key}
+            <li class="{if $smarty.get.point_type eq $key and $smarty.get.all eq 0}manner_A{/if}">
+                <a href="index.php?app=point&amp;point_type={$key}&all=0">{$type}</a>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
+    {if $smarty.get.point_type eq 1}
+    <div class="donate">
+        <h2>捐赠记录</h2>
+        <dl class="donate_list">
+            <marquee style="HEIGHT: 200px" scrollamount="2" direction="up">
+                {foreach from=$donate_list item=item key=key}
+                <dd class="donate_dd"> <b>{$item.user_name}</b> 为 <b>{$item.goods_name}</b> 捐赠
+                    <b>{$item.total_point}</b> 积分
+                </dd>
+                {/foreach}
+            </marquee>
+        </dl>
+    </div>
+    {/if}
+    <div class="jfqing" id="prizeChoose">
+        <ul>
+            <!--{foreach from=$data item=d}-->
+            <li>
+                <p class="jfqing_A">
+                    <a href="index.php?app=point&act=view&id={$d.id}" target="_blank">
+                        <img src="{$d.default_image}" alt="{$d.goods_name}" height="142" width="212"></a>
+                </p>
+                <p class="jfqing_B">
+                    <span>{$lang.prize_name}</span>
+                    <a href="index.php?app=point&act=view&id={$d.id}" target="_blank">{$d.goods_name}</a>
+                </p>
+                <p class="jfqing_E">
+                    <span>{if $smarty.get.point_type eq 1}{$lang.donate_need_point}：{else}{$lang.need_point}：{/if}</span>
+                    <span class="jfqing_F">{$d.need_point}分</span>
+                    <span class="jfqing_G">{if $smarty.get.point_type eq 1}{else}还剩{$d.stock}份{/if}</span>
+                </p>
+                <p>
+                    <a href="index.php?app=point&act=view&id={$d.id}" target="_blank">
+                        {if $smarty.get.point_type eq 1}立即捐赠{else}<img src="{res file=images/duihuan.jpg}" alt="立即兑换">{/if}
+                    </a>
+                </p>
+            </li>
+            <!--{/foreach}-->
+        </ul>
+    </div>
+    {include file="page.bottom.html"}
+    <div style="clear:both;"></div>
+</div>
+{include file="footer.html"}

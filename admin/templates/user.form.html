@@ -108,14 +108,6 @@ $(function(){
             <label class="field_notice">{$lang.email}</label>        </td>
       </tr>
       <tr>
-        <th class="paddingT15"> 用户等级:</th>
-        <td class="paddingT15 wordSpacing5">
-            <select name="grade_id">
-            {html_options options=$grade_options selected=$user.grade_id}
-            </select>
-        </td>
-      </tr>
-      <tr>
         <th class="paddingT15"> 直接上级:</th>
         <td class="paddingT15 wordSpacing5">
             <input class="infoTableInput2" name="parent_name" type="text" value="{$user.parent_name}" {if $user.parent_name} readonly="readonly" {/if} />

@@ -132,6 +132,11 @@ class CartApp extends MallbaseApp {
 			'quantity' => $quantity,
 			'goods_image' => addslashes($spec_info['default_image']) 
 		);
+
+		//360cd.cn born statics
+		$statics_model=&m('statics');
+		$statics_model->update($spec_info['store_id'],'carts',$quantity);
+		//360cd.cn
 		
 		/* 添加并返回购物车统计即可 */
 		$cart_model = &  m('cart');
@@ -243,6 +248,11 @@ class CartApp extends MallbaseApp {
 		$model_cart->edit($where, array(
 			'quantity' => $quantity 
 		));
+
+		//360cd.cn born statics
+		$statics_model=&m('statics');
+		$statics_model->update($spec_info['store_id'],'carts',1);
+		//360cd.cn
 		
 		/* 小计 */
 		$subtotal = $quantity * $cart_spec_info['price'];

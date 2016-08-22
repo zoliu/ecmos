@@ -167,6 +167,11 @@ class Buyer_orderApp extends MemberbaseApp
                 return;
             }
 
+            //360cd.cn born statics
+            $statics_model=&m('statics');
+            $statics_model->update($order_info['seller_id'],'cancels',1);
+            //360cd.cn
+
             /* 加回商品库存 */
             $model_order->change_stock('+', $order_id);
             $cancel_reason = (!empty($_POST['remark'])) ? $_POST['remark'] : $_POST['cancel_reason'];
@@ -180,6 +185,12 @@ class Buyer_orderApp extends MemberbaseApp
                 'remark'    => $cancel_reason,
                 'log_time'  => gmtime(),
             ));
+
+            //360cd.cn born statics
+            $statics_model=&m('statics');
+            $statics_model->update($order_info['seller_id'],'sales',1);
+            $statics_model->update($order_info['seller_id'],'moneys',$order_info['order_amount']);
+            //360cd.cn
 
             /* 发送给卖家订单取消通知 */
             $model_member =& m('member');
@@ -254,6 +265,11 @@ class Buyer_orderApp extends MemberbaseApp
 
                 return;
             }
+
+            //360cd.cn
+            $point = &m("point_set");
+            $point->buyerPoint($this->visitor->get('user_id'),$order_info['order_amount']);
+            //360cd.cn
 
             /* 记录订单操作日志 */
             $order_log =& m('orderlog');
@@ -366,6 +382,10 @@ class Buyer_orderApp extends MemberbaseApp
         }
         else
         {
+            //360cd.cn born statics
+            $statics_model=&m('statics');
+            $statics_model->update_order($order_id,'comments',1);
+            //360cd.cn
             $evaluations = array();
             /* 写入评价 */
             foreach ($_POST['evaluations'] as $rec_id => $evaluation)
@@ -380,12 +400,15 @@ class Buyer_orderApp extends MemberbaseApp
                 {
                     case 3:
                         $credit_value = 1;
+                        $statics_model->update_order($order_id,'goodcomments',1);//360cd.cn
                     break;
                     case 1:
                         $credit_value = -1;
+                         $statics_model->update_order($order_id,'badcomments',1);//360cd.cn
                     break;
                     default:
                         $credit_value = 0;
+                         $statics_model->update_order($order_id,'normalcomments',1);//360cd.cn
                     break;
                 }
                 $evaluations[intval($rec_id)] = array(

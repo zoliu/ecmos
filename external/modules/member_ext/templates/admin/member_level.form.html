@@ -1,0 +1,103 @@
+{include file="header.html"}
+
+<style>
+td>p {
+    margin: 1em 0em;
+}
+</style>
+
+<script type="text/javascript">
+$(function() {
+    $('#member_level_form').validate({
+        errorPlacement: function(error, element) {
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success: function(label) {
+            label.addClass('right').text('OK!');
+        },
+        rules: {
+            level_name: {
+                required: true
+            },
+            level_discount: {
+                max: 1,
+                min: 0,
+                number: true
+            }
+        },
+        messages: {
+            level_name: {
+                required: '{$lang.level_name_required}'
+            },
+            level_discount: {
+                max: '{$lang.level_discount_max}',
+                min: '{$lang.level_discount_min}',
+                number: '{$lang.number_only}'
+            }
+        }
+    });
+
+});
+</script>
+<div id="rightTop">
+    <p>会员等级</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?module=member_ext&act=level_index">等级管理</a></li>
+        {if $data.grade_id}
+        <li><a class="btn1" href="index.php?module=member_ext&act=add_member_level">新增等级</a></li>
+        <li><span>编辑等级</span></li>
+        {else}
+        <li><span>新增等级</span></li>
+        {/if}
+        <li><a class="btn1" href="index.php?module=member_ext">扩展管理</a></li>
+        <li><a class="btn1" href="index.php?module=point">积分中心</a></li>
+    </ul>
+</div>
+<div class="info">
+    <form method="POST" enctype="multipart/form-data" id="member_level_form">
+        <table class="infoTable">
+            <tr>
+                <th class='paddingT15'>{$lang.level_name}:</th>
+                <td class='paddingT15 wordSpacing5'>
+                    <input class='infoTableFile2' id='level_name' type='input' name='grade_name' value="{$data.grade_name}" />
+                    <label class='field_notice'></label>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">优先级 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" type="text" name="priority" value="{if $data.priority}{$data.priority}{else}{$priority}{/if}" />
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">升级需求 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <p><span>推荐会员累计购物：</span><input name="upgrade_buy" value="{$data.upgrade_buy}" type="text" class="infoTableInput2" /></p>
+                    <p><span>累计积分：</span><input name="upgrade_integral" value="{$data.upgrade_integral}" type="text" class="infoTableInput2" /></p>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">提成相关 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <p><span>推荐会员购物提成：</span><input name="buy_tc" value="{$data.buy_tc}" type="text" class="infoTableInput2" /></p>
+                    <p><span>推荐商家销售提成：</span><input name="sell_tc" value="{$data.sell_tc}" type="text" class="infoTableInput2" /></p>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">购物折扣 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" type="text" name="discount" value="{$data.discount}" />
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15"> </th>
+                <td class="ptb20">
+                    <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                    <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

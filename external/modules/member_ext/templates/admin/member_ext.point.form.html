@@ -1,0 +1,59 @@
+{include file="header.html"}
+
+<script type="text/javascript">
+$(function() {
+});
+</script>
+<div id="rightTop">
+    <p>会员扩展</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?module=member_ext">扩展管理</a></li>
+        <li><span>修改积分</span></li>
+        <li><a class="btn1" href="index.php?module=member_ext&act=level_index">会员等级</a></li>
+        <li><a class="btn1" href="index.php?module=point">积分中心</a></li>
+    </ul>
+</div>
+<div class="info">
+    <form method="POST" enctype="multipart/form-data" id="member_level_form">
+        <table class="infoTable">
+            <tr>
+                <th class='paddingT15'>{$lang.user_name}:</th>
+                <td class='paddingT15 wordSpacing5'>
+                    <input class='infoTableFile2' type='text' value="{$data.user_name}" />
+                    <input class='infoTableFile2' id='user_id' type='hidden' name='user_id' value="{$data.user_id}" />
+                    <label class='field_notice'></label>
+                </td>
+            </tr>
+            <tr>
+                <th class='paddingT15'>{$lang.curr_user_point}:</th>
+                <td class='paddingT15 wordSpacing5'>
+                    <input class='infoTableFile2' type='text' name="curr_point" value="{$data.integral}" />
+                    <label class='field_notice'></label>
+                </td>
+            </tr>
+            <th class='paddingT15'>{$lang.user_point}:</th>
+            <td class='paddingT15 wordSpacing5'>
+                <input class='infoTableFile2' type='text' name="user_point" />
+                <label class='field_notice'></label>
+            </td>
+            </tr>
+            <th class='paddingT15'>{$lang.opt_type}:</th>
+            <td class='paddingT15 wordSpacing5'>
+                <select name='opt_type'>
+                    <option value="1">增加</option>
+                    <option value="0">减少</option>
+                </select>
+                <label class='field_notice'></label>
+            </td>
+            </tr>
+            <tr>
+                <th class="paddingT15"> </th>
+                <td class="ptb20">
+                    <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                    <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

@@ -1,0 +1,110 @@
+
+<!-- www.360cd.cn  mosquito -->
+
+{include file="header.html"}
+
+<style>
+.in-div {
+    width: 24em;
+    height: 12em;
+    border: 1px solid;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+.in-div>p {
+    margin: 0.5em 0.5em;
+}
+.in-div>p>span {
+    display: inline-block;
+    width: 8em;
+    font-weight: bold;
+}
+</style>
+
+<script type="text/javascript">
+    $(function() {
+
+    });
+</script>
+
+<div id="rightTop">
+    <p>会员等级</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?module=member_ext&act=level_index">等级管理</a></li>
+        <li><span>等级设置</span></li>
+    </ul>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data" id="_form_">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">升级类型 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <select name="upgrade_type">
+                    {html_options options=$upgrade_type_options selected=$config.upgrade_type}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">商城订单佣金率 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" type="text" name="order_rate" value="{$config.order_rate}" />
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">提成层级 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" type="text" name="tc_layer" value="{$config.tc_layer}" />
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">提成占比 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <div class="in-div" >
+                        <p>
+                            <span>商城占比: </span>
+                            <input class="infoTableInput2" type="text" name="tc[mall_ratio]" value="{$config.tc.mall_ratio}" />
+                        </p>
+                        <p>
+                            <span>推荐会员购物提成占比: </span>
+                            <input class="infoTableInput2" type="text" name="tc[buy_ratio]" value="{$config.tc.buy_ratio}" />
+                        </p>
+                        <p>
+                            <span>推荐商家销售提成占比: </span>
+                            <input class="infoTableInput2" type="text" name="tc[sell_ratio]" value="{$config.tc.sell_ratio}" />
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">商品分类佣金率:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <div class="in-div" >
+                        {foreach from=$gcate_options key=cate_id item=cate_name}
+                        <p><span>{$cate_name}: </span><input class="infoTableInput2" type="text" name="gcate[{$cate_id}]" value="{$config.gcate.$cate_id}" /></p>
+                        {/foreach}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">店铺等级提成抵扣 :</th>
+                <td class="paddingT15 wordSpacing5">
+                    <div class="in-div" >
+                        {foreach from=$sgrade_options key=grade_id item=grade_name}
+                        <p><span>{$grade_name}: </span><input class="infoTableInput2" type="text" name="sgrade[{$grade_id}]" value="{$config.sgrade.$grade_id}" /></p>
+                        {/foreach}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td class="ptb20">
+                    <input class="formbtn" type="submit" name="Submit" value="提交" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+{include file="footer.html"}

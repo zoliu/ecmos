@@ -14,27 +14,33 @@
                     <dt>
                         <span>{$lang.welcome}</span> <strong>{$user.user_name|escape}</strong>
                         <a href="{url app=member&act=profile}">{$lang.edit_profile}>></a>{if $store}&nbsp;&nbsp;<a href="{url app=store&id=$user.user_id}">{$lang.view_store}>></a>{/if}
-                        <span style="float: right;">用户编号：{$user.user_id|escape}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span>用户编号：{$user.user_id|escape}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <p>用户等级: 
+                        <b style="font-size:15px;color:red;">
+                        {if $options_user_level[$user_ext.grade_id]}
+                        {$options_user_level[$user_ext.grade_id]}
+                        {/if}
+                        </b>&nbsp;&nbsp; 用户积分: 
+                        <b style="font-size:15px;color:red;">
+                        {if $user_ext.integral}
+                        {$user_ext.integral}
+                        {else}
+                        0
+                        {/if}
+                        </b></p>
                     </dt>
                     <dd>
-                        <span>
-                        </span>
                         <span>{$lang.last_ip}{$lang.colon}{$user.last_ip}</span>
-
                     </dd>
-
                 </dl>
-
                 <!--{if $store && $member_role eq 'seller_admin'}-->
                 <dl class="col-2 fleft">
                     <dt> <strong>{$lang.store_rate}</strong>
                     </dt>
                     <dd>
                         {$lang.credit_value}{$lang.colon}
-                        <a href="{url app=store&act=credit&id=$store.store_id}" target="_blank">{$store.credit_value}</a>
-                        {if $store.credit_value ge 0 }
-                        <img src="{$store.credit_image}" align="absmiddle" />
-                        {/if}
+                        <a href="{url app=store&act=credit&id=$store.store_id}" target="_blank">{$store.credit_value}</a> {if $store.credit_value ge 0 }
+                        <img src="{$store.credit_image}" align="absmiddle" /> {/if}
                     </dd>
                     <dd>{$lang.praise_rate}{$lang.colon}{$store.praise_rate}%</dd>
                 </dl>
@@ -43,8 +49,7 @@
                     <p style="clear: both;">{sprintf lang=you_have_pm var1=new_message}</p>
                     <p style="line-height:25px;">
                         {$lang.account_total_money}
-                        <span style="font-size:16px;font-weight:bold; color:#FE5400;">{$money_info.money|price}</span>
-                        &nbsp;{$lang.yuan}&nbsp;&nbsp;&nbsp;&nbsp;{$lang.account_freezing}
+                        <span style="font-size:16px;font-weight:bold; color:#FE5400;">{$money_info.money|price}</span> &nbsp;{$lang.yuan}&nbsp;&nbsp;&nbsp;&nbsp;{$lang.account_freezing}
                         <span style="color:blue;">{$money_info.money_dj|price}</span>
                         <br />
                         <span class="epay_btn">
@@ -55,207 +60,294 @@
                         </span>
                         <br>
                     </p>
-                </dl>                
+                </dl>
             </div>
-
         </div>
-
-    <div class="platform clearfix">
-        <script type="text/javascript" src='{lib file=jquery.zclip.min.js}'></script>
-        <style>
-    .jm_tip{
-        line-height: 25px;margin-left: 10px;
-    }
-    .information_index .title {
-     background: url('') no-repeat 0 bottom; 
-    line-height: 35px;
-    }
-    /* 一键推广 */
-    .yjtg{width:890px;border-top:1px dashed #dedddd;padding:20px 0 0 0;margin-left: 20px;margin-top: 10px;}
-    .yjtg h2{width:890px;font-size: 14px;color:#333;font-family:"微软雅黑";font-weight:normal;line-height:24px;}
-    .yjtg_con{width:890px;float:left;margin:20px 0 0 0;}
-    .yjtg_con textarea{width:95%;height:63px;border:1px solid #ddd;font-size:14px;color:#666666;line-height:24px;padding:10px 0 0 15px;}
-    .yjtg_txt{float:left;width:890px;margin: 15px 0 15px 0;}
-    .yjtg_button{width:114px;height:32px;background:#7cbe56;color:#fff;text-align:center;line-height:32px;font-family:"微软雅黑";font-size:16px;float:left;margin:0 10px 0 0;display:inline;cursor:pointer;}
-    .yjtg_button:hover{width:114px;height:32px;background:#8cd562;}
-    .yjtg_txt span{float:left;width:600px;color:#999;line-height:18px;}
-    
-    
-    /* 微店推广攻略 */
-    .tg_con{width:960px;float:left;border-top:1px dashed #dedddd;padding:30px 0 0 0;margin:30px 0 0 0;}
-    .tg_con dt{width:960px;font-size:20px;color:#333;font-family:"微软雅黑";font-weight:normal;line-height:24px;}
-    .tg_con dd{width:960px;float:left;margin:15px 0 0 0;}
-    .tg_con dd ul{;float:left;width:300px;padding:0 20px 0 0;overflow:hidden;}
-    .tg_con dd li{line-height:36px;}
-    .tg_con dd li a{color:#0043b2;}
-</style>
-        <div class="wrap_line margin15" style="width:auto;">
-            <div class="public_index">
-                <div class="information_index">
-
-                    <div class="remind">
-                        <div class="yjtg">
-                            <h2>商城推广，让会员加盟：</h2>
-
-                            <div class="yjtg_con">
-                                <textarea name="" cols="" rows="" id="txtContent">我刚开了微店，跪求人气，来访我网店者，每人都有惊喜相送：{$site_url}/?app=member&act=register&parent_id={$user.user_id}
-                                </textarea>
+        <div class="platform clearfix">
+            <script type="text/javascript" src='{lib file=jquery.zclip.min.js}'></script>
+            <style>
+            .jm_tip {
+                line-height: 25px;
+                margin-left: 10px;
+            }
+            
+            .information_index .title {
+                background: url('') no-repeat 0 bottom;
+                line-height: 35px;
+            }
+            /* 一键推广 */
+            
+            .yjtg {
+                width: 890px;
+                border-top: 1px dashed #dedddd;
+                padding: 20px 0 0 0;
+                margin-left: 20px;
+                margin-top: 10px;
+            }
+            
+            .yjtg h2 {
+                width: 890px;
+                font-size: 14px;
+                color: #333;
+                font-family: "微软雅黑";
+                font-weight: normal;
+                line-height: 24px;
+            }
+            
+            .yjtg_con {
+                width: 890px;
+                float: left;
+                margin: 20px 0 0 0;
+            }
+            
+            .yjtg_con textarea {
+                width: 95%;
+                height: 63px;
+                border: 1px solid #ddd;
+                font-size: 14px;
+                color: #666666;
+                line-height: 24px;
+                padding: 10px 0 0 15px;
+            }
+            
+            .yjtg_txt {
+                float: left;
+                width: 890px;
+                margin: 15px 0 15px 0;
+            }
+            
+            .yjtg_button {
+                width: 114px;
+                height: 32px;
+                background: #7cbe56;
+                color: #fff;
+                text-align: center;
+                line-height: 32px;
+                font-family: "微软雅黑";
+                font-size: 16px;
+                float: left;
+                margin: 0 10px 0 0;
+                display: inline;
+                cursor: pointer;
+            }
+            
+            .yjtg_button:hover {
+                width: 114px;
+                height: 32px;
+                background: #8cd562;
+            }
+            
+            .yjtg_txt span {
+                float: left;
+                width: 600px;
+                color: #999;
+                line-height: 18px;
+            }
+            /* 微店推广攻略 */
+            
+            .tg_con {
+                width: 960px;
+                float: left;
+                border-top: 1px dashed #dedddd;
+                padding: 30px 0 0 0;
+                margin: 30px 0 0 0;
+            }
+            
+            .tg_con dt {
+                width: 960px;
+                font-size: 20px;
+                color: #333;
+                font-family: "微软雅黑";
+                font-weight: normal;
+                line-height: 24px;
+            }
+            
+            .tg_con dd {
+                width: 960px;
+                float: left;
+                margin: 15px 0 0 0;
+            }
+            
+            .tg_con dd ul {
+                ;
+                float: left;
+                width: 300px;
+                padding: 0 20px 0 0;
+                overflow: hidden;
+            }
+            
+            .tg_con dd li {
+                line-height: 36px;
+            }
+            
+            .tg_con dd li a {
+                color: #0043b2;
+            }
+            </style>
+            <div class="wrap_line margin15" style="width:auto;">
+                <div class="public_index">
+                    <div class="information_index">
+                        <div class="remind">
+                            <div class="yjtg">
+                                <h2>商城推广，让会员加盟：</h2>
+                                <div class="yjtg_con">
+                                    <textarea name="" cols="" rows="" id="txtContent">我刚开了微店，跪求人气，来访我网店者，每人都有惊喜相送：{$site_url}/?app=member&act=register&parent_id={$user.user_id}
+                                    </textarea>
+                                </div>
+                                <div class="yjtg_txt">
+                                    <div class="yjtg_button" id="btncopy">复制内容</div>
+                                    <span>复制后粘贴到QQ群、QQ、微博、博客、论坛、或者通过邮件，均可推广！ 点击此链接进入你微店的访客，会自动成为你的分销商！</span>
+                                </div>
                             </div>
-                            <div class="yjtg_txt">
-                                <div class="yjtg_button" id="btncopy">复制内容</div>
-                                <span>复制后粘贴到QQ群、QQ、微博、博客、论坛、或者通过邮件，均可推广！ 点击此链接进入你微店的访客，会自动成为你的分销商！</span>
-                            </div>
+                            <div style="clear:both"></div>
                         </div>
-                        <div style="clear:both"></div>
-
+                        <script type="text/javascript">
+                        $('#btncopy').zclip({
+                            path: "{lib file=ZeroClipboard.swf}",
+                            copy: function() {
+                                return $('#txtContent').val();　　　　　
+                            }
+                        });
+                        </script>
                     </div>
-                    <script type="text/javascript">
-                    $('#btncopy').zclip({
-                        path: "{lib file=ZeroClipboard.swf}",
-                        copy: function(){
-                            return $('#txtContent').val();
-              　　　 　　}
-                    });
-                    </script>
-
                 </div>
-
+                <div class="wrap_bottom"></div>
             </div>
-            <div class="wrap_bottom"></div>
-        </div>
-
-        <div class="col-1">
-            <div class="buyer-notice box-notice box">
-                <div class="hd clearfix">
-                    <h2>{$lang.buyer_remind}</h2>
-                </div>
-                <div class="bd dealt">
-                    <div class="list">
-                        <h4>{$lang.dealt_immediately}{$lang.colon}</h4>
-                        <dl class="clearfix">
-                            <dt>{$lang.order_remind}{$lang.colon}</dt>
-                            <dd>
-                                <span>{sprintf lang=order_for_pay_remind var1=buyer_stat.pending}</span>
-                                <span>
+            <div class="col-1">
+                <div class="buyer-notice box-notice box">
+                    <div class="hd clearfix">
+                        <h2>{$lang.buyer_remind}</h2>
+                    </div>
+                    <div class="bd dealt">
+                        <div class="list">
+                            <h4>{$lang.dealt_immediately}{$lang.colon}</h4>
+                            <dl class="clearfix">
+                                <dt>{$lang.order_remind}{$lang.colon}</dt>
+                                <dd>
+                                    <span>{sprintf lang=order_for_pay_remind var1=buyer_stat.pending}</span>
+                                    <span>
                                     {sprintf lang=order_for_confirm_remind var1=buyer_stat.shipped}
                                 </span>
-                                <span>
+                                    <span>
                                     {sprintf lang=order_for_evaluate_remind var1=buyer_stat.finished}
                                 </span>
-                            </dd>
-                        </dl>
-                        <dl class="clearfix">
-                            <dt>{$lang.groupbuy_remind}{$lang.colon}</dt>
-                            <dd>
-                                <span>
+                                </dd>
+                            </dl>
+                            <dl class="clearfix">
+                                <dt>{$lang.groupbuy_remind}{$lang.colon}</dt>
+                                <dd>
+                                    <span>
                                     {sprintf lang=groupbuy_for_finished_remind var1=buyer_stat.groupbuy_finished}
                                 </span>
-                                <span>
+                                    <span>
                                     {sprintf lang=groupbuy_for_canceled_remind var1=buyer_stat.groupbuy_canceled}
                                 </span>
-                            </dd>
-                        </dl>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="extra"></div>
                     </div>
-                    <div class="extra"></div>
                 </div>
-            </div>
-            <!--{if $store && $member_role eq 'seller_admin'}-->
-            <div class="seller-notice box-notice box">
-                <div class="hd clearfix">
-                    <h2>{$lang.seller_remind}</h2>
-                    <p></p>
-                </div>
-                <div class="bd">
-                    <div class="list">
-                        <dl class="clearfix">
-                            <dt>{$lang.order_remind}{$lang.colon}</dt>
-                            <dd>
-                                <span>
+                <!--{if $store && $member_role eq 'seller_admin'}-->
+                <div class="seller-notice box-notice box">
+                    <div class="hd clearfix">
+                        <h2>{$lang.seller_remind}</h2>
+                        <p></p>
+                    </div>
+                    <div class="bd">
+                        <div class="list">
+                            <dl class="clearfix">
+                                <dt>{$lang.order_remind}{$lang.colon}</dt>
+                                <dd>
+                                    <span>
                                     {sprintf lang=order_for_settle_remind var1=seller_stat.submitted}
                                 </span>
-                                <span>
+                                    <span>
                                     {sprintf lang=order_for_ship_remind var1=seller_stat.accepted}
                                 </span>
-                            </dd>
-                        </dl>
-                        <dl class="clearfix">
-                            <dt>{$lang.groupbuy_remind}{$lang.colon}</dt>
-                            <dd>
-                                <span>
+                                </dd>
+                            </dl>
+                            <dl class="clearfix">
+                                <dt>{$lang.groupbuy_remind}{$lang.colon}</dt>
+                                <dd>
+                                    <span>
                                     {sprintf lang=groupbuy_for_end_remind var1=seller_stat.groupbuy_end}
                                 </span>
-                            </dd>
-                        </dl>
-                    </div>
-                    <div class="extra">
-                        <span>{$lang.store_grade}{$lang.colon}{$sgrade.grade_name}</span>
-                        <span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="extra">
+                            <span>{$lang.store_grade}{$lang.colon}{$sgrade.grade_name}</span>
+                            <span>
                             {$lang.expire_time}{$lang.colon}
                             <!--{if $sgrade.add_time}-->
                             {sprintf lang=leaving_day var1=sgrade.add_time}
                             <!--{else}-->
                             {$lang.no_limit}
                             <!--{/if}--> </span>
-                        <span>
+                            <span>
                             {$lang.goods_put}{$lang.colon}{$sgrade.goods.used}/
                             <!--{if $sgrade.goods.total}-->
                             {$sgrade.goods.total}
                             <!--{else}-->
                             {$lang.no_limit}
                             <!--{/if}--> </span>
-                        <span>
+                            <span>
                             {$lang.space_use}{$lang.colon}{$sgrade.space.used}M/
                             <!--{if $sgrade.space.total}-->
                             {$sgrade.space.total}M
                             <!--{else}-->
                             {$lang.no_limit}
                             <!--{/if}--> </span>
+                        </div>
                     </div>
                 </div>
+                <!--{/if}-->
+                <!--{if $_member_menu.overview}-->
+                <div class="apply-notice box-notice box">
+                    <div class="hd clearfix">
+                        <h2>{$lang.apply_remind}</h2>
+                    </div>
+                    <div class="bd">
+                        <div class="extra">
+                            <!--{if $applying}-->
+                            {sprintf lang=store_applying var1=user.sgrade}
+                            <!--{else}-->
+                            {$lang.not_seller}{$lang.colon}
+                            <a href="{$_member_menu.overview.url}" title="{$_member_menu.overview.text}">{$_member_menu.overview.text}</a>
+                            <!--{/if}-->
+                        </div>
+                    </div>
+                </div>
+                <!--{/if}-->
             </div>
-            <!--{/if}-->
-            <!--{if $_member_menu.overview}-->
-            <div class="apply-notice box-notice box">
-                <div class="hd clearfix">
-                    <h2>{$lang.apply_remind}</h2>
+            <div class="col-2">
+                <div class="mall-notice box">
+                    <div class="hd clearfix">
+                        <h2>商城公告</h2>
+                    </div>
+                    <ul class="bd">
+                        <!--{foreach from=$system_notice item=article}-->
+                        <li>
+                            <a href="{url app=article&act=view&article_id=$article.article_id}" target="_blank">{$article.title|escape|truncate:30}</a>
+                        </li>
+                        <!--{/foreach}-->
+                    </ul>
                 </div>
-                <div class="bd">
-                    <div class="extra">
-                        <!--{if $applying}-->
-                        {sprintf lang=store_applying var1=user.sgrade}
-                        <!--{else}-->
-                        {$lang.not_seller}{$lang.colon}
-                        <a href="{$_member_menu.overview.url}" title="{$_member_menu.overview.text}">{$_member_menu.overview.text}</a>
-                        <!--{/if}--> </div>
+                <div class="mall-customer box">
+                    <div class="hd">
+                        <h2>平台客服联系方式</h2>
+                    </div>
+                    <ul class="bd">
+                        <li>电话联系：021-68554667</li>
+                        <li>手机联系：18216564563 小苗</li>
+                        <li>电子邮件：service@zouliu.com </li>
+                        <li>400电话：400-800-9358 </li>
+                    </ul>
                 </div>
-            </div>
-            <!--{/if}--> </div>
-        <div class="col-2">
-            <div class="mall-notice box">
-                <div class="hd clearfix">
-                    <h2>商城公告</h2>
-                </div>
-                <ul class="bd">
-                    <!--{foreach from=$system_notice item=article}-->
-                    <li>
-                        <a href="{url app=article&act=view&article_id=$article.article_id}" target="_blank">{$article.title|escape|truncate:30}</a>
-                    </li>
-                    <!--{/foreach}--> </ul>
-            </div>
-            <div class="mall-customer box">
-                <div class="hd">
-                    <h2>平台客服联系方式</h2>
-                </div>
-                <ul class="bd">
-                    <li>电话联系：021-68554667</li>
-                    <li>手机联系：18216564563 小苗</li>
-                    <li>电子邮件：service@zouliu.com </li>
-                    <li>400电话：400-800-9358 </li>
-                </ul>
             </div>
         </div>
     </div>
-</div>
-<div class="clear"></div>
+    <div class="clear"></div>
 </div>
 {include file=footer.html}

@@ -5,6 +5,9 @@ define('RAPP_PATH', dirname(__FILE__));
 include_once RAPP_PATH . '/lib/pclzip.lib.php';
 include_once RAPP_PATH . '/lib/methods.lib.php';
 
+use rapp\lib\Dir;
+use rapp\lib\Methods;
+
 /**
  * 应用中心模块界面类
  *

@@ -1,0 +1,90 @@
+{include file="header.html"}
+<div id="rightTop">
+    <p>积分商品</p>
+    <ul class="subnav">
+        <li><span>{$lang.point_goods}</span></li>
+        <li><a class="btn1" href="index.php?module=point&act=add_goods">新增商品</a></li>
+        <li><a class="btn1" href="index.php?module=point&act=point_goods_log">{$lang.point_goods_log}</a> </li>
+        <li><a class="btn1" href="index.php?module=point">{$lang.point_logs}</a></li>
+        <li><a class="btn1" href="index.php?module=point&act=point_set">{$lang.point_set}</a></li>
+        <li><a class="btn1" href="index.php?module=member_ext">{$lang.member_ext}</a></li>
+    </ul>
+</div>
+<div class="mrightTop">
+    <div class="fontl">
+        <form method="get">
+            <div class="left">
+                <input type="hidden" name="module" value="point" />
+                <input type="hidden" name="act" value="point_goods" /> {$lang.point_goods_name}:
+                <input class="queryInput" type="text" name="point_goods_name" value="{$query.point_goods_name|escape}" />
+                <input type="submit" class="formbtn" style="cursor: pointer;" value="{$lang.query}" />
+            </div>
+            <!--{if $filtered}-->
+            <a class="left formbtn1" href="index.php?module=point&act=point_goods">{$lang.cancel_query}</a>
+            <!--{/if}-->
+            <span>
+              </span></form>
+    </div>
+    <div class="fontr">
+        {if $point_goods_list}{include file=page.top.html}{/if}
+    </div>
+</div>
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!--{if $point_goods_list}-->
+        <tr class="tatr1">
+            <td width="20" class="firstCell">
+                <input type="checkbox" class="checkall" />
+            </td>
+            <td align="left" width="120">{$lang.photo}</td>
+            <td align="left" width="120">{$lang.goods_name}</td>
+            <td align="left" width="120">{$lang.goods_price}</td>
+            <td align="left" width="120">{$lang.stock}</td>
+            <td align="left" width="120">{$lang.used_stock}</td>
+            <td align="left" width="120">{$lang.need_point}</td>
+            <td align="left" width="120">{$lang.enabled}</td>
+            <td align="left" width="120">{$lang.max_num}</td>
+            <td align="left" width="120">{$lang.sort}</td>
+            <td class="handler">{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$point_goods_list item=point_goods}-->
+        <tr class="tatr2">
+            <td class="firstCell">
+                <input value="{$point_goods.id}" class='checkitem' type="checkbox" />
+            </td>
+            <td align="left">{if $point_goods.default_image }<img src='/{$point_goods.default_image}' width=120 height=75 />{/if}&nbsp;</td>
+            <td align="left">{$point_goods.goods_name}</td>
+            <td align="left">{$point_goods.goods_price}</td>
+            <td align="left">{$point_goods.stock|modifier:intval}</td>
+            <td align="left">{$point_goods.used_stock|modifier:intval}</td>
+            <td align="left">{$point_goods.need_point}</td>
+            <td align="left">{if $point_goods.enabled}{$lang.enableded}{else}{$lang.unableded}{/if}</td>
+            <td align="left">{$point_goods.max_num|modifier:intval}</td>
+            <td align="left">{$point_goods.sort}</td>
+            <td class="handler">
+                <a href="index.php?module=point&amp;act=edit_goods&amp;id={$point_goods.id}">{$lang.edit}</a> | <a name="drop" href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?module=point&amp;act=drop_goods&amp;id={$point_goods.id}');">{$lang.drop}</a> |
+                <br> <a name="drop" href="javascript:drop_confirm('{$lang.enabled_confirm}', 'index.php?module=point&amp;act=enabled_goods&amp;id={$point_goods.id}&enabled={$point_goods.enabled}');">{if $point_goods.enabled}{$lang.unabled}{else}{$lang.enabled}{/if}</a>
+            </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="7">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <!--{if $point_goods}-->
+    <div id="dataFuncs">
+        <div id="batchAction" class="left paddingT15">
+            <input class="formbtn batchButton" type="button" style="cursor: pointer;" value="{$lang.drop}" name="id" uri="index.php?module=point&act=drop_goods" presubmit="confirm('{$lang.drop_confirm}');" />
+            <input class="formbtn batchButton" type="button" style="cursor: pointer;" value="{$lang.enabled}" name="id" uri="index.php?module=point&act=enabled_goods&enabled=1" presubmit="confirm('{$lang.enabled_confirm}');" />
+            <input class="formbtn batchButton" type="button" style="cursor: pointer;" value="{$lang.unabled}" name="id" uri="index.php?module=point&act=enabled_goods&enabled=0" presubmit="confirm('{$lang.enabled_confirm}');" />
+        </div>
+        <div class="pageLinks">
+            {if $point_goods_list}{include file=page.bottom.html}{/if}
+        </div>
+    </div>
+    <!--{/if}-->
+    <div class="clear"></div>
+</div>
+{include file="footer.html"}

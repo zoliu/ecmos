@@ -1,0 +1,60 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function() {
+
+});
+</script>
+<div id="rightTop">
+    <p>积分中心</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?module=point">{$lang.point_logs}</a></li>
+        <li><span>{$lang.point_set}</span></li>
+        <li><a class="btn1" href="index.php?module=point&act=point_goods">{$lang.point_goods}</a></li>
+        <li><a class="btn1" href="index.php?module=point&act=point_goods_log">{$lang.point_goods_log}</a> </li>
+        <li><a class="btn1" href="index.php?module=member_ext">{$lang.member_ext}</a></li>
+    </ul>
+</div>
+<div class="info">
+    <form method="POST" enctype="multipart/form-data">
+        <table class="infoTable">
+            <!--{foreach from=$config item=cfg}-->
+            {if $cfg.enable_config} {if $cfg.type eq 'select'}
+            <tr>
+                <th class='paddingT15'>{$cfg.label}:</th>
+                <td class='paddingT15 wordSpacing5'>
+                    <select name='{$cfg.name}'>
+                        <option>{$lang.select_pls}</option>
+                        {html_options options=$cfg.options selected=$data[$cfg.name]}
+                    </select>
+                    <label class='field_notice'>{$cfg.desc}</label>
+                </td>
+            </tr>
+            {elseif $cfg.type eq 'textarea'}
+            <tr>
+                <th class='paddingT15'>{$cfg.label}:</th>
+                <td class='paddingT15 wordSpacing5'>
+                    <textarea id="{$cfg.name}" name="{$cfg.name}" style="width:350px;height:100px;">{$data[$cfg.name]|escape}</textarea>
+                    <label class='field_notice'>{$cfg.desc}</label>
+                </td>
+            </tr>
+            {else}
+            <tr>
+                <th class='paddingT15'>{$cfg.label}:</th>
+                <td class='paddingT15 wordSpacing5'>
+                    <input class='infoTableFile2' id='{$cfg.name}' type='text' name='{$cfg.name}' value="{$data[$cfg.name]}" />
+                    <label class='field_notice'>{$cfg.desc}</label>
+                </td>
+            </tr>
+            {/if} {/if}
+            <!--{/foreach}-->
+            <tr>
+                <th class="paddingT15"> </th>
+                <td class="ptb20">
+                    <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                    <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

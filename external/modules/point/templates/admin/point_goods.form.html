@@ -1,0 +1,132 @@
+{include file="header.html"}
+<script type="text/javascript">
+$(function() {
+    $('#point_goods_form').validate({
+        errorPlacement: function(error, element) {
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success: function(label) {
+            label.addClass('right').text('OK!');
+        },
+        onkeyup: false,
+        rules: {
+            sort_order: {
+                number: true
+            }
+        },
+        messages: {
+
+            sort_order: {
+                number: '{$lang.number_only}'
+            }
+        }
+    });
+});
+</script>
+{$build_editor_goods_content}
+<div id="rightTop">
+    <p>积分商品</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?module=point&act=point_goods">{$lang.point_goods}</a></li>
+        {if $point_goods.id}
+        <li><a class="btn1" href="index.php?module=point&act=add_goods">新增商品</a></li>
+        <li><span>编辑商品</span></li>
+        {else}
+        <li><span>新增商品</span></li>
+        {/if}
+        <li><a class="btn1" href="index.php?module=point&act=point_goods_log">{$lang.point_goods_log}</a> </li>
+        <li><a class="btn1" href="index.php?module=point">{$lang.point_logs}</a></li>
+        <li><a class="btn1" href="index.php?module=point&act=point_set">{$lang.point_set}</a></li>
+        <li><a class="btn1" href="index.php?module=member_ext">{$lang.member_ext}</a></li>
+    </ul>
+</div>
+<div class="info">
+    <form method="post" enctype="multipart/form-data" id="point_goods_form">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">
+                    {$lang.goods_name}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" id="goods_name" type="text" name="goods_name" value="{$point_goods.goods_name|escape}" />
+                    <label class="field_notice">{$lang.goods_name}</label>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.goods_desc}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <textarea name="goods_desc" id="goods_desc">{$point_goods.goods_desc}</textarea>
+                    <label class="field_notice">{$lang.goods_desc}</label>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.stock}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" id="stock" type="text" name="stock" value="{$point_goods.stock|escape}" />
+                    <label class="field_notice">{$lang.stock}</label>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.goods_price}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" id="goods_price" type="text" name="goods_price" value="{$point_goods.goods_price|escape}" />
+                    <label class="field_notice">{$lang.goods_price}</label>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.need_point}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" id="need_point" type="text" name="need_point" value="{$point_goods.need_point|escape}" />
+                    <label class="field_notice">{$lang.need_point}</label>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.max_num}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" id="max_num" type="text" name="max_num" value="{$point_goods.max_num|escape}" />
+                    <label class="field_notice">{$lang.max_num_desc}</label>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.photo}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" id="photo_file" type="file" name="photo_file" value="" />
+                    <input class="infoTableInput2" id="photo" type="hidden" name="photo" value="{$point_goods.default_image}" />
+                    <label class="field_notice">{$lang.photo}</label>
+                    <br>
+                    <br> {if $point_goods.default_image } <img src="{$point_goods.default_image}" alt="" width="100" height="70">{/if}&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.goods_content}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <textarea name="goods_content" id="goods_content">{$point_goods.goods_content}</textarea>
+                    <label class="field_notice">{$lang.goods_content}</label>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    {$lang.sort}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput2" id="sort" type="text" name="sort" value="{$point_goods.sort|escape}" />
+                    <label class="field_notice">{$lang.sort}</label>
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td class="ptb20">
+                    <input class="formbtn" type="submit" name="Submit" style="cursor: pointer;" value="{$lang.submit}" />
+                    <input class="formbtn" type="reset" name="Submit2" style="cursor: pointer;" value="{$lang.reset}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

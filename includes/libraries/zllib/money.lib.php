@@ -25,6 +25,8 @@ define('MONEY_L_T_SYSTEM', 6); //系统操作
 define('MONEY_L_T_BUY_TC', 7); //推荐会员购物提成
 define('MONEY_L_T_SELL_TC', 8); //推荐商家销售提成
 
+import('zllib/methods.lib');
+
 
 /**
  * 用户钱包公用方法类
@@ -38,21 +40,12 @@ class Money {
     protected $money_log_model;
     protected $bank_model;
     protected $member_model;
-    protected $c_config; //佣金配置
 
     function __construct() {
         $this->money_model = &m('money');
         $this->money_log_model = &m('money_log');
         $this->bank_model = &m('bank');
         $this->member_model = &m('member');
-        
-        import('zllib/methods.lib');
-        $this->c_config = Methods::load_config(ROOT_PATH . '/data/commission.inc.php');
-        $this->c_config = array_merge($this->c_config, array(
-        	'mall_tc' => 0.2, //提成占比
-        	'buy_tc'  => 0.4,
-        	'sell_tc'  => 0.4,
-        ));
     }
 
     /**
@@ -549,6 +542,9 @@ class Money {
      * @param unknown $order_info
      */
     function order($order_info) {
+
+        $filename = ROOT_PATH . '/data/member_level.inc.php';
+        $config = Methods::load_config($filename);
     
         //获取相关信息
     	$buyer_id = $order_info['buyer_id'];
@@ -576,10 +572,10 @@ class Money {
     		$cate_temp = array_shift($cate_id_arr);
     		$cate_id = $cate_temp['cate_id'];
     		
-    		$money += $v['quantity'] * $v['price'] * ($this->c_config['gcate'][$cate_id] ? $this->c_config['gcate'][$cate_id] : $this->c_config['mall_c_rate']);
+    		$money += $v['quantity'] * $v['price'] * ($config['gcate'][$cate_id] ? $config['gcate'][$cate_id] : $config['order_rate']);
     	}
-    	if ($this->c_config['sgrade'][$store_info['sgrade']]) {
-    		$money = $money * (1 - $this->c_config['sgrade'][$store_info['sgrade']]);
+    	if ($config['sgrade'][$store_info['sgrade']]) {
+    		$money = $money * (1 - $config['sgrade'][$store_info['sgrade']]);
     	}
     	
     	//钱包变更
@@ -591,19 +587,20 @@ class Money {
     		$this->pay_seller_add($order_info['seller_id'], $order_info['buyer_id'], $order_info['order_amount'] - $money, $order_info['order_id']);
     	}
         
-        //更新用户购物总额与销售总额
-        $this->member_model->edit($buyer_id, "total_buy = total_buy + {$order_info['order_amount']}");
-        $this->member_model->edit($seller_id, "total_sell = total_sell + {$order_info['order_amount']}");
-    
+        //更新用户购物总额
+        $member_ext_model = &m('member_ext');
+        $member_ext_model->edit($buyer_id, "total_buy = total_buy + {$order_info['order_amount']}");
+        
         //更新相关用户的等级
         import('zllib/user.lib');
         $buyer_info = $this->member_model->get($buyer_id);
-        UserGrade::init()->update_grade($buyer_info['parent_id']);
+        $member_grade_model = &m('member_grade');
+        $member_grade_model->updateGrade($buyer_id);
     
         //更新提成相关
-        $this->buy_tc($buyer_id, $money * $this->c_config['buy_tc'], $this->c_config['tc_layer']);
-        $this->sell_tc($seller_id, $money * $this->c_config['sell_tc'], $this->c_config['tc_layer']);
-        $this->tc_add(ADMIN_ID, $seller_id, $money * $this->c_config['mall_tc'], MONEY_L_T_SYSTEM);
+        $this->buy_tc($buyer_id, $money * $config['tc']['buy_ratio'], $config['tc_layer']);
+        $this->sell_tc($seller_id, $money * $config['tc']['sell_ratio'], $config['tc_layer']);
+        $this->tc_add(ADMIN_ID, $seller_id, $money * $config['mall_ratio'], MONEY_L_T_SYSTEM);
     }
     
     /**
@@ -616,6 +613,8 @@ class Money {
         if (!$buyer_info) {
             return 0;
         }
+
+        $member_grade_model = &m('member_grade');
     
         //得到相应层级类的上级用户信息
         $parent_id_arr = explode(',', $buyer_info['parent_path']);
@@ -629,23 +628,17 @@ class Money {
             if (!$parent_id_arr) {
                 break;
             }
-            
-            $joinstr = $this->member_model->parseJoin('grade_id', 'id', 'user_grade');
-            $parent_info = $this->member_model->get(array(
-                'joinstr' => $joinstr,
-                'fields' => 'member.user_id, member.grade_id, user_grade.other',
-                'conditions' => "user_id = {$parent_id}",
-            ));
-            if (!$parent_info) {
+
+            $parent_grade_info = $member_grade_model->getGradeinfo($parent_id);
+            if (!$parent_grade_info) {
                 continue;
             }
-            $parent_info['other'] = unserialize($parent_info['other']);
     
             //计算money
-            $income_money = $money * $parent_info['other']['buy_tc'];
+            $income_money = $money * $parent_grade_info['buy_tc'];
     
             //加入记录，变更余额
-            $this->tc_add($parent_info['user_id'], $buyer_info['user_id'], $income_money, MONEY_L_T_BUY_TC);
+            $this->tc_add($parent_id, $buyer_info['user_id'], $income_money, MONEY_L_T_BUY_TC);
             
             $money = $money - $income_money;
         }
@@ -667,6 +660,8 @@ class Money {
         if (!$seller_info) {
             return 0;
         }
+
+        $member_grade_model = &m('member_grade');
     
         //得到相应层级类的上级用户信息
         $parent_id_arr = explode(',', $seller_info['parent_path']);
@@ -681,22 +676,16 @@ class Money {
                 break;
             }
             
-            $joinstr = $this->member_model->parseJoin('grade_id', 'id', 'user_grade');
-            $parent_info = $this->member_model->get(array(
-                'joinstr' => $joinstr,
-                'fields' => 'member.user_id, member.grade_id, user_grade.other',
-                'conditions' => "user_id = {$parent_id}",
-            ));
-            if (!$parent_info) {
+            $parent_grade_info = $member_grade_model->getGradeinfo($parent_id);
+            if (!$parent_grade_info) {
                 continue;
             }
-            $parent_info['other'] = unserialize($parent_info['other']);
-    
+
             //计算money
-            $income_money = $money * $parent_info['other']['sell_tc'];
+            $income_money = $money * $parent_grade_info['sell_tc'];
     
             //加入记录，变更余额
-            $this->tc_add($parent_info['user_id'], $seller_info['user_id'], $income_money, MONEY_L_T_SELL_TC);
+            $this->tc_add($parent_id, $seller_info['user_id'], $income_money, MONEY_L_T_SELL_TC);
     
             $money = $money - $income_money;
         }

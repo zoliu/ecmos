@@ -106,7 +106,7 @@ return array(
                 'url'   => 'index.php?app=goods',
             ),
             'recommend_type' => array(
-                'text'  => LANG::get('recommend_type'),
+                'text'  => Lang::get('recommend_type'),
                 'url'   => 'index.php?app=recommend'
             ),
             'recom_cate' => array(
@@ -161,14 +161,6 @@ return array(
                 'text' => Lang::get('money'),
                 'url'  => 'index.php?app=money',
             ),
-            'user_grade' => array(
-                'text' => Lang::get('user_grade'),
-                'url'  => 'index.php?app=user_grade',
-            ),
-        	'commission' => array(
-        		'text' => '佣金管理',
-        		'url' => 'index.php?app=commission',
-        	),
         ),
     ),
     // 交易
@@ -217,12 +209,16 @@ return array(
                 'url'  => 'index.php?app=groupbuy',
             ),
             'consulting' => array(
-                'text'  =>  LANG::get('consulting'),
+                'text'  =>  Lang::get('consulting'),
                 'url'   => 'index.php?app=consulting',
             ),
             'share_link' => array(
-                'text'  =>  LANG::get('share_link'),
+                'text'  =>  Lang::get('share_link'),
                 'url'   => 'index.php?app=share',
+            ),
+            'statics' => array(
+                'text'  =>  Lang::get('statics_details'),
+                'url'   => 'index.php?app=statics',
             ),
         ),
     ),

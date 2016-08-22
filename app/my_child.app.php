@@ -63,10 +63,8 @@ class My_childApp extends MemberbaseApp {
         $conditions .= " AND member.parent_id = {$this->user_id}";
         
         $page = $this->_get_page();
-        $joinstr = $this->user_model->parseJoin('grade_id', 'id', 'user_grade');
         $user_list = $this->user_model->find(array(
-            'joinstr' => $joinstr,
-            'fields' => 'member.user_id, member.user_name, member.real_name, member.phone_mob, member.reg_time, user_grade.grade_name',
+            'fields' => 'member.user_id, member.user_name, member.real_name, member.phone_mob, member.reg_time',
             'conditions' => $conditions,
             'limit' => $page['limit'],
             'count' => true,
