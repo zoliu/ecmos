@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2016-08-19 15:10:05
+Date: 2016-08-22 16:05:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -95,11 +95,16 @@ CREATE TABLE `ecm_all_statistics` (
   `store_id` int(11) DEFAULT NULL,
   `store_name` char(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ecm_all_statistics
 -- ----------------------------
+INSERT INTO `ecm_all_statistics` VALUES ('1', null, '3', '1', '105', null, null, null, null, null, null, null, '1', '2016-3-08-4-22', '1471815471', '1471824303', '2', '演示店铺');
+INSERT INTO `ecm_all_statistics` VALUES ('2', null, '3', '1', '105', null, null, null, null, null, null, null, '2', '2016-3-08-4', '1471815471', '1471824303', '2', '演示店铺');
+INSERT INTO `ecm_all_statistics` VALUES ('3', null, '3', '1', '105', null, null, null, null, null, null, null, '3', '2016-3-08', '1471815471', '1471824303', '2', '演示店铺');
+INSERT INTO `ecm_all_statistics` VALUES ('4', null, '3', '1', '105', null, null, null, null, null, null, null, '4', '2016-3', '1471815471', '1471824303', '2', '演示店铺');
+INSERT INTO `ecm_all_statistics` VALUES ('5', null, '3', '1', '105', null, null, null, null, null, null, null, '5', '2016', '1471815471', '1471824303', '2', '演示店铺');
 
 -- ----------------------------
 -- Table structure for `ecm_app`
@@ -262,7 +267,7 @@ CREATE TABLE `ecm_cart` (
   PRIMARY KEY (`rec_id`),
   KEY `session_id` (`session_id`) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=113 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=114 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ecm_cart
@@ -366,6 +371,7 @@ INSERT INTO `ecm_collect` VALUES ('3', 'goods', '16', '', '1469745367');
 INSERT INTO `ecm_collect` VALUES ('3', 'goods', '25', '', '1470937825');
 INSERT INTO `ecm_collect` VALUES ('3', 'goods', '26', '', '1470937824');
 INSERT INTO `ecm_collect` VALUES ('3', 'goods', '39', '', '1470937825');
+INSERT INTO `ecm_collect` VALUES ('2', 'store', '2', '', '1471820906');
 
 -- ----------------------------
 -- Table structure for `ecm_coupon`
@@ -428,6 +434,137 @@ CREATE TABLE `ecm_delivery_template` (
 
 -- ----------------------------
 -- Records of ecm_delivery_template
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `ecm_deposit_account`
+-- ----------------------------
+DROP TABLE IF EXISTS `ecm_deposit_account`;
+CREATE TABLE `ecm_deposit_account` (
+  `account_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `account` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `money` decimal(10,2) NOT NULL,
+  `frozen` decimal(10,2) NOT NULL,
+  `real_name` varchar(30) NOT NULL,
+  `pay_status` varchar(3) NOT NULL DEFAULT 'off',
+  `add_time` int(11) NOT NULL,
+  `last_update` int(11) NOT NULL,
+  PRIMARY KEY (`account_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ecm_deposit_account
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `ecm_deposit_recharge`
+-- ----------------------------
+DROP TABLE IF EXISTS `ecm_deposit_recharge`;
+CREATE TABLE `ecm_deposit_recharge` (
+  `recharge_id` int(11) NOT NULL AUTO_INCREMENT,
+  `tradesn` varchar(30) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `examine` varchar(100) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `status` varchar(30) NOT NULL,
+  `is_online` int(1) NOT NULL,
+  `extra` text NOT NULL,
+  `add_time` int(11) NOT NULL,
+  `pay_time` int(11) NOT NULL,
+  `end_time` int(11) NOT NULL,
+  PRIMARY KEY (`recharge_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ecm_deposit_recharge
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `ecm_deposit_record`
+-- ----------------------------
+DROP TABLE IF EXISTS `ecm_deposit_record`;
+CREATE TABLE `ecm_deposit_record` (
+  `record_id` int(11) NOT NULL AUTO_INCREMENT,
+  `tradesn` varchar(30) NOT NULL,
+  `order_sn` varchar(20) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT '交易发起方',
+  `party_id` int(11) NOT NULL COMMENT '交易的对方',
+  `amount` decimal(10,2) NOT NULL COMMENT '收支金额',
+  `balance` decimal(10,2) NOT NULL COMMENT '账户余额',
+  `flow` varchar(10) NOT NULL COMMENT '资金流向',
+  `purpose` varchar(20) NOT NULL COMMENT '用途',
+  `status` varchar(30) NOT NULL,
+  `payway` varchar(100) NOT NULL COMMENT '资金渠道',
+  `name` varchar(100) NOT NULL COMMENT '名称',
+  `remark` varchar(255) NOT NULL COMMENT '备注',
+  `add_time` int(11) NOT NULL,
+  `pay_time` int(11) NOT NULL,
+  `end_time` int(11) NOT NULL,
+  PRIMARY KEY (`record_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ecm_deposit_record
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `ecm_deposit_refund`
+-- ----------------------------
+DROP TABLE IF EXISTS `ecm_deposit_refund`;
+CREATE TABLE `ecm_deposit_refund` (
+  `refund_id` int(11) NOT NULL AUTO_INCREMENT,
+  `record_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT '获得退款的用户ID',
+  `amount` decimal(10,2) NOT NULL,
+  `status` varchar(30) NOT NULL,
+  `remark` varchar(255) NOT NULL,
+  PRIMARY KEY (`refund_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ecm_deposit_refund
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `ecm_deposit_setting`
+-- ----------------------------
+DROP TABLE IF EXISTS `ecm_deposit_setting`;
+CREATE TABLE `ecm_deposit_setting` (
+  `setting_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `trade_rate` decimal(10,3) NOT NULL COMMENT '交易手续费',
+  `transfer_rate` decimal(10,3) NOT NULL,
+  `auto_create_account` int(1) NOT NULL,
+  `config_account_captcha` int(1) NOT NULL,
+  PRIMARY KEY (`setting_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ecm_deposit_setting
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `ecm_deposit_withdraw`
+-- ----------------------------
+DROP TABLE IF EXISTS `ecm_deposit_withdraw`;
+CREATE TABLE `ecm_deposit_withdraw` (
+  `withdraw_id` int(11) NOT NULL AUTO_INCREMENT,
+  `record_id` int(11) NOT NULL,
+  `tradesn` varchar(30) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `status` varchar(30) NOT NULL,
+  `card_info` text NOT NULL,
+  `add_time` int(11) NOT NULL,
+  `pay_time` int(11) NOT NULL,
+  `end_time` int(11) NOT NULL,
+  PRIMARY KEY (`withdraw_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ecm_deposit_withdraw
 -- ----------------------------
 
 -- ----------------------------
@@ -1187,7 +1324,7 @@ CREATE TABLE `ecm_goods_statistics` (
 -- Records of ecm_goods_statistics
 -- ----------------------------
 INSERT INTO `ecm_goods_statistics` VALUES ('1', '26', '1', '5', '5', '1', '0');
-INSERT INTO `ecm_goods_statistics` VALUES ('2', '8', '0', '3', '4', '0', '0');
+INSERT INTO `ecm_goods_statistics` VALUES ('2', '14', '0', '3', '4', '0', '0');
 INSERT INTO `ecm_goods_statistics` VALUES ('3', '28', '2', '7', '4', '0', '0');
 INSERT INTO `ecm_goods_statistics` VALUES ('4', '17', '1', '5', '8', '17', '0');
 INSERT INTO `ecm_goods_statistics` VALUES ('5', '7', '0', '1', '2', '0', '0');
@@ -1209,12 +1346,12 @@ INSERT INTO `ecm_goods_statistics` VALUES ('20', '5', '0', '2', '2', '1', '1');
 INSERT INTO `ecm_goods_statistics` VALUES ('21', '6', '0', '3', '3', '0', '1');
 INSERT INTO `ecm_goods_statistics` VALUES ('22', '5', '0', '2', '2', '0', '0');
 INSERT INTO `ecm_goods_statistics` VALUES ('23', '8', '0', '0', '0', '0', '0');
-INSERT INTO `ecm_goods_statistics` VALUES ('24', '20', '0', '4', '4', '2', '1');
+INSERT INTO `ecm_goods_statistics` VALUES ('24', '48', '0', '5', '4', '2', '1');
 INSERT INTO `ecm_goods_statistics` VALUES ('25', '6', '1', '11', '3', '16', '0');
 INSERT INTO `ecm_goods_statistics` VALUES ('26', '10', '1', '5', '2', '0', '1');
 INSERT INTO `ecm_goods_statistics` VALUES ('27', '4', '0', '3', '1', '0', '0');
 INSERT INTO `ecm_goods_statistics` VALUES ('28', '4', '0', '2', '1', '1', '1');
-INSERT INTO `ecm_goods_statistics` VALUES ('29', '51', '0', '13', '14', '6', '0');
+INSERT INTO `ecm_goods_statistics` VALUES ('29', '52', '0', '13', '14', '6', '0');
 INSERT INTO `ecm_goods_statistics` VALUES ('39', '39', '1', '20', '17', '15', '0');
 
 -- ----------------------------
@@ -1397,13 +1534,27 @@ CREATE TABLE `ecm_member` (
 -- ----------------------------
 -- Records of ecm_member
 -- ----------------------------
-INSERT INTO `ecm_member` VALUES ('1', 'admin', 'seema@zoliu.cn', 'e10adc3949ba59abbe56e057f20f883e', '超级管理员', '0', null, null, null, '', '', null, null, null, '1421048268', '1471540884', '127.0.0.1', '91', '0', '', '0', null, '', '', '0', '0', '1', ',0,1', '0');
-INSERT INTO `ecm_member` VALUES ('2', 'seller', 'seller@ecmall.com', 'e10adc3949ba59abbe56e057f20f883e', '超级卖家', '0', null, null, null, null, null, null, null, null, '1421048309', '1471546177', '127.0.0.1', '71', '0', null, '0', null, '', '', '0', '0', '1', ',0,1', '0');
+INSERT INTO `ecm_member` VALUES ('1', 'admin', 'seema@zoliu.cn', 'e10adc3949ba59abbe56e057f20f883e', '超级管理员', '0', null, null, null, '', '', null, null, null, '1421048268', '1471815873', '127.0.0.1', '92', '0', '', '0', null, '', '', '0', '0', '1', ',0,1', '0');
+INSERT INTO `ecm_member` VALUES ('2', 'seller', 'seller@ecmall.com', 'e10adc3949ba59abbe56e057f20f883e', '超级卖家', '0', null, null, null, null, null, null, null, null, '1421048309', '1471822717', '127.0.0.1', '73', '0', null, '0', null, '', '', '0', '0', '1', ',0,1', '0');
 INSERT INTO `ecm_member` VALUES ('3', 'buyer', 'buyer@ecmall.com', 'e10adc3949ba59abbe56e057f20f883e', '超级买家', '0', null, null, null, null, null, null, null, null, '1421048309', '1471025587', '127.0.0.1', '68', '0', null, '0', null, '', '', '0', '0', '2', ',0,1,2', '0');
 INSERT INTO `ecm_member` VALUES ('22', 'tiantian', 'tiantian@sina.cn', 'e10adc3949ba59abbe56e057f20f883e', null, '0', null, null, null, null, null, null, null, null, '1469138175', '1471458126', '192.168.1.5', '9', '0', null, '0', null, '', '', '0', '0', '21', ',0,1,2,21', '0');
 INSERT INTO `ecm_member` VALUES ('23', 'lucky', 'lucky@sina.cn', 'e10adc3949ba59abbe56e057f20f883e', null, '0', null, null, null, null, null, null, null, null, '1469139490', '1471462433', '192.168.1.5', '4', '0', null, '0', null, '', '', '0', '0', '22', ',0,1,2,21,22', '0');
 INSERT INTO `ecm_member` VALUES ('21', 'summer', 'summer@sina.com', 'e10adc3949ba59abbe56e057f20f883e', '夏天', '0', '1922-02-02', null, null, '', '', null, null, null, '1469136102', '1471458103', '192.168.1.5', '11', '0', 'data/files/mall/portrait/1/21.jpg', '0', null, '', '', '0', '0', '2', ',0,1,2', '0');
 INSERT INTO `ecm_member` VALUES ('24', 'test', 'test@ecm.com', 'e10adc3949ba59abbe56e057f20f883e', '', '0', null, null, null, '', '', null, null, null, '1469657821', '1469664631', '127.0.0.1', '2', '0', null, '0', null, '', '', '0', '0', '1', ',0,1', '0');
+
+-- ----------------------------
+-- Table structure for `ecm_member_bind`
+-- ----------------------------
+DROP TABLE IF EXISTS `ecm_member_bind`;
+CREATE TABLE `ecm_member_bind` (
+  `openid` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `app` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ecm_member_bind
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `ecm_member_ext`
@@ -1427,7 +1578,7 @@ INSERT INTO `ecm_member_ext` VALUES ('21', '1', '0', '0', '0.0000', '1471387536'
 INSERT INTO `ecm_member_ext` VALUES ('23', '3', '1282', '4988', '1705.0000', '1471387536');
 INSERT INTO `ecm_member_ext` VALUES ('22', '3', '0', '0', '0.0000', '1471387536');
 INSERT INTO `ecm_member_ext` VALUES ('3', '1', '0', '0', '0.0000', '1471387536');
-INSERT INTO `ecm_member_ext` VALUES ('2', '2', '700', '1100', '0.0000', '1471387536');
+INSERT INTO `ecm_member_ext` VALUES ('2', '2', '750', '1150', '0.0000', '1471387536');
 INSERT INTO `ecm_member_ext` VALUES ('1', '3', '0', '0', '0.0000', '1471387536');
 
 -- ----------------------------
@@ -1475,7 +1626,7 @@ CREATE TABLE `ecm_message` (
   KEY `from_id` (`from_id`) USING BTREE,
   KEY `to_id` (`to_id`) USING BTREE,
   KEY `parent_id` (`parent_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ecm_message
@@ -1522,6 +1673,7 @@ INSERT INTO `ecm_message` VALUES ('42', '0', '2', '积分消费-- 消费100积�
 INSERT INTO `ecm_message` VALUES ('43', '0', '2', '积分消费-- 消费100积分 兑换积分商品【养元面(100积分1件9种面组成）】', '积分消费-- 消费100积分 兑换积分商品【养元面(100积分1件9种面组成）】', '1471546397', '1471546397', '1', '0', '3');
 INSERT INTO `ecm_message` VALUES ('44', '0', '2', '积分消费-- 消费100积分 兑换积分商品【养元面(100积分1件9种面组成）】', '积分消费-- 消费100积分 兑换积分商品【养元面(100积分1件9种面组成）】', '1471546458', '1471546458', '1', '0', '3');
 INSERT INTO `ecm_message` VALUES ('45', '0', '2', '积分消费-- 消费100积分 兑换积分商品【VIP套餐（牛蒡酱8瓶）】', '积分消费-- 消费100积分 兑换积分商品【VIP套餐（牛蒡酱8瓶）】', '1471550447', '1471550447', '1', '0', '3');
+INSERT INTO `ecm_message` VALUES ('46', '0', '2', '登陆赠送积分-- 得到50积分 ', '登陆赠送积分-- 得到50积分', '1471815905', '1471815905', '1', '0', '3');
 
 -- ----------------------------
 -- Table structure for `ecm_module`
@@ -2287,7 +2439,7 @@ CREATE TABLE `ecm_point_logs` (
   `remark` varchar(100) DEFAULT NULL,
   `type` char(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ecm_point_logs
@@ -2317,6 +2469,7 @@ INSERT INTO `ecm_point_logs` VALUES ('22', '2', 'seller', '100', '1471546271', '
 INSERT INTO `ecm_point_logs` VALUES ('23', '2', 'seller', '100', '1471546397', '积分消费-- 消费100积分 兑换积分商品【养元面(100积分1件9种面组成）】', 'buyer_to_point');
 INSERT INTO `ecm_point_logs` VALUES ('24', '2', 'seller', '100', '1471546458', '积分消费-- 消费100积分 兑换积分商品【养元面(100积分1件9种面组成）】', 'buyer_to_point');
 INSERT INTO `ecm_point_logs` VALUES ('25', '2', 'seller', '100', '1471550447', '积分消费-- 消费100积分 兑换积分商品【VIP套餐（牛蒡酱8瓶）】', 'buyer_to_point');
+INSERT INTO `ecm_point_logs` VALUES ('26', '2', 'seller', '50', '1471815905', '登陆赠送积分-- 得到50积分 ', 'login_point');
 
 -- ----------------------------
 -- Table structure for `ecm_point_set`
@@ -3333,7 +3486,7 @@ CREATE TABLE `ecm_sessions` (
 -- ----------------------------
 -- Records of ecm_sessions
 -- ----------------------------
-INSERT INTO `ecm_sessions` VALUES ('1c4271e9b68b01483316d31fdb147874', '1471563157', '0', '0', '127.0.0.1', '', '1');
+INSERT INTO `ecm_sessions` VALUES ('c6927224c2e941fe6f922fc4bc8cc3ae', '1471825745', '0', '0', '127.0.0.1', '', '1');
 
 -- ----------------------------
 -- Table structure for `ecm_sessions_data`
@@ -3350,7 +3503,7 @@ CREATE TABLE `ecm_sessions_data` (
 -- ----------------------------
 -- Records of ecm_sessions_data
 -- ----------------------------
-INSERT INTO `ecm_sessions_data` VALUES ('1c4271e9b68b01483316d31fdb147874', '1471563157', 'ECMALL_WAP|i:0;admin_info|a:5:{s:7:\"user_id\";s:1:\"1\";s:9:\"user_name\";s:5:\"admin\";s:8:\"reg_time\";s:10:\"1421048268\";s:10:\"last_login\";s:10:\"1471459139\";s:7:\"last_ip\";s:11:\"192.168.1.5\";}user_info|a:6:{s:7:\"user_id\";s:1:\"2\";s:9:\"user_name\";s:6:\"seller\";s:8:\"reg_time\";s:10:\"1421048309\";s:10:\"last_login\";s:10:\"1471480378\";s:7:\"last_ip\";s:9:\"127.0.0.1\";s:8:\"store_id\";s:1:\"2\";}');
+INSERT INTO `ecm_sessions_data` VALUES ('c6927224c2e941fe6f922fc4bc8cc3ae', '1471825745', 'ECMALL_WAP|i:0;admin_info|a:5:{s:7:\"user_id\";s:1:\"1\";s:9:\"user_name\";s:5:\"admin\";s:8:\"reg_time\";s:10:\"1421048268\";s:10:\"last_login\";s:10:\"1471540884\";s:7:\"last_ip\";s:9:\"127.0.0.1\";}user_info|a:6:{s:7:\"user_id\";s:1:\"2\";s:9:\"user_name\";s:6:\"seller\";s:8:\"reg_time\";s:10:\"1421048309\";s:10:\"last_login\";s:10:\"1471815905\";s:7:\"last_ip\";s:9:\"127.0.0.1\";s:8:\"store_id\";s:1:\"2\";}');
 
 -- ----------------------------
 -- Table structure for `ecm_sgrade`
@@ -3377,7 +3530,7 @@ CREATE TABLE `ecm_sgrade` (
 -- Records of ecm_sgrade
 -- ----------------------------
 INSERT INTO `ecm_sgrade` VALUES ('1', '系统默认', '5', '2', '1', '0', '100元/年', '0', '测试用户请选择“默认等级”，可以立即开通。', null, 'default|default', '', '255');
-INSERT INTO `ecm_sgrade` VALUES ('2', '认证店铺', '200', '1000', '1', '0', '200元/年', '1', '申请时需要上传身份证和营业执照复印件', 'editor_multimedia,coupon,groupbuy', 'default|default', '', '255');
+INSERT INTO `ecm_sgrade` VALUES ('2', '认证店铺', '200', '1000', '11', '0', '200元/年', '1', '申请时需要上传身份证和营业执照复印件', 'editor_multimedia,coupon,groupbuy', 'default|default,default|style1,default|style2,default|style3,default|style4,default|style5,default|style6,default|style7,default|style8,jd2015|default,leshenghuo|default', '', '255');
 
 -- ----------------------------
 -- Table structure for `ecm_shipping`
