@@ -1,0 +1,204 @@
+<script type="text/javascript" src="{lib file=groupinfo.js}" charset="utf-8"></script>
+<script type="text/javascript">
+//<!CDATA[
+/* buy */
+function buy()
+{
+	var gid = '{$goods.gid}';//增加团购id添加到购物车
+	var max_per_user = '{$goods.max_per_user}';
+	var max_per_user_desc = '{$goods.max_per_user_desc}';
+	
+    if (goodsspec.getSpec() == null)
+    {
+        alert(lang.select_specs);
+        return;
+    }
+    var spec_id = goodsspec.getSpec().id;
+    var quantity = $("#quantity").val();
+    if (quantity == '')
+    {
+        alert(lang.input_quantity);
+        return;
+    }
+    if (parseInt(quantity) < 1)
+    {
+        alert(lang.invalid_quantity);
+        return;
+    }
+	if(max_per_user > 0 && parseInt(quantity) > max_per_user)
+	{
+			alert(max_per_user_desc);
+			return;
+	}
+    add_to_cart(spec_id, quantity, gid);
+}
+
+/* add cart */
+function add_to_cart(spec_id, quantity, gid)
+{
+    var url = SITE_URL + '/index.php?app=cart&act=add';
+    $.getJSON(url, {'spec_id':spec_id, 'quantity':quantity, 'gid':gid}, function(data){
+        if (data.done)
+        {
+            $('.bold_num').text(data.retval.cart.kinds);
+            $('.bold_mly').html(price_format(data.retval.cart.amount));
+            $('.ware_cen').slideDown('slow');
+            setTimeout(slideUp_fn, 5000);
+        }
+        else
+        {
+            alert(data.msg);
+        }
+    });
+}
+
+var specs = new Array();
+<!--{foreach from=$goods._specs item=spec}-->
+<!--{if $spec.group_price}-->
+specs.push(new spec({$spec.spec_id}, '{$spec.spec_1|escape}', '{$spec.spec_2|escape}', {$spec.price},{$spec.group_price}, {$spec.stock}));
+<!--{else}-->
+specs.push(new spec({$spec.spec_id}, '{$spec.spec_1|escape}', '{$spec.spec_2|escape}', {$spec.price},0, {$spec.stock}));
+<!--{/if}-->
+<!--{/foreach}-->
+var specQty = {$goods.spec_qty};
+var defSpec = {$goods.default_spec|escape};
+var goodsspec = new goodsspec(specs, specQty, defSpec);
+//]]>
+</script>
+<style type="text/css">
+.ju-desc { border-bottom:1px solid #EFEFEF; border-top:1px solid #EFEFEF; padding: 10px 0;}
+.ju-desc p{ font-size:14px; line-height:25px; color:#666;}
+.ju-desc a{ color:#0066CC; font-weight:700; text-decoration:none;}
+.promo-price-type{border:1px solid #E3C8BD; color:#B68571;padding:2px 3px 2px 3px; border-radius:2px; font-style:normal}
+.promo-price{color:#BB000D; font-size:24px; font-family:Arial,Helvetica,sans-serif; vertical-align:middle; font-weight:700;padding-left:5px;}
+.price-del{font-size:15px}
+.price-normal{font-family:Arial;color:#FF543A;font-size:16px;font-weight:bold}
+sub.two{padding-left:12px; padding-right:12px;}
+</style>
+<h2 class="ware_title">{$goods.goods_name|escape}</h2>
+
+<div class="ware_info">
+    <div class="ware_pic">
+        <div class="big_pic">
+            <a href="javascript:;"><span class="jqzoom"><img src="{$goods._images.0.thumbnail|default:$default_image}" width="300" height="300" jqimg="{$goods._images.0.image_url}" /></span></a>
+        </div>
+
+        <div class="bottom_btn">
+            <!--<a class="collect" href="javascript:collect_goods({$goods.goods_id});" title="{$lang.add_to_favorite}"></a>-->
+            <div class="left_btn"></div>
+            <div class="right_btn"></div>
+            <div class="ware_box">
+                <ul>
+                    <!--{foreach from=$goods._images item=goods_image name=fe_goods_image}-->
+                    <li {if $smarty.foreach.fe_goods_image.first}class="ware_pic_hover"{/if} bigimg="{$goods_image.image_url}"><img src="{$goods_image.thumbnail}" width="55" height="55" /></li>
+                    <!--{/foreach}-->
+                </ul>
+            </div>
+        </div>
+        <script>
+            $(function(){
+                var btn_list_li = $("#btn_list > li");
+                btn_list_li.hover(function(){
+                    $(this).find("ul:not(:animated)").slideDown("fast");
+                },function(){
+                    $(this).find("ul").slideUp("fast");
+                });
+            });
+        </script>
+        <!-- {if $share} -->
+        <ul id="btn_list">
+            <li id="btn_list1" title="{$lang.collect_goods}">
+                <ul class="drop_down">
+                    <!-- {foreach from=$share item=item} -->
+                    <!-- {if $item.type eq 'collect'} --><li><!-- {if $item.logo} --><img src="{$item.logo}" /><!-- {/if} --><a target="_blank" href="{$item.link}">{$item.title|escape}</a></li><!-- {/if} -->
+                    <!-- {/foreach} -->
+                </ul>
+            </li>
+            <li id="btn_list2" title="{$lang.share_goods}">
+                <ul class="drop_down">
+                    <!-- {foreach from=$share item=item} -->
+                    <!-- {if $item.type eq 'share'} --><li><!-- {if $item.logo} --><img src="{$item.logo}" /><!-- {/if} --><a target="_blank" href="{$item.link}">{$item.title|escape}</a></li><!-- {/if} -->
+                    <!-- {/foreach} -->
+                </ul>
+            </li>
+        </ul>
+        <!-- {/if} -->
+    </div>
+
+    <div class="ware_text">
+        <div class="rate">
+        
+       		<div id="is_pro"{if !$goods._specs.0.group_price}style="display:none"{/if}>
+				<span>价<sub class="two"></sub>格{$lang.colon}</span>
+				<span ectype="goods_price"><del class="price-del">{$goods._specs.0.price|price}</del></span><br />
+				<span>促<sub class="two"></sub>销{$lang.colon}</span>
+				<em class="promo-price-type" title="{$goods.pro_desc}">{$lang.ju}</em>
+				<span class="promo-price" ectype="goods_group_price">{$goods._specs.0.group_price|price}</span>
+			</div>
+               
+			<div id="not_pro" {if $goods._specs.0.group_price} style="display:none"{/if}>
+				<span>价<sub class="two"></sub>格{$lang.colon}</span>
+				<span class="price-normal" ectype="goods_price">{$goods._specs.0.price|price}</span>
+			</div>
+               
+            <!-- end tyioocom -->
+            <span>品<sub class="two"></sub>牌{$lang.colon}</span>{$goods.brand|escape}<br />
+            <!--{if $goods.tags}-->
+            <span>{$lang.tags}{$lang.colon}</span><span><!--{foreach from=$goods.tags item=tag}-->{$tag}&nbsp;&nbsp;&nbsp;<!--{/foreach}--></span><br />
+            <!--{/if}-->
+            <span>{$lang.sale_situation}{$lang.colon}</span><span>{$sales_info}{$comments}</span><br />
+            <span>{$lang.region}{$lang.colon}</span><span>{$store.region_name|escape}</span>
+        </div>
+
+        <div class="handle">
+            <!--{if $goods.spec_qty gt 0}-->
+            <ul>
+                <li class="handle_title">{$goods.spec_name_1|escape}: </li>
+            </ul>
+            <!--{/if}-->
+            <!--{if $goods.spec_qty gt 1}-->
+            <ul>
+                <li class="handle_title">{$goods.spec_name_2|escape}: </li>
+            </ul>
+            <!--{/if}-->
+            <ul>
+                <li class="handle_title">{$lang.quantity}: </li>
+                <li>
+                    <input type="text" class="text width1" name="" id="quantity" value="1" />
+                    {$lang.unit}{$lang.left_bracket}{$lang.stock}<span class="stock" ectype="goods_stock">{$goods._specs.0.stock}</span>{$lang.unit}{$lang.right_bracket}
+                </li>
+            </ul>
+            <!--{if $goods.spec_qty gt 0}-->
+            <ul>
+                <li class="handle_title">{$lang.your_select}: </li>
+                <li class="aggregate" ectype="current_spec"></li>
+            </ul>
+            <!--{/if}-->
+        </div>
+
+        <ul class="ware_btn">
+            <div class="ware_cen" style="display:none">
+                <div class="ware_center">
+                    <h1>
+                        <span class="dialog_title">{$lang.add_to_cart_ok}</span>
+                        <span class="close_link" title="{$lang.close}" onmouseover="this.className = 'close_hover'" onmouseout="this.className = 'close_link'" onclick="slideUp_fn();"></span>
+                    </h1>
+                    <div class="ware_cen_btn">
+                        <p class="ware_text_p">{$lang.cart_status}</p>
+                        <p class="ware_text_btn">
+                            <input type="submit" class="btn1" name="" value="{$lang.view_cart}" onclick="location.href='{$site_url}/index.php?app=cart'" />
+                            <input type="submit" class="btn2" name="" value="{$lang.continue_buy}" onclick="$('.ware_cen').css({'display':'none'});" />
+                        </p>
+                    </div>
+                </div>
+                <div class="ware_cen_bottom"></div>
+            </div>
+
+            <!--<li class="btn_c1" title="{$lang.buy_now}"><a href="#"></a></li>-->
+            <li class="btn_c2" title="{$lang.add_to_cart}"><a href="javascript:buy();"></a></li>
+            <li class="btn_c3" title="{$lang.add_to_favorite}"><a href="javascript:collect_goods({$goods.goods_id});"></a></li>
+        </ul>
+    </div>
+
+    <div class="clear"></div>
+</div>

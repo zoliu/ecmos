@@ -1,0 +1,233 @@
+{include file=header_meals.html}
+
+<script type="text/javascript">
+    function addToCart(spec_id) {
+        var quantity = $("#cart_amount_input_" + spec_id).val();
+        var store_id = $("#store_id").val();
+        
+        if (quantity == "" || quantity == "0" || quantity == null) {
+            quantity = 1;
+        } else {
+            quantity = parseInt(quantity) + 1;
+        }
+        change_quantity(store_id, spec_id, quantity);
+    }
+    function reduceToCart(spec_id){
+        var quantity = $("#cart_amount_input_" + spec_id).val();
+        var store_id = $("#store_id").val();
+        
+        if (quantity == "" || quantity == "0" || quantity == null) {
+            quantity = 0;
+        } else {
+            quantity = parseInt(quantity) - 1;
+        }
+        change_quantity(store_id, spec_id, quantity);
+    }
+    function change_quantity(store_id, spec_id, quantity)
+    {
+        $.getJSON('index.php?app=cart&act=meals_cart&store_id=' + store_id + '&spec_id=' + spec_id + '&quantity=' + quantity, function (result) {
+            if (result.done) {
+                $('#cartShowDiv').html(result.retval.cartShowDiv);
+                $('#spec_'+spec_id).html(quantity);
+            }
+            else {
+                //更新失败
+                alert(result.msg);
+            }
+        });
+    }
+    function clearCart()
+    {
+        var store_id = $("#store_id").val();
+        $.getJSON('index.php?app=cart&act=meals_clear&store_id=' + store_id, function (result) {
+            if (result.done) {
+                $('#cartShowDiv').html(result.retval.cartShowDiv);
+                $('.i-num').html(0);
+            }
+            else {
+                //更新失败
+                alert(result.msg);
+            }
+        });
+    }
+</script>
+
+
+
+<input id="store_id" type="hidden" value="{$store.store_id}" name="store_id">
+
+
+<div class="peisong">
+    <div class="w">
+        <div class="fl"><span><b>√</b> {$store.store_name|escape}</span></div>
+        <a href="{url app=mapstore}" class="btn-ckct">查看周边商家</a>
+        <a class="btn-cgadd" href="{url app=mapstore&act=address}">更换地址</a>
+    </div>
+</div>
+
+<div class="section clearfix" style="padding:20px 0">
+    <div class="left-panel">
+        <div class="shop-panel gradient clearfix">
+            <a href="javascript:void(0)" class="i-fav-not"></a>
+            <div class="shop-info gradient">
+                <div class="visible  clearfix">
+                    <div class="shop-logo">
+                        <a href="">
+                            <img src="{$store.store_logo}" alt="" width="120" height="120" >
+                        </a>
+                    </div>
+                    <div class="shop-about">
+                        <p class="shop-name">{$store.store_name|escape}<span class="cursor"></span></p>
+                        <!--
+                        <p class="scope">中式简餐<span class="express">楼口代送</span></p>
+                        <p class="rate"></p>
+                        -->
+                    </div>
+                </div>
+                <div class="invisible" style="display: none; ">
+                    <div class="invisible-con">
+                        <div class="invisible-main">
+                            <p class="average"><label class="label">人均：</label><strong class="money">{$store.service_consumption|escape|default:未填写}</strong></p>
+                            <p class="location"><label class="label">地址：</label><span class="address">{$store.address|escape|default:未填写}</span></p>
+                            <p class="open-time"><label class="label">营业时间：</label><time>{$store.service_begin}:00 至 {$store.service_end}:00</time></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="delivery">
+                <div class="time">
+                    <p class="tit">送餐时间</p>
+                    <p class="infos"><span class="num">{$store.service_arrive}</span><small class="small">分钟</small></p>
+                </div>
+                <!--
+                <div class="start">
+                    <p class="tit">起送价</p>
+                    <p class="infos"><span class="num">20</span><small class="small">元</small></p>
+                </div>
+                <div class="price">
+                    <p class="tit">配送费</p>
+                    <p class="infos"><span class="num">0</span><small class="small">元</small></p>
+                </div>
+                -->
+            </div>
+        </div>
+        <div class="goods-panel">
+            <div class="tab-panel clearfix">
+                <span class="tab menu-tab on">菜单</span>
+                <span class="tab evaluation-tab">评价</span>
+            </div>
+            <div class="goods-con">
+                <div class="menu-panel clearfix" style="display: block;">
+                    <div style="width:199px; float: left;height:1px;">
+                        <ul class="menu-list" style="position: absolute; top: 0px;">
+                            <!--{foreach from=$waimai item=waimai_info name=fe_waimai_info}-->
+                            <li class="item <!--{if $smarty.foreach.fe_waimai_info.first}-->on<!--{/if}-->">
+                                <span class="items gradient2">{$waimai_info.value|escape}<strong>({$waimai_info.count|escape})</strong></span>
+                            </li>
+                            <!--{/foreach}-->
+                        </ul>
+                    </div>
+                    <div class="menu-sort">
+                        <!--{foreach from=$waimai item=waimai_info name=fe_waimai_info}-->
+                        <div class="goods">
+                            <div class="evl-tit">{$waimai_info.value|escape}<strong>({$waimai_info.count|escape})</strong></div>
+                            <div class="good-list">
+                                <div class="with-pic">
+                                    <ul class="clearfix">
+                                        <!--{foreach from=$waimai_info.goods_list item=goods name=fe_goods}-->
+                                        <li>
+                                            <div class="img">
+                                                <a href="javascript:void(0);"><img src="{$goods.default_image}" alt="" width="188" height="144" style="display: inline;"></a>
+                                                <a href="javascript:void(0);" onclick="addToCart({$goods.spec_id});" class="i i-shop" title="加入购物车" style="display: none;"></a>
+                                                <i class="i i-num" id="spec_{$goods.spec_id}">{$goods.quantity|default:0}</i>
+                                            </div>
+                                            <div class="goods-infos">
+                                                <p class="goods-name"><a class="hook" onclick="show_spec({$goods.spec_id});" href="javascript:void(0);">{$goods.goods_name|escape}</a></p>
+                                                <p class="rate"></p>
+                                                <p class="goods-price clearfix">
+                                                    <span class="price-num">{$goods.price|price}</span>
+                                                    <span class="sold">已售：<strong>{$goods.sales|escape}</strong></span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <!--{/foreach}-->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--{/foreach}-->
+                    </div>
+                </div>
+                <div class="evaluation-panel hide" style="display: none;">
+                    
+                    <!--{if $meals_orders}-->
+                    <ul class="eva-list clearfix">
+                        <!--{foreach from=$meals_orders item=meals_order name=fe_meals_order}-->
+                        <li class="gradient">
+                            <p class="user-eva clearfix">
+                                <a href="" class="user">{$meals_order.buyer_name|escape}</a>
+                                <span class="evaluation"><!--{if $goods.evaluation eq 1}-->差<!--{elseif $goods.evaluation eq 2}-->中<!--{else}-->好<!--{/if}-->评</span>
+                            </p>
+                            <p class="eva-con">{$meals_order.comment|escape}</p>
+                            <p class="eva-time"><time>{$meals_order.evaluation_time|date:complete}</time></p>
+                        </li>
+                        <!--{/foreach}-->
+                    </ul>
+                    <!--{else}-->
+                    <div class="i i-comment">暂无评论</div>
+                    <!--{/if}-->
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="position: relative; width:300px; float:right;">
+        <div class="right-panel" style="position: static; top: 10px;">
+            <div class="shop-cart">
+                <div class="i cart-tab">购物车<a href="javascript:void(0)" onclick="clearCart();" class="i i-trash"></a></div>
+                <div class="cart-con">
+                    <div class="cart-status">
+                        <div id="cartShowDiv">
+                            <!--{if $meals_carts}-->
+                            <div class="order-panel">
+                                <div class="waves"></div>
+                                <div class="order">
+                                    <div class="order-tit clearfix"><span class="what">商品</span><span class="order-num">数量</span><span class="order-price">价格</span></div>
+                                    <div class="order-list">
+                                        <div id="content_1">
+                                            <div class="scrollbar">
+                                                <ul>
+                                                    <!--{foreach from=$meals_carts.goods item=meals_goods name=fe_meals_goods}-->
+                                                    <li>
+                                                        <span class="order-name"><strong>{$meals_goods.goods_name|escape}</strong></span>
+                                                        <span class="count-panel">
+                                                            <span class="place-holder"><a href="javascript:void(0);" onclick="reduceToCart({$meals_goods.spec_id});" class="i i-plus"></a></span>
+                                                            <input type="text" class="result" onblur="" id="cart_amount_input_{$meals_goods.spec_id|escape}" value="{$meals_goods.quantity}">
+                                                            <span class="place-holder"><a href="javascript:void(0);" onclick="addToCart({$meals_goods.spec_id});" class="i i-add"></a></span>
+                                                        </span>
+                                                        <span class="price-num">￥{$meals_goods.subtotal|escape}</span>
+                                                    </li>
+                                                    <!--{/foreach}-->
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="sum clearfix"><span>配送费:<strong>￥0.0</strong></span><span>&nbsp;打包费:<strong>￥0.0</strong></span><span>&nbsp;合计:<strong>￥{$meals_carts.amount}</strong></span></div>
+                                    </div>
+                                </div>
+                                <div class="waves2"></div>
+                            </div>
+                            <!--{else}-->
+                            <div class="i i-empty">购物车为空</div>
+                            <!--{/if}-->
+                        </div>
+                        <div id="submit_form"><a href="{url app=order&goods=cart&store_id=$store.store_id}" class="order-btn yes moveBtn" target="_blank">确认下单</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{include file=footer_meals.html}

@@ -1,0 +1,344 @@
+<br />
+<div class="kf_boxWrap">
+    <!--{if $store.im_qq}-->
+    <div class="kf_box">
+        <a href="http://wpa.qq.com/msgrd?V=1&amp;Uin={$store.im_qq|escape}&amp;Site={$store.store_name|escape}&amp;Menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:{$store.im_qq|escape}:4" alt="QQ"></a>
+    </div>
+    <!--{/if}-->
+    <!--{if $store.im_ww}-->
+    <div class="kf_box">
+        <a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid={$store.im_ww|escape:url}&site=cntaobao&s=2&charset={$charset}"><img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid={$store.im_ww|escape:url}&site=cntaobao&s=2&charset={$charset}" alt="Wang Wang" /></a>
+    </div>
+    <!--{/if}-->
+    <!--{if $store.im_msn}-->
+    <div class="kf_box">
+        <a target="_blank" href="http://settings.messenger.live.com/Conversation/IMMe.aspx?invitee={$store.im_msn|escape}"><img src="http://messenger.services.live.com/users/{$store.im_msn|escape}/presenceimage/" alt="status" /></a>
+    </div>
+    <!--{/if}-->
+    <!--收藏店铺 360cd.cn  seema -->
+    <div class="kf_box">
+        <a href="javascript:collect_store({$store.store_id})"><img src="
+        themes/store/rj/styles/default/images/icon_concern.png" title="{$lang.collect_the_store}" width='30px' height='30px' style="margin-top: 7px;" /></a>
+    </div>
+</div>
+<br />
+<div id="backtop">
+    <a href="javascript:;" title="返回顶部" class="backtop" id="backhome" style="display: none;"></a>
+</div>
+<script type="text/javascript">
+$(function() {
+        backTop();
+    })
+    //返回顶部
+function backTop() {
+    var oBackTop = $('#backhome');
+
+    oBackTop.click(function() {
+        $('html,body').animate({
+            'scrollTop': 0
+        }, 800);
+    });
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() <= 0) {
+            oBackTop.css('display', 'none');
+        } else {
+            oBackTop.css('display', 'block');
+        }
+    });
+}
+</script>
+<div class="Mt10"></div>
+<div id="footer" class="yaygWrap footerBg">
+    <div class="w">
+        <div class="clear1 Mt10"></div>
+        <div class="footerNavWrap b_t1">
+            <!-- {if $smarty.get.app eq "store" and $smarty.get.act eq "index"} -->
+            <div class="footerSubNav01">
+                <ul>
+                    <!--{foreach from=$partners item=partner name=storeLink}-->
+                    <li {if $smarty.foreach.storeLink.first}{else if} class="line01" {/if}><a href="{$partner.link}" target="_blank">{$partner.title|escape}</a></li>
+                    <!--{/foreach}-->
+                </ul>
+            </div>
+            <!--{/if}-->
+        </div>
+    </div>
+</div>
+<div id="Cfooter" class="Cfooter">
+    <dl class="Cfooter-info" style="width: 1200px;">
+        <dt>
+            <div class="Cfooter-tel" style="margin-bottom: 10px;">
+                <img src="/themes/store/default/styles/default/images/footer/phone.png"></div>
+            <p>
+                CEO邮箱：
+                <a href="mailto: liubowater@zoliu.cn">liubowater@zoliu.cn</a>
+            </p>
+            <p>
+                客服邮箱：
+                <a href="mailto: liubowater@zoliu.cn">liubowater@zoliu.cn</a>
+            </p>
+            <p>
+                招商邮箱：
+                <a href="mailto: liubowater@zoliu.cn">liubowater@zoliu.cn</a>
+            </p>
+        </dt>
+        <!--{foreach from=$nav_article_list item=nalist}-->
+        <dd>
+            <strong>{$nalist.cate_name}</strong>
+            <!--{foreach from=$nalist.childs item=naitem name=foreach_childs}-->
+            <!--{if $smarty.foreach.foreach_childs.iteration<5}-->
+            <a href="{if $naitem.url}{$naitem.url}{else}{url app=article&act=view&article_id=$naitem.article_id}{/if}" target="_blank">{$naitem.title}</a>
+            <!--{/if}-->
+            <!--{/foreach}-->
+        </dd>
+        <!--{/foreach}-->
+        <dd class="f-sao1">
+            <a href="http://weibo.com/zhuoxinwang" target="_blank"> <b></b> 官方微博
+            </a>
+        </dd>
+        <dd class="f-sao2"> <b></b> 卓信微信
+        </dd>
+        <dd class="f-app">
+            <b></b> 卓信手机客户端
+        </dd>
+    </dl>
+    <div class="Cfooter-copyright" style="width: 1200px;">
+        <a href="index.php">{$lang.index}</a>
+        <!--{foreach from=$navs.footer item=nav}-->
+        | <a href="{$nav.link}" {if $nav.open_new} target="_blank" {/if}>{$nav.title|escape}</a>
+        <!--{/foreach}-->
+        <br>
+        <span class="carial">
+Copyright
+<b>©</b>
+2013-2014 360cd.cn All Rights Reserved.
+</span>
+        <!--{if $icp_number}--><a rel="nofollow" target="_blank" href="http://www.miibeian.gov.cn/?biid=7520">>{$icp_number}</a>
+        <!--{/if}-->
+        <script src=" http://hm.baidu.com/h.js?864aa6160890a072351b7511bbf1bf50" type="text/javascript"></script>
+        <a href="http://tongji.baidu.com/hm-web/welcome/ico?s=864aa6160890a072351b7511bbf1bf50" target="_blank">
+            <img border="0" src="http://eiv.baidu.com/hmt/icon/21.gif" width="20" height="20"></a>
+        <div class="Cfooter-copyright-img">
+            <a href="pagefooter/htmlrecords/business.htm" target="_blank">
+                <img src="/themes/store/default/styles/default/images/footer/gongshanglogo.jpg" width="50" height="50"></a>
+            <a href="xianggang.php" target="_blank">
+                <img src="/themes/store/default/styles/default/images/footer/20140520.png" width="50" height="50"></a>
+            <a href="http://www.miibeian.gov.cn/?biid=7520" target="_blank">
+                <img src="/themes/store/default/styles/default/images/footer/beian.png" width="50" height="50"></a>
+            <!--<script type='text/javascript'>
+(function(){document.getElementById('___szfw_logo___').oncontextmenu = function(){return false;}})();
+</script>
+-->
+            <!--可信网站图片LOGO安装开始-->
+            <script src="http://kxlogo.knet.cn/seallogo.dll?sn=e14031031010747199wim3000000&amp;size=0"></script>
+            <span style="display:inline-block;position:relative;width:auto;">
+<a href="https://ss.knet.cn/verifyseal.dll?sn=e14031031010747199wim3000000&amp;ct=df&amp;a=1&amp;pa=0.8271773194428533" id="kx_verify" tabindex="-1" target="_blank" kx_type="图标式" style="display:inline-block;">
+<img src="http://rr.knet.cn/static/images/logo/cnnic.png" style="border:none;" oncontextmenu="return false;" alt="可信网站"></a>
+</span>
+            <script type="text/JavaScript">function change_CNNIC(eleId){ var str= document.getElementById(eleId).href; var str1 =str.substring(0,(str.length-6)); str1+=RndNum(6); document.getElementById(eleId).href=str1; } function RndNum(k){ var rnd=""; for (var i=0;i
+                <k;i++){ rnd+=Math.floor(Math.random()*10); } return rnd; } </script>
+        </div>
+    </div>
+</div>
+<style>
+/*footer css*/
+
+.Cfooter {
+    clear: both;
+    margin: 40px 0 0;
+    background: #fff;
+    /*text-align: center;*/
+    overflow: hidden;
+    padding-bottom: 20px;
+}
+
+.Cfooter-service {
+    height: 156px;
+    border-bottom: 1px solid #d5d5d5;
+    margin: 0 auto;
+    font-family: \5B8B\4F53;
+}
+
+.Cfooter-service dl {
+    display: inline;
+    float: left;
+    width: 104px;
+    height: 103px;
+    margin: 32px 23px 23px;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.Cfooter-service dl dt {
+    display: none;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 17px;
+}
+
+.Cfooter-service dl dt div {
+    width: 50px;
+    height: 50px;
+}
+
+.Cfooter-service dl dd {
+    color: #666;
+}
+
+.Cfooter-service dl dd b {
+    display: block;
+    font: normal 18px/20px '\5FAE\8F6F\96C5\9ED1';
+    color: #333;
+}
+
+.Cfooter-info {
+    padding: 25px 0 0;
+    height: 158px;
+    margin: 0 auto;
+    border-bottom: 1px solid #d5d5d5;
+}
+
+.Cfooter-info dt {
+    float: left;
+    width: 216px;
+    height: 158px;
+    padding: 0 11px;
+}
+
+.Cfooter-info dt p {
+    height: 22px;
+    line-height: 22px;
+}
+
+.Cfooter-tel span {
+    line-height: 22px;
+}
+
+.Cfooter-tel b {
+    float: left;
+    width: 28px;
+    height: 32px;
+    margin: 10px 0 0;
+    background-position: -311px -91px;
+}
+
+.Cfooter-tel strong,
+.Cfooter-tel em {
+    display: block;
+    font: bold 25px/30px Arial;
+    color: #000;
+}
+
+.Cfooter-tel em {
+    margin-bottom: 24px;
+    font: bold 14px/15px '\5FAE\8F6F\96C5\9ED1';
+    color: #5f5754;
+}
+
+.Cfooter-info dd {
+    float: left;
+    width: 120px;
+}
+
+.Cfooter-info dd a {
+    display: block;
+    color: #333;
+    line-height: 22px;
+}
+
+.Cfooter-info dd a:hover {
+    color: #666;
+}
+
+.Cfooter-info dd strong {
+    font-size: 14px;
+    color: #333;
+}
+
+.Cfooter-info .f-app,
+.Cfooter-info .f-sao1,
+.Cfooter-info .f-sao2 {
+    width: 90px;
+    height: 115px;
+    padding: 0 15px;
+    text-align: center;
+}
+
+.Cfooter-info .f-app b,
+.Cfooter-info .f-sao1 b,
+.Cfooter-info .f-sao2 b {
+    display: block;
+    margin: 7px auto;
+    width: 72px;
+    height: 89px;
+    background-position: -381px -66px;
+}
+
+.Cfooter-info .f-app a {
+    color: #666;
+}
+
+.Cfooter-info .f-sao1 b,
+.Cfooter-info .f-sao2 b {
+    width: 87px;
+    height: 87px;
+    border: 1px solid #ccc;
+    background-position: -28px -87px;
+    margin-top: 9px;
+}
+
+.Cfooter-info .f-sao1 b {
+    border: none;
+}
+
+.Cfooter-info .f-sao2 b {
+    background-position: -110px -87px;
+}
+
+.Cfooter-copyright {
+    clear: both;
+    position: relative;
+    margin: 25px auto 0;
+    line-height: 22px;
+}
+
+.Cfooter-copyright .validate,
+.Cfooter-copyright .itrust {
+    display: inline-block;
+    width: 112px;
+    height: 40px;
+    background-position: -197px -91px;
+    line-height: 321px;
+    overflow: hidden;
+}
+
+.Cfooter-copyright .itrust {
+    background-position: -197px -131px;
+}
+
+.Cfooter-copyright-img {
+    clear: both;
+    padding: 10px 0 0;
+}
+
+.Cfooter-copyright-img a {
+    float: left;
+    margin: 0 20px 0 0;
+}
+
+.Cfooter-copyright .carial b {
+    font-family: Tahoma;
+}
+
+.f-sao2 b,
+.f-app b,
+.f-sao1 b {
+    background: url(/themes/store/default/styles/default/images/footer/common_ico.png) no-repeat;
+}
+</style>
+{$async_sendmail}
+</body>
+
+</html>

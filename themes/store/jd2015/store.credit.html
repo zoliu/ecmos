@@ -1,0 +1,113 @@
+{include file=header.html} {include file=top.html}
+<div id="content">
+    <div id="left">
+        {include file=left.html}
+    </div>
+    <div id="right">
+        <div class="module_currency">
+            <h2 class="common_title veins1">
+                <div class="ornament1"></div>
+                <div class="ornament2"></div>
+                <span class="ico1"><span class="ico2">{$lang.praise_rate} ( {$store.praise_rate} % )</span></span>
+            </h2>
+            <div class="wrap">
+                <div class="wrap_child">
+                    <div class="credited">
+                        <table>
+                            <tr class="bg2 new_size">
+                                <th></th>
+                                <th>{$lang.in_a_week}</th>
+                                <th>{$lang.in_a_month}</th>
+                                <th>{$lang.in_six_month}</th>
+                                <th>{$lang.six_month_before}</th>
+                                <th>{$lang.total}</th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <div class="fontColor6 credited_css">{$lang.good_eval}</div>
+                                </th>
+                                <td>{$stats.3.in_a_week}</td>
+                                <td>{$stats.3.in_a_month}</td>
+                                <td>{$stats.3.in_six_month}</td>
+                                <td>{$stats.3.six_month_before}</td>
+                                <td>{$stats.3.total}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <div class="fontColor7 credited_css">{$lang.normal_eval}</div>
+                                </th>
+                                <td>{$stats.2.in_a_week}</td>
+                                <td>{$stats.2.in_a_month}</td>
+                                <td>{$stats.2.in_six_month}</td>
+                                <td>{$stats.2.six_month_before}</td>
+                                <td>{$stats.2.total}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <div class="fontColor8 credited_css">{$lang.bad_eval}</div>
+                                </th>
+                                <td>{$stats.1.in_a_week}</td>
+                                <td>{$stats.1.in_a_month}</td>
+                                <td>{$stats.1.in_six_month}</td>
+                                <td>{$stats.1.six_month_before}</td>
+                                <td>{$stats.1.total}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <div class="fontColor9 credited_css">{$lang.total}</div>
+                                </th>
+                                <td>{$stats.0.in_a_week}</td>
+                                <td>{$stats.0.in_a_month}</td>
+                                <td>{$stats.0.in_six_month}</td>
+                                <td>{$stats.0.six_month_before}</td>
+                                <td>{$stats.0.total}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="module">
+            <ul class="user_menu">
+                <li><a class="{if $smarty.get.eval}normal{else}active{/if}" href="{url app=store&act=credit&id=$store.store_id}#module"><span>{$lang.all_eval}</span></a></li>
+                <li><a class="{if $smarty.get.eval eq 3}active{else}normal{/if}" href="{url app=store&act=credit&id=$store.store_id&eval=3}#module"><span>{$lang.good_eval}</span></a></li>
+                <li><a class="{if $smarty.get.eval eq 2}active{else}normal{/if}" href="{url app=store&act=credit&id=$store.store_id&eval=2}#module"><span>{$lang.normal_eval}</span></a></li>
+                <li><a class="{if $smarty.get.eval eq 1}active{else}normal{/if}" href="{url app=store&act=credit&id=$store.store_id&eval=1}#module"><span>{$lang.bad_eval}</span></a></li>
+            </ul>
+        </div>
+        <table class="tab_table">
+            <tr class="bg1 new_size">
+                <th>{$lang.eval}</th>
+                <th class="width2">{$lang.content}</th>
+                <th class="width3">{$lang.goods}</th>
+                <th>{$lang.amount}</th>
+                <th>{$lang.buyer}</th>
+                <th>{$lang.time}</th>
+            </tr>
+            <!--{foreach from=$goods_list item=goods}-->
+            <tr>
+                <th>
+                    <!--{if $goods.evaluation eq 1}-->
+                    <span class="fontColor8">{$lang.bad_eval}</span>
+                    <!--{elseif $goods.evaluation eq 2}-->
+                    <span class="fontColor7">{$lang.normal_eval}</span>
+                    <!--{else}-->
+                    <span class="fontColor6">{$lang.good_eval}</span>
+                    <!--{/if}-->
+                </th>
+                <td>
+                    <div class="tab_table_con">{$goods.comment|escape|nl2br}</div>
+                </td>
+                <td><a class="ware_link" href="{url app=goods&id=$goods.goods_id}">{$goods.goods_name|escape}</a></td>
+                <td class="tab_align money">{$goods.price|price}</td>
+                <td class="tab_align fontColor10">{$goods.buyer_name|escape}
+                    <br/><img src="{$goods.buyer_credit_image}" title="{$goods.buyer_credit_value}" /></td>
+                <td class="tab_align fontColor11">{$goods.evaluation_time|date:complete}</td>
+            </tr>
+            <!--{/foreach}-->
+        </table>
+        {include file=page.bottom.html}
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

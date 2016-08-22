@@ -1,0 +1,61 @@
+{include file=header.html}
+
+{include file=top.html}
+
+<style>
+    .coupon{}
+    .coupon li{margin: 0 auto;position: relative;height: 159px;text-align: left;width: 267px;float:left;margin:20px 60px;}
+    .coupon li .cardbg {height: 159px;width: 267px;position: absolute;border-radius: 8px;-webkit-border-radius: 8px;-moz-border-radius: 8px;box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);top: 0;left: 0;z-index: 1;}
+    .coupon li p{background-color:#fff; opacity:0.8;filter:alpha(opacity=80); }
+    .coupon li .name{position: absolute;right: 10px;top: 7px;text-align: center;z-index:22;margin:10px 0;font-size: 16px;font-weight: bold;}
+    .coupon li .price{position: absolute;right: 10px;top: 50px;text-align: center;z-index:22;margin:10px 0;font-size:30px;font-weight: bold;color: red;}
+    .coupon li .time{position: absolute;right: 10px;top:100px;text-align: center;z-index:22;margin:10px 0;font-size: 16px;font-weight: bold;}
+</style>
+
+
+<script>
+    function add_coupon(coupon_id){
+        
+        <!--{if !$visitor.user_id}-->
+        alert('请先登录');
+        return;
+        <!--{/if}-->
+        
+        var url = SITE_URL + '/index.php?app=my_coupon&act=add';
+            $.getJSON(url, {'coupon_id': coupon_id}, function (data) {
+            if (data.done)
+            {
+                alert(data.retval);
+            }
+            else
+            {
+                alert(data.msg);
+            }
+        });
+    }
+</script>
+
+<div id="content">
+    <div id="left">
+        {include file=left.html}
+    </div>
+    
+    <div id="right">
+        
+        <ul class="coupon">
+            <!--{foreach from=$coupons item=coupon name=fe_coupon}-->
+            <li onclick="add_coupon({$coupon.coupon_id})">
+                <img class="cardbg" src="{$coupon.coupon_bg|escape}">
+                <p class="name" >{$coupon.coupon_name}</p>
+                <p class="price" ><!--{if $coupon.coupon_value}-->{$coupon.coupon_value|price}<!--{else}-->{$lang.no_limit}<!--{/if}--></p>
+                <p class="time" >{$coupon.start_time|date} 至 <!--{if $coupon.end_time}-->{$coupon.end_time|date}<!--{else}-->{$lang.no_limit}<!--{/if}--></p>
+            </li>
+            <!--{/foreach}-->
+        </ul>
+        
+    </div>
+    
+    <div class="clear"></div>
+</div>
+
+{include file=footer.html}

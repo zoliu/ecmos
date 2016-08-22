@@ -1,0 +1,119 @@
+{include file=header.html}
+
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    $("select[ectype='order_by']").change(function(){
+        var params = location.search.substr(1).split('&');
+        var key    = 'order';
+        var value  = this.value;
+        var found  = false;
+        for (var i = 0; i < params.length; i++)
+        {
+            param = params[i];
+            arr   = param.split('=');
+            pKey  = arr[0];
+            if (pKey == 'page')
+            {
+                params[i] = 'page=1';
+            }
+            if (pKey == key)
+            {
+                params[i] = key + '=' + value;
+                found = true;
+            }
+        }
+        if (!found)
+        {
+            params.push(key + '=' + value);
+        }
+        location.assign(SITE_URL + '/index.php?' + params.join('&'));
+    });
+});
+//]]>
+</script>
+
+{include file=top.html}
+<br />
+<div class="Mt10"></div>
+<div class="yaygWrap">
+    <div class="w">
+        <div class="yayg_shopL">
+            {include file=user_shopinfo.html}
+            <div class="Mt10"></div>
+            {include file=left.html}
+        </div>
+        <div class="yayg_shopR">
+            <div class="module_special">
+                <div class="m_s_hd">
+                    <h2>{$cate}</h2>
+                </div>
+                <div class="m_s_bd">
+                    <!--{if $searched_goods}-->
+                    <div class="majorGoods">
+                        <ul>
+                            <!--{foreach from=$searched_goods item=sgoods}-->
+                            <li>
+                               <div class="imgDiv"> 
+                                    <a href="{url app=goods&id=$sgoods.goods_id}" target="_blank">
+                                        <img src="{$sgoods.default_image}" />
+                                    </a>
+                               </div>
+                               <div class="nameDiv">
+                                   <h3><a href="{url app=goods&id=$sgoods.goods_id}" title="{$sgoods.goods_name|escape}" target="_blank">{$sgoods.goods_name|escape|truncate:60}</a></h3>
+                               </div>
+                               <div class="PriceDiv">
+                                   <span class="price">{$sgoods.price|price}</span>
+                                   <!-- <i class="mark_price">¥150.00</i> -->
+
+                                <span class="" style="float:center;font-size: 14px;margin-left: 15px;"></span>
+                               </div>
+                               <div class="PriceDiv">
+                        <span class="" style="float: right;font-size: 14px;border:1px solid #E5E5E5;padding:3px 9px;"><a href="javascript:add_to_shop({$sgoods.default_spec},1);"> 加入购物车</a></span>
+                         <!-- <i class="mark_price">¥150.00</i> -->
+
+<script>
+        function add_to_shop(spec_id, quantity)
+        {
+            var url = 'index.php?app=cart&act=add';
+
+            $.getJSON(url, {'spec_id': spec_id, 'quantity': quantity}, function(data) {
+                if (data.done)
+                {
+                    alert('购物车加入成功！');
+                    //window.location.href = 'index.php?app=cart';
+                    // $('.bold_num').text(data.retval.cart.kinds);
+                    // $('.bold_mly').html(price_format(data.retval.cart.amount));
+                    // $(".buynow .msg").slideDown().delay(5000).slideUp();
+                }
+                else
+                {
+                    alert(data.msg);
+                }
+            });
+        }
+    </script>
+                     </div>
+                            </li>
+                            <!--{/foreach}-->
+
+                        </ul>
+                    </div>
+                    <div class="Mt10"></div>
+                    {include file=page.bottom.html}
+                    <!--{else}-->
+                    <div class="nothing"><p>{$lang.no_records}</p></div>
+                    <!--{/if}-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="Mt10"></div>
+<br />
+<br />
+
+
+
+{include file=footer.html}

@@ -1,0 +1,115 @@
+
+<input id="city" type="hidden" value="{$store.region_name|escape}">
+
+<input id="addr" type="hidden" value="{$store.address|escape}">
+
+                <div class="s_cont" style=''>
+
+                        <style>
+
+                         .show_map_info .show_bd_map{font-weight: 600;color:red;font-size: 14px;}
+
+                        .show_map_info dt,.show_map_info dd{}
+
+                         .show_map_info .show_logo{margin-left:0px;margin-top:-60px;}
+
+                        </style>
+
+                        <div class="map" >
+
+                            <script type="text/javascript" src="http://api.map.baidu.com/api?key=abcd&v=1.0&services=true"></script>
+
+                            <div id="info" style=''></div>
+
+                            <div id="container" style='height:356px;'></div>
+
+                        <script type="text/javascript"> 
+
+                        var xOffset= 0.013151;
+
+                        var yOffset= 0.006888;
+
+                        var map = new BMap.Map("container");          // 创建地图实例  
+
+                        var point = new BMap.Point(116.332557 +xOffset, 39.998112 +yOffset); 
+
+                        var city=document.getElementById("city").value;
+
+                        var addr=document.getElementById("addr").value;
+
+                   
+
+                         var sContent="<dl class='show_map_info'>"+
+
+                                "<dt class='show_bd_map'>{$store.store_name}</dt> "+
+                                "<dd><b>地址：</b>"+addr+"</dd>"+
+
+                                " <dd><b>电话：</b> {$store.tel}</dd>"+
+
+                               // "<dd class='show_logo'><img src='data/files/store_751/other/store_logo.jpg' width=50 height=50 /></dd>"+
+                                "</dl>";
+
+                        var opts = {
+
+                          width : 90,     // 信息窗口宽度
+
+                          height: 50,     // 信息窗口高度
+
+                          enableMessage:true,//设置允许信息窗发送短息
+
+                          message:"{$store.store_name}"
+
+                        }
+
+
+
+
+
+                        map.centerAndZoom(point,12);
+
+                        map.addControl(new BMap.NavigationControl()); 
+
+                        // 创建地址解析器实例
+
+                        var myGeo = new BMap.Geocoder();
+
+                        // 将地址解析结果显示在地图上,并调整地图视野
+
+                        myGeo.getPoint(addr, function(point){
+
+                          if (point) {
+
+                            map.centerAndZoom(point, 16);
+
+                            var maker1=new BMap.Marker(point);
+
+                            map.addOverlay(maker1);
+
+                            var infoWindow = new BMap.InfoWindow(sContent,opts);
+
+                            maker1.openInfoWindow(infoWindow);
+
+                          }
+
+                        }, city);
+
+
+
+
+
+                       
+
+                        map.enableScrollWheelZoom();
+
+                        // 初始化地图，设置中心点坐标和地图级别  
+
+                        </script>
+
+
+
+                        </div>
+
+
+                    </div>
+
+

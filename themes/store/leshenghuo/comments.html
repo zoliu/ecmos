@@ -1,0 +1,25 @@
+<div class="message">
+    <!-- {foreach from=$goods_comments item=comment} -->
+    <dl class="{cycle values=message_text,message_text bg1}">
+        <dt>
+            <span class="light">{if $comment.anonymous}***{else}{$comment.buyer_name|escape}{/if} ({$comment.evaluation_time|date:complete})</span>
+        </dt>
+        <dd>{$comment.comment|escape|nl2br}</dd>
+        <div class="beat">
+            {$lang.evaluation}:
+            {if $comment.evaluation gt 0}<img src="{res file=images/bit.gif}" />{/if}
+            {if $comment.evaluation gt 1}<img src="{res file=images/bit.gif}" />{/if}
+            {if $comment.evaluation gt 2}<img src="{res file=images/bit.gif}" />{/if}
+            {if $comment.evaluation lt 3}<img src="{res file=images/bit2.gif}" />{/if}
+            {if $comment.evaluation lt 2}<img src="{res file=images/bit2.gif}" />{/if}
+            {if $comment.evaluation lt 1}<img src="{res file=images/bit2.gif}" />{/if}
+        </div>
+    </dl>
+    <!-- {foreachelse} -->
+    <dl class="message_text">
+        <dt><span class="light">{$lang.no_records}</span></dt>
+    </dl>
+    <!-- {/foreach} -->
+</div>
+
+

@@ -1,0 +1,78 @@
+<br />
+<div class="kf_boxWrap">
+  <!--{if $store.im_qq}-->
+  <div class="kf_box">
+    <a href="http://wpa.qq.com/msgrd?V=1&amp;Uin={$store.im_qq|escape}&amp;Site={$store.store_name|escape}&amp;Menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:{$store.im_qq|escape}:4" alt="QQ"></a>
+  </div>
+  <!--{/if}-->
+  <!--{if $store.im_ww}-->
+  <div class="kf_box">
+    <a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid={$store.im_ww|escape:url}&site=cntaobao&s=2&charset={$charset}" ><img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid={$store.im_ww|escape:url}&site=cntaobao&s=2&charset={$charset}" alt="Wang Wang" /></a>
+  </div>
+  <!--{/if}-->
+  <!--{if $store.im_msn}-->
+  <div class="kf_box">
+    <a target="_blank" href="http://settings.messenger.live.com/Conversation/IMMe.aspx?invitee={$store.im_msn|escape}"><img src="http://messenger.services.live.com/users/{$store.im_msn|escape}/presenceimage/" alt="status" /></a>
+  </div>
+  <!--{/if}-->
+</div>
+<br />
+<div id="backtop"> 
+  <a href="javascript:;" title="返回顶部" class="backtop" id="backhome" style="display: none;"></a>
+</div>
+<script type="text/javascript">
+  $(function(){
+    backTop();  
+  })
+//返回顶部
+function backTop(){
+  var oBackTop = $('#backhome');
+  
+  oBackTop.click(function(){
+    $('html,body').animate({'scrollTop':0},800);
+  });
+  
+  $(window).scroll(function(){
+    if($(window).scrollTop() <= 0) {
+      oBackTop.css('display','none');
+    } else {
+      oBackTop.css('display','block');
+    }
+  });
+}
+</script>
+<div class="Mt10"></div>
+<div id="footer" class="yaygWrap footerBg">
+    <div class="w">
+        <div class="clear1 Mt10"></div>
+        <div class="footerNavWrap b_t1">
+          <!-- {if $smarty.get.app eq "store" and $smarty.get.act eq "index"} -->
+           <div class="footerSubNav01">
+              <ul>
+                <!--{foreach from=$partners item=partner name=storeLink}-->
+
+                <li {if $smarty.foreach.storeLink.first}{else if} class="line01"{/if}><a href="{$partner.link}" target="_blank">{$partner.title|escape}</a></li>
+                <!--{/foreach}-->
+              </ul> 
+           </div>
+           <!--{/if}-->
+           <div class="site_Info">
+                <p>Copyright 2007 - 2014  </p>
+                <p> </p>
+                
+               <p>
+                {sprintf lang=query_info var1=query_time var2=query_count var3=query_user_count}
+                <!--{if $gzip_enabled}-->{$lang.gzip_enabled}<!--{else}-->{$lang.gzip_disabled}<!--{/if}-->
+                <!--{if $memory_info}-->{sprintf lang=memory_info var1=memory_info}<!--{/if}--> {$statistics_code}<br />
+                Powered by <a href="http://ecmall.shopex.cn/?pid=6&host={$site_domain}" target="_blank">ECMall {$ecm_version}</a> &copy; 2003-2012 <a href="http://www.shopex.cn" target="_blank">ShopEx Inc.</a>
+                <!--{if $icp_number}--><br />{$icp_number}<!--{/if}-->  
+
+               </p>
+               <p>{$async_sendmail}</p>
+
+           </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

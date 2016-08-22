@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <!-- Use IE7 mode -->
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset={$charset}" />
+        <meta http-equiv="Content-Type" content="text/html;charset={$charset}" />
+        {$page_seo}
+
+        <link href="{res file=css/store_meals.css}" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{res file=js/store_meals.js}" charset="utf-8"></script>
+        <script type="text/javascript">
+        //<!CDATA[
+            var SITE_URL = "{$site_url}";
+            var REAL_SITE_URL = "{$real_site_url}";
+            var PRICE_FORMAT = '{$price_format}';
+        //]]>
+        </script>
+        {$_head_tags}
+    </head>
+
+    <body>
+        <div class="wm-head">
+            <div class="site-nav">
+                <div class="w">
+                    <div class="site-navl" id="login-content">
+                        <span class="fcc63 mr10">欢迎光临楼口美食！</span> 
+                        <!--{if !$visitor.user_id}-->
+                        <a href="{url app=member&act=login&ret_url=$ret_url}">登录</a> | 
+                        <a href="{url app=member&act=register&ret_url=$ret_url}">注册</a>
+                        <!--{else}-->
+                        &nbsp;&nbsp;您好 , {$visitor.user_name|escape}
+                        <a href="{url app=member}">&nbsp;&nbsp;[会员中心]&nbsp;&nbsp;</a>
+                        <a href="{url app=member&act=logout}">[退出]&nbsp;&nbsp;</a>
+                        <!--{/if}-->
+                    </div>
+                    <div class="site-nav2">
+                        <a href="{url app=buyer_order}" class="fc66" >我的订单</a> <span>|</span> 
+                        <a href="{url app=my_favorite}" class="fc66 my_fav">我的收藏</a> <span>|</span> 
+                        <a href="javascript:void(0);" class="fc66 hook_feedback">在线反馈</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w" style="height:99px; padding:15px 0 10px 0 ; position:relative">
+                <div class="clearfix">
+                    <a href="{$site_url}" class="fl"><img src="{$site_logo}"/></a>
+                    <ul class="lk-psfw">
+                        <li class="f1">闪电配送<b><!--{if $store.service_arrive}-->平均{$store.service_arrive}分钟送达<!--{else}-->未填写<!--{/if}--></b></li>
+                        <li class="f2">外送时间<b><!--{if $store.service_begin || $store.service_end}-->{$store.service_begin}:00 至 {$store.service_end}:00<!--{else}-->未填写<!--{/if}--></b></li>
+                        <li class="f3">订餐电话<b><!--{if $store.tel}-->{$store.tel|escape}<!--{else}-->未填写<!--{/if}--></b></li>
+                    </ul>
+                    <div class="search-wrap " style="height:auto;">
+                        <div class="st1">
+                            <div class="wm-memu" style="top: 19px;">
+                                <!--  <a href="/index.php" >首页</a> -->
+                                <a href="javascript:void(0)" class="on">我要外卖</a> 
+                                <a href="{url app=member}">会员中心</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,262 @@
+<script type="text/javascript" src="{lib file=goodsinfo.js}" charset="utf-8"></script>
+<script type="text/javascript">
+//<!CDATA[
+/* buy */
+function buy()
+{
+    if (goodsspec.getSpec() == null)
+    {
+        alert(lang.select_specs);
+        return;
+    }
+    var spec_id = goodsspec.getSpec().id;
+
+    var quantity = $("#quantity").val();
+    if (quantity == '')
+    {
+        alert(lang.input_quantity);
+        return;
+    }
+    if (parseInt(quantity) < 1)
+    {
+        alert(lang.invalid_quantity);
+        return;
+    }
+    add_to_cart(spec_id, quantity);
+}
+
+/* add cart */
+function add_to_cart(spec_id, quantity)
+{
+    var url = SITE_URL + '/index.php?app=cart&act=add';
+    $.getJSON(url, {'spec_id':spec_id, 'quantity':quantity}, function(data){
+        if (data.done)
+        {
+            $('.bold_num').text(data.retval.cart.kinds);
+            $('.bold_mly').html(price_format(data.retval.cart.amount));
+            $('.ware_cen').slideDown('slow');
+            setTimeout(slideUp_fn, 5000);
+        }
+        else
+        {
+            alert(data.msg);
+        }
+    });
+}
+
+var specs = new Array();
+<!--{foreach from=$goods._specs item=spec}-->
+specs.push(new spec({$spec.spec_id}, '{$spec.spec_1|escape}', '{$spec.spec_2|escape}', {$spec.price}, {$spec.stock}));
+<!--{/foreach}-->
+var specQty = {$goods.spec_qty};
+var defSpec = {$goods.default_spec|escape};
+var goodsspec = new goodsspec(specs, specQty, defSpec);
+//]]>
+</script>
+<div class="wareBox">
+    <h2 class="ware_title" style="font-size: 12px;">
+        <div id="path" style="bottom: 1px;width:600px;text-overflow: ellipsis;white-space:nowrap;overflow:hidden;height: 30px;">
+            {$lang.curlocal}:
+            <!--修改分类导航 360cd.cn seema-->
+            <!--{foreach from=$_curlocal item=lnk name=foreach_cate_links}-->
+            <!--{if $lnk.url}-->
+                <a href="{$lnk.url}{if ($smarty.foreach.foreach_cate_links.index)>1}&store_id={$goods.store_id}{/if}">{$lnk.text|escape}</a> <span>&#8250;</span>
+            <!--{/if}-->
+            <!--{/foreach}-->
+            {$goods.goods_name|escape}
+        </div>
+        
+    </h2>
+    <div style="margin-left: 10px;line-height:20px;width: 500px;">
+        <b style="font-size: 14px;color: #000000;">        
+        {$goods.goods_name|escape|truncate:250}
+        </b>
+    </div>
+    <div class="ware_info">
+        <div class="ware_pic">
+
+            <div class="big_pic">
+                <a href="javascript:;">
+                    <span class="jqzoom">
+                        <img src="{$goods._images.0.thumbnail|default:$default_image}" width="340" height="340" jqimg="{$goods._images.0.image_url}" />
+                    </span>
+                </a>
+            </div>
+
+            <div class="bottom_btn">
+                <!--<a class="collect" href="javascript:collect_goods({$goods.goods_id});" title="{$lang.add_to_favorite}"></a>
+            -->
+            <div class="left_btn"></div>
+            <div class="right_btn"></div>
+            <div class="ware_box">
+                <ul>
+                    <!--{foreach from=$goods._images item=goods_image name=fe_goods_image}-->
+                    <li {if $smarty.foreach.fe_goods_image.first}class="ware_pic_hover"{/if} bigimg="{$goods_image.image_url}">
+                        <img src="{$goods_image.thumbnail}" width="55" height="55" />
+                    </li>
+                    <!--{/foreach}--> </ul>
+            </div>
+        </div>
+    </div>
+<style type="text/css">
+    .rate a{padding: 2px 10px 2px 10px;margin-right: 10px;color: #fff;line-height: 20px;text-decoration:none;}
+    .rate .fresh{background-color: #fe3c00;}
+    .rate .pesticide{background-color: #ff9000;}
+    .rate .quality{color: #ff9000;font-size: 16px;font-weight: bold;}
+</style>
+    <div class="ware_text">
+        <div class="rate">
+             <div>{$goods.remark|escape|truncate:250}</div>
+            <span class="">{$lang.price}:</span>
+            <span class="fontColor3" ectype="goods_price">{$goods._specs.0.price|price}</span>
+            <br />
+            <span class="">{$lang.brand}:</span>
+            {$goods.brand|escape}
+            <br />
+            {$lang.tags}:&nbsp;&nbsp;
+            <!--{foreach from=$goods.tags item=tag}-->
+            {$tag}&nbsp;&nbsp;&nbsp;
+            <!--{/foreach}-->
+            <br />
+            {$lang.sale_situation}: {$sales_info}{$comments}
+            <br />
+        </div>
+
+        <div class="handle">
+            <!--{if $goods.spec_qty gt 0}-->
+            <ul>
+                <li class="handle_title">{$goods.spec_name_1|escape}:</li>
+            </ul>
+            <!--{/if}-->
+            <!--{if $goods.spec_qty gt 1}-->
+            <ul>
+                <li class="handle_title">{$goods.spec_name_2|escape}:</li>
+            </ul>
+            <!--{/if}-->
+            <ul>
+                <li class="handle_title">{$lang.quantity}:</li>
+                <li>
+                    <input type="text" class="text width1" name="" id="quantity" value="1" />
+                    {$lang.unit}{$lang.left_bracket}{$lang.stock}
+                    <span class="stock" ectype="goods_stock">{$goods._specs.0.stock}</span>
+                    {$lang.unit}{$lang.right_bracket}
+                </li>
+            </ul>
+            <!--{if $goods.spec_qty gt 0}-->
+            <ul>
+                <li class="handle_title">{$lang.your_select}:</li>
+                <li class="aggregate" ectype="current_spec"></li>
+            </ul>
+            <!--{/if}--> 
+        </div>
+
+        <ul class="ware_btn">
+            <div class="ware_cen" style="display:none">
+                <div class="ware_center">
+                    <h1>
+                        <span class="dialog_title">{$lang.add_to_cart_ok}</span>
+                        <span class="close_link" title="{$lang.close}" onmouseover="this.className = 'close_hover'" onmouseout="this.className = 'close_link'" onclick="slideUp_fn();"></span>
+                    </h1>
+                    <div class="ware_cen_btn">
+                        <p class="ware_text_p">{$lang.cart_status}</p>
+                        <p class="ware_text_btn">
+                            <input type="submit" class="btn1" name="" value="{$lang.view_cart}" onclick="location.href='{$site_url}/index.php?app=cart'" />
+                            <input type="submit" class="btn2" name="" value="{$lang.continue_buy}" onclick="$('.ware_cen').css({'display':'none'});" />
+                        </p>
+                    </div>
+                </div>
+                <div class="ware_cen_bottom"></div>
+            </div>
+
+            <!--<li class="btn_c1" title="{$lang.buy_now}">
+            <a href="#"></a>
+        </li>
+        -->
+        <li title="{$lang.add_to_cart}">
+            <a href="javascript:buy();" class="yayg_btn btn-import btn-big">
+                <span>
+                    <span>加入购物车</span>
+                </span>
+            </a>
+        </li>
+        <li title="{$lang.add_to_favorite}">
+            <a href="javascript:collect_goods({$goods.goods_id});" class="yayg_btn btn-major btn-big">
+                <span>
+                    <span>加入收藏</span>
+                </span>
+            </a>
+        </li>
+    </ul>
+    <div class="clear1"></div>
+    <!--产品分享 Start-->
+    <div class="goodsShare">
+        <script>
+                    $(function(){
+                        var btn_list_li = $("#share_listWrap > li");
+                        btn_list_li.hover(function(){
+                            $(this).find("div:not(:animated)").slideDown("fast");
+                        },function(){
+                            $(this).find("div").slideUp("fast");
+                        });
+                    });
+                </script>
+        <!-- {if $share} -->
+        <ul id="share_listWrap">
+            <li>
+                <span class="shareicon">
+                    <a href="javascript:void(0);">分享到</a>
+                </span>
+                <div class="share_list" style="z-index: 1000;">
+                    <!-- {foreach from=$share item=item} -->
+                    <!-- {if $item.type eq 'share'} -->
+                    <a href="{$item.link}" target="_blank">
+                        <!-- {if $item.logo} -->
+                        <span>
+                            <img src="{$item.logo}" />
+                        </span>
+                        <!-- {/if} --> <strong>{$item.title|escape}</strong>
+                    </a>
+                    <!-- {/if} -->
+                    <!-- {/foreach} --> 
+                </div>
+
+            </li>
+
+        </ul>
+        <ul id="btn_list" style="display:none;">
+            <li  title="{$lang.collect_goods}">
+                <ul class="drop_down">
+                    <!-- {foreach from=$share item=item} -->
+                    <!-- {if $item.type eq 'collect'} -->
+                    <li>
+                        <!-- {if $item.logo} -->
+                        <img src="{$item.logo}" />
+                        <!-- {/if} -->
+                        <a target="_blank" href="{$item.link}">{$item.title|escape}</a>
+                    </li>
+                    <!-- {/if} -->
+                    <!-- {/foreach} --> </ul>
+            </li>
+
+            <li id="btn_list2" title="{$lang.share_goods}">
+                <ul class="drop_down">
+                    <!-- {foreach from=$share item=item} -->
+                    <!-- {if $item.type eq 'share'} -->
+                    <li>
+                        <!-- {if $item.logo} -->
+                        <img src="{$item.logo}" />
+                        <!-- {/if} -->
+                        <a target="_blank" href="{$item.link}">{$item.title|escape}</a>
+                    </li>
+                    <!-- {/if} -->
+                    <!-- {/foreach} --> </ul>
+            </li>
+        </ul>
+        <!-- {/if} --> </div>
+    <!--产品分享 End-->
+
+</div>
+<div class="clear"></div>
+</div>
+</div>
+<div class="user_shopinfo_box">{include file=user_shopinfo.html}</div>

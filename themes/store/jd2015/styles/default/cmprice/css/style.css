@@ -1,0 +1,75 @@
+/*
+	datetime: 2016-06-08
+	Filename: style.css
+	Author: tianjing
+*/
+
+.container{width: 1187px; margin:0 auto;}
+
+/* 图片列表 */
+.list li{border:1px solid #c9c9c9; width: 268px; padding:10px; float: left; display: inline; margin-right: 9px;margin-top: 9px;}
+.list li h2{font-size: 14px;overflow: hidden;text-overflow:ellipsis; white-space: nowrap;margin: 10px 0;}
+.list li h2 a{color: #333;}
+.list li .comment .comment-text{overflow: hidden;text-overflow:ellipsis; white-space: nowrap;font-size: 12px; font-family: "simsun";color: #949494;}
+.list li .comment p{font-size: 12px; font-family: "simsun";color: #a1a1a1; margin-top: 5px;}
+.line{background: url(../images/line.gif) no-repeat; width: 267px; height: 11px; margin: 5px 0;}
+.avatars{float: left;}
+.avatars img{ border-radius: 18px;-moz-border-radius: 18px;-webkit-border-radius: 18px; vertical-align: middle;}
+.avatars span{color: #3399ff;font-size: 12px; margin-left: 5px;}
+.message{background: url(../images/message.gif) no-repeat left center; float: right; margin-top: 10px; font-size: 12px; padding-left: 15px;color: #a1a1a1;}
+
+
+/* 比价 */
+.parity-hd{border-top: 1px solid #d7d7d7;border-left: 1px solid #d7d7d7;border-right: 1px solid #d7d7d7;padding:10px; font-size: 12px;}
+.parity-hd a{border:1px solid #e4e4e4; padding:10px; display: inline-block; color: #000; margin-right: 10px;}
+.parity-hd a.cur{background: #ff7701; color: #fff;}
+.parity-table table{border:1px solid #d7d7d7; font-family: "simsun"; font-size: 12px;}
+.parity-table table td{border-bottom: 1px solid #d7d7d7;border-right: none;border-left: none; padding:20px;}
+.parity-table table td img{vertical-align: middle;}
+	.parity-name{font-size: 14px; width: 20%;}
+	.parity-title{ width: 40%; color: #3366cc;}
+	.parity-price{ width: 10%; color: #b1191a; font-size: 16px; font-weight: bold;}
+	.parity-info{width: 15%;color: #e53f42;}
+	.parity-time{width: 15%;color: #6b6b6b;}
+
+/* 晒单 */
+.sd-list{float:left; display: inline-block; width: 209px;border:1px solid #e4e4e4; text-align: center; padding:10px 0;}
+	.sd-list span{background: url(../images/camera.jpg) no-repeat; width: 25px; height: 19px; display: inline-block; margin-right: 10px; vertical-align: middle;}
+.sd-article{float: right;border:1px solid #e4e4e4; width: 945px; padding:30px 10px;}
+.sd-article-tit{border-bottom: 1px solid #e4e4e4;padding-bottom: 15px;}
+.sd-article-tit strong{font-weight: normal; margin-left: 30px;}
+.sd-content h2{text-align: center; font-size: 16px; margin-top: 40px;}
+.bdsharebuttonbox{float: right; margin-right: 20px;}
+.sd-time{border-bottom: 1px dashed #e4e4e4; text-align: center;}
+.sd-time span{position: relative; top: 10px; background: #fff; display: inline-block; padding:0 10px; font-size: 12px; color: #868686;}
+.sd-comment{border:1px solid #e4e4e4; margin-top: 40px; padding:20px 30px; font-size: 12px;color: #989898;}
+.sd-comment img{float: left;border:1px solid #d7d7d7; padding:4px; margin-right: 20px;}
+.sd-comment-info h4,.sd-comment p{margin-top:20px;}
+.sd-area{margin:10px;}
+.sd-area p{color: #797979; font-size: 12px; margin:0 40px;}
+	.mao{background: url(../images/mao.gif) no-repeat right top; width: 23px; height: 20px;}
+	.mao1{background: url(../images/mao1.gif) no-repeat right top; width: 23px; height: 20px; float: right;}
+.imglist{margin: 14px;}
+.imglist img{margin-right: 16px;}
+
+.sd-comment2{margin:0 14px;}
+.sd-comment2-hd{border-bottom: 1px solid #e4e4e4; height: 26px; line-height: 26px; padding:15px 0;}
+.total{float: left; font-size: 14px; vertical-align: middle;}
+	.total i{font-style: normal;color: #fd2a2a;}
+.share-btn{float: right; vertical-align: middle;}
+.sd-comment2-box{margin-top: 20px;}
+	.sd-comment2-avatars{float: left;}
+	.sd-comment2-avatars img{border:1px solid #f2f2f2;}
+.textarea01{float: right; position: relative;}
+	.textarea01 textarea{width: 855px;height: 86px;border:1px solid #e4e4e4; overflow: hidden;}
+	.textarea01 span{background: url(../images/arrow.gif) no-repeat; display: inline-block; width: 6px; height: 10px; position: absolute; left: -5px; top: 10px;}
+.sd-submit{text-align: right; font-size: 12px;margin-top: 10px; border-bottom: 1px solid #e4e4e4; padding-bottom: 15px;}
+	.sd-code{border:1px solid #d7d7d7; width: 76px; height: 24px;}
+	.sd-code-img{margin:0 10px;}
+	.sd-word-num i{color: #ff0000; font-style: normal;}
+	.sd-submit-btn{background: #dd2726; color: #fff;padding:5px 10px; margin-left: 10px;}
+.sd-comment-list li{border-bottom: 1px solid #e4e4e4; padding-bottom: 20px; margin-top: 20px;}
+.sd-comment-text{float: right; width: 870px; }
+	.sd-comment-hd i{color: #fd2a2a; font-style: normal; font-size: 14px;}
+	.sd-comment-hd span{color: #afafaf; font-size: 14px; margin-left: 10px;}
+	.sd-comment-text p{font-size: 14px; margin-top: 10px;}

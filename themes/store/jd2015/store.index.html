@@ -1,0 +1,98 @@
+{include file=header.html}
+
+{include file=top.html}
+
+<div id="content">
+    <div id="left">
+        {include file=left.html}
+    </div>
+    <div id="right">
+        <div class="die6">{$store.description|escape:editor}</div>
+        <!--{if $recommended_good}-->
+        <div class="module_special">
+            <h2 class="common_title veins2">
+                <div class="ornament1"></div>
+                <div class="ornament2"></div>
+                <span class="ico1"><span class="ico2">{$lang.recommended_goods}</span></span>
+            </h2>
+            <div class="wrap">
+                <div class="wrap_child">
+                    <div class="major">
+                        <ul class="list">
+                            <!--{foreach from=$recommended_good item=rgoods}-->
+                            <li>
+                                <div class="pic">
+                                    <a href="{url app=goods&id=$rgoods.goods_id}" target="_blank"><img src="{$rgoods.default_image}" width="150" height="150" /></a>
+                                </div>
+                                <h3><a href="{url app=goods&id=$rgoods.goods_id}" target="_blank">{$rgoods.goods_name|escape}</a></h3>
+                                <p>{$rgoods.price|price}</p>
+                            </li>
+                            <!-- {/foreach} -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--{/if}-->
+        <!--{if $new_groupbuy and $store.functions.groupbuy and $store.enable_groupbuy}-->
+        <div class="module_special">
+            <h2 class="common_title veins2">
+                <div class="ornament1"></div>
+                <div class="ornament2"></div>
+                <span class="ico1"><span class="ico2">{$lang.new_groupbuy}</span></span>
+            </h2>
+            <div class="wrap">
+                <div class="wrap_child">
+                    <div class="group_major">
+                        <ul class="list">
+                            <!--{foreach from=$new_groupbuy item=groupbuy}-->
+                            <li>
+                                <div class="pic">
+                                    <a href="{url app=groupbuy&id=$groupbuy.group_id}"><img src="{$groupbuy.default_image}" /></a>
+                                </div>
+                                <h3><a href="{url app=groupbuy&id=$groupbuy.group_id}" target="_blank">{$groupbuy.group_name|escape}</a></h3>
+                                <p><span>{$lang.groupbuy_price}:&nbsp;</span>{$groupbuy.price|price}</p>
+                                <div class="time">{$lang.lefttime}:&nbsp;{$groupbuy.lefttime}</div>
+                            </li>
+                            <!-- {/foreach} -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--{/if}-->
+        <div class="module_special">
+            <h2 class="common_title veins2">
+                <div class="ornament1"></div>
+                <div class="ornament2"></div>
+                <span class="ico1"><span class="ico2">{$lang.new_goods}</span></span>
+            </h2>
+            <div class="wrap">
+                <div class="wrap_child">
+                    <!--{if $new_good}-->
+                    <div class="major">
+                        <ul class="list">
+                            <!--{foreach from=$new_good item=ngoods}-->
+                            <li>
+                                <div class="pic">
+                                    <a href="{url app=goods&id=$ngoods.goods_id}" target="_blank"><img src="{$ngoods.default_image}" width="150" height="150" /></a>
+                                </div>
+                                <h3><a href="{url app=goods&id=$ngoods.goods_id}" target="_blank">{$ngoods.goods_name|escape}</a></h3>
+                                <p>{$ngoods.price|price}</p>
+                            </li>
+                            <!--{/foreach}-->
+                        </ul>
+                    </div>
+                    <!--{else}-->
+                    <div class="nothing">
+                        <p>{$lang.no_records}</p>
+                    </div>
+                    <!--{/if}-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+{include file=footer.html}

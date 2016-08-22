@@ -124,6 +124,10 @@ class FrontendApp extends ECBaseApp {
 		$cart = & m('cart');
 		$this->assign('cart_goods_kinds', $cart->get_kinds(SESS_ID, $this->visitor->get('user_id')));
 		
+		import('init.lib');
+		$psmb = new Psmb_init();
+		$carts_top  = $psmb->get_carts_top(SESS_ID, $this->visitor->get('user_id'));
+		$this->assign('carts_top',$carts_top);
 		
 		//顶部分类
 		$position = array('0px','-39px','-50px','-80px','-100px','-170px','-200px','-100px');

@@ -1,0 +1,83 @@
+<script type="text/javascript" src="{lib file=jquery.plugins/jquery.validate.js}" charset="utf-8"></script>
+<script type="text/javascript">
+$(function(){
+    $('#message').validate({
+        errorPlacement: function(error, element){
+            var _message_box = $(element).parent().find('.field_message');
+            _message_box.find('.field_notice').hide();
+            _message_box.parent().append(error);
+        },
+        rules : {
+            content : {
+                required : true,
+                byteRange : [0,255,'{$charset}']
+            }
+        },
+        messages : {
+            content : {
+                required : '{$lang.content_not_null}',
+                byteRange: '{$lang.max_script}'
+            }
+        }
+    });
+})
+</script>
+
+<div class="message">
+    <!--{foreach from=$qa_info item=qainfo}-->
+    <div class="{cycle values=message_text2,message_text2 bg1}">
+        <dl class="leave_word">
+            <dt>{$lang.question_content}: </dt>
+            <dd>{$qainfo.question_content|escape|nl2br}</dd>
+            <p>
+                <span class="name"><!-- {if $qainfo.user_name} -->{$qainfo.user_name}<!--{else}-->{$lang.guest}<!-- {/if} -->
+                </span>
+            </p>
+            <dd>
+                <p>{$qainfo.time_post|date:complete}</p>
+            </dd>
+        </dl>
+        <!-- {if $qainfo.reply_content} -->
+        <dl class="revert_to">
+            <dt>{$lang.store_reply}: </dt>
+            <dd>{$qainfo.reply_content|escape|nl2br}</dd>
+            <p>
+                <span class="date">{$qainfo.time_reply|date:complete}</span>
+            </p>
+        </dl>
+        <!-- {/if} -->
+    </div>
+    <!-- {foreachelse} -->
+    <div class="{cycle values=message_text2,message_text2 bg1}">
+        <span class="light">{$lang.no_records}</span>
+    </div>
+    <!--{/foreach}-->
+</div>
+{if $qa_info}{include file=page.bottom.html}{/if}
+<div class="clear"></div>
+<!--{if $smarty.get.app eq 'groupbuy' and $group.ican.ask or $smarty.get.app eq 'goods'}-->
+<div class="fill_in">
+    <form method="post" id="message" action="index.php?app={$smarty.get.app}<!--{if $smarty.get.act}-->&amp;act={$smarty.get.act}<!--{elseif $smarty.get.app eq 'goods'}-->&amp;act=qa<!--{/if}-->&amp;id={$smarty.get.id}">
+    <p> <span class="desc">{$lang.wanner_qa}: </span><textarea name="content"></textarea><span class="field_message"><span class="field_notice"></span></span></p>
+    <p>
+        <!--{if !$guest_comment_enable and !$visitor.user_id}-->
+            {$lang.login_to_comment}
+        <!--{else}-->
+        <span>{$lang.qa_email}: </span>
+        <span><input type="text" class="text" name="email" value="{$email}" /></span>
+        <!--{if $captcha}-->
+        <span>{$lang.captcha}: </span>
+        <span><input type="text" class="text" name="captcha" /></span>
+        <span><a href="javascript:change_captcha($('#captcha'));"><img id="captcha" class="captcha" src="index.php?app=captcha&amp;{$random_number}" /></a></span>
+        <!--{/if}-->
+        <!--{if $smarty.session.user_info}-->
+        <span><label><input type="checkbox" name="hide_name" value="hide" /> {$lang.hide_name}</label></span>
+        <!--{/if}-->
+        <input type="submit" value="{$lang.submit_message}" name="qa" />
+        <!--<input type="hidden" value="{$smarty.get.id}" name="goods_id" />
+        <input type="hidden" value="ask" name="type" />-->
+        <!--{/if}-->
+    </p>
+    </form>
+</div>
+<!--{/if}-->

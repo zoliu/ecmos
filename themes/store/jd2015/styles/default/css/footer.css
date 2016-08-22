@@ -1,0 +1,59 @@
+/*******************************  -----------右侧的悬浮窗口------------ ************************/
+.mui-mbar-tabs-mask {position: absolute;top: 0;left: 0;width: 35px;background-color: #000;height:1000;}
+.mui-mbar-tabs {position: fixed;z-index: 999999;top: 0;right: 0;width: 35px;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}
+.mui-mbar-tab {position: absolute;left: 0;width: 35px;height: 35px;background-color: #000;cursor: pointer;z-index: 9;}
+.mui-mbar-tab a{color: #fff}
+.mui-mbar-tab-logo{position: absolute;left: 0;top: 0;width: 35px;height: 35px;}
+.mui-mbar-tab-hover {background: #E4393C;}
+.mui-mbar-tab-tip{position: absolute;right: 35px;top: -1px;width: 90px;height: 35px;line-height: 35px;text-align: center;color: #fff;background-color: #494949;-webkit-box-shadow: 0 0 5px rgba(0,0,0,.2);-moz-box-shadow: 0 0 5px rgba(0,0,0,.2);box-shadow: 0 0 5px rgba(0,0,0,.2);}
+.mui-mbar-arr {position: absolute;width: 16px;height: 16px;line-height: 16px;text-align: center;font-size: 16px;font-family: "\5b8b\4f53";}
+.mui-mbar-tab-tip-arr {top: 10px;right: -8px;color: #494949;}
+
+.mui-mbar-tab-cart{height: 135px;}
+.mui-mbar-tab-logo-cart{background:url(../images/tmall-left-cart.png) no-repeat;}
+.mui-mbar-tab-cart .mui-mbar-tab-logo {top: 10px;}
+.mui-mbar-tab-cart .mui-mbar-tab-txt {display: block;left: 7px;top: 40px;width: 20px;height: 50px;line-height: 16px;overflow: hidden;padding: 0;position: absolute;font-size: 12px;text-align: center;color: #fff;}
+.mui-mbar-tab-cart .mui-mbar-tab-sup {display: block;top: 95px;right: 8px;text-align: center;position: absolute;z-index: 999999;}
+.mui-mbar-tab-cart .mui-mbar-tab-sup-bg {border-radius: 10px;background-color: #E4393C;}
+.mui-mbar-tab-cart .mui-mbar-tab-sup-bd {padding: 0 3px;min-width: 14px;height: 20px;line-height: 20px;border-radius: 10px;font-size: 12px;color: #fff;}
+
+.mui-mbar-tab-logo-asset{height: 35px;background:url(../images/tmall-left-money.png) no-repeat;}
+.mui-mbar-tab-logo-brand{height: 35px;background:url(../images/tmall-left-brand.png) no-repeat;}
+.mui-mbar-tab-logo-foot{height: 35px;background:url(../images/tmall-left-foot.png) no-repeat;}
+.mui-mbar-tab-logo-favor{height: 35px;background:url(../images/tmall-left-favor.png) no-repeat;}
+.mui-mbar-tab-logo-top{height: 35px;background:url(../images/tmall-left-top.png) no-repeat;}
+.mui-mbar-tab-logo-qrcode{height: 35px;background:url(../images/tmall-left-qrcode.png) no-repeat;}
+.mui-mbar-tab-logo-ue{height: 35px;background:url(../images/tmall-left-ue.png) no-repeat;}
+
+.mui-mbarp-qrcode-tip {position: absolute;top: -161px;right: 35px;width: 170px;height: 170px;background: #fff;z-index: 999999;cursor: default;border: 1px solid #D1D1D1;border-left: 0;-webkit-box-shadow: 0 0 5px rgba(0,0,0,.4);-moz-box-shadow: 0 0 5px rgba(0,0,0,.4);box-shadow: 0 0 5px rgba(0,0,0,.4);}
+.mui-mbarp-qrcode-hd img {width: 140px;height: 140px;margin: 10px 15px;}
+
+
+
+/*******************************---------------------底部样式----------------------------*************************************/
+#footer {text-align: left;border-top: 0;margin: 0;padding: 0;height: auto;clear: both;background: #fff;position: relative;}
+
+#service-2014 {margin-bottom: 20px;}
+#service-2014 .slogen {position: relative;height: 54px;padding: 20px 0;margin-bottom: 14px;background: #F5F5F5;text-align: center;}
+#service-2014 .slogen .item {display: inline-block;position: absolute;left: 50%;top: 20px;width: 302px;height: 54px;text-align: left;vertical-align: middle;font: 400 18px/50px "microsoft yahei";}
+#service-2014 .slogen .item b {padding: 0 10px;font-size: 24px;color: #C81623;}
+#service-2014 .slogen .fore1 {margin-left: -604px;}
+#service-2014 .slogen .fore2 {margin-left: -304px;}
+#service-2014 .slogen .fore3 {margin-left: 0;}
+#service-2014 .slogen .fore4 {margin-left: 304px;}
+#service-2014 .slogen .item i {display: block;position: absolute;top: 0;left: 10px;width: 220px;height: 54px;background-repeat: no-repeat;background-position: 0 0;}
+#service-2014 .slogen .fore1 i {background-image: url(../images/service_items_1.png);}
+#service-2014 .slogen .fore2 i {background-image: url(../images/service_items_2.png);}
+#service-2014 .slogen .fore3 i {background-image: url(../images/service_items_3.png);}
+#service-2014 .slogen .fore4 i {background-image: url(../images/service_items_4.png);}
+#service-2014 dl {width: 178px;float: left;}
+#service-2014 dt {padding: 6px 0;font: 400 16px/24px "microsoft yahei";}
+#service-2014 dd {line-height: 20px;}
+#service-2014 #coverage {float: right;width: 310px;height: 168px;background: url(../images/20130330B_1.png) no-repeat 60px -131px;}
+#service-2014 #coverage .dt {padding: 6px 40px 15px 80px;font: 400 16px/24px "microsoft yahei";}
+#service-2014 #coverage .dd {padding: 0 40px 15px 80px;}
+
+#footer-2014 {border-top: 1px solid #E5E5E5;padding: 20px 0 30px;text-align: center;}
+#footer-2014 .links a {margin: 0 10px;}
+#footer-2014 .copyright {margin: 10px 0;}
+#footer-2014 .authentication a {margin: 0 5px;text-decoration: none;}

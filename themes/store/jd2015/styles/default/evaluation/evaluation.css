@@ -1,0 +1,51 @@
+
+.shop-rate-box .personal-rating .item-scrib .over, .shop-rate-box .personal-rating .item-scrib .normal, .shop-rate-box .personal-rating .item-scrib .lower, .shop-rate-box .personal-info .personal-rating .rate-info-box .rc-tp, .shop-rate-box .personal-info .personal-rating .rate-info-box .rc-bt {
+    background: url(images/evaluation_1.png) no-repeat;
+}
+.small-star-no1, .small-star-no2, .small-star-no3, .small-star-no4, .small-star-no5 {display: inline-block;width: 78px;height: 11px; line-height: 11px;background: url(images/evaluation_2.png) no-repeat -96px -261px;}
+.evaluation{position: relative;z-index: 10;margin-bottom: 10px;}
+.evaluation-shadow{border: solid 3px #EEE;}
+.evaluation .bd {border: 1px solid #CCC;border-width: 1px;padding: 0;background: #F4F9FF;border-color: #D8D8D8!important;}
+.evaluation .bd .con{margin-bottom: 0;padding-top: 10px;}
+.evaluation .bd .con h4{position: relative;left: 10px;z-index: 1;font-weight: bold;color: black;padding-left: 2em;overflow: hidden;line-height: 18px;height: 18px;margin-bottom: 5px;font-size: 12px;
+background:url(images/evaluation_1.png) no-repeat;background-position: -295px 0;}
+.evaluation .bd .con .seller-rate-info{background-color: white;overflow: hidden;zoom: 1;padding: 20px 25px 10px;border-top: 1px solid #D7D7D7;}
+.evaluation .bd .con .seller-rate-info ul {height: 115px;overflow: hidden;position: relative;z-index: 0;}
+.evaluation .bd .con .seller-rate-info li {width: 452px;height: 30px;line-height: 30px;padding-left: 10px;margin-bottom: 12px;vertical-align: middle;}
+.evaluation .bd .con .seller-rate-info li.J_RateInfoTrigger {cursor: pointer;}
+.evaluation .bd .con .seller-rate-info .item-scrib {height: 30px;line-height: 30px;overflow: hidden;color: gray;position: relative;}
+.evaluation .bd .con .seller-rate-info .item-scrib .title {margin-top: 4px;line-height: 22px;font-weight: 700;color: #404040;}
+.evaluation .bd .con .seller-rate-info .item-scrib .count {font-size: 14px;font-weight: 700;color: #F60;}
+.item-scrib  .percent {position: absolute;right: 10px;top: 2px;width: 79px;padding-left: 130px;text-align: center;height: 28px;line-height: 26px;display: block;color: #fff;zoom: 1}
+.item-scrib .over,.item-scrib .normal,.item-scrib .lower{background: url(images/evaluation_1.png) no-repeat;}
+.item-scrib .over{background-position:0 -283px}
+.item-scrib .lower {background-position: 0 -309px;}
+.item-scrib .normal{background-position:0 -832px}
+.evaluation .bd .con .seller-rate-info .rate-info-box {color: #666;width: 250px;height: 115px;line-height: 15px;position: absolute;right: 15px;top: 0;font-size: 11px;display: none; margin-bottom: 0;z-index: 50;zoom: 1;}
+.evaluation .bd .con .seller-rate-info .h{ color: #F50!important;}
+.evaluation .bd .con .seller-rate-info .rate-info-box .rc-tp {background: url(images/evaluation_1.png) no-repeat;margin: 0;background-position: 0 -359px;position: relative;display: block; height: 4px;}
+.evaluation .bd .con .seller-rate-info .rate-info-box .rc-bt {background: url(images/evaluation_1.png) no-repeat;margin: 0;background-position: 1px -373px;position: relative;display: block;height: 4px;}
+.evaluation .bd .con .seller-rate-info .rate-info-box .bd {width: auto;height: 100px;overflow: hidden; border: 0;padding: 2px 0 4px 8px;background-color: #E5E5E5;zoom: 1;}
+.evaluation .bd .con .seller-rate-info .rate-info-box .total {height: 24px;}
+.evaluation .bd .con .seller-rate-info .rate-info-box .count {height: 15px;white-space: nowrap;overflow: hidden;}
+.rc-bt {margin: 0;background-position: 1px -373px;}
+
+.evaluation .bd .con .seller-rate-info .rate-info-box .count .rate-stat {display: inline-block;margin-bottom: 3px;height: 10px;font-size: 0;line-height: 1px;margin-right: 4px;zoom: 1;vertical-align: middle;background-color: #FF944C;}
+
+.evaluation .bd .con .seller-rate-info li.selected {background: #E5E5E5 url(images/evaluation_1.png) no-repeat;background-position: 0 -384px;}
+.evaluation .bd .con .seller-rate-info li.selected .rate-info-box {display: block;}
+.star-value-no {background: url(images/evaluation_2.png) no-repeat;width: 89px;height: 16px;overflow: hidden;display: -moz-inline-box;display: inline-block;vertical-align: inherit!important;}
+
+.small-star-no4 { background-position: -96px -277px;}
+.small-star-no3 {background-position: -96px -293px;}
+.small-star-no2 {background-position: -96px -309px;}
+.small-star-no1 {background-position: -96px -325px;}
+.star-value-4d7{background-position: 0 -172px;}
+/*根據不同的積分顯示不同的位置*/
+.star-value-50{background-position:0 -152px}
+.star-value-49, .star-value-48, .star-value-47, .star-value-46, .star-value-45, .star-value-44, .star-value-43, .star-value-42, .star-value-41 {background-position: 0 -172px;}
+.star-value-40{background-position:0 -193px}.star-value-39,.star-value-38,.star-value-37,.star-value-36,.star-value-35,.star-value-34,.star-value-33,.star-value-32,.star-value-31{background-position:0 -214px}
+.star-value-30{background-position:0 -235px}.star-value-29,.star-value-28,.star-value-27,.star-value-26,.star-value-25,.star-value-24,.star-value-23,.star-value-22,.star-value-21{background-position:0 -256px}
+.star-value-20{background-position:0 -277px}.star-value-19,.star-value-18,.star-value-17,.star-value-16,.star-value-15,.star-value-14,.star-value-13,.star-value-12,.star-value-11{background-position:0 -298px}
+.star-value-10{background-position:0 -319px}.star-value-9,.star-value-8,.star-value-7,.star-value-6,.star-value-5,.star-value-4,.star-value-3,.star-value-2,.star-value-1{background-position:0 -340px}
+.star-value-0,.star-value-00{background-position:0 -361px}

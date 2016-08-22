@@ -1,0 +1,98 @@
+<div class="userShop">
+    <ul>
+        <li>
+            <div class="itemWrap" style="padding:6px 0px;">
+                <div class="itemL"><p>卖&nbsp;家:</p></div>
+                <div class="itemR"><a href="{url app=store&id=$store.store_id}">{$store.store_name|escape}</a></div>
+            </div>
+        </li>
+        <li>
+            
+            <div class="itemWrap" style="padding-top:5px;">
+                <div class="itemL"><p>{$lang.store_owner}: </p></div>
+                <div class="itemR"><p style="padding-right:5px;">{$store.store_owner.user_name|escape}</p>
+                    <a target="_blank" href="{url app=message&act=send&to_id=$store.store_owner.user_id|escape}">
+                         <img src="{res file=images/web_mail.gif}" alt="{$lang.send_pm}" />
+                    </a>
+                </div>
+            </div>
+            <div class="itemWrap">
+                <div class="itemL"><p>{$lang.credit_value}: </p></div>
+                <div class="itemR">
+                <p class="fontColor1">{$store.credit_value}</p>
+                <!--{if $store.credit_value ge 0}-->
+                <p style="padding-left:5px;"><img src="{$store.credit_image}" alt="" /></p>
+                <!--{/if}-->
+                </div>
+            </div>
+            <div class="itemWrap">
+                <div class="itemL"><p>{$lang.goods_count}: </p></div>
+                <div class="itemR"><p>{$store.goods_count}</p></div>
+            </div>
+        </li>
+        <li>
+            <div class="itemWrap">
+                <div class="itemL"><p>{$lang.store_grade}: </p></div>
+                <div class="itemR"><p>{$store.sgrade}</p></div>
+            </div> 
+            <!--{if $store.certifications}-->    
+            <div class="itemWrap" style="padding-top:5px;">
+                <div class="itemL"><p>{$lang.certification}类型: </p></div>
+                <div class="itemR">
+                    <!--{foreach from=$store.certifications item=cert}-->
+                    <!--{if $cert eq "autonym"}-->
+                    <a href="{url app=article&act=system&code=cert_autonym}" target="_blank" title="{$lang.cert_autonym}"><img src="{res file=images/cert_autonym.gif}" /></a>
+                    <!--{elseif $cert eq "material"}-->
+                    <a href="{url app=article&act=system&code=cert_material}" target="_blank" title="{$lang.cert_material}"><img src="{res file=images/cert_material.gif}" /></a>
+                    <!--{/if}-->
+                    <!--{/foreach}-->
+                </div>
+            </div>  
+            <!-- {/if} -->
+        </li>
+
+        <li>
+            <div class="itemWrap">
+                <div class="itemL"><p>{$lang.region}: </p></div>
+                <div class="itemR"><p>{$store.region_name|escape}</p></div>
+            </div>
+            <!--{if $store.address}-->
+            <div class="itemWrap">
+                <p style="padding:0px 5px">{$store.address|escape}</p>
+            </div>
+            <!--{/if}-->
+            <!--{if $store.tel}-->
+            <div class="itemWrap">
+                <div class="itemL"><p>{$lang.tel}: </p></div>
+                <div class="itemR"><p>{$store.tel|escape}</p></div>
+            </div>
+             <!--{/if}-->
+            <div class="itemWrap">
+                <div class="itemL"><p>{$lang.store_add_time}: </p></div>
+                <div class="itemR"><p>{$store.add_time|date}</p></div>
+            </div>
+        </li>
+        <li>
+            <div class="itemWrap txWrap" style="padding:10px 0px;">
+                <!--{if $store.im_qq}-->
+                <a href="http://wpa.qq.com/msgrd?V=1&amp;Uin={$store.im_qq|escape}&amp;Site={$store.store_name|escape}&amp;Menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:{$store.im_qq|escape}:4" alt="QQ"></a>
+                <!--{/if}-->
+                <!--{if $store.im_ww}-->
+                <a target="_blank" href="http://amos.im.alisoft.com/msg.aw?v=2&uid={$store.im_ww|escape:url}&site=cntaobao&s=2&charset={$charset}" ><img border="0" src="http://amos.im.alisoft.com/online.aw?v=2&uid={$store.im_ww|escape:url}&site=cntaobao&s=2&charset={$charset}" alt="Wang Wang" /></a>
+                <!--{/if}-->
+                <!--{if $store.im_msn}-->
+                <a target="_blank" href="http://settings.messenger.live.com/Conversation/IMMe.aspx?invitee={$store.im_msn|escape}"><img src="http://messenger.services.live.com/users/{$store.im_msn|escape}/presenceimage/" alt="status" /></a>
+                <!--{/if}-->
+            </div>
+        </li>
+        <li style="border-bottom:0px;">
+            <div class="toshop">
+                <a href="{url app=store&id=$store.store_id}">进入卖家店铺</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:collect_store({$store.store_id})">{$lang.collect_the_store}</a>
+            </div>
+        </li>
+
+
+    </ul>
+</div>
