@@ -1,0 +1,205 @@
+<script type="text/javascript" src="{lib file=goodsinfo.js}" charset="utf-8"></script>
+<script type="text/javascript">
+//<!CDATA[
+/* buy */
+function buy()
+{
+    if (goodsspec.getSpec() == null)
+    {
+        alert(lang.select_specs);
+        return;
+    }
+    var spec_id = goodsspec.getSpec().id;
+
+    var quantity = $("#quantity").val();
+    if (quantity == '')
+    {
+        alert(lang.input_quantity);
+        return;
+    }
+    if (parseInt(quantity) < 1)
+    {
+        alert(lang.invalid_quantity);
+        return;
+    }
+    add_to_cart(spec_id, quantity);
+}
+
+/* add cart */
+function add_to_cart(spec_id, quantity)
+{
+    var url = SITE_URL + '/index.php?app=cart&act=add';
+    $.getJSON(url, {'spec_id':spec_id, 'quantity':quantity}, function(data){
+        if (data.done)
+        {
+            $('.bold_num').text(data.retval.cart.kinds);
+            $('.bold_mly').html(price_format(data.retval.cart.amount));
+            $('.ware_cen').slideDown('slow');
+            setTimeout(slideUp_fn, 5000);
+        }
+        else
+        {
+            alert(data.msg);
+        }
+    });
+}
+
+var specs = new Array();
+<!--{foreach from=$goods._specs item=spec}-->
+specs.push(new spec({$spec.spec_id}, '{$spec.spec_1|escape}', '{$spec.spec_2|escape}', {$spec.price}, {$spec.stock}));
+<!--{/foreach}-->
+var specQty = {$goods.spec_qty};
+var defSpec = {$goods.default_spec|escape};
+var goodsspec = new goodsspec(specs, specQty, defSpec);
+//]]>
+</script>
+
+<div style="background: #f2f2f2;border-bottom: solid 1px #f2f2f2;margin-bottom: 10px;">
+    <div style="background: #fff;padding:15px;width:1170px;margin: auto;">
+        <div class="ware_info">
+            <div class="ware_pic">
+                <div class="big_pic">
+                    <a href="javascript:;"><span class="jqzoom"><img src="{$goods._images.0.thumbnail|default:$default_image}" width="350" height="350" jqimg="{$goods._images.0.image_url}" /></span></a>
+                </div>
+                <div class="bottom_btn">
+                    <!--<a class="collect" href="javascript:collect_goods({$goods.goods_id});" title="{$lang.add_to_favorite}"></a>-->
+                    <div class="left_btn"></div>
+                    <div class="right_btn"></div>
+                    <div class="ware_box">
+                        <ul>
+                            <!--{foreach from=$goods._images item=goods_image name=fe_goods_image}-->
+                            <li {if $smarty.foreach.fe_goods_image.first}class="ware_pic_hover" {/if} bigimg="{$goods_image.image_url}"><img src="{$goods_image.thumbnail}" width="54" height="54" /></li>
+                            <!--{/foreach}-->
+                        </ul>
+                    </div>
+                </div>
+                <div class="detail_action">
+                    <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+                        <span class="bds_more">分享该商品</span>
+                    </div>
+                    <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6780915" src="http://bdimg.share.baidu.com/static/js/bds_s_v2.js?cdnversion=390773"></script>
+                    <span class="favorite_area"><a id="js_add_fav_btn" href="javascript:collect_goods({$goods.goods_id});" class="">收藏该商品</a></span>
+                </div>
+            </div>
+            <div class="ware_text">
+                <h2 class="ware_title">{$goods.goods_name|escape}</h2>
+                <h3 class="goods_subname">{$goods.goods_subname|escape}</h3>
+                <div class="rate">
+                    <span class="letter1">{$lang.price}: </span><span class="fontColor3" ectype="goods_price">{$goods._specs.0.price|price}</span>
+                    <br />
+                    {if $donation}
+                    <span class="letter1">{$lang.donation}: </span>
+                    <div style="width:250px;display: inline-block;vertical-align: top;">
+                        {foreach from=$donation item=do}
+                        <img src={$do.default_image} width=25 height=30 style="vertical-align: middle" />&nbsp;{$do.title} X {$do.num}({if $do.supply_type =='1'}长期赠送{else}赠完为止{/if})
+                        <br /> {/foreach}
+                    </div>
+                    {/if}
+                    <!--{if $goods._specs.0.is_pro}-->
+                    <span class="letter1">促销: </span>
+                    <em class="promo-price-type" title="{$goods.pro_desc}">{$goods.pro_name}</em>
+                    <span class="promo-price" ectype="goods_pro_price">{$goods._specs.0.pro_price|price}</span>
+                    <div class="countdown J_Countdown_GoodsPromotion">
+                        <span class="lefttime">还剩</span>
+                        <span class="flip-top J_NumDays">{$goods.lefttime.d}</span><em>天</em>
+                        <span class="flip-top J_NumHours">{$goods.lefttime.h}</span><em>小时</em>
+                        <span class="flip-top J_NumMins">{$goods.lefttime.m}</span><em>分</em>
+                        <span class="flip-top J_NumSeconds">{$goods.lefttime.s}</span><em>秒</em>
+                    </div>
+                    <!--{/if}-->
+                    <!--{if $goods.if_open}-->
+                    <span class="letter1">会员价: </span>
+                    <!--{if $visitor.user_id }-->
+                    <em class="promo-price-type" title="{$goods.grade_name}">{$goods.grade_name}</em><span class="promo-price" ectype="member_price">{$goods._specs.0.member_price|price}</span>
+                    <br />
+                    <!--{else}-->
+                    <em class="promo-price-type">登录后查看是否享受该优惠</em>
+                    <!--{/if}-->
+                    <!--{/if}-->
+                    <div style="width: 100%;color:#e4393c;">
+                        <!--{if $store.amount_for_free_fee}-->满{$store.amount_for_free_fee|price}元包邮
+                        <!--{/if}-->
+                        <!--{if $store.acount_for_free_fee}-->,满{$store.acount_for_free_fee|escape}件包邮
+                        <!--{/if}-->
+                    </div>
+                    {if $goods.integral_max_exchange}可使用积分:<em style="color:red;font-weight: bold;padding-left:10px;">{$goods.integral_max_exchange|escape}</em>
+                    <br />{/if}
+                    <span class="letter1">{$lang.brand}: </span>{$goods.brand|escape}
+                    <br /> {$lang.tags}:&nbsp;&nbsp;
+                    <!--{foreach from=$goods.tags item=tag}-->{$tag}&nbsp;&nbsp;&nbsp;
+                    <!--{/foreach}-->
+                    <br /> {$lang.sale_situation}: {$sales_info}{$comments}
+                    <br /> {$lang.region}: {$store.region_name|escape}
+                    <br /> {$goods.scan_code}
+                    <br/>
+                    <span style="color:blue;font-weight:bold">微信扫描产品分享到朋友圈</span>
+                </div>
+                <div class="handle">
+                    <!--{if $goods.spec_qty gt 0}-->
+                    <ul>
+                        <li class="handle_title">{$goods.spec_name_1|escape}: </li>
+                    </ul>
+                    <!--{/if}-->
+                    <!--{if $goods.spec_qty gt 1}-->
+                    <ul>
+                        <li class="handle_title">{$goods.spec_name_2|escape}: </li>
+                    </ul>
+                    <!--{/if}-->
+                    <!--{if $goods.spec_qty gt 2}-->
+                    <ul>
+                        <li class="handle_title">{$goods.spec_name_3|escape}: </li>
+                    </ul>
+                    <!--{/if}-->
+                    <!--{if $goods.spec_qty gt 3}-->
+                    <ul>
+                        <li class="handle_title">{$goods.spec_name_4|escape}: </li>
+                    </ul>
+                    <!--{/if}-->
+                    <!--{if $goods.spec_qty gt 4}-->
+                    <ul>
+                        <li class="handle_title">{$goods.spec_name_5|escape}: </li>
+                    </ul>
+                    <!--{/if}-->
+                    <ul>
+                        <li class="handle_title">{$lang.quantity}: </li>
+                        <li>
+                            <input type="text" class="text width1" name="" id="quantity" value="1" /> {$lang.unit}{$lang.left_bracket}{$lang.stock}
+                            <span class="stock" ectype="goods_stock">{$goods._specs.0.stock}</span>{$lang.unit}{$lang.right_bracket}
+                        </li>
+                    </ul>
+                    <!--{if $goods.spec_qty gt 0}-->
+                    <ul>
+                        <li class="handle_title">{$lang.your_select}: </li>
+                        <li class="aggregate" ectype="current_spec"></li>
+                    </ul>
+                    <!--{/if}-->
+                </div>
+                <ul class="ware_btn clearfix">
+                    <div class="ware_cen" style="display:none">
+                        <div class="ware_center">
+                            <h1>
+                                <span class="dialog_title">{$lang.add_to_cart_ok}</span>
+                                <span class="close_link" title="{$lang.close}" onmouseover="this.className = 'close_hover'" onmouseout="this.className = 'close_link'" onclick="slideUp_fn();"></span>
+                            </h1>
+                            <div class="ware_cen_btn">
+                                <p class="ware_text_p">{$lang.cart_status}</p>
+                                <p class="ware_text_btn">
+                                    <input type="submit" class="btn1" name="" value="{$lang.view_cart}" onclick="location.href = '{$site_url}/index.php?app=cart'" />
+                                    <input type="submit" class="btn2" name="" value="{$lang.continue_buy}" onclick="$('.ware_cen').css({'display':'none'});" />
+                                </p>
+                            </div>
+                        </div>
+                        <div class="ware_cen_bottom"></div>
+                    </div>
+                    <li class="btn_c2" title="{$lang.add_to_cart}">
+                        <a href="javascript:buy();"></a>
+                    </li>
+                    <li class="btn_c3" title="{$lang.add_to_favorite}">
+                        <a href="javascript:collect_goods({$goods.goods_id});"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>

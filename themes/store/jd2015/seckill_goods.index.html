@@ -1,0 +1,305 @@
+{include file=header.html}
+
+{include file=top.html}
+
+
+
+<script type="text/javascript" src="{lib file=seckillinfo.js}" charset="utf-8"></script>
+<script type="text/javascript">
+//<!CDATA[
+    /* buy */
+    function buy()
+    {
+        if (goodsspec.getSpec() == null)
+        {
+            alert(lang.select_specs);
+            return;
+            }
+            var spec_id = goodsspec.getSpec().id;
+
+            var quantity = $("#quantity").val();
+            if (quantity == '')
+            {
+                alert(lang.input_quantity);
+                return;
+            }
+            if (parseInt(quantity) < 1) {
+                alert(lang.invalid_quantity);
+                return;
+            }
+            add_to_cart(spec_id, quantity);
+        }
+        /* add cart */
+        function add_to_cart(spec_id, quantity)
+        {
+            var seckill_id = {$goods.seckill_id};
+            var url = SITE_URL + '/index.php?app=cart&act=add';
+            $.getJSON(url, {'spec_id': spec_id, 'quantity': quantity, 'seckill_id': seckill_id}, function(data) {
+                if (data.done)
+                {
+                    $('.bold_num').text(data.retval.cart.kinds);
+                    $('.bold_mly').html(price_format(data.retval.cart.amount));
+                    $('.ware_cen').slideDown('slow');
+                    setTimeout(slideUp_fn, 5000);
+                }
+                else
+                {
+                    alert(data.msg);
+                }
+            });
+        }
+
+        /*buy_now*/
+        function buy_now()
+        {
+            //验证数据
+            if (goodsspec.getSpec() == null)
+            {
+                alert(lang.select_specs);
+                return;
+            }
+            var spec_id = goodsspec.getSpec().id;
+
+            var quantity = $("#quantity").val();
+            if (quantity == '')
+            {
+                alert(lang.input_quantity);
+                return;
+            }
+            if (parseInt(quantity) < 1)
+            {
+                alert(lang.invalid_quantity);
+                return;
+            }
+            buy_now_add_cart(spec_id, quantity);
+        }
+
+        /* add buy_now_add_cart */
+        function buy_now_add_cart(spec_id, quantity)
+        {
+            var seckill_id = {$goods.seckill_id};
+            
+            var url = SITE_URL + '/index.php?app=cart&act=add';
+            $.getJSON(url, {'spec_id': spec_id, 'quantity': quantity, 'seckill_id': seckill_id}, function(data) {
+                if (data.done)
+                {
+                    location.href = SITE_URL + '/index.php?app=order&goods=cart&store_id={$store.store_id}';
+                } else {
+                    alert(data.msg);
+                }
+            });
+        }
+
+
+
+
+var specs = new Array();
+<!--{foreach from=$goods._specs item=spec}-->
+<!--{if $spec.is_seckill}-->
+specs.push(new spec({$spec.spec_id}, '{$spec.spec_1|escape}', '{$spec.spec_2|escape}', {$spec.price},{$spec.seckill_price}, {$spec.stock},true,{$spec.discount|default:0}));
+<!--{else}-->
+specs.push(new spec({$spec.spec_id}, '{$spec.spec_1|escape}', '{$spec.spec_2|escape}', {$spec.price},0, {$spec.stock},false,{$spec.discount|default:0}));
+<!--{/if}-->
+<!--{/foreach}-->
+var specQty = {$goods.spec_qty};
+var defSpec = {$goods.default_spec|escape};
+var goodsspec = new goodsspec(specs, specQty, defSpec);
+
+//]]>
+</script>
+<div style="background: #f2f2f2;border-bottom: solid 1px #f2f2f2;margin-bottom: 10px;">
+    <div style="background: #fff;padding:15px;width:1170px;margin: auto;">
+
+        <div class="ware_info">
+            <div class="ware_pic">
+                <div class="big_pic">
+                    <a href="javascript:;"><span class="jqzoom"><img src="{$goods._images.0.thumbnail|default:$default_image}" width="350" height="350" jqimg="{$goods._images.0.image_url}" /></span></a>
+                </div>
+
+                <div class="bottom_btn">
+                    <!--<a class="collect" href="javascript:collect_goods({$goods.goods_id});" title="{$lang.add_to_favorite}"></a>-->
+                    <div class="left_btn"></div>
+                    <div class="right_btn"></div>
+                    <div class="ware_box">
+                        <ul>
+                            <!--{foreach from=$goods._images item=goods_image name=fe_goods_image}-->
+                            <li {if $smarty.foreach.fe_goods_image.first}class="ware_pic_hover"{/if} bigimg="{$goods_image.image_url}"><img src="{$goods_image.thumbnail}" width="54" height="54" /></li>
+                            <!--{/foreach}-->
+                        </ul>
+                    </div>
+                </div>
+                <div class="detail_pay"><em class="metatit">支付方式：</em>
+                    <span>支付宝</span><i class="vline">|</i><span>网上银行</span>
+                </div>
+
+                <div class="detail_action">
+                    <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+                        <span class="bds_more">分享该商品</span>
+                    </div>
+                    <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6780915" src="http://bdimg.share.baidu.com/static/js/bds_s_v2.js?cdnversion=390773"></script>
+                    <span class="favorite_area"><a id="js_add_fav_btn" href="javascript:collect_goods({$goods.goods_id});" class="">收藏该商品</a></span>
+                </div>
+            </div>
+
+            <div class="ware_text">
+                <h2 class="ware_title">{$goods.goods_name|escape}</h2>
+                <h3 class="goods_subname">{$goods.goods_subname|escape}</h3>
+                <div class="rate" >
+                    <span class="letter1">{$lang.price}: </span><span class="fontColor3" ectype="goods_price">{$goods._specs.0.seckill_price|price}</span><br />
+                    
+                    
+                    
+                    
+                    <!--{if $goods.max_per_user}--><span class="letter1">每人限购: </span>{$goods.max_per_user}<br/><!--{/if}-->
+                    {if $goods.integral_max_exchange}可使用积分:<em style="color:red;font-weight: bold;padding-left:10px;">{$goods.integral_max_exchange|escape}</em><br />{/if}
+                    <!--{if $goods.brand}--><span class="letter1">{$lang.brand}: </span>{$goods.brand|escape}<br /><!--{/if}-->
+                    {$lang.region}: {$store.region_name|escape}<br />
+                    剩余库存: {$goods.seckill_stock|escape}<br />
+                </div>
+                
+                <div class="handle">
+                    <!--{if $goods.spec_qty gt 0}-->
+                    <ul>
+                        <li class="handle_title">{$goods.spec_name_1|escape}: </li>
+                    </ul>
+                    <!--{/if}-->
+                    <!--{if $goods.spec_qty gt 1}-->
+                    <ul>
+                        <li class="handle_title">{$goods.spec_name_2|escape}: </li>
+                    </ul>
+                    <!--{/if}-->
+                    <ul>
+                        <li class="handle_title">{$lang.quantity}: </li>
+                        <li>
+                            <input type="text" class="text width1" name="" id="quantity" value="1" />
+                            {$lang.unit}
+                        </li>
+                    </ul>
+                    <!--{if $goods.spec_qty gt 0}-->
+                    <ul>
+                        <li class="handle_title">{$lang.your_select}: </li>
+                        <li class="aggregate" ectype="current_spec"></li>
+                    </ul>
+                    <!--{/if}-->
+                </div>
+                <style>
+                    .pace{width: 440px;padding: 10px 20px;margin-top: 20px;border: 1px solid #e8e8e8;overflow: hidden;}
+                    .pace .num_cont{float: left;height: 40px!important;padding-top: 0px!important;width: 100%;overflow: hidden;}
+                    .pace .num_cont li{float: left;width: 100%;overflow: hidden;padding-bottom: 0px!important;position: relative;}
+                    .pace .num_cont .jindu{display: block;height: 6px;background-color: #ccc;margin-top: 10px}
+                    .pace .num_cont .jindu b{height: 6px;display: block;width: 0%;background-color: #ff934b;}
+                </style>
+                <div class="pace">
+                    <ul class="num_cont">
+                        <li>
+                            <span style="float:left;">剩余({$goods.seckill_stock})</span><span style="float:right;">总量({$goods.seckill_total_stock})</span>
+                        </li>
+                        <li class="jindu" style="border: none;">
+                            <b style="width:{$goods.seckill_stock_percent|default:0}%"></b>
+                            
+                        </li>
+                    </ul>
+                </div>
+                <ul class="ware_btn clearfix">
+                    <div class="ware_cen" style="display:none">
+                        <div class="ware_center">
+                            <h1>
+                                <span class="dialog_title">{$lang.add_to_cart_ok}</span>
+                                <span class="close_link" title="{$lang.close}" onmouseover="this.className = 'close_hover'" onmouseout="this.className = 'close_link'" onclick="slideUp_fn();"></span>
+                            </h1>
+                            <div class="ware_cen_btn">
+                                <p class="ware_text_p">{$lang.cart_status}</p>
+                                <p class="ware_text_btn">
+                                    <input type="submit" class="btn1" name="" value="{$lang.view_cart}" onclick="location.href = '{$site_url}/index.php?app=cart'" />
+                                    <input type="submit" class="btn2" name="" value="{$lang.continue_buy}" onclick="$('.ware_cen').css({'display':'none'});" />
+                                </p>
+                            </div>
+                        </div>
+                        <div class="ware_cen_bottom"></div>
+                    </div>
+                    <!--{if $goods.seckill_state eq 'end'  or $goods.seckill_stock eq '0'}-->
+                    <li class="btn_c4" title="{$lang.add_to_cart}"><a href="javascript:void(0);">秒杀结束</a></li>
+                    <!--{/if}-->
+                    <!--{if $goods.seckill_state eq 'on' and $goods.seckill_stock neq '0'}-->
+                    <li class="btn_c6" title="{$lang.add_to_cart}"><a href="javascript:buy_now();">立刻购买</a></li>
+                    <!--{/if}-->
+                    <!--{if $goods.seckill_state eq 'begin'}-->
+                    <li class="btn_c5" title="{$lang.add_to_cart}"><a href="javascript:void(0);">等待开始</a></li>
+                    <!--{/if}-->
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="content">
+    <div id="left">
+        {include file=left.html}
+    </div>
+
+    <div id="right">
+
+        <div id="module">
+            <ul class="user_menu">
+                <li><a class="active" href="{url app=goods&id=$goods.goods_id}#module"><span>{$lang.goods_detail}</span></a></li>
+            </ul>
+        </div>
+
+        <div class="option_box">
+
+
+            <!-- sku   -->
+            {if $props}
+            <div style="background:#F5F5F5;margin-bottom:20px;margin-top:10px;border:1px #E2E2E2 solid;">
+                {foreach from=$props item=prop}
+                <div style="float:left;width:32%;padding:5px; height:20px; line-height:20px;background:#F5F5F5">
+                    {$prop.name}：{$prop.value}
+                </div>
+                {/foreach}
+                <div style="clear:both;height:0; display:block; overflow:hidden"></div>
+            </div>
+            {/if}
+            <!-- sku  -->
+
+
+            <div class="default">{$goods.description|escape:editor}</div>
+        </div>
+        <!--{if $goods.related_info.count gt 0}-->
+        <div class="module_currency">
+            <h2 class="common_title veins1">
+                <div class="ornament1"></div>
+                <div class="ornament2"></div>
+                <span class="ico1"><span class="ico2">{$lang.related_info}</span></span>
+            </h2>
+            <dl class="related_list">
+                <!--{foreach from=$goods.related_info.list item=app_data}-->
+                <!--{if $app_data.data and $app_data.app_type neq 'ECMALL'}-->
+                <dt><a href="{$app_data.app_url}">{$app_data.app_name}</a></dt>
+                <!--{foreach from=$app_data.data item=item}-->
+                <dd>{$item}</dd>
+                <!--{/foreach}-->
+                <!--{/if}-->
+                <!--{/foreach}-->
+            </dl>
+        </div>
+        <!--{/if}-->
+        <div class="clear"></div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+
+{include file=footer.html}

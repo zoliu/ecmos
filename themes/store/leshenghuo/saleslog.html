@@ -1,0 +1,29 @@
+<div class="table_common">
+    <table>
+        <tr class="bg2">
+            <th>{$lang.buyer}</th>
+            <th>{$lang.buy_price}</th>
+            <th>{$lang.quantity}</th>
+            <th>{$lang.add_time}</th>
+            <th>{$lang.evaluation}</th>
+        </tr>
+        <!--{foreach from=$sales_list item=sales}-->
+        <tr>
+            <td>{if $sales.anonymous}***{else}{$sales.buyer_name|escape}{/if}</td>
+            <td>{$sales.price|price}</td>
+            <td>{$sales.quantity} <span class="fontColor5">{if $sales.specification}{$lang.left_bracket}{$sales.specification|escape}{$lang.right_bracket}{/if}</span></td>
+            <td>{$sales.add_time|date}</td>
+            <td>{if $sales.evaluation gt 0}<img src="{res file=images/bit.gif}" />{/if}
+                {if $sales.evaluation gt 1}<img src="{res file=images/bit.gif}" />{/if}
+                {if $sales.evaluation gt 2}<img src="{res file=images/bit.gif}" />{/if}
+                {if $sales.evaluation lt 3}<img src="{res file=images/bit2.gif}" />{/if}
+                {if $sales.evaluation lt 2}<img src="{res file=images/bit2.gif}" />{/if}
+                {if $sales.evaluation lt 1}<img src="{res file=images/bit2.gif}" />{/if} </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr>
+            <td colspan="6"><span class="light">{$lang.no_records}</span></td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+</div>

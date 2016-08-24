@@ -1,0 +1,151 @@
+{include file=header.html} {include file=top.html}
+<div class="Mt10"></div>
+<div class="yaygWrap">
+    <div class="w">
+        <div class="shop_description">
+            <div class="s_d_bd">
+                {$store.description|escape:editor}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="Mt10"></div>
+<div class="yaygWrap">
+    <div class="w">
+        <!--{if $recommended_good}-->
+        <div class="module_1_0">
+            <div class="module_1_0hd">
+                <h3 class="dotted_icon">{$lang.recommended_goods}</h3>
+            </div>
+            <div class="module_1_0bd">
+                <!--content01 Start-->
+                <div class="majorGoods">
+                    <ul>
+                        <!--{foreach from=$recommended_good item=rgoods key=k name=foreach_recommended_goods}-->
+                        <li style="{if ($smarty.foreach.foreach_recommended_goods.index+1)%5==0} margin-right:0px;{/if}">
+                            <div class="imgDiv">
+                                <a href="{url app=goods&id=$rgoods.goods_id}" target="_blank">
+                                    <img src="{$rgoods.default_image}" />
+                                </a>
+                            </div>
+                            <div class="nameDiv">
+                                <h3><a href="{url app=goods&id=$rgoods.goods_id}" title="{$goods.goods_name|escape}" target="_blank">{$rgoods.goods_name|escape|truncate:60}</a></h3>
+                            </div>
+                            <div class="PriceDiv">
+                                <span class="price">{$rgoods.price|price}</span>&nbsp;
+                                <span class="" style="float:center;font-size: 14px;margin-left: 15px;"></span>
+                            </div>
+                            <div class="PriceDiv">
+                                <span class="" style="float: right;font-size: 14px;border:1px solid #E5E5E5;padding:3px 9px;"><a href="javascript:add_to_shop({$rgoods.default_spec},1);"> 加入购物车</a></span>
+                                <!-- <i class="mark_price">¥150.00</i> -->
+                                <script>
+                                function add_to_shop(spec_id, quantity) {
+                                    var url = 'index.php?app=cart&act=add';
+
+                                    $.getJSON(url, {
+                                        'spec_id': spec_id,
+                                        'quantity': quantity
+                                    }, function(data) {
+                                        if (data.done) {
+                                            alert('购物车加入成功！');
+                                            //window.location.href = 'index.php?app=cart';
+                                            // $('.bold_num').text(data.retval.cart.kinds);
+                                            // $('.bold_mly').html(price_format(data.retval.cart.amount));
+                                            // $(".buynow .msg").slideDown().delay(5000).slideUp();
+                                        } else {
+                                            alert(data.msg);
+                                        }
+                                    });
+                                }
+                                </script>
+                            </div>
+                        </li>
+                        <!--{/foreach}-->
+                    </ul>
+                </div>
+                <!--content01 End-->
+            </div>
+        </div>
+        <!--{/if}-->
+        <div class="Mt10"></div>
+        <!--新品推荐 Start-->
+        <div class="module_1_0">
+            <div class="module_1_0hd">
+                <h3 class="dotted_icon">{$lang.new_goods}</h3>
+            </div>
+            <div class="module_1_0bd">
+                <!--content01 Start-->
+                <!--{if $new_good}-->
+                <div class="majorGoods">
+                    <ul>
+                        <!--{foreach from=$new_good item=ngoods key=k3 name=foreach_new_goods}-->
+                        <li style="{if ($smarty.foreach.foreach_new_goods.index+1)%5==0} margin-right:0px;{/if}">
+                            <div class="imgDiv">
+                                <a href="{url app=goods&id=$ngoods.goods_id}" target="_blank">
+                                    <img src="{$ngoods.default_image}" />
+                                </a>
+                            </div>
+                            <div class="nameDiv">
+                                <h3><a href="{url app=goods&id=$ngoods.goods_id}" title="{$ngoods.goods_name|escape}" target="_blank">{$ngoods.goods_name|escape|truncate:60}</a></h3>
+                            </div>
+                            <div class="PriceDiv">
+                                <span class="price">{$ngoods.price|price}</span>
+                                <span class="" style="float:center;font-size: 14px;margin-left: 15px;"><!--{if $ngoods.pvprice}-->PV:{$ngoods.pvprice}<!--{/if}--></span>
+                                <!-- <i class="mark_price">¥150.00</i> -->
+                            </div>
+                            <div class="PriceDiv">
+                                <span class="" style="float: right;font-size: 14px;border:1px solid #E5E5E5;padding:3px 9px;"><a href="javascript:add_to_shop({$ngoods.default_spec},1);"> 加入购物车</a></span>
+                            </div>
+                        </li>
+                        <!--{/foreach}-->
+                    </ul>
+                </div>
+                <!--{else}-->
+                <div class="nothing">
+                    <p>{$lang.no_records}</p>
+                </div>
+                <!--{/if}-->
+            </div>
+        </div>
+        <!--新品推荐 End-->
+        <!--商品团购 Start-->
+        <!--{if $new_groupbuy and $store.functions.groupbuy and $store.enable_groupbuy}-->
+        <div class="module_1_0">
+            <div class="module_1_0hd">
+                <h3 class="dotted_icon">{$lang.new_groupbuy}</h3>
+            </div>
+            <div class="module_1_0bd">
+                <!--content01 Start-->
+                <div class="majorGoods">
+                    <ul>
+                        <!--{foreach from=$new_groupbuy item=groupbuy key=k2 name=foreach_new_groupbuy}-->
+                        <li style="{if ($smarty.foreach.foreach_new_groupbuy.index+1)%5==0} margin-right:0px;{/if}">
+                            <div class="imgDiv">
+                                <a href="{url app=groupbuy&id=$groupbuy.group_id}" target="_blank">
+                                    <img src="{$groupbuy.default_image}" />
+                                </a>
+                                <div class="time_countdown">{$lang.lefttime}:&nbsp;{$groupbuy.lefttime}</div>
+                            </div>
+                            <div class="nameDiv">
+                                <h3><a href="{url app=groupbuy&id=$groupbuy.group_id}" title="{$groupbuy.group_name|escape}" target="_blank">{$groupbuy.group_name|escape}</a></h3>
+                            </div>
+                            <div class="PriceDiv">
+                                <span class="price">{$groupbuy.price|price}</span>
+                                <i class="mark_price">{$groupbuy.group_price|price}</i>
+                                <span class="" style="float: right;font-size: 14px;border:1px solid #E5E5E5;padding:3px 9px;"><a href="{url app=groupbuy&id=$groupbuy.group_id}"> 参加团购</a></span>
+                            </div>
+                        </li>
+                        <!--{/foreach}-->
+                    </ul>
+                </div>
+                <!--content01 End-->
+            </div>
+        </div>
+        <div class="Mt10"></div>
+        <!--{/if}-->
+        <!--商品团购 End-->
+    </div>
+</div>
+<div class="Mt10"></div>
+<div class="Mt10"></div>
+{include file=footer.html}

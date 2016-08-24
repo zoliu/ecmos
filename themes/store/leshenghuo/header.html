@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<base href="{$site_url}/" />
+<!-- Use IE7 mode -->
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset={$charset}" />
+<meta http-equiv="Content-Type" content="text/html;charset={$charset}" />
+{$page_seo}
+
+<meta name="author" content="ecmall.shopex.cn" />
+<meta name="copyright" content="ShopEx Inc. All Rights Reserved" />
+<link href="{res file=shopcommon.css}" rel="stylesheet" type="text/css" />
+<link href="{res file=shop.css}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="index.php?act=jslang"></script>
+<script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+<script src="{res file=js/common.js}" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+//<!CDATA[
+var SITE_URL = "{$site_url}";
+var REAL_SITE_URL = "{$real_site_url}";
+var PRICE_FORMAT = '{$price_format}';
+
+$(function(){
+    var span = $("#select_list");
+    span.hover(function(){
+        $("#float_list:not(:animated)").show();
+    }, function(){
+        $("#float_list").hide();
+    });
+
+    //城市地址切换 Start
+    $("#citytitle .title").bind("click",function(){
+        $(this).addClass("cur");
+       $("#cityBox").slideDown("fast"); 
+        return false;
+    })
+    $("#cityBox .cityS_C01Bd ul li").each(function(index){
+        //  
+        $(this).click(function(){
+          var textC= $(this).text();
+
+           $("#citytitle").find("h2").html(textC);
+           $("#cityBox").hide();
+            $("#citytitle .title").removeClass("cur");
+           return false;
+        })
+        
+    })
+    $(document).click(function(){
+        if($("#cityBox").is(":visible"))
+        {
+            $("#cityBox").hide();
+            $("#citytitle .title").removeClass("cur");
+        }
+
+    })
+    //城市地址切换 End 
+});
+//]]>
+</script>
+{$_head_tags}
+</head>
+
+<body>
+<div id="headertop">
+    <div class="w">
+        <div class="headertop_l">
+            <p>欢迎来到商城！</p>
+        </div>
+        <div class="headertop_r">
+            <!--左边部分 Start-->
+            <div class="left">
+                <p class="helloC">
+                    {$lang.hello},{$visitor.user_name|escape}&nbsp;&nbsp;&nbsp;&nbsp;
+                    <!--{if !$visitor.user_id}-->
+                    [&nbsp;<a href="{url app=member&act=login&ret_url=$ret_url}">{$lang.login}</a>&nbsp;]
+                    [&nbsp;<a href="{url app=member&act=register&ret_url=$ret_url}">{$lang.register}</a>&nbsp;]
+                    <!--{else}-->
+                    [<a href="{url app=member&act=logout}">{$lang.logout}</a>]
+                    <!--{/if}-->
+                </p>
+            </div>
+            <!--左边部分 End-->
+            <div class="right">
+                <ul>
+                    <li class="line01"><a href="{url app=category}">{$lang.i_want_buy}</a></li>
+                    <li class="line01"><a href="{url app=my_goods&act=add}">{$lang.i_want_sell}</a></li>
+                    <li class="line01"><a href="{url app=my_favorite}">我的收藏</a></li>
+                    <li id="select_list" class="line01" style="width:60px;text-align:center;">   
+                        <a class="z_index" href="{url app=member}">{$lang.member_center}</a>
+                        <ul id="float_list">
+                            <div class="adorn1"></div>
+                            <div class="adorn2"></div>
+                            <!--{if $visitor.store_id}-->
+                            <li><a href="{url app=my_goods}">{$lang.my_goods}</a></li>
+                            <li><a href="{url app=seller_order}">{$lang.order_manage}</a></li>
+                            <li><a href="{url app=my_qa}">{$lang.my_qa}</a></li>
+                            <!--{else}-->
+                            <li><a href="{url app=buyer_order}">{$lang.my_order}</a></li>
+                            <li><a href="{url app=buyer_groupbuy}">{$lang.my_groupbuy}</a></li>
+                            <li><a href="{url app=my_question}">{$lang.my_question}</a></li>
+                            <!--{/if}-->
+
+                        </ul> 
+                    </li>
+                    <li class="line01">
+                        <a href="{url app=cart}" target="_blank" class="icons_02"><span>购物车</span><strong class="cart_goods_kinds">{$cart_goods_kinds}</strong></a>
+                    </li>
+                    <li class="line01">
+                        <a href="{url app=article&code=$acc_help}" class="icons_01">{$lang.help_center}</a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    </div>     
+</div>
+<div id="headerMiddle">
+    <div class="w">
+        <div class="h_m_boxWrap">
+            <div class="logo">
+                <div style="width: 300px;">
+                <h1 title="{$site_title}" style="margin-top: 40px;"><a href="index.php"><img alt="{$site_title}" src="{$site_logo}" /></a></h1>
+                </div>
+                
+            </div>
+            <!--search Start-->
+            <div class="searchBox">
+                <div class="top-search"> 
+                    <div class="top-search-box">
+                        <div class="ts_Box">
+                            <span class="searchicon"></span>
+                            <form id="" name="" method="get" action="index.php">
+                                <input type="hidden" name="app" value="store" />
+                                <input type="hidden" name="act" value="search" />
+                                <input type="hidden" name="id" value="{$store.store_id}" />
+                                <input class="in head_search_input search_goods" autocomplete="off" type="text" name="keyword" />
+                                <input type="submit" id="search_submit" class="serarchBtn ok fff f14 fb" value="搜 索"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="top-search-words">
+                    <span>
+                        <!--{foreach from=$hot_keywords item=keyword}-->
+                        <a href="{url app=search&keyword=$keyword}">{$keyword}</a>
+                        <!--{/foreach}-->
+                     </span>
+                </div>
+            </div>
+            <!--search End-->
+            <!--购物车  Start-->
+            <div class="buyCart">
+                <a href="{url app=cart}" target="_blank" class="buyCartBox"><span>去结算</span> <strong id="cart_goods_kinds">{$cart_goods_kinds}</strong><span>件</span></a>
+            </div>
+            <!--购物车  End-->
+        </div>
+    </div>
+</div>
+

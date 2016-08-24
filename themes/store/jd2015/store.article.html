@@ -1,0 +1,17 @@
+{include file=header.html}
+
+{include file=top.html}
+
+<div id="content">
+    <div id="left">
+        {include file=left.html}
+    </div>
+    
+    <div id="right">
+        <div class="default">{$article.content|escape:editor}</div>
+    </div>
+    
+    <div class="clear"></div>
+</div>
+
+{include file=footer.html}

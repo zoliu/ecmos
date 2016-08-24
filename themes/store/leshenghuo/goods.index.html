@@ -1,0 +1,116 @@
+{include file=header.html}
+{include file=top.html}
+<div class="Mt10"></div>
+<div class="yaygWrap" style="overflow:visible;height:480px;">
+    <div class="w" style="position:relative;">
+        {include file=goodsinfo.html}
+    </div>
+</div>
+<div class="clear1 Mt10"></div>
+<div class="yaygWrap">
+    <div class="w">
+        <div class="yayg_shopL">
+            <!--浏览历史记录 Start-->
+
+            <div class="module_common">
+               <div class="m_c_hd">
+                   <h2>{$lang.goods_history}</h2>
+               </div>
+               <div class="m_c_bd">
+                  <!--{if $smarty.get.app eq "goods"}-->
+                    <div class="widgets_Goods01">
+                        <ul>
+                            <!--{foreach from=$goods_history item=gh_goods}-->
+                            <li>
+                                <div class="imgDiv">
+                                    <a href="{url app=goods&id=$gh_goods.goods_id}"><img src="{$gh_goods.default_image}" width="50" height="50" alt="{$gh_goods.goods_name|truncate:20|escape}" title="{$gh_goods.goods_name|escape}" /></a>
+                                </div>
+                                <div class="nameDiv">
+                                    <h4><a href="{url app=goods&id=$gh_goods.goods_id}">{$gh_goods.goods_name|truncate:36|escape}</a></h4>
+                                </div>
+                            </li>
+                            <!--{/foreach}-->
+                        </ul>
+
+                    </div>
+                  <!--{/if}-->
+               </div>
+            </div> 
+
+            <!--浏览历史记录 End--> 
+        </div>
+        <div class="yayg_shopR">
+            <div class="product-tags">
+                <h2 class="active" ><a href="{url app=goods&id=$goods.goods_id}#module"><span>{$lang.goods_detail}</span></a></h2>
+                <h2 class="normal"><a href="{url app=goods&act=comments&id=$goods.goods_id}#module"><span>{$lang.goods_comment}</span></a></h2>
+                <h2 class="normal"><a href="{url app=goods&act=saleslog&id=$goods.goods_id}#module"><span>{$lang.sales_log}</span></a></h2>
+                <h2 class="normal"><a href="{url app=goods&act=qa&id=$goods.goods_id}#module"><span>{$lang.qa}</span></a></h2>
+            </div>
+            <style>
+            .option_box {
+                width: 95%;
+                padding: 15px 20px;
+                margin-bottom: 10px;
+                _overflow-x: auto;
+                }
+                .cmp_video img{}
+            </style>
+            <div class="product_detail">
+                {include file="map.html"}
+                <div class="option_box">
+                    <!--360cd.cn-->
+                    {if $props}
+                    <div style="background:#F5F5F5;margin-bottom:20px;margin-top:10px;border:1px #E2E2E2 solid;">
+                       {foreach from=$props item=prop}
+                       <div style="float:left;width:32%;padding:5px; height:20px; line-height:20px;background:#F5F5F5">
+                          {$prop.name}：{$prop.value}
+                       </div>
+                       {/foreach}
+                       <div style="clear:both;height:0; display:block; overflow:hidden"></div>
+                    </div>
+                    {/if}
+                    <!--360cd.cn-->
+                    <div class="default">{$goods.description|escape:editor}</div>
+                </div>
+<script type="text/javascript">
+    $(function(){
+        var cmp_id={$store.cmp_id};
+        $.getJSON('index.php?app=goods&act=get_video',{cmp_id: cmp_id}, function(data) {
+            if(data){
+                var html='<ul>';
+                $.each(data,function(i,item){
+                    html+='<li><a href="'+item.v_url+'"><img src="'+item.v_thumb+'" alt="'+item.v_desc+'" width=210 height=210></a></li>';
+                    $('#cmp_video').html(html);
+                });
+            }
+        });
+
+    });
+</script>
+                <!--{if $goods.related_info.count gt 0}-->
+                <div class="module_currency">
+                    <h2 class="common_title veins1">
+                        <div class="ornament1"></div>
+                        <div class="ornament2"></div>
+                        <span class="ico1"><span class="ico2">{$lang.related_info}</span></span>
+                    </h2>
+                    <dl class="related_list">
+                        <!--{foreach from=$goods.related_info.list item=app_data}-->
+                        <!--{if $app_data.data and $app_data.app_type neq 'ECMALL'}-->
+                        <dt><a href="{$app_data.app_url}">{$app_data.app_name}</a></dt>
+                        <!--{foreach from=$app_data.data item=item}-->
+                        <dd>{$item}</dd>
+                        <!--{/foreach}-->
+                        <!--{/if}-->
+                        <!--{/foreach}-->
+                    </dl>
+                </div>
+                <!--{/if}-->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="Mt10"></div>
+<br />
+<br />
+{include file=footer.html}

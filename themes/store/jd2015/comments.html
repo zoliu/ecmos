@@ -1,0 +1,77 @@
+<div class="message">
+    <!--{if $evaluation_data}-->
+    <script type="text/javascript" src="{lib file=search_goods.js}" charset="utf-8"></script>
+    <script>
+        $(function() {
+            $("input[name='evalscore']").bind("click", function() {
+                replaceParam('evalscore', this.value, 'show_comment');
+            });
+            $("input[name='havecomment']").bind("click", function() {
+                if (this.checked == true) {
+                    replaceParam('havecomment', this.value, 'show_comment');
+                } else {
+                    dropParam('havecomment');
+                }
+            });
+        });
+    </script>
+    <div class="nc-g-r" id="show_comment">
+        <p>宝贝与描述相符<em>{$evaluation_data.evaluation_desc}</em>分</p>
+        <dl class="ncs-rate-column">
+            <dt><em style="left:{$evaluation_data.percent}%;">{$evaluation_data.evaluation_desc}</em></dt>
+            <dd>非常不满</dd>
+            <dd>不满意</dd>
+            <dd>一般</dd>
+            <dd>满意</dd>
+            <dd>非常满意</dd>
+        </dl>
+        <a href="{url app=store&id=$store.store_id}" target="_blank">店铺评价</a>
+    </div>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="nc-comment" id="t">
+        <thead class="type">
+            <tr>
+                <th colspan="2"><div>
+            <input name="evalscore" type="radio" value="0" {if $smarty.get.evalscore eq '0' or !$smarty.get.evalscore}checked=""{/if}>
+                   <label for="allRate">全部评价</label>
+            <input name="evalscore" type="radio" value="3" {if $smarty.get.evalscore eq '3'}checked=""{/if}>
+                   <label for="goodRate">好评</label> <span style="color:#999;padding-left:2px">({$comments_count.good})</span>
+            <input name="evalscore" type="radio" value="2" {if $smarty.get.evalscore eq '2'}checked=""{/if}>
+                   <label for="mediumRate">中评</label> <span style="color:#999;padding-left:2px">({$comments_count.middle})</span>
+            <input name="evalscore" type="radio" value="1" {if $smarty.get.evalscore eq '1'}checked=""{/if}>
+                   <label for="worstRate">差评</label> <span style="color:#999;padding-left:2px">({$comments_count.bad})</span>
+        </div></th>
+        <td><div>
+                <input name="havecomment" type="checkbox" value="1" {if $smarty.get.havecomment eq '1'}checked{/if}>
+                       显示有内容的评价</div>
+        </td>
+        </tr>
+        </thead>
+    </table>
+    <!--{/if}-->
+    <!-- {foreach from=$goods_comments item=comment} -->
+    
+    <dl class="{cycle values=message_text,message_text bg1}">
+        <dt>
+        <span class="light">{if $comment.anonymous}***{else}{$comment.buyer_name|escape}{/if}<img src="{$comment.buyer_credit_image}" title="{$comment.buyer_credit_value}" /> ({$comment.evaluation_time|date:complete})</span>
+        </dt>
+        <dd>{$comment.comment|escape|nl2br}
+            {$comment.evalpic|modifier:var_dump}
+        </dd>
+        <div class="beat">
+            {$lang.evaluation}:
+            {if $comment.evaluation gt 0}<img src="{res file=images/bit.gif}" />{/if}
+            {if $comment.evaluation gt 1}<img src="{res file=images/bit.gif}" />{/if}
+            {if $comment.evaluation gt 2}<img src="{res file=images/bit.gif}" />{/if}
+            {if $comment.evaluation lt 3}<img src="{res file=images/bit2.gif}" />{/if}
+            {if $comment.evaluation lt 2}<img src="{res file=images/bit2.gif}" />{/if}
+            {if $comment.evaluation lt 1}<img src="{res file=images/bit2.gif}" />{/if}
+        </div>
+    </dl>
+    <!-- {foreachelse} -->
+    <dl class="message_text">
+        <dt><span class="light">{$lang.no_records}</span></dt>
+    </dl>
+    <!-- {/foreach} -->
+</div>
+
+

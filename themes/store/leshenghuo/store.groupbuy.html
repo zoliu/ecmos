@@ -1,0 +1,70 @@
+{include file=header.html}
+{include file=top.html}
+<br />
+<div class="Mt10"></div>
+<div class="yaygWrap">
+    <div class="w">
+        <div class="yayg_shopL">
+            {include file=user_shopinfo.html}
+            <div class="Mt10"></div>
+            {include file=left.html}
+        </div>
+        <div class="yayg_shopR">
+            
+            <div class="module_special">
+                <div class="m_s_hd">
+                    <h2>
+                     <!-- {foreach from=$search_name item=item} -->
+                        <!-- {if $item.url} -->
+                            <a href="{$item.url}">{$item.text}</a>
+                        <!-- {else} -->
+                        {$item.text}
+                        <!-- {/if} -->
+                        <!-- {/foreach} -->   
+                    </h2>
+                </div>
+                <div class="m_s_bd">
+                    
+                    <div class="majorGoods major_group_List">
+                        <!--{if $groupbuy_list}-->
+                        <ul>
+
+                            <!--{foreach from=$groupbuy_list item=groupbuy}-->
+                            <li>
+                               <div class="imgDiv"> 
+                                    <a href="{url app=groupbuy&id=$groupbuy.group_id}" target="_blank">
+                                        <img src="{$groupbuy.default_image}" />
+                                    </a>
+                                    <div class="time_countdown">{$lang.lefttime}:&nbsp;{$groupbuy.lefttime}</div>
+                               </div>
+                               <div class="nameDiv">
+                                   <h3><a href="{url app=groupbuy&id=$groupbuy.group_id}" title="{$groupbuy.group_name|escape}" target="_blank">{$groupbuy.group_name|escape}</a></h3>
+                               </div>
+                               <div class="PriceDiv">
+                                   <span class="price">{$groupbuy.price|price}</span>
+                                    <i class="mark_price">{$groupbuy.group_price|price}</i>
+                                    <span class="" style="float: right;font-size: 14px;border:1px solid #E5E5E5;padding:3px 9px;"><a href="{url app=groupbuy&id=$groupbuy.group_id}"> 参加团购</a></span>
+                               </div>
+                            </li>
+                            <!--{/foreach}-->
+
+                        </ul>  
+                        <!--{else}-->
+                        <div class="nothing"><p>{$lang.no_groupbuy}</p></div>
+                        <!--{/if}-->  
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<div class="Mt10"></div>
+<br />
+<br />
+{include file=footer.html}

@@ -1,0 +1,32 @@
+             
+<!--浏览历史记录 Start-->
+<!--{if $smarty.get.app eq "goods"}-->
+<div class="module_common">
+   <div class="m_c_hd">
+       <h2>{$lang.goods_history}</h2>
+   </div>
+   <div class="m_c_bd">
+        <div class="widgets_Goods01">
+            <ul>
+                <!--{foreach from=$goods_history item=gh_goods}-->
+                <li>
+                    <div class="imgDiv">
+                        <a href="{url app=goods&id=$gh_goods.goods_id}"><img src="{$gh_goods.default_image}" width="50" height="50" alt="{$gh_goods.goods_name|truncate:20|escape}" title="{$gh_goods.goods_name|escape}" /></a>
+                    </div>
+                    <div class="nameDiv">
+                        <h4><a href="{url app=goods&id=$gh_goods.goods_id}">{$gh_goods.goods_name|truncate:36|escape}</a></h4>
+                    </div>
+                </li>
+                <!--{/foreach}-->
+            </ul>
+
+        </div>
+
+   </div>
+</div> 
+<!--{/if}-->
+<!--浏览历史记录 End--> 
+
+
+
+

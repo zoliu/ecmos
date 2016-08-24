@@ -1,12 +1,13 @@
 <div id="nav">
-    <div class="banner"><a href="{url app=store&id=$store.store_id}">
-        <!--{if $store.store_banner}-->
-        <img src="{$store.store_banner}" width="1000" height="120" />
-        <!--{else}-->
-        <img src="{res file=images/banner.jpg}"  />
-        <!--{/if}-->
-    </a></div>
-
+    <div class="banner">
+        <a href="{url app=store&id=$store.store_id}">
+            <!--{if $store.store_banner}-->
+            <img src="{$store.store_banner}" width="1000" height="120" />
+            <!--{else}-->
+            <img src="{res file=images/banner.jpg}" />
+            <!--{/if}-->
+        </a>
+    </div>
     <ul>
         <li><a class="{if $smarty.get.app eq 'store' and $smarty.get.act eq 'index'}active{else}normal{/if}" href="{url app=store&id=$store.store_id}"><span>{$lang.store_index}</span></a></li>
         {if $store.functions.groupbuy and $store.enable_groupbuy}
@@ -18,6 +19,5 @@
         <li><a class="{if $smarty.get.app eq 'store' and $smarty.get.act eq 'credit'}active{else}normal{/if}" href="{url app=store&act=credit&id=$store.store_id}"><span>{$lang.credit_evaluation}</span></a></li>
         <a class="collection" href="javascript:collect_store({$store.store_id})">{$lang.collect_the_store}</a>
     </ul>
-
     <div class="nav_bg"></div>
 </div>

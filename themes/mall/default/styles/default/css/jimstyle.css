@@ -272,14 +272,14 @@
 	height: 33px;
 	line-height: 33px;
 	padding-left:10px;
-	border-left:2px solid #6d5e57; 
-	border-top:2px solid #6d5e57; 
-	border-bottom:2px solid #6d5e57;
+	border-left:2px solid #E4393C; 
+	border-top:2px solid #E4393C; 
+	border-bottom:2px solid #E4393C;
 	border-right:none;
 	color:#ccc;
 }
 .soso-btn{ 
-	background: #6d5e57; 
+	background: #E4393C; 
 	width: 80px; 
 	height: 37px; 
 	border: none; 
@@ -291,20 +291,20 @@
 .tel{ width: 225px;}
 
 /*nav*/
-.global-nav{ background: #2f2f2f; height: 35px; line-height: 35px;}
+.global-nav{ background: #E4393C; height: 35px; line-height: 35px;}
 .tiao{ 
-	width: 250px; 
+	width: 210px; 
 	height:35px; 
 	line-height: 35px; 
 	color:#fff; 
-	background: #670101;
+	background: #B10000;
 	position: relative;
 }
 .tiao strong{ padding-left: 20px;}
 .tiao span{ background: url(../images/tiao-ico.gif) no-repeat; width: 13px; height: 8px; display: block; position: absolute; top: 14px; right: 15px;}
 .w-nav ul li{ float: left;}
 .w-nav ul li a{ color:#fff; display: block; padding: 0 20px;}
-.w-nav ul li a:hover{ background: #1c1c1c; color:#fff; font-weight:bold;}
+.w-nav ul li a:hover{ background: #DE7070; color:#fff; font-weight:bold;}
 
 /******************** header END ********************/
 

@@ -1,0 +1,35 @@
+{include file=header.html}
+{include file=top.html}
+
+<br />
+<div class="Mt10"></div>
+<div class="yaygWrap">
+    <div class="w">
+        <div class="yayg_shopL">
+            {include file=user_shopinfo.html}
+            <div class="Mt10"></div>
+            {include file=left.html}
+        </div>
+        <div class="yayg_shopR">
+            
+            <div class="module_special">
+                <div class="m_s_bd">
+
+					{$article.content|escape:editor}
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="Mt10"></div>
+<br />
+<br />
+
+
+
+
+{include file=footer.html}

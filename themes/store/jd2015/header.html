@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<base href="{$site_url}/" />
+<!-- Use IE7 mode -->
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset={$charset}" />
+<meta http-equiv="Content-Type" content="text/html;charset={$charset}" />
+{$page_seo}
+
+<link href="{res file=css/header.css}" rel="stylesheet" type="text/css" />
+<link href="{res file=shop.css}" rel="stylesheet" type="text/css" />
+<link href="{res file=css/footer.css}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="index.php?act=jslang"></script>
+<script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{lib file=cart.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{res file=js/main.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{lib file=kissy/build/kissy.js}"></script>
+<script type="text/javascript" src="{lib file=kissy/build/switchable/switchable-pkg.js}"></script>
+<script type="text/javascript">
+//<!CDATA[
+var SITE_URL = "{$site_url}";
+var REAL_SITE_URL = "{$real_site_url}";
+var PRICE_FORMAT = '{$price_format}';
+
+//]]>
+</script>
+{$_head_tags}
+<!--<editmode></editmode>-->
+</head>
+
+<body>
+<div id="site-nav" class="w-full">
+   <div class="shoptop w clearfix">
+      <div class="login_info">
+         {$lang.hello}
+         <!--{if !$visitor.user_id}-->
+         <a href="{url app=member&act=login&ret_url=$ret_url}">{$lang.login}</a>
+         <a href="{url app=member&act=register&ret_url=$ret_url}">{$lang.register}</a>
+         <!--{else}-->
+         <a href="{url app=member}">{$visitor.user_name|escape}</a>
+         <a href="{url app=message&act=newpm}">{$lang.pm}<!--{if $new_message}-->(<span>{$new_message}</span>)<!--{/if}--></a>
+         <a href="{url app=member&act=logout}">{$lang.logout}</a>
+         <!--{/if}-->
+      </div>
+      <ul class="quick-menu">
+        {if !$index}<li class="home"><a href="{$site_url}">{$lang.back_home}</a></li>{/if}
+        <li class="item">
+           <div class="menu iwantbuy">
+              <a class="menu-hd" href="{url app=category}">{$lang.i_want_buy}<b></b></a>
+              <div class="menu-bd">
+                 <div class="menu-bd-panel">
+                    <div>
+                       <p><a href="{url app=category}">{$lang.gcategory}</a></p>
+                       <p><a href="#">大家正在买</a></p>
+					   <p><a href="#">品味连连看</a></p>
+                    </div>
+                 </div>
+              </div>
+           </div>
+         </li>
+         <li class="item">
+            <div class="menu mytb">
+               <a class="menu-hd" href="{url app=buyer_admin}">我是买家<b></b></a>
+               <div class="menu-bd">
+                  <div class="menu-bd-panel">
+                     <div>
+                        <p><a href="{url app=buyer_order}">已买到的宝贝</a></p>
+                        <p><a href="{url app=friend}">我的好友</a></p>
+                        <p><a href="{url app=my_question}">我的咨询</a></p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </li>
+         <li class="item">
+            <div class="menu seller-center">
+               <a class="menu-hd" href="{url app=seller_admin}">卖家中心<b></b></a>
+               <div class="menu-bd">
+                  <div class="menu-bd-panel">
+                     <div>
+                        <p><a href="{url app=seller_order}">已卖出的宝贝</a></p>
+                        <p><a href="{url app=my_goods}">出售中的宝贝</a></p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </li>
+         <li class="service">
+            <a href="{url app=article&code=help}">帮助中心</a>
+         </li>
+         <li class="service">
+            <a href="{url app=article&code=help}">在线客服</a>
+         </li>
+         <li class="item">
+            <div class="menu favorite">
+               <a class="menu-hd" href="{url app=my_favorite}">收藏夹<b></b></a>
+               <div class="menu-bd">
+                  <div class="menu-bd-panel">
+                     <div>
+                       <p><a href="{url app=my_favorite}">收藏的宝贝</a></p>
+                       <p><a href="{url app=my_favorite&type=store}">收藏的店铺</a></p>
+                    </div>
+                 </div>
+               </div>
+           </div>
+         </li>
+         <li class="item" style="background:none">
+            <div class="menu sites">
+               <a class="menu-hd" href="javascript:;">网站导航<b></b></a>
+               <div class="menu-bd padding10">
+                  <!--{foreach from=$navs.header item=nav}-->
+                  <a href="{$nav.link}"{if $nav.open_new} target="_blank"{/if}>{$nav.title|escape}</a>
+                  <!--{/foreach}-->
+               </div>
+            </div>
+        </li>
+     </ul>
+   </div>
+</div>
+    
+    
+<div id="header" class="w-full">
+    <div class="shop-t w clearfix pb10 mb5 mt5">
+        <div class="logo">
+            <a href="{$site_url}" title="{$site_title}"><img alt="{$site_title}" src="{$site_logo}" /></a>
+        </div>
+        <div class="top-search">
+            <div class="top-search-box clearfix">
+                <ul class="top-search-tab clearfix">
+                    <li id="index" class="current"><span>商品</span></li>
+                    <li id="store"><span>店铺</span></li>
+                    <li id="groupbuy"><span>团购</span></li>
+                </ul>
+                <div class="form-fields">
+                    <form method="GET" action="{url app=search}">
+                        <input type="hidden" name="app" value="search" />
+                        <input type="hidden" name="act" value="{if $smarty.get.act eq 'store'}store{elseif $smarty.get.act eq 'groupbuy'}groupbuy{else}index{/if}" />
+                        <input type="text"   name="keyword" value="{$smarty.get.keyword}" class="keyword {if !$smarty.get.keyword}kw_bj {if $smarty.get.act eq 'store'}store{elseif $smarty.get.act eq 'groupbuy'}groupbuy{else}index{/if}_bj {/if}" />
+                        <input type="submit" value="{$lang.search}" class="submit" hidefocus="true" />
+                    </form>
+                </div>
+            </div>
+            <div class="top-search-keywords">
+                <!--{foreach from=$hot_keywords item=keyword name=fe_keyword}-->
+                <a {if $smarty.foreach.fe_keyword.iteration % 3 == 1}style="color:#c40000;"{/if} href="{url app=search&keyword=$keyword|escape:url}">{$keyword}</a>|
+                <!--{/foreach}-->
+            </div>
+        </div>
+        <div class="header_cart">
+            <div class="title clearfix">
+                <b></b><a href="{url app=cart}">去购物车结算</a><em></em>
+            </div>
+            <div class="shoping"><span class="count-cart J_C_T_GoodsKinds">{$cart_goods_kinds}</span></div>
+            <div class="cart-list">
+                <!--{if $carts_top.cart_items}-->
+                <div class="goods-list">
+                    <h4>最新加入的商品</h4>
+                    <!--{foreach from=$carts_top.cart_items item=cart name=fe_cart}-->
+                    <div {if $smarty.foreach.fe_cart.last}style="border:0px;"{/if} class="clearfix list" id="cart_goods{$cart.rec_id}">
+                        <div class="goods-img">
+                            <a href="{url app=goods&id=$cart.goods_id}" target="_top"><img alt="{$cart.goods_name}" src="{$cart.goods_image}" width="40" height="40"></a>
+                        </div>
+                        <div class="goods-title">
+                            <a title="{$cart.goods_name}" href="{url app=goods&id=$cart.goods_id}" target="_top">{$cart.goods_name}</a>
+                        </div>
+                        <div class="goods-admin">
+                            <div class="mini-cart-count"><strong class="mini-cart-price J_C_T_Price">{$cart.price|price}</strong> x {$cart.quantity}</div>
+                            <div class="mini-cart-del"><a href="javascript:;" onclick="drop_cart_item({$cart.store_id}, {$cart.rec_id});">删除</a></div>
+                        </div>
+                    </div>
+                    <!--{/foreach}-->
+                </div>
+                <div class="total">
+                    <span>共<strong class="J_C_T_GoodsKinds">{$cart_goods_kinds}</strong>件商品</span><span>共计<strong class="J_C_T_Amount">{$carts_top.total|price}</strong></span><br />
+                    <a href="{url app=cart}">去购物车结算</a>
+                </div>
+                <!--{else}-->
+                <div class="nogoods clearfix">
+                    <b></b>购物车中还没有商品，赶紧选购吧！
+                </div>
+                <!--{/if}-->
+            </div>
+        </div>
+    </div>
+</div>

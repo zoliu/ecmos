@@ -1,0 +1,43 @@
+{include file=header.html}
+
+{include file=top.html}
+<div class="Mt10"></div>
+<div class="yaygWrap" style="overflow:visible;height:480px;">
+    <div class="w" style="position:relative;">
+        {include file=goodsinfo.html}
+    </div>
+</div>
+<div class="clear1 Mt10"></div>
+<div class="yaygWrap">
+    <div class="w">
+        <div class="yayg_shopL">
+            {include file=left.html}
+        </div>
+        <div class="yayg_shopR">
+            <div class="product-tags">
+                <h2 class="normal" ><a href="{url app=goods&id=$goods.goods_id}#module"><span>{$lang.goods_detail}</span></a></h2>
+                <h2 class="active"><a href="{url app=goods&act=comments&id=$goods.goods_id}#module"><span>{$lang.goods_comment}</span></a></h2>
+                <h2 class="normal"><a href="{url app=goods&act=saleslog&id=$goods.goods_id}#module"><span>{$lang.sales_log}</span></a></h2>
+                <h2 class="normal"><a href="{url app=goods&act=qa&id=$goods.goods_id}#module"><span>{$lang.qa}</span></a></h2>
+            </div>
+            <div class="product_detail">
+                <div class="module_currency">
+                    <div class="wrap">
+                        <div class="wrap_child">
+                            {include file=comments.html}
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                {include file=page.bottom.html}
+                <div class="clear"></div>
+            </div>
+        </div>
+
+    </div>
+</div> 
+<div class="Mt10"></div>
+<br />
+<br />
+{include file=footer.html}

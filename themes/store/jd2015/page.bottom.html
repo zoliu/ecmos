@@ -1,0 +1,31 @@
+<!--{if $page_info.page_count gt 1}-->
+<div class="shop_list_page">
+    <div class="page">
+        <a class="stat">{sprintf lang=total_item var1=page_info.item_count}</a>
+        <!--{if $page_info.prev_link}-->
+        <a class="former" href="{$page_info.prev_link}#module"></a>
+        <!--{else}-->
+        <span class="former_no"></span>
+        <!--{/if}-->
+        <!--{if $page_info.first_link}-->
+        <a class="page_link" href="{$page_info.first_link}">1&nbsp;<!--{$page_info.first_suspen}--></a>
+        <!--{/if}-->
+        <!--{foreach from=$page_info.page_links key=page item=link}-->
+        <!--{if $page_info.curr_page eq $page}-->
+        <a class="page_hover" href="{$link}#module">{$page}</a>
+        <!--{else}-->
+        <a class="page_link" href="{$link}#module">{$page}</a>
+        <!--{/if}-->
+        <!--{/foreach}-->
+        <!--{if $page_info.last_link}-->
+        <a class="page_link" href="{$page_info.last_link}"><!--{$page_info.last_suspen}-->&nbsp;<!--{$page_info.page_count}--></a>
+        <!--{/if}-->
+        <a class="nonce">{$page_info.curr_page} / {$page_info.page_count}</a>
+        <!--{if $page_info.next_link}-->
+        <a class="down" href="{$page_info.next_link}#module">{$lang.next_page}</a>
+        <!--{else}-->
+        <span class="down_no">{$lang.next_page}</span>
+        <!--{/if}-->
+    </div>
+</div>
+<!--{/if}-->
