@@ -8,9 +8,9 @@
 .page span.page_text{ background: #fff; color: #b10000; border: 1px solid #e5e5e5;}
 /*全部分类*/
 
-.search-type .float-left{border-bottom:2px solid #670101;width:100%;height: 28px;margin:10px auto;}
+.search-type .float-left{border-bottom:2px solid #E4393C;width:100%;height: 28px;margin:10px auto;}
 .search-type .btn-type a{display:block;float:left;height: 27px;line-height: 27px;font-size: 14px;padding:0px 20px;border:1px solid #CCC;border-bottom:0;}
-.search-type .btn-type a.current{background:#670101;border:1px solid #670101;color: white;font-weight: bold;border-bottom:0;}
+.search-type .btn-type a.current{background:#E4393C;border:1px solid #E4393C;color: white;font-weight: bold;border-bottom:0;}
 
 .condition .scate .show-more h3{height:16px;line-height:16px;padding:0px 5px;width:60px;border: 1px solid #CCC;color: #666;background-position: 0 -1152px;background-image: url(../images/T1MBVHXjdeXXXXXXXX.png); background-repeat: repeat-x;_padding:0 2px;font-weight:normal;font-size:12px;}
 .condition .scate .show-more h3 i{display:block;float:left;margin-top:4px;_margin-top:2px;width: 8px;height: 8px;background: url(../images/T1ebamXel5XXXXXXXX-20-2400.png) no-repeat scroll 0 -1497px transparent; _background-position:2px -1497px;}
