@@ -1,8 +1,26 @@
 {include file="header.html"}
+<link rel="stylesheet" type="text/css" href="{lib file=toastr/toastr.css}">
+<script type="text/javascript" src="{lib file=toastr/toastr.js}"></script>
 <script language="javascript">
+toastr.options = {
+  "closeButton": true,
+ "debug": false,
+  "positionClass": "toast-top-full-width",
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
 $(function(){
-
+    
 });
+
+
 <!--{if $dangerous_apps}-->
 var dangerous_apps = '';
 <!--{foreach from=$dangerous_apps item=da}-->
@@ -32,6 +50,18 @@ alert(dangerous_apps);
 <dt>{$lang.ecmall_news}</dt>
 <dd>
     <ul id="news">
+    <li><b>系统：</b>ECMALL深度定制系统({$upgrade.system}),本系统由360cd.cn提供永久在线免费升级服务</li>
+    <li><b>当前版本：</b>{$upgrade.currentVersion}</li>
+    {if $upgrade.upgrade}
+    <li><b>更新版本：</b><span style="color:red;font-size: 14px;font-weight: 600">{$upgrade.nextVersion} </span> <a href='/admin/?app=upgrade&act=update'>更新到最新版</a></li>
+    <li><b>新版说明：</b>{$upgrade.remark|editor}</li>
+    <script type="text/javascript">
+    $(document).ready(function() {
+          toastr.success('<span style="font-weight:600;font-size:13px;">当前系统可升级到最新版{$upgrade.nextVersion}</span><br>{$upgrade.remark}');
+    });
+      
+    </script>
+    {/if}
     </ul>
 </dd>
 <!--{if $remind_info}-->

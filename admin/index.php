@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_ALL & ~E_NOTICE);
+// error_reporting(E_ALL & ~E_NOTICE);
 
 /* 应用根目录 */
 define('APP_ROOT', dirname(__FILE__));          //该常量只在后台使用
@@ -22,8 +22,7 @@ ECMall::startup(array(
         ROOT_PATH . '/includes/ecapp.base.php',
         ROOT_PATH . '/includes/plugin.base.php',
         APP_ROOT . '/app/backend.base.php',
-        //ROOT_PATH . '/includes/libraries/common.lib.php',
-		ROOT_PATH . '/includes/common.php',
+        ROOT_PATH . '/includes/libraries/zllib/common.lib.php',
     ),
 ));
 

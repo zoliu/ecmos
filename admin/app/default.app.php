@@ -34,6 +34,10 @@ class DefaultApp extends BackendApp
      */
     function welcome()
     {
+        import('zxlib/upgrade/upgrade.lib');
+        $update=new Upgrade();
+        
+        $this->assign('upgrade',$update->get_system_info());
         $this->assign('admin', $this->visitor->get());
 
         $ms =& ms();
