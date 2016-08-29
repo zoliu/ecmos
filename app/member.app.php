@@ -271,8 +271,8 @@ class MemberApp extends MemberbaseApp
             $data            = array();
             $data['user_id'] = $user_id;
 
-            $init_grade       = UserGrade::init()->get_init_grade();
-            $data['grade_id'] = $init_grade['id'];
+            // $init_grade       = UserGrade::init()->get_init_grade();
+            // $data['grade_id'] = $init_grade['id'];
 
             $parent_name = trim($_POST['parent_name']);
             $parent_info = $user_model->get("user_name = '{$parent_name}'");

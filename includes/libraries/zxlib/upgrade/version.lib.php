@@ -76,7 +76,7 @@ class Version{
 		{
 			return ;
 		}
-		$url=$this->remoteUri.'&appid='.$this->confVer['appid'].'&appkey='.$this->confVer['appkey'].'&version='.$this->confVer['system'];
+		$url=$this->remoteUri.'&appid='.$this->confVer['appid'].'&appkey='.$this->confVer['appkey'].'&version='.$this->confVer['system'].'&verno='.base64_encode($this->confVer['version']);
 		$result=getUri($url);
 		if($result)
 		{
