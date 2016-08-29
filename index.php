@@ -1,10 +1,13 @@
 <?php
-
-error_reporting(E_ALL & ~E_NOTICE);
-
+// error_reporting(E_ALL & ~E_NOTICE);
+// $_GET['debug']=1;
 define('ROOT_PATH', dirname(__FILE__));
 include(ROOT_PATH . '/eccore/ecmall.php');
 
+if (!file_exists(ROOT_PATH . "/data/install.lock") && is_dir(ROOT_PATH . "/install")) {
+    @header("location: install");
+    exit;
+}
 /* 定义配置信息 */
 ecm_define(ROOT_PATH . '/data/config.inc.php');
 
@@ -20,8 +23,8 @@ ECMall::startup(array(
         ROOT_PATH . '/includes/plugin.base.php',
         ROOT_PATH . '/app/frontend.base.php',
         ROOT_PATH . '/includes/subdomain.inc.php',
-        //ROOT_PATH . '/includes/libraries/common.lib.php',
-        ROOT_PATH . '/includes/common.php',
+        ROOT_PATH . '/includes/libraries/zllib/common.lib.php',
+      
     ),
 ));
 ?>
