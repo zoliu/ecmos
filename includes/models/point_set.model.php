@@ -127,8 +127,8 @@ class Point_setModel extends BaseModel
         if (!$is_exists) {
             $data = array(
                 'user_id'       => $user_id,
-                'user_level_id' => 0,
-                'status'        => 1,
+                'grade_id' => 0,
+                'update_time' => gmtime(),
             );
             $user_mod->add($data);
         }
