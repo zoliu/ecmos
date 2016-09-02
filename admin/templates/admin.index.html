@@ -37,10 +37,12 @@
         {$admin.last_ip}</td>
       <td>{$admin.logins}</td>
       <td class="handler">
-      <!--{if $admin.privs eq all}-->{$lang.system_manager}
+      <!--{if $admin.privs eq all}-->{$lang.system_manager}<br>
+      <a href="index.php?app=admin&amp;act=modifypwd&amp;user_id={$admin.user_id}">{$lang.modifypassword}</a> 
       </td>
       <!--{else}-->
       <span style="width: 120px">
+       <a href="index.php?app=admin&amp;act=modifypwd&amp;user_id={$admin.user_id}">{$lang.modifypassword}</a> <br> 
       <a href="index.php?app=admin&amp;act=edit&amp;id={$admin.user_id}">{$lang.edit}</a> | <a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=admin&amp;act=drop&amp;id={$admin.user_id}');">{$lang.drop_admin}</a>
       </span>
       </td>

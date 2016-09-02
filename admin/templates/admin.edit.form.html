@@ -1,0 +1,28 @@
+{include file="header.html"}
+<div id="rightTop">
+  <p>{$lang.admin}</p>
+  <ul class="subnav">
+    <li><a class="btn1" href="index.php?app=admin">{$lang.manage}</a></li>
+    <li><span>{$lang.add}</span></li>
+  </ul>
+</div>
+<div class="info">
+  <form method="post" enctype="multipart/form-data" id="test_form">
+    <table class="infoTable">
+      <tr>
+        <th class="paddingT15"> {$lang.password}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="password" type="password" id="password" /><label class="field_notice">{$lang.password_note}</label></td>
+      </tr>
+       <tr>
+        <th class="paddingT15"> {$lang.confirm_password}:</th>
+        <td class="paddingT15 wordSpacing5"><input class="infoTableInput2" name="confirm_password" type="password" id="confirm_password" /><label class="field_notice">{$lang.confirmpassword_note}</label></td>
+      </tr>
+      <tr>
+        <th></th>
+        <td class="ptb20"><input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+          <input class="formbtn" type="reset" name="Reset" value="{$lang.reset}" /></td>
+      </tr>
+    </table>
+  </form>
+</div>
+{include file="footer.html"} 

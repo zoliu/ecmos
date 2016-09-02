@@ -220,6 +220,34 @@ class AdminApp extends BackendApp
              }
         }
     }
+
+    function modifypwd()
+    {
+        $user_id=isset($_GET['user_id'])?intval($_GET['user_id']):0;
+        if(!$user_id)
+        {
+            $this->show_warning('用户ID不能为空');
+            return;
+        }
+        if(!IS_POST)
+        {
+            $this->display('admin.edit.form.html');
+        }else{
+            $password=post('password');
+            $confirm_password=post('confirm_password');
+            if($password!=$confirm_password)
+            {
+                $this->show_warning('两次输入密码不一样');
+                return;
+            }
+            //360cd.cn
+            $admin_model=&m('admin');
+            $admin_model->update($user_id,$password);
+            $this->show_message('密码修改成功');
+            return;
+        }
+    }
+
 }
 
 ?>

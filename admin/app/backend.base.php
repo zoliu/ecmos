@@ -50,15 +50,20 @@ class BackendApp extends ECBaseApp
             $user_name = trim($_POST['user_name']);
             $password  = $_POST['password'];
 
-            $ms =& ms();
-            $user_id = $ms->user->auth($user_name, $password);
-            if (!$user_id)
+            // $ms =& ms();
+            // $user_id = $ms->user->auth($user_name, $password);
+            //360cd.cn
+            $admin_model=&m('admin');
+            $user_id=$admin_model->doLogin($user_name,$password);
+            if ($user_id<1)
             {
                 /* 未通过验证，提示错误信息 */
-                $this->show_warning($ms->user->get_error());
+                // $this->show_warning($ms->user->get_error());
+                $this->show_warning($admin_model->get_error());
 
                 return;
             }
+            //360cd.cn
 
             /* 通过验证，执行登陆操作 */
             if (!$this->_do_login($user_id))

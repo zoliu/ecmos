@@ -318,8 +318,11 @@ class DefaultApp extends InstallerApp
         }
         /* 安装初始数据 TODO 暂时不完整 */
         $sqls = get_sql(version_data('initdata.sql'));
-        $password = md5($admin_pass);
+        $password = md5($admin_pass);        
+        $vcode=mt_rand(100000,999999);
+        $admin_password=md5($password.$vcode);
         $sqls[]=" update  `ecm_member` set password='{$password}', email='{$admin_email}' where user_name='{$admin_name}'";
+        $sqls[] = "update `ecm_admin` set password='{$admin_password}', vcode='{$vcode}' where user_id=1";
         //$sqls[] = "INSERT INTO `ecm_member`(user_name, email, password, reg_time) VALUES('{$admin_name}', '{$admin_email}', '{$password}', " . gmtime() . ")";
         foreach ($sqls as $sql)
         {

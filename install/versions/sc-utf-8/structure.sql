@@ -45,6 +45,17 @@ CREATE TABLE `ecm_address` (
   KEY `user_id` (`user_id`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
+/*Table structure for table `ecm_admin` */
+
+DROP TABLE IF EXISTS `ecm_admin`;
+
+CREATE TABLE `ecm_admin` (
+  `user_id` int(11) NOT NULL,
+  `password` char(100) DEFAULT NULL COMMENT '密码',
+  `vcode` char(50) DEFAULT NULL COMMENT '随机验证码',
+  PRIMARY KEY (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 /*Table structure for table `ecm_all_statistics` */
 
 DROP TABLE IF EXISTS `ecm_all_statistics`;
@@ -178,7 +189,7 @@ CREATE TABLE `ecm_cart` (
   PRIMARY KEY (`rec_id`),
   KEY `session_id` (`session_id`) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=113 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `ecm_cate_pvs` */
 
@@ -270,6 +281,113 @@ CREATE TABLE `ecm_delivery_template` (
   `template_add_fees` text NOT NULL,
   `created` int(10) NOT NULL,
   PRIMARY KEY (`template_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Table structure for table `ecm_deposit_account` */
+
+DROP TABLE IF EXISTS `ecm_deposit_account`;
+
+CREATE TABLE `ecm_deposit_account` (
+  `account_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `account` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `money` decimal(10,2) NOT NULL,
+  `frozen` decimal(10,2) NOT NULL,
+  `real_name` varchar(30) NOT NULL,
+  `pay_status` varchar(3) NOT NULL DEFAULT 'off',
+  `add_time` int(11) NOT NULL,
+  `last_update` int(11) NOT NULL,
+  PRIMARY KEY (`account_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Table structure for table `ecm_deposit_recharge` */
+
+DROP TABLE IF EXISTS `ecm_deposit_recharge`;
+
+CREATE TABLE `ecm_deposit_recharge` (
+  `recharge_id` int(11) NOT NULL AUTO_INCREMENT,
+  `tradesn` varchar(30) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `examine` varchar(100) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `status` varchar(30) NOT NULL,
+  `is_online` int(1) NOT NULL,
+  `extra` text NOT NULL,
+  `add_time` int(11) NOT NULL,
+  `pay_time` int(11) NOT NULL,
+  `end_time` int(11) NOT NULL,
+  PRIMARY KEY (`recharge_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Table structure for table `ecm_deposit_record` */
+
+DROP TABLE IF EXISTS `ecm_deposit_record`;
+
+CREATE TABLE `ecm_deposit_record` (
+  `record_id` int(11) NOT NULL AUTO_INCREMENT,
+  `tradesn` varchar(30) NOT NULL,
+  `order_sn` varchar(20) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT '交易发起方',
+  `party_id` int(11) NOT NULL COMMENT '交易的对方',
+  `amount` decimal(10,2) NOT NULL COMMENT '收支金额',
+  `balance` decimal(10,2) NOT NULL COMMENT '账户余额',
+  `flow` varchar(10) NOT NULL COMMENT '资金流向',
+  `purpose` varchar(20) NOT NULL COMMENT '用途',
+  `status` varchar(30) NOT NULL,
+  `payway` varchar(100) NOT NULL COMMENT '资金渠道',
+  `name` varchar(100) NOT NULL COMMENT '名称',
+  `remark` varchar(255) NOT NULL COMMENT '备注',
+  `add_time` int(11) NOT NULL,
+  `pay_time` int(11) NOT NULL,
+  `end_time` int(11) NOT NULL,
+  PRIMARY KEY (`record_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Table structure for table `ecm_deposit_refund` */
+
+DROP TABLE IF EXISTS `ecm_deposit_refund`;
+
+CREATE TABLE `ecm_deposit_refund` (
+  `refund_id` int(11) NOT NULL AUTO_INCREMENT,
+  `record_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT '获得退款的用户ID',
+  `amount` decimal(10,2) NOT NULL,
+  `status` varchar(30) NOT NULL,
+  `remark` varchar(255) NOT NULL,
+  PRIMARY KEY (`refund_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Table structure for table `ecm_deposit_setting` */
+
+DROP TABLE IF EXISTS `ecm_deposit_setting`;
+
+CREATE TABLE `ecm_deposit_setting` (
+  `setting_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `trade_rate` decimal(10,3) NOT NULL COMMENT '交易手续费',
+  `transfer_rate` decimal(10,3) NOT NULL,
+  `auto_create_account` int(1) NOT NULL,
+  `config_account_captcha` int(1) NOT NULL,
+  PRIMARY KEY (`setting_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*Table structure for table `ecm_deposit_withdraw` */
+
+DROP TABLE IF EXISTS `ecm_deposit_withdraw`;
+
+CREATE TABLE `ecm_deposit_withdraw` (
+  `withdraw_id` int(11) NOT NULL AUTO_INCREMENT,
+  `record_id` int(11) NOT NULL,
+  `tradesn` varchar(30) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `status` varchar(30) NOT NULL,
+  `card_info` text NOT NULL,
+  `add_time` int(11) NOT NULL,
+  `pay_time` int(11) NOT NULL,
+  `end_time` int(11) NOT NULL,
+  PRIMARY KEY (`withdraw_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Table structure for table `ecm_discus` */
@@ -634,6 +752,16 @@ CREATE TABLE `ecm_member` (
   KEY `email` (`email`) USING BTREE,
   KEY `outer_id` (`outer_id`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `ecm_member_bind` */
+
+DROP TABLE IF EXISTS `ecm_member_bind`;
+
+CREATE TABLE `ecm_member_bind` (
+  `openid` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `app` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Table structure for table `ecm_member_ext` */
 

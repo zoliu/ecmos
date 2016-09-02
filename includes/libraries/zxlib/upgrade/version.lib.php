@@ -72,12 +72,13 @@ class Version{
 	function _getRemoteVersion()
 	{
 
-		if(!$this->checkVersion())
-		{
-			return ;
-		}
-		$url=$this->remoteUri.'&appid='.$this->confVer['appid'].'&appkey='.$this->confVer['appkey'].'&version='.$this->confVer['system'].'&verno='.base64_encode($this->confVer['version']);
+		// if(!$this->checkVersion())
+		// {
+		// 	return ;
+		// }
+		$url=$this->remoteUri.'&appid='.$this->confVer['appid'].'&appkey='.$this->confVer['appkey'].'&version='.$this->confVer['system'];
 		$result=getUri($url);
+		// echo $url;
 		if($result)
 		{
 			$result=json_decode($result,1);

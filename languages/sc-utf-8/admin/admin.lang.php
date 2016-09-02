@@ -1,6 +1,10 @@
 <?php
 
 return array(
+    'confirm_password'=>'确认输入密码',//360cd.cn
+    'confirmpassword_note'=>'确认输入的管理密码没有错误',//360cd.cn
+    'password_note'=>'管理密码用于管理员进行后台登陆',//360cd.cn
+    'modifypassword'=>'修改管理密码',//360cd.cn
     'admin' => '管理员管理',
     'manage' => '管理',
     'add' => '添加',
