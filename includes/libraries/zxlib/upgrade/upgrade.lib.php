@@ -45,6 +45,10 @@ class Upgrade{
 	{
 		return $this->ver->readVersionRemark();
 	}
+	function getSystemRemark()
+	{
+		return $this->ver->getSystemRemark();
+	}
 
 	function getBaseUri()
 	{
@@ -59,6 +63,7 @@ class Upgrade{
             'remark'=>$this->versionRemark(),
             'currentVersion'=>$this->currentVersion(),//360cd.cn
             'system'=>$this->currentSystem(),//360cd.cn
+            'system_remark'=>$this->getSystemRemark(),//360cd.cn
             );
 		return $upgrade;
 	}
@@ -101,34 +106,12 @@ class Upgrade{
 		$zip->extract(PCLZIP_OPT_PATH, ROOT_PATH);
 		if ($zip->errorCode() == 0) {
 			$this->ver->saveVersion($this->nextVersion());
-			$this->install_sql();
 			return 1;
 		}
 		else {
 			return -2;// $zip->errorInfo();
 		}
 	}
-
-	function install_sql()
-	{
-		$path=ROOT_PATH.'/data/upgrade.sql';
-		if(!file_exists($path))
-		{
-			return 0;
-		}
-		$sqls=get_sql($path);
-		$db= db();
-		if(is_array($sqls) && count($sqls)>0)
-		{
-			foreach($sqls as $k=>$v)
-			{
-				$db->query($v);
-			}
-		}
-		@unlink($path);
-	}
-
-
 
 	function backup()
 	{
@@ -196,42 +179,6 @@ class Upgrade{
 			return -2;
 		}
 	}
-
-
-}
-//读取sql文件到数组;
-function get_sql($file)
-{
-    $contents = file_get_contents($file);
-    $contents = str_replace("\r\n", "\n", $contents);
-    $contents = trim(str_replace("\r", "\n", $contents));
-    $return_items = $items = array();
-    $items = explode(";\n", $contents);
-    foreach ($items as $item)
-    {
-        $return_item = '';
-        $item = trim($item);
-        $lines = explode("\n", $item);
-        foreach ($lines as $line)
-        {
-            if (isset($line[0]) && $line[0] == '#')
-            {
-                continue;
-            }
-            if (isset($line[1]) && $line[0] .  $line[1] == '--')
-            {
-                continue;
-            }
-
-            $return_item .= $line;
-        }
-        if ($return_item)
-        {
-            $return_items[] = $return_item;
-        }
-    }
-
-    return $return_items;
 }
 
 /**

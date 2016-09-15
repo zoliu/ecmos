@@ -73,8 +73,8 @@ function addHistoryItem(tab, item){
         if($('#history dd').length == maxHistoryLength){
             $('#history dd:last').remove();
         }
-        var lnk = $('<a href="javascript:;" id="' + tab + '-' + item + '">' + menu[tab]['children'][item]['text'] + '</a>').css({"color":"#98a9c2"});
-        var close = $('<a href="javascript:;" class="close"><img src="templates/style/images/close.gif" / ></a>');
+        var lnk = $('<span class="icon-star-empty"></span><a href="javascript:;" id="' + tab + '-' + item + '">' + menu[tab]['children'][item]['text'] + '</a>').css({"color":"#98a9c2"});
+        var close = $('<a href="javascript:;" class="close"><span class="icon-remove"></span></a>');
         lnk.click(function(){
             openItem(item, tab);
         });
@@ -106,11 +106,18 @@ function loadSubmenu(){
     /* 将子菜单逐项添加到菜单中 */
     $.each(m.children, function(k, v){
         var p = v.parent ? v.parent : currTab;
-        var item = $('<dd><a href="javascript:;" url="' + v.url + '" parent="' + p + '" id="item_' + k + '">' + v.text + '</a></dd>');
+        var item = $('<dd><span class="icon-star-empty"></span><a href="javascript:;" url="' + v.url + '" parent="' + p + '" id="item_' + k + '">' + v.text + '</a></dd>');
         item.children('a').click(function(){
             openItem(this.id.substr(5));
         });
         $('#submenu').append(item);
+    });
+    $('#submenu dd').hover(function(){    
+        $('#submenu dd').removeClass('hover');   
+        $(this).addClass('hover');        
+    });
+    $('#submenu dd').click(function(){ 
+        $(this).children('a').click();
     });
 }
 function openItem(itemIndex, tab){
@@ -134,6 +141,8 @@ function openItem(itemIndex, tab){
         $(this).removeClass('selected');
     });
     $(id).addClass('selected');
+     $('#submenu dd').removeClass('current');
+    $(id).parent().addClass('current');
 
     /* 更新iframe的内容 */
     $('#workspace').show();
@@ -146,8 +155,16 @@ function openItem(itemIndex, tab){
 function setWorkspace(){
     var wWidth = $(window).width();
     var wHeight = $(window).height();
-    $('#workspace').width(wWidth - $('#left').width() - parseInt($('#left').css('margin-right')));
+    var lheight=$('#left').height();
+    var hheight=$('#head').height();
+    
+        $('#workspace').width(wWidth - $('#left').width() - parseInt($('#left').css('margin-right')));
+    
+    
+    
     $('#workspace').height(wHeight - $('#head').height());
+    $('#left').height(wHeight - $('#head').height()-2);
+
 }
 
 /* 后台导航 */

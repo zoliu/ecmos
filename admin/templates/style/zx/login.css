@@ -1,0 +1,177 @@
+@charset "utf-8";
+/*
+ * Name: base.less
+ * Description: function,ie hack
+ * Creator: iRuxu,Dora
+ * Modify: iRuxu
+ * Update: 2015-6-27
+ * API: http://iruxu.com/LessLab/
+ */
+/*
+ * Responsive.less v2.0 
+ * Author:iRuxu
+ * Creat:2014.8
+ * Update:2015.6.11
+ * https://github.com/iRuxu/LessLab
+ */
+/*新PC适配方案（JS）
+----------------------------------------*/
+.screen-xl html {
+  font-size: 100%;
+}
+.screen-l html {
+  font-size: 100%;
+}
+.screen-m html {
+  font-size: 100%;
+}
+.screen-s html {
+  font-size: 100%;
+}
+.screen-xs html {
+  font-size: 100%;
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  html {
+    font-size: 100%;
+  }
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  html {
+    font-size: 100%;
+  }
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+  html {
+    font-size: 300%;
+  }
+}
+/*手机适配
+----------------------------------------*/
+@media only screen and (min-device-width: 320px) and (max-device-width: 720px) {
+  html {
+    font-size: 100%;
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 720px) and (orientation: landscape) {
+  html {
+    font-size: 200%;
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 720px) and (orientation: portrait) {
+  html {
+    font-size: 200%;
+  }
+}
+.container {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.container .up {
+  background-color: #008ead;
+  width: 100%;
+  height: 60%;
+}
+.container .down {
+  background-color: #008ead;
+  width: 100%;
+  height: 60%;
+  background-color: #ebebeb;
+  height: 40%;
+}
+.container .down .footer {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+}
+.container .down .footer .ver {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 12px;
+  line-height: inherit;
+}
+.container .box {
+  height: 350px;
+  width: 380px;
+  display: block;
+  left: 50%;
+  margin-left: -190px;
+  position: absolute;
+  top: 50%;
+  margin-top: -175px;
+  z-index: 9999;
+  background-color: #fff;
+  border: 1px solid #E6E4E4;
+  border-radius: 3px;
+}
+.container .box .main {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 13px;
+  line-height: inherit;
+  line-height: 30px;
+  height: 30px;
+  margin-top: 15px;
+}
+.container .box .main .title {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 700;
+}
+html {
+  height: 100%;
+  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+}
+html body {
+  height: 100%;
+  margin: 0;
+}
+form .zx-form-group label {
+  font-size: 13px;
+  font-weight: 600;
+}
+form .zx-form-group input {
+  border: 1px solid #d3d3d3;
+  padding: 10px 10px;
+  width: 95%;
+  border-radius: 4px;
+  padding-left: 5px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+form .zx-form-group input.checkcode {
+  width: 40%;
+  *width: 30%;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+form .zx-form-group .validates {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+form .zx-form-group .validates img {
+  width: 150px;
+  height: 35px;
+  vertical-align: middle;
+  *vertical-align: top;
+  margin-top: -3px;
+  *margin-top: -5px;
+}
+form .zx-form-group input[type=submit] {
+  background-color: #F14F12;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  *margin-top: -15px;
+  border: 1px solid #F14F12;
+}

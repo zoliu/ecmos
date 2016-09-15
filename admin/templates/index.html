@@ -6,6 +6,11 @@
 <meta http-equiv="Content-Type" content="text/html;charset={$charset}" />
 <title>{$lang.ecmall_admin} -- Powered by ECMall</title>
 <link href="templates/style/admin.css" rel="stylesheet" type="text/css" />
+<link href="templates/style/zx/font/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!--[if IE 7]>
+<link rel="stylesheet" href="templates/style/zx/font/css/font-awesome-ie7.min.css">
+<![endif]-->
+<link href="templates/style/zx/common.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
 <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
 
@@ -32,10 +37,10 @@ var menu = {$menu_json};
 </div>
 <div id="head">
     <div id="logo"><a href="index.php"><img src="templates/style/images/logo.gif" alt="ECMall" /></a></div>
-    <div id="menu"><span>{$lang.hello}<strong>{$visitor.user_name}</strong> <a href="index.php?act=logout">[{$lang.logout}]</a> <a href="{$site_url}/index.php" target="_blank">[{$lang.ecmall_index}]</a></span>
-    <a href="javascript:;" class="menu_btn1" id="iframe_refresh">{$lang.refresh}</a>
-    <a href="javascript:;" class="menu_btn2" id="clear_cache">{$lang.clear_cache}</a>
-    <a href="#" id="back_btn"><img src="templates/style/images/tiring_room_nav.gif" /></a>
+    <div id="license"></div>    
+    <div id="menu"><span>{$lang.hello}<strong>{$visitor.user_name}</strong> <a href="index.php?act=logout" class="icon-item"><span class="icon-signout"></span></a> <a href="{$site_url}/index.php" target="_blank" class="icon-item"><span class="icon-home"></span></a></span>
+    <a href="javascript:;"  id="iframe_refresh" class="icon-item"><span class="icon-refresh"></span></a>
+    <a href="javascript:;" id="clear_cache" class="icon-item"><span class="icon-trash"></span></a>
     </div>
     <ul id="nav">
     </ul>
@@ -45,11 +50,11 @@ var menu = {$menu_json};
     <div id="left">
         <div id="leftMenus">
             <dl id="submenu">
-                <dt><a class="ico1" id="submenuTitle" href="javascript:;"></a></dt>
+                <dt><span class=" icon-th-list"></span><a class="" id="submenuTitle" href="javascript:;"></a></dt>
             </dl>
             <dl id="history" class="history">
                 <dt>
-                    <a class="ico2" id="historyText" href="#">{$lang.action_history}</a>
+                    <span class="icon-time"></span><a class= id="historyText" href="#">{$lang.action_history}</a>
                 </dt>
             </dl>
          </div>
@@ -58,5 +63,11 @@ var menu = {$menu_json};
         <iframe frameborder="0" style="display:none;" width="100%" id="workspace"></iframe>
     </div>
 </div>
+
+
+<script type="text/javascript">
+   
+
+</script>
 </body>
 </html>

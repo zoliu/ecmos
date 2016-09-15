@@ -50,7 +50,7 @@ alert(dangerous_apps);
 <dt>{$lang.ecmall_news}</dt>
 <dd>
     <ul id="news">
-    <li><b>系统：</b>ECMALL深度定制系统({$upgrade.system}),本系统由360cd.cn提供永久在线免费升级服务</li>
+    <li><b>系统：</b>{$upgrade.system_remark}</li>
     <li><b>当前版本：</b>{$upgrade.currentVersion}</li>
     {if $upgrade.upgrade}
     <li><b>更新版本：</b><span style="color:red;font-size: 14px;font-weight: 600">{$upgrade.nextVersion} </span> <a href='/admin/?app=upgrade&act=update'>更新到最新版</a></li>

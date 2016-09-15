@@ -46,10 +46,15 @@ class Version{
 	{
 		return $this->confVer['version'];
 	}
+
+	function getSystemRemark()
+	{
+		return !empty($this->confVer['system_remark'])?base64_decode($this->confVer['system_remark']):'';
+	}
 	/**检查是否需要升级版本**/
 	function checkVersion()
 	{
-		return $this->confVer['version']===$this->confVer['next_version']?0:1;
+		return $this->confVer['version']==$this->confVer['next_version']?0:1;
 	}
 
 	function _initVersion()
@@ -64,26 +69,28 @@ class Version{
 				'next_version'=>0,
 				'upgrade_time'=>gmtime(),
 				'remark'=>'',//360cd.cn
+				'system_remark'=>'',//360cd.cn
 				);
 			$this->saveConfig($this->configPath,$data);
 		}
 	}
 
+	function saveSystemRemark($remark)
+	{
+		$this->confVer['system_remark']=$remark;
+
+	}
+
 	function _getRemoteVersion()
 	{
-
-		// if(!$this->checkVersion())
-		// {
-		// 	return ;
-		// }
-		$url=$this->remoteUri.'&appid='.$this->confVer['appid'].'&appkey='.$this->confVer['appkey'].'&version='.$this->confVer['system'];
+		$url=$this->remoteUri.'&appid='.$this->confVer['appid'].'&appkey='.$this->confVer['appkey'].'&version='.$this->confVer['system'].'&verno='.base64_encode($this->confVer['version']);
 		$result=getUri($url);
-		// echo $url;
 		if($result)
 		{
 			$result=json_decode($result,1);
 			if(isset($result['version']))
 			{
+				$this->saveSystemRemark($result['system_remark']);
 				$this->saveVersionRemark($result['remark']);
 				$this->saveNextVersion($result['version']);
 			}
