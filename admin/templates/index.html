@@ -2,14 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- Use IE7 mode -->
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset={$charset}" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html;charset={$charset}" />
 <title>{$lang.ecmall_admin} -- Powered by ECMall</title>
 <link href="templates/style/admin.css" rel="stylesheet" type="text/css" />
 <link href="templates/style/zx/font/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<!--[if IE 7]>
-<link rel="stylesheet" href="templates/style/zx/font/css/font-awesome-ie7.min.css">
-<![endif]-->
+
 <link href="templates/style/zx/common.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
 <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
@@ -38,9 +37,9 @@ var menu = {$menu_json};
 <div id="head">
     <div id="logo"><a href="index.php"><img src="templates/style/images/logo.gif" alt="ECMall" /></a></div>
     <div id="license"></div>    
-    <div id="menu"><span>{$lang.hello}<strong>{$visitor.user_name}</strong> <a href="index.php?act=logout" class="icon-item"><span class="icon-signout"></span></a> <a href="{$site_url}/index.php" target="_blank" class="icon-item"><span class="icon-home"></span></a></span>
-    <a href="javascript:;"  id="iframe_refresh" class="icon-item"><span class="icon-refresh"></span></a>
-    <a href="javascript:;" id="clear_cache" class="icon-item"><span class="icon-trash"></span></a>
+    <div id="menu"><span>{$lang.hello}<strong>{$visitor.user_name}</strong> <a href="index.php?act=logout" class="nav-icon-item"><i class="fa fa-sign-out"></i></a> <a href="{$site_url}/index.php" target="_blank" class="nav-icon-item"><i class="fa fa-home"></i></a></span>
+    <a href="javascript:;"  id="iframe_refresh" class="nav-icon-item"><i class="fa fa-refresh"></i></a>
+    <a href="javascript:;" id="clear_cache" class="nav-icon-item"><i class="fa fa-trash"></i></a>
     </div>
     <ul id="nav">
     </ul>
@@ -50,11 +49,11 @@ var menu = {$menu_json};
     <div id="left">
         <div id="leftMenus">
             <dl id="submenu">
-                <dt><span class=" icon-th-list"></span><a class="" id="submenuTitle" href="javascript:;"></a></dt>
+                <dt><i class=" fa fa-th-list"></i><a class="" id="submenuTitle" href="javascript:;"></a></dt>
             </dl>
             <dl id="history" class="history">
                 <dt>
-                    <span class="icon-time"></span><a class= id="historyText" href="#">{$lang.action_history}</a>
+                    <i class="fa fa-clock-o"></i><a class= id="historyText" href="#">{$lang.action_history}</a>
                 </dt>
             </dl>
          </div>

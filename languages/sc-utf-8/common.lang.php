@@ -1,5 +1,7 @@
 <?php
 return array(
+	'or'=>'或者',//360cd.cn
+	'no_register_login'=>'匿名登陆',//360cd.cn
 	'ckgwc'    => '1.查看购物车',
 	'qrddxx'   => '2.确认订单信息',
 	'fk'       => '3.付款',

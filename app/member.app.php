@@ -48,8 +48,8 @@ class MemberApp extends MemberbaseApp
         $this->assign('options_user_level', $member_level_info);
         //360cd.cn
         
-        $member_grade_model = &m('member_grade');
-        $member_grade_model->updateGrade($user['user_id']);
+        // $member_grade_model = &m('member_grade');
+        // $member_grade_model->updateGrade($user['user_id']);
 
         //---www.360cd.cn  Mosquito---
         //360cd.cn 余额支付

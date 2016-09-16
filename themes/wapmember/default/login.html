@@ -21,7 +21,7 @@
 				<dd>
 					<input type="hidden" class="J_AjaxFormSuccessRet J_AjaxFormFields" name="ret_url" value="{$ret_url}" />
 					<input type="submit" class="J_AjaxFormSubmit btn-alipay" value="{$lang.login}" />
-					<p class="mt20">{$lang.not_member} <a href="{url app=member&act=register&ret_url=$ret_url}" title="{$lang.register}">{$lang.register}</a></p>
+					<p class="mt20">{$lang.not_member} <a href="{url act=anyoneRegister}">{$lang.no_register_login} {$lang.or}<a href="{url app=member&act=register&ret_url=$ret_url}" title="{$lang.register}">{$lang.register}</a></p>
 				</dd>
 			</dl>
 		</form>

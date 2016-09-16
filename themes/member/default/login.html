@@ -80,10 +80,10 @@ $(function(){
                         </ol>
                         <ol class="a2">
                             
-                            <div class="noregister">{$lang.not_member}</div>
+                            <div class="noregister">{$lang.not_member}<a href="{url act=anyoneRegister}">{$lang.no_register_login} {$lang.or}</a></div>
                             <div class="register"><div class="registera">
                                 <a href="{url app=member&act=register&ret_url=$ret_url}">{$lang.register_form}</a></div>
-                            </div>
+                                </div>
                         </ol>
                     </ul>
                 </div>
@@ -98,5 +98,10 @@ $(function(){
         </div>
     </div>
 </div>
+<style type="text/css">
+    .login ol .noregister{
+        width:auto;
+    }
+</style>
 
 {include file="footer.html"}

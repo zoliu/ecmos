@@ -120,6 +120,8 @@ class FrontendApp extends ECBaseApp {
 		$this->assign('wapmall_theme_root', site_url() . '/themes/wapmall/' . $mall_template_name . '/styles/'. $mall_style_name);
 	}
 
+
+
 	function display($tpl) {
 		$cart = & m('cart');
 		$this->assign('cart_goods_kinds', $cart->get_kinds(SESS_ID, $this->visitor->get('user_id')));
@@ -251,6 +253,58 @@ class FrontendApp extends ECBaseApp {
 			$this->show_message(Lang::get('login_successed') . $synlogin, 'back_before_login', rawurldecode($_POST['ret_url']), 'enter_member_center', 'index.php?app=member');
 		}
 	}
+	function anyoneRegister()
+    {
+      if (!empty($_GET['ret_url']))
+        {
+            $ret_url = trim($_GET['ret_url']);
+        }
+        else
+        {
+            if (isset($_SERVER['HTTP_REFERER']))
+            {
+                $ret_url = $_SERVER['HTTP_REFERER'];
+            }
+            else
+            {
+                $ret_url = SITE_URL . '/index.php';
+            }
+        }
+        /* 防止登陆成功后跳转到登陆、退出的页面 */
+        $ret_url = strtolower($ret_url);            
+        if (str_replace(array('act=login', 'act=logout',), '', $ret_url) != $ret_url)
+        {
+            $ret_url = SITE_URL . '/index.php';
+        }
+      $local_user=ecm_getcookie('ecm_local_user');
+      if(!(isset($local_user) && !empty($local_user)))
+      {
+        $local_user='ecm_user_'.gmtime().rand(1,9999);
+      }
+      $user_mod= &m('member');
+       $ms =& ms(); //连接用户中心
+      $user_info=$user_mod->get(array('conditions'=>" user_name='".$local_user."'"));
+      if(!$user_info)
+      {
+       
+        $user_id = $ms->user->register($local_user, '111111', $local_user.'@126.com');
+      }else{
+        $user_id=$user_info['user_id'];
+      }
+       $this->_do_login($user_id);
+            
+            /* 同步登陆外部系统 */
+       $synlogin = $ms->user->synlogin($user_id);
+
+       ecm_setcookie('ecm_local_user',$local_user,gmtime()+2592000);
+       	//360cd.cn
+        $point = &m("point_set");
+        $point->loginPoint($user_id);
+        //360cd.cn
+
+       $this->show_message(Lang::get('login_successed') . $synlogin,'back_before_login', rawurldecode($ret_url),
+                'enter_member_center', 'index.php?app=member');
+    }
 
 	function pop_warning($msg, $dialog_id = '', $url = '') {
 		if ($msg == 'ok') {

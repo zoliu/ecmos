@@ -73,8 +73,8 @@ function addHistoryItem(tab, item){
         if($('#history dd').length == maxHistoryLength){
             $('#history dd:last').remove();
         }
-        var lnk = $('<span class="icon-star-empty"></span><a href="javascript:;" id="' + tab + '-' + item + '">' + menu[tab]['children'][item]['text'] + '</a>').css({"color":"#98a9c2"});
-        var close = $('<a href="javascript:;" class="close"><span class="icon-remove"></span></a>');
+        var lnk = $('<i class="fa fa-star-o" aria-hidden="true"></i><a href="javascript:;" id="' + tab + '-' + item + '">' + menu[tab]['children'][item]['text'] + '</a>').css({"color":"#98a9c2"});
+        var close = $('<a href="javascript:;" class="close"><i class="fa fa-times" aria-hidden="true"></i></a>');
         lnk.click(function(){
             openItem(item, tab);
         });
@@ -106,7 +106,7 @@ function loadSubmenu(){
     /* 将子菜单逐项添加到菜单中 */
     $.each(m.children, function(k, v){
         var p = v.parent ? v.parent : currTab;
-        var item = $('<dd><span class="icon-star-empty"></span><a href="javascript:;" url="' + v.url + '" parent="' + p + '" id="item_' + k + '">' + v.text + '</a></dd>');
+        var item = $('<dd><i class="fa fa-star-o" aria-hidden="true"></i><a href="javascript:;" url="' + v.url + '" parent="' + p + '" id="item_' + k + '">' + v.text + '</a></dd>');
         item.children('a').click(function(){
             openItem(this.id.substr(5));
         });

@@ -130,12 +130,15 @@ body {
   *zoom: 1;
   padding-left: 0;
 }
-#leftMenus dt span.icon-th-list {
+#leftMenus dt a:hover {
+  padding-left: 0;
+}
+#leftMenus dt i.fa-th-list {
   margin: 0 15px 0 15px;
   color: white;
   font-size: 15px;
 }
-#leftMenus dt span.icon-time {
+#leftMenus dt i.fa-clock-o {
   margin: 0 15px 0 15px;
   color: white;
   font-size: 15px;
@@ -174,10 +177,10 @@ body {
 #leftMenus dd .close {
   top: 13px;
 }
-#leftMenus dd .close span.icon-remove {
+#leftMenus dd .close i.fa-times {
   font-size: 12px;
 }
-#leftMenus span.icon-star-empty {
+#leftMenus i.fa-star-o {
   margin: 0 15px 0 17px;
   font-size: 13px;
   color: #ffffff;
@@ -192,11 +195,11 @@ body {
   text-decoration: none;
   vertical-align: bottom;
 }
-#head #menu a.icon-item {
+#head #menu a.nav-icon-item {
   color: #fff;
   margin: 0 3px;
 }
-#head #menu a span {
+#head #menu a i {
   width: 25px;
   bottom: 0;
   display: inline-block;
@@ -205,28 +208,28 @@ body {
   float: none;
   margin-right: 0px;
 }
-#head #menu a span.icon-signout {
+#head #menu a i.fa-sign-out {
   font-size: 20px;
   *font-size: 24px;
   position: relative;
   *zoom: 1;
   top: 3px;
 }
-#head #menu a span.icon-home {
+#head #menu a i.fa-home {
   font-size: 20px;
   *font-size: 24px;
   position: relative;
   *zoom: 1;
   top: 3px;
 }
-#head #menu a span.icon-refresh {
+#head #menu a i.fa-refresh {
   font-size: 18px;
   *font-size: 22px;
   position: relative;
   *zoom: 1;
   top: 6px;
 }
-#head #menu a span.icon-trash {
+#head #menu a i.fa-trash {
   font-size: 18px;
   *font-size: 22px;
   position: relative;
@@ -255,7 +258,7 @@ body {
   border: none;
   color: black;
 }
-.subnav li span {
+.subnav li i {
   line-height: 46px;
   height: 46px;
   margin-top: -14px;

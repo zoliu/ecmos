@@ -271,7 +271,10 @@ class Captcha
             $font[$i]['width'] = $font[$i]['width'] > $this->width / $seccodelength ? $this->width / $seccodelength : $font[$i]['width'];
             $widthtotal += $font[$i]['width'];
         }
-        $x = mt_rand($font[0]['angle'] > 0 ? cos(deg2rad(90 - $font[0]['angle'])) * $font[0]['zheight'] : 1, $this->width - $widthtotal);
+        //360cd.cn
+        $min=$font[0]['angle'] > 0 ? cos(deg2rad(90 - $font[0]['angle'])) * $font[0]['zheight'] : 1;
+        $max=$this->width - $widthtotal;
+        $x = mt_rand($this->get_max_and_min($min,$max,0),$this->get_max_and_min($min,$max));
         !$this->color && $text_color = imagecolorallocate($this->im, $this->fontcolor[0], $this->fontcolor[1], $this->fontcolor[2]);
         for ($i = 0; $i < $seccodelength; $i++)
         {
@@ -285,11 +288,24 @@ class Captcha
             {
                 $text_shadowcolor = imagecolorallocate($this->im, 255 - $this->fontcolor[0], 255 - $this->fontcolor[1], 255 - $this->fontcolor[2]);
             }
-            $y = $font[0]['angle'] > 0 ? mt_rand($font[$i]['height'], $this->height) : mt_rand($font[$i]['height'] - $font[$i]['hd'], $this->height - $font[$i]['hd']);
+            $min1=$font[$i]['height'];
+            $max1=$this->height;
+            $min2=$font[$i]['height'] - $font[$i]['hd'];
+            $max2=$this->height - $font[$i]['hd'];
+            $y = $font[0]['angle'] > 0 ? mt_rand($this->get_max_and_min($min1,$max1,0),$this->get_max_and_min($min1,$max1)) : mt_rand($this->get_max_and_min($min2,$max2,0),$this->get_max_and_min($min2,$max2));
             $this->shadow && imagettftext($this->im, $font[$i]['size'], $font[$i]['angle'], $x + 1, $y + 1, $text_shadowcolor, $font[$i]['font'], $seccode[$i]);
             imagettftext($this->im, $font[$i]['size'], $font[$i]['angle'], $x, $y, $text_color, $font[$i]['font'], $seccode[$i]);
             $x += $font[$i]['width'];
         }
+    }
+    //360cd.cn 
+    function get_max_and_min($num1,$num2,$max=1)
+    {
+        if($max)
+        {
+            return $num1>$num2?$num1:$num2;
+        } 
+        return $num1>$num2?$num2:$num1;
     }
 
     function giffont()

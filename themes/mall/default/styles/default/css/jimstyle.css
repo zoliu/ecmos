@@ -266,7 +266,7 @@
 /*soso*/
 .header{ position:relative; z-index: 10;}
 .logo{ width: 236px; display: inline;}
-.soso{ margin-left:130px; display: inline;}
+.soso{ margin-left:130px; display: inline;width: 500px;}
 .soso-input{ 
 	width:377px; 
 	height: 33px;
