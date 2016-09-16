@@ -46,15 +46,10 @@ class Version{
 	{
 		return $this->confVer['version'];
 	}
-
-	function getSystemRemark()
-	{
-		return !empty($this->confVer['system_remark'])?base64_decode($this->confVer['system_remark']):'';
-	}
 	/**检查是否需要升级版本**/
 	function checkVersion()
 	{
-		return $this->confVer['version']==$this->confVer['next_version']?0:1;
+		return $this->confVer['version']===$this->confVer['next_version']?0:1;
 	}
 
 	function _initVersion()
@@ -75,32 +70,40 @@ class Version{
 		}
 	}
 
-	function saveSystemRemark($remark)
-	{
-		$this->confVer['system_remark']=$remark;
-
-	}
-
 	function _getRemoteVersion()
 	{
-		$url=$this->remoteUri.'&appid='.$this->confVer['appid'].'&appkey='.$this->confVer['appkey'].'&version='.$this->confVer['system'].'&verno='.base64_encode($this->confVer['version']);
+
+		// if(!$this->checkVersion())
+		// {
+		// 	return ;
+		// }
+		$url=$this->remoteUri.'&appid='.$this->confVer['appid'].'&appkey='.$this->confVer['appkey'].'&version='.$this->confVer['system'];
 		$result=getUri($url);
+		
 		if($result)
 		{
 			$result=json_decode($result,1);
 			if(isset($result['version']))
 			{
-				$this->saveSystemRemark($result['system_remark']);
 				$this->saveVersionRemark($result['remark']);
+				$this->saveSystemRemark($result['system_remark']);
 				$this->saveNextVersion($result['version']);
 			}
 		}
 	}
 
+	function saveSystemRemark($remark)
+	{
+		!empty($remark)?$this->confVer['system_remark']=$remark:null;
+	}
+	function readSystemRemark()
+	{
+		return !empty($this->confVer['system_remark'])?base64_decode($this->confVer['system_remark']):'';
+	}
+
 	function saveVersionRemark($remark)
 	{
-		$this->confVer['remark']=$remark;
-
+		!empty($remark)?$this->confVer['remark']=$remark:null;
 	}
 
 	function readVersionRemark()

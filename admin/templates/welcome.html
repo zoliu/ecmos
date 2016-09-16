@@ -61,6 +61,8 @@ alert(dangerous_apps);
     });
       
     </script>
+    {else}
+    <li><b>新版说明：</b>{$upgrade.remark|editor}</li>
     {/if}
     </ul>
 </dd>

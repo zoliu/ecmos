@@ -44,12 +44,12 @@ $(function(){
 				<label for="{$lang.password}">{$lang.password}</label>
 				<div class="zx-form-input"><input type="password" name="password" placeholder="管理员密码"></div>
 			</div>
-			
+			<!--{if $captcha}-->
 			<div class='zx-form-group'>
 				<label for="{$lang.captcha}">{$lang.captcha}</label>
 				<div class="zx-form-input"><input type="text" name="captcha" class="checkcode"> <div class="validates"><img onclick="this.src='index.php?app=captcha&' + Math.round(Math.random()*10000)" style="cursor:pointer;" class="validate" src="index.php?app=captcha&{$random_number}" /></div></div>
 			</div>
-			<!--{if $captcha}-->
+			
 			<!--{/if}-->
 			<div class='zx-form-group'><br>
 				<div class="zx-form-input"><input type="submit" value="{$lang.submit}"></div>

@@ -166,25 +166,6 @@ function setWorkspace(){
     $('#left').height(wHeight - $('#head').height()-2);
 
 }
-
-/* 后台导航 */
-var num = 0;
-var close_num = 0;
-var div = document.getElementsByTagName('div');
-window.onload = function()
-{
-    var img = document.getElementById('back_btn');
-    img.onclick = display_fn;
-    var closes = document.getElementsByTagName('div');
-    for(i = 0; i < closes.length; i++)
-    {
-        if(closes[i].className == 'close_float')
-        {
-            close_num = i;
-        }
-    }
-    closes[close_num].onclick = none_fn;
-}
 function display_fn()
 {
     for(i = 0; i < div.length; i++)
@@ -206,4 +187,14 @@ function none_fn()
         }
     }
     div[num].style.display = 'none';
+}
+
+
+/* 后台导航 */
+var num = 0;
+var close_num = 0;
+var div = document.getElementsByTagName('div');
+window.onload = function()
+{
+  
 }
