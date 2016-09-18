@@ -1,7 +1,7 @@
 <?php
 
 // error_reporting(E_ALL & ~E_NOTICE);
-$_GET['debug']=1;
+// $_GET['debug']=1;
 
 /* 应用根目录 */
 define('APP_ROOT', dirname(__FILE__));          //该常量只在后台使用
