@@ -6,7 +6,7 @@
 	}
     function sendSms($uid,$key,$to,$content)
 	{
-		 $url='http://utf8.sms.webchinese.cn/?Uid='.$uid.'&Key='.$key.'&smsMob='.$to.'&smsText='.$content;
+		 $url='http://api.360cd.cn/sms-send?uid='.$uid.'&key='.$key.'&phone='.$to.'&content='.$content;
 		 $res = pushURI($url);
 		 if($res=='')
 		 {
