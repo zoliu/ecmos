@@ -197,7 +197,6 @@ class baseWx extends wxUri
 
 	function getUri($url,$action='GET',$data=array())
 	{
-	    write_log($url);
 		try{
 
 
@@ -212,13 +211,11 @@ class baseWx extends wxUri
 		 $action=='POST'?curl_setopt($ch, CURLOPT_POSTFIELDS, $data):null;
 		 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
 		 $tmpInfo = curl_exec($ch); 
-		 write_log($tmpInfo);
 		 if (curl_errno($ch)) {  		 
 			echo 'Errno'.curl_error($ch);
 		 }
 		 curl_close($ch); 
 		 $json_data=$tmpInfo;
-		 write_log($json_data);
 		}catch(Exception $ex)
 		{
 			write_log($ex);
