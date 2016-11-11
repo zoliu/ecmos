@@ -27,4 +27,3 @@ ECMall::startup(array(
       
     ),
 ));
-?>
