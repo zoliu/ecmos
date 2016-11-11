@@ -382,7 +382,7 @@
 .handle {padding: 10px 20px; background: #f6f6f6; border: 1px solid #e8e8e8; overflow: hidden; }
 .handle:hover{ background: #fffbfc; border: 1px solid #ffe8ee; }
 .handle ul { width: 360px; overflow: hidden; color: #7a7a7a; margin-bottom: 10px;}
-.handle li { float: left; cursor: pointer; }
+.handle li { float: left; cursor: pointer; margin-bottom: 5px;}
 .handle_title { padding-top: 3px; }
 .solid { padding: 2px 4px; border: 1px solid #f00042; color: #fff; margin-right: 8px; background: #f00042; }
 .dotted { padding: 2px 4px; border: 1px solid #f00042; margin-right: 8px; background: #fff; }
