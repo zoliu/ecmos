@@ -3,11 +3,16 @@
 执行路径http://you web site/install
 一路安装下去就可以
 
+### 2016-12-04更新日志
+1. 修改了调试模式的开启条件需要config.inc.php中的DEBUG_MODE
+- 增加了新的调用方式SL(),与LM()是为了与新的模块兼容，SL()默认调用/includes/libraries/zllib/下的文件夹或目录，如SL('member'),将调用/includes/libraries/zllib/member.lib.php或/includes/libraries/zllib/member/member.lib.php系统采用自动载入，LM()与&m('');载入效果是一样的，不过，LM()可以直接使用比如LM('goods')->find($where);
+
+
 ### 2016-12-04紧急更新日志
 1. 增加了防注入插件
 2. 修改了团购的注入漏洞
 3. 防注入插件需要在商城后台插件处开启
-
+4. 修改了商品发布处的因为高度限制产生的部分信息被隐藏
 
 ### 2016-10-13 更新记录
 1. 修改了短信调用接口,短信0.055元一条。
