@@ -228,15 +228,16 @@ function LM($name) {
  * @return void            无返回，仅仅载入
  */
 function __autoload($classname) {
-	import('zllib/' . $classname . '.lib');
 	$load = array(
 		'zllib/' . strtolower($classname) . '/' . $classname . '.lib.php',
 		'zllib/' . $classname . '.lib.php',
 	);
 	$path = ROOT_PATH . '/includes/libraries/';
 	foreach ($load as $key => $value) {
-		if (file_exists($path . $value)) {
-			require_once $path . $value;
+		$file = $path . $value;
+		strtolower($file);
+		if (file_exists($file)) {
+			require_once $file;
 			return;
 		}
 	}
