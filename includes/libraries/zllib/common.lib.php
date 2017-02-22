@@ -234,8 +234,7 @@ function __autoload($classname) {
 	);
 	$path = ROOT_PATH . '/includes/libraries/';
 	foreach ($load as $key => $value) {
-		$file = $path . $value;
-		strtolower($file);
+		$file = $path . strtolower($value);
 		if (file_exists($file)) {
 			require_once $file;
 			return;

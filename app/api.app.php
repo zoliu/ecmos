@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 /**
  * 此功能用于接口性登陆或注册
  * 登陆接口格式如/?app=api&appid=[管理员后台填写的登陆appid]&appkey=[管理员后台填写的登陆appkey]&uid=[用户的email|用户的mobile|用户的code|用户的username]&act=[userLogin|emailLogin|codeLogin|mobileLogin]
@@ -28,7 +30,7 @@ class ApiApp extends MallbaseApp {
 	function auth() {
 		$appid = isset($_GET['appid']) && !empty($_GET['appid']) ? trim($_GET['appid']) : '';
 		$appkey = isset($_GET['appkey']) && !empty($_GET['appkey']) ? trim($_GET['appkey']) : '';
-		if ($appid != $this->appid || $appkey &= $this->appkey) {
+		if ($appid != $this->appid || $appkey != $this->appkey) {
 			$this->toJson('-1', '权限验证出错!');
 		}
 
@@ -47,12 +49,16 @@ class ApiApp extends MallbaseApp {
 			$username = '360cd_' . $user_id;
 		}
 		if (empty($email)) {
-			$email = '360cd_' . $user_id . '@zoliu.cn';
+			$email = $username . '@zoliu.cn';
+		}
+		if (empty($password)) {
+			$password = rand_code(8);
 		}
 		$data = array(
 			'user_name' => $username, //360cd.cn
 			'email' => $email, //360cd.cn
 			'phone_mob' => $mobile, //360cd.cn
+			'password' => $password, //360cd.cn
 		);
 		$u_id = LM('member')->add($data);
 		if ($u_id) {

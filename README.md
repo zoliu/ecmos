@@ -3,6 +3,15 @@
 执行路径http://you web site/install
 一路安装下去就可以
 
+
+### 2017-02-20更新日志
+1. 增加了外部登陆调用接口
+2. 增加了外部注册调用接口
+3. 修改了导入已有类的兼容性问题
+4. 登陆接口:格式如/?app=api&appid=[管理员后台填写的登陆appid]&appkey=[管理员后台填写的登陆appkey]&uid=[用户的email|用户的mobile|用户的code|用户的username]&act=[userLogin|emailLogin|codeLogin|mobileLogin]
+5. 注册接口：接口为/?app=api&appid=[管理员后台填写的登陆appid]&appkey=[管理员后台填写的登陆appkey]&username=&email=&mobile=&password=&act=register
+ * 其中username,email,mobile,不能全为空
+
 ### 2016-12-04更新日志
 1. 修改了调试模式的开启条件需要config.inc.php中的DEBUG_MODE
 - 增加了新的调用方式SL(),与LM()是为了与新的模块兼容，SL()默认调用/includes/libraries/zllib/下的文件夹或目录，如SL('member'),将调用/includes/libraries/zllib/member.lib.php或/includes/libraries/zllib/member/member.lib.php系统采用自动载入，LM()与&m('');载入效果是一样的，不过，LM()可以直接使用比如LM('goods')->find($where);
