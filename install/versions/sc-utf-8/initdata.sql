@@ -2,7 +2,8 @@
 SQLyog Ultimate v11.11 (64 bit)
 MySQL - 5.5.49-0+deb7u1 : Database - ecmos
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -202,7 +203,7 @@ insert  into `ecm_order_log`(`log_id`,`order_id`,`operator`,`order_status`,`chan
 
 /*Data for the table `ecm_partner` */
 
-insert  into `ecm_partner`(`partner_id`,`store_id`,`title`,`link`,`logo`,`sort_order`) values (2,2,'ECMall','http://ecmall.shopex.cn',NULL,1),(3,2,'ECShop','http://www.ecshop.com',NULL,2),(4,0,'上海商派','http://www.shopex.cn','data/files/mall/partner/4.png',1),(5,0,'支付宝','http://www.alipay.com','data/files/mall/partner/5.gif',2),(6,0,'财付通','http://www.tenpay.com','data/files/mall/partner/6.PNG',3),(7,21,'卓流官网','http://www.360cd.cn',NULL,255);
+insert  into `ecm_partner`(`partner_id`,`store_id`,`title`,`link`,`logo`,`sort_order`) values (2,2,'ECMOS','http://',NULL,1),(3,2,'ECShop','http://www.ecshop.com',NULL,2),(4,0,'上海商派','http://www.shopex.cn','data/files/mall/partner/4.png',1),(5,0,'支付宝','http://www.alipay.com','data/files/mall/partner/5.gif',2),(6,0,'财付通','http://www.tenpay.com','data/files/mall/partner/6.PNG',3),(7,21,'卓流官网','http://www.360cd.cn',NULL,255);
 
 /*Data for the table `ecm_payment` */
 

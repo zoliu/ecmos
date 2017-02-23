@@ -1,10 +1,10 @@
 <?php
 
 return array(
-    'name'      => 'pink',
-    'version'   => '1.0',
-    'author'    => 'ECMall TEAM',
-    'description'=> 'style',
+	'name' => 'pink',
+	'version' => '1.0',
+	'author' => 'TEAM',
+	'description' => 'style',
 );
 
 ?>

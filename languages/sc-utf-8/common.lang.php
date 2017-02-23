@@ -1,32 +1,32 @@
 <?php
 return array(
-	'or'=>'或者',//360cd.cn
-	'no_register_login'=>'匿名登陆',//360cd.cn
-	'ckgwc'    => '1.查看购物车',
-	'qrddxx'   => '2.确认订单信息',
-	'fk'       => '3.付款',
-	'qrsh'     => '4.确认收货',
-	'pj'       => '5.评价',
-	'zjcj'     => '最新成交',
-	'bi'       => '笔',
-	'more' =>'更多',
-	'store_map'    => '店铺地图',
+	'or' => '或者', //360cd.cn
+	'no_register_login' => '匿名登陆', //360cd.cn
+	'ckgwc' => '1.查看购物车',
+	'qrddxx' => '2.确认订单信息',
+	'fk' => '3.付款',
+	'qrsh' => '4.确认收货',
+	'pj' => '5.评价',
+	'zjcj' => '最新成交',
+	'bi' => '笔',
+	'more' => '更多',
+	'store_map' => '店铺地图',
 	'goods_qrcode' => '商品二维码',
 	'store_qrcode' => '店铺二维码',
-	'go2store'=>'进入商家店铺',
-	'hot_search'=> '热门搜索',
-	'contact_style'=>'联系方式',
-	'business_scope_note'=>'如：女装上衣 t恤 衬衫 长袖 纯色 打底裤',
+	'go2store' => '进入商家店铺',
+	'hot_search' => '热门搜索',
+	'contact_style' => '联系方式',
+	'business_scope_note' => '如：女装上衣 t恤 衬衫 长袖 纯色 打底裤',
 	'goods_sku' => '商家编码',
-	'all_evaluation'=>'综合评分',
-	'fen'=>'分',
-	'store_evaluation'=>'店铺动态评分',
-	'compare_insdusty'=>'与行业相比',
-	'goods_evaluation'=>'商品评分',
-	'service_evaluation'=>'服务评分',
-	'shipped_evaluation'=>'发货评分',
-	'goods'   => '商品',
-	'back_home'  => '回到首页',
+	'all_evaluation' => '综合评分',
+	'fen' => '分',
+	'store_evaluation' => '店铺动态评分',
+	'compare_insdusty' => '与行业相比',
+	'goods_evaluation' => '商品评分',
+	'service_evaluation' => '服务评分',
+	'shipped_evaluation' => '发货评分',
+	'goods' => '商品',
+	'back_home' => '回到首页',
 	'username' => '用户名',
 	'password' => '密&nbsp;&nbsp;&nbsp;码',
 	'captcha' => '验证码',
@@ -162,7 +162,7 @@ return array(
 	'captcha_failed' => '验证码输入错误',
 	'login_error' => array(
 		'-1' => '您输入的用户名或密码不正确，请重新输入',
-		'-2' => '您的账户无法使用，可能是因为用户名重复或不符合规则' 
+		'-2' => '您的账户无法使用，可能是因为用户名重复或不符合规则',
 	),
 	'login_successed' => '登录成功。',
 	'logout_successed' => '退出登录成功。',
@@ -254,7 +254,7 @@ return array(
 	'order_eval' => array(
 		'1' => '差评',
 		'2' => '中评',
-		'3' => '好评' 
+		'3' => '好评',
 	),
 	'use' => '使用',
 	'preview' => '预览',
@@ -271,7 +271,7 @@ return array(
 	'back_index' => '返回首页',
 	'cancel_query' => '取消检索',
 	'pay_message' => '支付消息',
-	'default_site_description' => '这是一个用ECMall架设的网上商城',
+	'default_site_description' => '这是一个用ECMOS架设的网上商城',
 	'default_closed_reason' => '商城维护中，暂时关闭，请稍候访问。',
 	'ecmall_sysmsg' => '系统信息',
 	'page_close' => '关闭页面',
@@ -345,42 +345,42 @@ return array(
 	'feed_order_created' => array(
 		'title' => '{actor} 在店铺 {store} 购买了商品',
 		'body' => '',
-		'name' => '订单生成' 
+		'name' => '订单生成',
 	),
 	'feed_store_created' => array(
 		'title' => '{actor} 在 {mall_name} 开通了店铺 {store}',
 		'body' => '',
-		'name' => '店铺开通' 
+		'name' => '店铺开通',
 	),
 	'feed_goods_created' => array(
 		'title' => '{actor} 添加了商品 {goods}',
 		'body' => '',
-		'name' => '添加商品' 
+		'name' => '添加商品',
 	),
 	'feed_groupbuy_created' => array(
 		'title' => '{actor} 添加了团购 {groupbuy}',
 		'body' => '团购说明：{groupbuy_message}',
-		'name' => '添加团购' 
+		'name' => '添加团购',
 	),
 	'feed_goods_collected' => array(
 		'title' => '{actor} 收藏了商品 {goods}',
 		'body' => '',
-		'name' => '收藏商品' 
+		'name' => '收藏商品',
 	),
 	'feed_store_collected' => array(
 		'title' => '{actor} 收藏了店铺 {store}',
 		'body' => '',
-		'name' => '收藏店铺' 
+		'name' => '收藏店铺',
 	),
 	'feed_goods_evaluated' => array(
 		'title' => '{actor} 给了商品 {goods} {evaluation}',
 		'body' => '评价：{comment}',
-		'name' => '评价商品' 
+		'name' => '评价商品',
 	),
 	'feed_groupbuy_joined' => array(
 		'title' => '{actor} 参加了团购 {groupbuy}',
 		'body' => '',
-		'name' => '参加团购' 
+		'name' => '参加团购',
 	),
 	'baidu_shoucang' => '百度收藏',
 	'qq_shuqian' => 'QQ书签',
@@ -393,7 +393,7 @@ return array(
 	'collected_goods' => '收藏的商品',
 	'collected_store' => '收藏的店铺',
 	'epay_set' => '账户设置',
-	
+
 	'account_total_money' => '账户总金额：',
 	'yuan' => '元',
 	'account_freezing' => '冻结金额：',
@@ -407,17 +407,17 @@ return array(
 	'curlocal_payment' => '付款',
 	'curlocal_order_confirm' => '确认收货',
 	'curlocal_my_evaluate' => '评价',
-	
+
 	'my_discus' => '我的退货/退款',
 	'discus_view' => '查看退货/退款',
 	'discus' => '退货/退款',
 	// 360cd.cn seema
-	
+
 	//---www.360cd.cn  Mosquito---
 	'my_money' => '钱包中心',
-    'my_child' => '下级管理',
+	'my_child' => '下级管理',
 
-    'statics_details' => '全统计',
+	'statics_details' => '全统计',
 );
 
 ?>
