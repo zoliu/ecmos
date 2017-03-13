@@ -3,6 +3,18 @@
 执行路径http://you web site/install
 一路安装下去就可以
 
+### 2017-03-14 更新日志
+1. 增加了链式数据库写法详细 写法，可以参考/external/ds/下边的所有的文件
+如：LM('navigation')->where("type='middle'")->orderBy('sort_order')->limit($params['num'])->find();
+
+2. 增加了新的模板引挚，为下一步的模板做准备，标签可以在任意页面中调用。
+如：
+{ds name=article type=view article_id=?}
+{ds name=article type=new num=? cate_id=? code=? store_id=?}
+{ds name=goods type=view goods_id=? }
+3. 去除了外部接口的调试语句
+4. 调整了短信发送的接口
+
 ### 2017-03-13 更新日志
 1. 修改了上一次更新的外部API调用的BUG，并且关闭了调试模式
 2. 增加了百度编辑器
