@@ -35,26 +35,26 @@ SUBDOMAIN_SUFFIX : 二级域名后缀,例如:用户的二级域名将是"test.ma
 
 SESSION_TYPE     : session数据存储类型，目前可选择session和mysql
 SESSION_MEMCACHED : 存储session数据的memcached服务器(服务器地址1:端口1|服务器地址2:端口2)
-*/
+ */
 
-return array (
-  'SITE_URL' => 'http://ecmos.t.360cd.cn',
-  'DB_CONFIG' => 'mysql://root:root@localhost:3306/ecmos',
-  'DB_PREFIX' => 'ecm_',
-  'LANG' => 'sc-utf-8',
-  'COOKIE_DOMAIN' => '',
-  'COOKIE_PATH' => '/',
-  'ECM_KEY' => '9798a6e44fa5f1999d7a2dd604e23424',
-  'MALL_SITE_ID' => 'EMQIFPZKd6RPi2Xd',
-  'ENABLED_GZIP' => 0,
-  'DEBUG_MODE' => 0,
-  'CACHE_SERVER' => 'default',
-  'MEMBER_TYPE' => 'default',
-  'ENABLED_SUBDOMAIN' => 0,
-  'SUBDOMAIN_SUFFIX' => '',
-  'SESSION_TYPE' => 'mysql',
-  'SESSION_MEMCACHED' => 'localhost:11211',
-  'CACHE_MEMCACHED' => 'localhost:11211',
+return array(
+	'SITE_URL' => 'http://' . $_SERVER['HTTP_HOST'],
+	'DB_CONFIG' => 'mysql://root:root@localhost:3306/ecmos',
+	'DB_PREFIX' => 'ecm_',
+	'LANG' => 'sc-utf-8',
+	'COOKIE_DOMAIN' => '',
+	'COOKIE_PATH' => '/',
+	'ECM_KEY' => '9798a6e44fa5f1999d7a2dd604e23424',
+	'MALL_SITE_ID' => 'EMQIFPZKd6RPi2Xd',
+	'ENABLED_GZIP' => 0,
+	'DEBUG_MODE' => 0,
+	'CACHE_SERVER' => 'default',
+	'MEMBER_TYPE' => 'default',
+	'ENABLED_SUBDOMAIN' => 0,
+	'SUBDOMAIN_SUFFIX' => '',
+	'SESSION_TYPE' => 'mysql',
+	'SESSION_MEMCACHED' => 'localhost:11211',
+	'CACHE_MEMCACHED' => 'localhost:11211',
 );
 
 ?>

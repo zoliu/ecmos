@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
 /**
  * 此功能用于接口性登陆或注册
  * 登陆接口格式如/?app=api&appid=[管理员后台填写的登陆appid]&appkey=[管理员后台填写的登陆appkey]&uid=[用户的email|用户的mobile|用户的code|用户的username]&act=[userLogin|emailLogin|codeLogin|mobileLogin]
