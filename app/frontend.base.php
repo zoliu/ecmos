@@ -24,7 +24,10 @@ class FrontendApp extends ECBaseApp {
 		}
 		// 在运行action之前，无法访问到visitor对象
 		// 360cd.cn
-		include (ROOT_PATH . "/Mobile_Detect.php");
+		if (!class_exists('Mobile_Detect')) {
+			include ROOT_PATH . "/Mobile_Detect.php";
+		}
+
 		$mob = new Mobile_Detect();
 		
 		$mob_debug = isset($_GET['mob']) ? intval($_GET['mob']) : 0;
@@ -51,52 +54,8 @@ class FrontendApp extends ECBaseApp {
 	function sms_captcha() {
 		$user_id = isset($this->visitor) ? $this->visitor->get('user_id') : 0;
 		$code = isset($_GET['code']) && !empty($_GET['code']) ? trim($_GET['code']) : '';
-		if (empty($code)) {
-			echo 0;
-			return;
-		}
-		if ($code != 'register_mobile' && !$user_id) {
-			echo -1;
-			return;
-		}
 		$mobile = isset($_GET['mobile']) && !empty($_GET['mobile']) ? trim($_GET['mobile']) : '';
-		
-		if ($code == 'register_mobile' && empty($mobile)) {
-			echo -21;
-			return;
-		}
-		$msg_model = &m('msg');
-		switch ($code) {
-			case 'turn_out' :
-				$result = $msg_model->turn_out_captcha($user_id);
-				break;
-			case 'tx_money' :
-				$result = $msg_model->tx_money_captcha($user_id);
-				break;
-			case 'modify_pay_passwd' :
-				$result = $msg_model->modify_pay_passwd_captcha($user_id);
-				break;
-			case 'modify_password' :
-				$result = $msg_model->modify_password_captcha($user_id);
-				break;
-			case 'register_mobile' :
-				$result = $msg_model->register_captcha($mobile);
-				break;
-			case 'modify_phone' :
-				$result = $msg_model->modify_phone($mobile);
-				break;
-			case 'modify_email' :
-				$result = $msg_model->modify_email_captcha($user_id);
-				break;
-			default :
-				$result = -12;
-				break;
-		}
-		if ($result > 0) {
-			echo 1;
-			return;
-		}
-		echo $result;
+		echo LM('msg')->toSms($code, $user_id, $mobile);
 	}
 
 	function _config_view() {
@@ -571,6 +530,13 @@ class MallbaseApp extends FrontendApp {
 		if (!$template_name) {
 			$template_name = 'default';
 		}
+		//360cd.cn template 灵活切换模板方便调试
+		if (isset($_GET['tmpl']) && !empty($_GET['tmpl'])) {
+			$_SESSION['curr_tmpl'] = trim($_GET['tmpl']);
+		}
+		if (!empty($_SESSION['curr_tmpl'])) {
+			$template_name = $_SESSION['curr_tmpl'];
+		}
 		return $template_name;
 	}
 
@@ -619,7 +585,15 @@ class MallbaseApp extends FrontendApp {
 		if (!$template_name) {
 			$template_name = 'default';
 		}
-		
+		//360cd.cn template 灵活切换模板方便调试
+		if (isset($_GET['tmpl']) && !empty($_GET['tmpl'])) {
+			$_SESSION['curr_tmpl'] = trim($_GET['tmpl']);
+		}
+
+		if (!empty($_SESSION['curr_tmpl'])) {
+			$template_name = $_SESSION['curr_tmpl'];
+		}
+
 		return $template_name;
 	}
 
@@ -708,7 +682,14 @@ class MemberbaseApp extends MallbaseApp {
 		} else {
 			$template_name = $this->_get_template_name();
 			$style_name = $this->_get_style_name();
-			
+			if (!empty($_GET['tmpl'])) {
+				$_SESSION['curr_tmpl'] = trim($_GET['tmpl']);
+			}
+			$tmpl = $_SESSION['curr_tmpl'];
+			if ($tmpl) {
+				$template_name = $tmpl;
+			}
+
 			$this->_view->template_dir = ROOT_PATH . "/themes/member/{$template_name}";
 			$this->_view->compile_dir = ROOT_PATH . "/temp/compiled/member/{$template_name}";
 			$this->_view->res_base = SITE_URL . "/themes/member/{$template_name}/styles/{$style_name}";

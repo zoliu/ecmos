@@ -349,6 +349,14 @@ class MemberApp extends MemberbaseApp {
 			));
 			$this->assign('edit_avatar', $edit_avatar);
 			$this->_config_seo('title', Lang::get('member_center') . ' - ' . Lang::get('my_profile'));
+			if (get('ajax_edit')) {
+				$this->display('member.profile.ajax.html');
+				return;
+			}
+			if (get('portrait')) {
+				$this->display('member.profile.portrait.html');
+				return;
+			}
 			$this->display('member.profile.html');
 		} else {
 			$data = array(
@@ -365,6 +373,10 @@ class MemberApp extends MemberbaseApp {
 					return;
 				}
 				$data['portrait'] = $portrait;
+			}
+			if (isset($_POST['portrait'])) {
+				$data = array();
+				$data['portrait'] = $_POST['portrait'];
 			}
 
 			$model_user = &m('member');
@@ -620,7 +632,6 @@ class MemberApp extends MemberbaseApp {
 			return 0;
 		}
 		//360cd.cn
-		$user_info =
 		$to = $member_data['email'];
 		$subject = "【修改手机验证】";
 		$vcode = mt_rand(111111, 999999);
@@ -666,7 +677,7 @@ class MemberApp extends MemberbaseApp {
 
 			return;
 		}
-		$result = $this->check_mobile($phone_mob);
+		$result = LM('member')->where("phone_mob='" . $phone_mob . "'")->get();
 		if ($result) {
 			echo ecm_json_encode(true);
 		} else {
@@ -763,17 +774,7 @@ class MemberApp extends MemberbaseApp {
 		$user_id = $this->visitor->get("user_id");
 		$user_mob = &m("member");
 		$info = $user_mob->get($user_id);
-		//是否是联盟商家
-		if ($this->visitor->get('manage_store')) {
-
-			if ($info['union_stor'] == 1 && $info['ustor_status'] == 1) {
-				$this->assign('vip_name', '1');
-			} else {
-				$this->assign('vip_name', '0');
-			}
-		} else {
-			$this->assign('vip_name', '0');
-		}
+		
 		$this->display('member.index.html');
 	}
 }

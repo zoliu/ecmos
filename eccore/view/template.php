@@ -542,11 +542,31 @@ class ecsTemplate
                     }
                     // $tmp = $this->assign($t['var'], $t['value']);
 
-                    return '<?php ' . $tmp . ' ?>';
-                    break;
-              
-                case 'include':
-                    $t = $this->get_para(substr($tag, 8), 0);
+				return '<?php ' . $tmp . ' ?>';
+				break;
+			case 'ds':
+
+				$t = $this->get_para(substr($tag, 3), 1);
+				if (isset($t['name']) && !empty($t['name'])) {
+					$this->assign($t['name'] . "_ds_var", $t);
+					$str = '
+                    $result=$this->dataSource("' . $t['name'] . '",$this->_var["' . $t['name'] . '_ds_var"]);
+					if (is_array($result) && count($result) > 0) {
+						foreach ($result as $k => $v) {
+							if(!empty($v)){
+								// print_r($v);
+								$this->assign($k, $v);
+							}
+
+						}
+					}
+                    ';
+				}
+				return '<?php ' . $str . ' ?>';
+				break;
+
+			case 'include':
+				$t = $this->get_para(substr($tag, 8), 0);
 
                     return '<?php echo $this->fetch(' . "'$t[file]'" . '); ?>';
                     break;
@@ -724,7 +744,30 @@ class ecsTemplate
             }
         }
     }
-	
+	//360cd.cn ds
+	function dataSource($name, $params = array()) {
+		if (!class_exists('baseDs')) {
+
+			include ROOT_PATH . '/includes/ds.base.php';
+		}
+		$name = strtolower($name);
+
+		$file_path = ROOT_PATH . "/external/ds/" . $name . ".ds.php";
+
+		if (file_exists($file_path)) {
+
+			$name = ucfirst($name);
+
+			$class_name = $name . 'Ds';
+			if (!class_exists($class_name)) {
+				include $file_path;
+			}
+			$ds = new $class_name();
+			$ds->init($params);
+			return $ds->getVar();
+		}
+	}
+	//360cd.cn ds
 	function select_insert_preg_callback($matches)
 	{
 		return stripslashes(trim($matches[1],''));
