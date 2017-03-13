@@ -128,6 +128,7 @@ class ApiApp extends MallbaseApp {
 	function _dologin($user_id) {
 		$this->_do_login($user_id);
 		$code = rand_code(25);
+		LM('member')->edit($user_id, array('valid_code' => $code));
 		$this->toJson(1, '登陆成功', array('login_code' => $code));
 	}
 
