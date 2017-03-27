@@ -259,7 +259,7 @@ class TemplateApp extends BackendApp {
 
 		import('zllib/http.lib');
 
-		return pushUri($pages[$page]);
+		return Http::pushUri($pages[$page]);
 	}
 
 	/**

@@ -461,7 +461,7 @@ class DbApp extends BackendApp {
 		$tmp_sql = $tmp_arr['Create Table'];
 		$tmp_sql = substr($tmp_sql, 0, strrpos($tmp_sql, ")") + 1); //去除行尾定义。
 		$tmp_sql = str_replace("\n", "\r\n", $tmp_sql);
-		$table_df .= $tmp_sql . " TYPE=MyISAM;\r\n";
+		$table_df .= $tmp_sql . " ENGINE=MyISAM;\r\n";
 		return $table_df;
 	}
 

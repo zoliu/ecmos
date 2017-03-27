@@ -1,0 +1,97 @@
+{include file="header.html"}
+<script>
+    $(function(){
+    // multi-select mall_gcategory
+    $('#gcategory').length>0 && gcategoryInit("gcategory");
+});
+</script>
+<div id="rightTop">
+    <p>{$lang.my_goods}</p>
+    <ul class="subnav">
+        <li><span>{$lang.manage}</span></li>
+        <li><a class="btn1" href="index.php?app=my_goods&amp;act=add">{$lang.add}</a></li>
+       
+    </ul>
+</div>
+<div class="mrightTop">
+    <div class="fontl">
+        <form method="get">
+            <div class="left">
+                <input type="hidden" name="app" value="my_goods" />
+                <input type="hidden" name="act" value="index" />
+                {$lang.goods_name}:
+                <input class="queryInput" type="text" name="goods_name" value="{$smarty.get.goods_name|escape}" />   
+                 {$lang.store_name}:
+                <input class="queryInput" type="text" name="store_name" value="{$smarty.get.store_name|escape}" /> 
+                {$lang.keyword}:
+                <input class="queryInput" type="text" name="keyword" value="{$smarty.get.keyword|escape}" />                
+                <div id="gcategory" style="display:inline;">
+                    <input type="hidden" name="cate_id" value="0" class="mls_id" />                
+                    <select class="querySelect">
+                        <option>{$lang.select_pls}</option>
+                        {html_options options=$gcategories}
+                    </select>
+                </div>              
+                <input type="submit" class="formbtn"style="cursor: pointer;" value="{$lang.query}" />
+            </div>
+            <!--{if $filtered}-->
+            <a class="left formbtn1" href="index.php?app=my_goods">{$lang.cancel_query}</a>
+            <!--{/if}-->
+      <span>
+              </span></form>
+    </div>
+    <div class="fontr">
+        {if $my_goods_list}{include file=page.top.html}{/if}
+    </div>
+</div>
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <!--{if $my_goods_list}-->
+        <tr class="tatr1">
+            <td width="20" class="firstCell"><input type="checkbox" class="checkall" /></td>
+            <td align="left"  width="120">{$lang.goods_image}</td>
+            <td align="left"  width="120">{$lang.goods_name}</td>
+            <td align="left"  width="120">{$lang.brand}</td>
+            <td align="left"  width="120">{$lang.cate_name}</td>
+            <td align="left"  width="120">{$lang.price}</td>
+            <td align="left"  width="120">{$lang.stock}</td>
+            <td class="handler">{$lang.handler}</td>
+        </tr>
+        <!--{/if}-->
+        <!--{foreach from=$my_goods_list item=my_goods}-->
+        <tr class="tatr2">
+            <td class="firstCell"><input value="{$my_goods.goods_id}" class='checkitem' type="checkbox" /></td>
+                <td align="left"><img src="/{$my_goods.default_image}" width=80 height=80 /></td>
+                 <td align="left">{$my_goods.goods_name}</td>
+                 <td>{$my_goods.brand|escape}</td>
+                <td>{$my_goods.cate_name|nl2br}</td>
+                <td>{$my_goods.price|nl2br}</td>
+                <td>{$my_goods.stock|nl2br}</td>
+          
+            <td class="handler">
+            <a href="index.php?app=my_goods&amp;act=edit&amp;id={$my_goods.goods_id}">{$lang.edit}</a>  |  <a name="drop" href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=my_goods&amp;act=drop&amp;id={$my_goods.goods_id}');">{$lang.drop}</a>          
+            </td>
+        </tr>
+        <!--{foreachelse}-->
+        <tr class="no_data">
+            <td colspan="7">{$lang.no_data}</td>
+        </tr>
+        <!--{/foreach}-->
+    </table>
+    <!--{if $my_goods_list}-->
+    <div id="dataFuncs">
+        <div id="batchAction" class="left paddingT15">
+           
+            <input class="formbtn batchButton" type="button"style="cursor: pointer;" value="{$lang.drop}" name="id" uri="index.php?app=my_goods&act=drop" presubmit="confirm('{$lang.drop_confirm}');" />
+
+            <input class="formbtn batchButton" type="button"style="cursor: pointer;" value="{$lang.assign}" name="id" uri="index.php?app=my_goods&act=assign_stock"  />
+           
+        </div>
+        <div class="pageLinks">
+            {if $my_goods_list}{include file=page.bottom.html}{/if}
+        </div>
+    </div>
+    <!--{/if}-->
+    <div class="clear"></div>
+</div>
+{include file="footer.html"}

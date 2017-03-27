@@ -51,6 +51,8 @@ define('BELONG_GOODS', 2);
 define('BELONG_STORE', 3);
 define('BELONG_GCATEGORY', 4);
 
+define('STOCK_STORE', 1); //设定库存商品的所属商家
+
 /* 二级域名开关 */
 !defined('ENABLED_SUBDOMAIN') && define('ENABLED_SUBDOMAIN', 0);
 

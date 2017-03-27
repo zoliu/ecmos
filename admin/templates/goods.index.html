@@ -6,12 +6,40 @@ $(function(){
     $('#gcategory').length>0 && gcategoryInit("gcategory");
 });
 //]]>
+ function goods_toggle(id)
+    {
+       $('.spec_'+id).toggle();
+    }
+//]]>
 </script>
+<style>
+  .show_spec{
+    position: relative;
+    top:0;
+    z-index: 999;
+
+  }
+  .tar3{
+    height: 0px;
+
+  }
+  .show_spec ul li{
+    float:left;
+    width:12%;
+  }
+  .show_spec ul {
+    margin-left: 5%;
+    width: 95%;
+  }
+</style>
 <div id="rightTop">
   <p>{$lang.goods}</p>
   <ul class="subnav">
     <li><!--{if $smarty.get.closed}--><a class="btn1" href="index.php?app=goods">{$lang.all_goods}</a><!--{else}--><span>{$lang.all_goods}</span><!--{/if}--></li>
     <li><!--{if $smarty.get.closed}--><span>{$lang.closed}</span><!--{else}--><a class="btn1" href="index.php?app=goods&amp;closed=1">{$lang.closed}</a><!--{/if}--></li>
+    <li>
+      <a class="btn1" href="index.php?app=my_goods&act=index">{$lang.stock}</a>
+    </li>
   </ul>
 </div>
 <div class="mrightTop1 info">
@@ -75,7 +103,38 @@ $(function(){
       <td class="table-center"><!-- {if $goods.if_show} --><img src="{res file=style/images/positive_enabled.gif}" /><!--{else}--><img src="{res file=style/images/positive_disabled.gif}" /><!-- {/if} --></td>
       <td class="table-center"><!-- {if $goods.closed} --><img src="{res file=style/images/negative_enabled.gif}" ectype="inline_edit" fieldname="closed" fieldid="{$goods.goods_id}" fieldvalue="1" title="{$lang.editable}"/><!--{else}--><img src="{res file=style/images/negative_disabled.gif}" ectype="inline_edit" fieldname="closed" fieldid="{$goods.goods_id}" fieldvalue="0" title="{$lang.editable}"/><!-- {/if} --></td>
       <td>{$goods.views|default:0}</td>
-      <td><a target="_blank" href="{$site_url}/index.php?app=goods&amp;id={$goods.goods_id}">{$lang.view}</a></td>
+
+      <td> <a target="" href="javascript:goods_toggle({$goods.goods_id});">{$lang.view_spec}</a>
+
+      <a target="_blank" href="{$site_url}/index.php?app=goods&amp;id={$goods.goods_id}">{$lang.view}</a></td>
+    </tr>
+    <tr class="tatr1 tar3">
+      <td colspan="9">
+        <div  class="show_spec spec_{$goods.goods_id}" style="display:none;">
+          {if $goods._specs}
+           <ul>
+            <li>{$goods.spec_name_1}</li>
+            <li>{$goods.spec_name_2}</li>
+            <li>{$lang.price}</li>
+            <li>{$lang.stock}</li>
+        
+            <li>{$lang.market_price}</li>
+          
+          </ul>
+           <div class="clear"></div>
+          {foreach from=$goods._specs item=spec}
+          <ul>
+            <li>{$spec.spec_1}</li>
+            <li>{$spec.spec_2}</li>
+            <li>{$spec.price}</li>
+            <li>{$spec.stock}</li>
+            <li>{$spec.market_price}</li>
+          </ul>
+           <div class="clear"></div>
+          {/foreach}
+          {/if}
+        </div>
+      </td>
     </tr>
     <!--{foreachelse}-->
     <tr class="no_data info">

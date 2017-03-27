@@ -35,7 +35,7 @@ var menu = {$menu_json};
     <div class="close_float"><img src="templates/style/images/close2.gif" /></div>
 </div>
 <div id="head">
-    <div id="logo"><a href="index.php"><img src="templates/style/images/logo.gif" alt="" /></a></div>
+    <div id="logo"><a href="index.php"><img src="templates/style/images/logo.png" alt="" /></a></div>
     <div id="license"></div>    
     <div id="menu"><span>{$lang.hello}<strong>{$visitor.user_name}</strong> <a href="index.php?act=logout" class="nav-icon-item"><i class="fa fa-sign-out"></i></a> <a href="{$site_url}/index.php" target="_blank" class="nav-icon-item"><i class="fa fa-home"></i></a></span>
     <a href="javascript:;"  id="iframe_refresh" class="nav-icon-item"><i class="fa fa-refresh"></i></a>
@@ -68,5 +68,8 @@ var menu = {$menu_json};
    
 
 </script>
+<style type="text/css">
+    #logo {left:10px;}
+</style>
 </body>
 </html>

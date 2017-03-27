@@ -116,9 +116,9 @@ function loadSubmenu(){
         $('#submenu dd').removeClass('hover');   
         $(this).addClass('hover');        
     });
-    $('#submenu dd').click(function(){ 
-        $(this).children('a').click();
-    });
+    // $('#submenu dd').click(function(){ 
+    //     $(this).children('a').click();
+    // });
 }
 function openItem(itemIndex, tab){
     if(typeof(itemIndex) == 'undefined')

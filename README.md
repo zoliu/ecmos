@@ -3,6 +3,20 @@
 执行路径http://you web site/install
 一路安装下去就可以
 
+
+### 2017-03-25 更新日志
+1. 增加in_goods_id在ecm_goods表用于库存
+2. 修改了表导出的引挚出错TYPE=MYISAM问题 
+3. 修改了后台编辑模板时的调用出错问题 
+4. 修复了微信调用的远程路径
+5. 删除了/includes/libraries/Http.lib.php
+6. 增加了云库功能，平台可以为指定店铺分配指定商品
+7. 管理员可以添加商品，修改商品，以及修改商铺商品的如规格，价格之类的
+8. 修复了PHP版本升级的FrontendApp的脚本错误。
+9. 修复后台管理员界面jquery调用层级出错
+10. 手动修改SQL：ALTER TABLE `ecm_goods` ADD COLUMN `in_goods_id` INT NULL ; 
+
+
 ### 2017-03-14 更新日志
 1. 增加了链式数据库写法详细 写法，可以参考/external/ds/下边的所有的文件
 如：LM('navigation')->where("type='middle'")->orderBy('sort_order')->limit($params['num'])->find();

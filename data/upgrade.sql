@@ -1,0 +1,1 @@
+ALTER TABLE `ecm_goods` ADD COLUMN `in_goods_id` INT NULL ; 

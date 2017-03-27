@@ -1,0 +1,429 @@
+{include file="header.html"}
+<style>
+a{ text-decoration: none;}
+    .show_image{
+        width:80%;display: block;
+        margin: 20px 10px;
+    }
+    .show_image_item{
+        margin-left:10px;display: inline-block;text-align: center;
+    }
+    .show_image_item a{
+        text-decoration: none;color:gray;
+        margin-top:8px;display: block;
+    }
+   tr{
+        border-bottom: 1px dotted gray;
+        
+    }
+    .wordSpacing5{
+        padding: 10px;
+    }
+    .spec_name{
+        width:80px;height:18px;
+    }
+    .tatr2{
+        height: 26px;line-height: 20px;
+        margin: 5px 5px;
+    }
+    .tatr2 td{
+        width:100px;
+    }
+</style>
+<script type="text/javascript">
+$(function(){
+    $('#my_goods_form').validate({
+        errorPlacement: function(error, element){
+            $(element).next('.field_notice').hide();
+            $(element).after(error);
+        },
+        success       : function(label){
+            label.addClass('right').text('OK!');
+        },
+        onkeyup    : false,
+        rules : {
+            sort_order : {
+                number   : true
+            }
+        },
+        messages : {
+            
+            sort_order  : {
+                number   : '{$lang.number_only}'
+            }
+        }
+    });
+});
+function add_uploadedfile(file_data)
+{
+    var newImg = '<tr id="' + file_data.file_id + '" class="tatr2"><input type="hidden" name="file_id[]" value="' + file_data.file_id + '" /><td><img width="40px" height="40px" src="' + SITE_URL + '/' + file_data.file_path + '" /></td><td>' + file_data.file_name + '</td><td><a href="javascript:insert_editor(\'' + file_data.file_name + '\', \'' + file_data.file_path + '\');">{$lang.insert_editor}</a> | |&nbsp;&nbsp; <a href="javascript:set_goods(\'' + file_data.file_id + '\',\'' + file_data.file_name + '\', \'' + file_data.file_path + '\');">添加到商品图片</a>&nbsp;&nbsp;<a href="javascript:drop_uploadedfile(' + file_data.file_id + ');">{$lang.drop}</a></td></tr>';
+    $('#thumbnails').prepend(newImg);
+}
+
+function set_goods(file_id,file_name,file_path)
+{
+  var html =$('#templ').html();
+  html=html.parseTmpl('file_id',file_id);
+  html=html.parseTmpl('file_name',file_name);
+  html=html.parseTmpl('file_path',file_path);
+  html=html.parseTmpl('show_class','show_image_item');
+  html=html.parseTmpl('file_id_name','goods_file_ids');
+  $('.show_image').prepend(html);
+}
+function insert_editor(file_name, file_path){
+    tinyMCE.execCommand('mceInsertContent', false, '<img src="'+ SITE_URL +'/' + file_path + '" alt="'+ file_name + '">');
+}
+function drop_uploadedfile(file_id)
+{
+    if(!window.confirm(lang.uploadedfile_drop_confirm)){
+        return;
+    }
+    $.getJSON('index.php?app=my_goods&act=drop_uploadedfile&file_id=' + file_id, function(result){
+        if(result.done){
+            $('#' + file_id).remove();
+        }else{
+            alert('drop_error');
+        }
+    });
+}
+function drop_uploadedfile2(file_id)
+{
+    if(!window.confirm(lang.uploadedfile_drop_confirm)){
+        return;
+    }
+    $.getJSON('index.php?app=my_goods&act=drop_goods_images&file_id=' + file_id, function(result){
+        if(result.done){
+            $('#' + file_id).remove();
+        }else{
+            alert('drop_error');
+        }
+    });
+}
+
+String.prototype.parseTmpl = function (findText, repText){
+    findText='#'+findText+'#';
+    var newRegExp = new RegExp(findText, 'g');
+    return this.replace(newRegExp, repText);
+}
+
+function up(obj)
+{
+    var o=obj.parent().parent();
+    var t=o.prev();
+    o.insertBefore(t);
+}
+
+function down(obj)
+{
+    var o=obj.parent().parent();
+    var t=o.next();
+    o.insertAfter(t);
+}
+
+function del(obj)
+{
+
+ var o=obj.parent().parent();
+     o.remove();
+}
+
+function add(obj)
+{
+ var html='<tr class="tatr2" >'+
+            '<td><input type="text" class="spec_1 spec_name" name="goods_spec1[]"></td>'+
+            '<td><input type="text" class="spec_2 spec_name"  name="goods_spec2[]"></td>'+
+            '<td><input type="text" class="spec_1 spec_name" name="goods_price[]"></td>'+
+            '<td><input type="text" class="spec_1 spec_name" name="goods_stock[]"></td>'+
+            '<td><input type="text" class="spec_1 spec_name" name="goods_sk[]"></td>'+
+            '<td style="width:240px;"><a href="javascript:void(0);" class="spec_up">上移</a> <a  href="javascript:void(0);" class="spec_down">下移</a> <a href="javascript:void(0);" class="spec_del">删除</a> <a  href="javascript:void(0);" class="spec_add">增加</a><input type=hidden name="spec_id[]" value="0" /></td>'+
+        '</tr>';
+    var o=obj.parent().parent().parent();
+    o.append(html);
+    init_spec();
+
+}
+function init_spec()
+{
+    $(".spec_up").unbind('click');
+    $(".spec_down").unbind('click');
+    $(".spec_del").unbind('click');
+    $(".spec_add").unbind('click');
+    $('.spec_up').click(function(event) {
+        up($(this));
+    });
+
+    $('.spec_down').click(function(event) {
+        down($(this));
+    });
+    $('.spec_del').click(function(event) {
+        del($(this));
+    });
+    $('.spec_add').click(function(event) {
+        add($(this));
+    });
+}
+
+$(document).ready(function() {
+    gcategoryInit('gcategory');
+    $('#open_spec').click(function(event) {
+        /* Act on the event */
+        if($(this).attr('checked'))
+        {
+            $('.show_spec_block').show();
+            $('.default_spec_show').hide();
+    
+        }else{
+            $('.show_spec_block').hide();
+            $('.default_spec_show').show();
+        }
+        init_spec();
+    });
+
+});
+</script>
+{$build_upload}
+{$build_editor_description}
+<div id="rightTop">
+    <p>{$lang.my_goods}</p>
+    <ul class="subnav">
+        <li>
+            <a class="btn1" href="index.php?app=my_goods">{$lang.manage}</a>
+        </li>
+        {if $my_goods.id}
+        <li>
+            <a class="btn1" href="index.php?app=my_goods&amp;act=add">{$lang.add}</a>
+        </li>
+        {else}
+        <li>
+            <span>{$lang.add}</span>
+        </li>
+        {/if}
+    </ul>
+</div>
+<div id='templ' style="display:none">
+    <dd class="#show_class#">
+        <input type="hidden" name="#file_id_name#[]" value="#file_id#" />
+        <img alt="#file_name#" src="{$site_url}/#file_path#"  />
+        <a href="javascript:drop_uploadedfile2(#file_id#);">{$lang.drop}</a>
+    </dd>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data" id="my_goods_form">
+        <table class="infoTable" >
+            <tr>
+                <th class="paddingT15">{$lang.mgcategory}:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <label class="field_notice">{$lang.mgcategory_desc}</label>
+                     <p class="select" id="gcategory">
+                        <!-- {if $my_goods.cate_id} -->
+                        <span class="f_l">{$my_goods.cate_name|escape}</span>
+                        <a class="edit_gcategory" href="javascript:;">{$lang.edit}</a>
+                        <select style="display:none">
+                            <option>{$lang.select_pls}</option>
+                            {html_options options=$mgcategories}
+                        </select>
+                        <!-- {else} -->
+                        <select>
+                            <option>{$lang.select_pls}</option>
+                            {html_options options=$mgcategories}
+                        </select>
+                        <!-- {/if} -->
+                        <input type="hidden" id="cate_id" name="cate_id" value="{$my_goods.cate_id}" class="mls_id" />
+                        <input type="hidden" name="cate_name" value="{$my_goods.cate_name|escape}" class="mls_names" />
+                    </p>
+
+                </td>
+            </tr>
+
+            <tr>
+                <th class="paddingT15">{$lang.goods_name}:</th>
+                <td class="paddingT15 wordSpacing5">
+
+                    <input class="infoTableInput2" id="goods_name" type="text" name="goods_name" value="{$my_goods.goods_name|escape}" />
+                    <label class="field_notice">{$lang.goods_name}</label>
+
+                </td>
+            </tr>
+          
+           
+              <tr  class="default_spec_show" style="display:{if $my_goods.spec_name_1}none;{else};{/if}">
+                <th class="paddingT15">{$lang.price}:</th>
+                <td class="paddingT15 wordSpacing5">
+
+                    <input class="infoTableInput2" id="price" type="text" name="price" value="{$my_goods._specs.0.price}" />
+                    <label class="field_notice">{$lang.price}</label>
+
+                </td>
+            </tr>
+            <tr  class="default_spec_show" style="display:{if $my_goods.spec_name_1}none;{else};{/if}">
+                <th class="paddingT15">{$lang.stock}:</th>
+                <td class="paddingT15 wordSpacing5">
+
+                    <input class="infoTableInput2" id="stock" type="text" name="stock" value="{$my_goods._specs.0.stock}" />
+                    <label class="field_notice">{$lang.stock}</label>
+
+                </td>
+            </tr>
+            <tr class="default_spec_show" style="display:{if $my_goods.spec_name_1}none;{else};{/if}">
+                <th class="paddingT15">{$lang.sku}:</th>
+                <td class="paddingT15 wordSpacing5">
+
+                    <input class="infoTableInput2" id="sku" type="text" name="sku" value="{$my_goods._specs.0.sku}" />
+                    <input type=hidden name='default_spec_id' value='{$my_goods._specs.0.spec_id}' />
+                    <label class="field_notice">{$lang.sku}</label>
+
+                </td>
+            </tr>
+
+            <tr>
+                <th class="paddingT15">{$lang.tags}:</th>
+                <td class="paddingT15 wordSpacing5">
+
+                    <input class="infoTableInput2" id="tags" type="text" name="tags" value="{$my_goods.tags|escape}" />
+                    <label class="field_notice">{$lang.tags}</label>
+
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">{$lang.brand}:</th>
+                <td class="paddingT15 wordSpacing5">
+
+                    <input class="infoTableInput2" id="brand" type="text" name="brand" value="{$my_goods.brand|escape}" />
+                    <label class="field_notice">{$lang.brand}</label>
+
+                </td>
+            </tr>
+             <tr>
+                <th class="paddingT15">{$lang.spec}:</th>
+                <td class="paddingT15 wordSpacing5">                    
+                    {$lang.open_spec}:  <input type=checkbox name='open_spec' id="open_spec" style="vertical-align:middle;" {if $my_goods.spec_name_1}checked{/if} /><label class="field_notice">{$lang.spec_desc}</label>
+                    <div class="show_spec_block" style="display:{if $my_goods.spec_name_1}block;{else}none;{/if}">
+                    <table  width="600" cellspacing="0" class="dataTable">
+                        <thead>
+                             <tr class="tatr2" >
+                                <td><input type="text" class="spec_1 spec_name" value="{$my_goods.spec_name_1}" name="spec_name_1"></td>
+                                <td><input type="text" class="spec_2 spec_name"  value="{$my_goods.spec_name_2}" name="spec_name_2"></td>
+                                <td><lable class="field_notice">{$lang.price}</lable></td>
+                                <td><lable class="field_notice">{$lang.stock}</lable></td>
+                                <td><lable class="field_notice">{$lang.sku}</lable></td>
+                                <td><lable class="field_notice">{$lang.action}</lable></td>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            {if $goods_specs and $my_goods.spec_name_1}
+                           <!--{foreach from=$goods_specs item=spec}-->
+                             <tr class="tatr2" >
+                                <td><input type="text" class="spec_1 spec_name"  value="{$spec.spec_1}" name="goods_spec1[]"></td>
+                                <td><input type="text" class="spec_2 spec_name"  value="{$spec.spec_2}" name="goods_spec2[]"></td>
+                                <td><input type="text" class="spec_1 spec_name"  value="{$spec.price}" name="goods_price[]"></td>
+                                <td><input type="text" class="spec_1 spec_name"  value="{$spec.stock}" name="goods_stock[]"></td>
+                                <td><input type="text" class="spec_1 spec_name"  value="{$spec.sku}" name="goods_sk[]"></td>
+                                <td style="width:240px;"><a href="javascript:void(0);" class="spec_up">上移</a> <a  href="javascript:void(0);" class="spec_down">下移</a><a  href="javascript:void(0);" class="spec_add">增加</a><input type=hidden name="spec_id[]" value="{$spec.spec_id}" /></td>
+                            </tr>
+                            <!--{/foreach}-->
+                            {else}
+                            <tr class="tatr2" >
+                                <td><input type="text" class="spec_1 spec_name" name="goods_spec1[]"></td>
+                                <td><input type="text" class="spec_2 spec_name"  name="goods_spec2[]"></td>
+                                <td><input type="text" class="spec_1 spec_name" name="goods_price[]"></td>
+                                <td><input type="text" class="spec_1 spec_name" name="goods_stock[]"></td>
+                                <td><input type="text" class="spec_1 spec_name" name="goods_sk[]"></td>
+                                <td style="width:240px;"><a href="javascript:void(0);" class="spec_up">上移</a> <a  href="javascript:void(0);" class="spec_down">下移</a> <a href="javascript:void(0);" class="spec_del">删除</a> <a  href="javascript:void(0);" class="spec_add">增加</a><input type=hidden name="spec_id[]" value="0" /></td>
+                            </tr>
+                            {/if}
+                        </tbody>
+                    </table>
+                </div>
+                
+
+                </td>
+            </tr>
+
+            <tr>
+                <th class="paddingT15">{$lang.description}:</th>
+                <td class="paddingT15 wordSpacing5" style="width:90%">
+
+                    <textarea name="description" id="description">{$my_goods.description}</textarea>
+                    <label class="field_notice">{$lang.description}</label>
+
+                </td>
+            </tr>
+           
+              <tr>
+                <th class="paddingT15">{$lang.goods_image}:</th>
+                <td class="paddingT15 wordSpacing5">
+                     <label class="field_notice">{$lang.goods_image_desc}</label><br><br>
+                    <dl class="show_image">
+                         <!-- {foreach from=$goods_images item=file} -->
+                        <dd class="show_image_item">
+                             <input type="hidden" name="goods_file_ids[]" value="{$file.file_id}" />
+                              <img alt="{$file.file_name}" src="{$site_url}/{$file.file_path}"/>
+                              <a href="javascript:drop_uploadedfile2({$file.file_id});">{$lang.drop}</a>
+                        </dd>
+                         <!-- {/foreach} --> 
+                      
+                    </dl>
+
+                  
+                </td>
+            </tr>
+            <tr>
+                <th>{$lang.upload_types}:</th>
+                <td  valign="top">
+                    <div id="divUploadTypeContainer">
+                        <input name="upload_types" id="bat_upload" type="radio" value="bat_upload" checked="checked" />
+                        <label for="bat_upload">{$lang.bat_upload}</label>
+                        <input name="upload_types" id="com_upload" type="radio" value="com_upload" />
+                        <label for="com_upload">{$lang.com_upload}</label>
+                    </div>
+                    <div id="divSwfuploadContainer">
+                        <div id="divButtonContainer">
+                            <span id="spanButtonPlaceholder"></span>
+                        </div>
+                        <div id="divFileProgressContainer"></div>
+                    </div>
+                    <iframe id="divComUploadContainer" style="display:none;" src="index.php?app=comupload&act=view_iframe&id={$id}&belong={$belong}&instance=desc_image" width="500" height="46" scrolling="no" frameborder="0"></iframe>
+                </td>
+            </tr>
+            <tr>
+                <th valign='top'>{$lang.uploaded_files}:</th>
+                <td>
+                    <div class="tdare">
+                        <table  width="600px" cellspacing="0" class="dataTable">
+                            <tbody id="thumbnails">
+                                <!-- {foreach from=$all_images item=file} -->
+                                <tr class="tatr2" id="{$file.file_id}">
+                                    <input type="hidden" name="file_id[]" value="{$file.file_id}" />
+                                    <td>
+                                        <img alt="{$file.file_name}" src="{$site_url}/{$file.file_path}" width="40px" height="40px" />
+                                    </td>
+                                    <td>{$file.file_name}</td>
+                                    <td>
+                                        <a href="javascript:insert_editor('{$file.file_name}', '{$file.file_path}');">{$lang.insert_editor}</a> |&nbsp;&nbsp;
+                                        <a href="javascript:set_goods('{$file.file_id}','{$file.file_name}', '{$file.file_path}');">{$lang.is_goods}</a>&nbsp;&nbsp;
+                                        |
+                                        <a href="javascript:drop_uploadedfile({$file.file_id});">{$lang.drop}</a>
+                                    </td>
+                                </tr>
+                                <!-- {/foreach} --> </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+         
+
+          
+
+            <tr>
+                <th></th>
+                <td class="ptb20">
+                    <input class="formbtn" type="submit" name="Submit"style="cursor: pointer;" value="{$lang.submit}" />
+                    <input class="formbtn" type="reset" name="Submit2"style="cursor: pointer;" value="{$lang.reset}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

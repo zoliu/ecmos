@@ -1,0 +1,157 @@
+{include file="header.html"}
+<style>
+.member_no_records {border-top: 0px !important;}
+.table td{ padding-left: 5px; }
+.table .ware_text { width: 155px; }
+.info dl{background-color: $ffc;margin-top: 15px;  border-bottom: 1px dotted gray;}
+.info dl dt{font-size: 14px;color:$ff0; line-height: 35px;height: 35px;margin-left: 20px; font-weight: 600;}
+.info dl ul li{
+    
+    line-height: 25px;
+}
+
+.spec_column{
+    font-size:13px;margin-left: 20px;
+}
+.spec_th{
+    border-bottom: 0px dotted gray;padding: 8px 3px;
+}
+.spec_info{
+    margin-left: 10px;font-size: 14px;color:red;font-weight: 600;
+}
+.downnum{
+    float:right;width:200px;margin-top:-20px;
+}
+.downnum input{
+    width:70px;
+}
+.num_desc{
+    color:#d0d0d0;
+}
+
+.issuance .formbtn{
+    margin: 20px;
+}
+.query_store{
+    display: inline-block;
+    font-size: 12px;
+    margin-left: 8px;
+}
+.show_store_list{
+    margin-left: 20px;
+}
+</style>
+<script type="text/javascript">
+$(function(){
+     $('.spec_num').blur(function(event) {
+         /* Act on the event */
+         var max=$(this).attr('maxnum');
+          max=parseInt(max);
+         var num=$(this).val();
+         num=parseInt(num);
+         if(num>max)
+         {
+            $(this).val(max);
+         }
+     });
+     $('.query_store').click(function(event) {
+         /* Act on the event */
+        var keyword= $('#keyword').val();
+        url='index.php?app=my_goods&act=ajax_query_store';
+        $.getJSON(url, {'keyword': keyword}, function(data) {
+                /*optional stuff to do after success */
+            if(data.done)
+            {               
+                var store_id=data.retval.store_id;
+                $('#qstore_id').val(store_id);
+                html='店铺查询成功';
+                
+            }else{
+                html=data.msg;
+            }
+            $('.show_store_list').html(html);
+                
+        });
+
+     });
+});
+
+function check()
+{
+   var store_id=$('#qstore_id').val();
+   store_id=parseInt(store_id);
+   if(store_id)
+   {
+        return true;
+   }else{
+        alert('店铺未选择');
+        return false;
+   }
+}
+</script>
+
+<div id="rightTop">
+    <p>{$lang.my_goods}</p>
+    <ul class="subnav">
+        <li>
+            <a class="btn1" href="index.php?app=my_goods">{$lang.manage}</a>
+        </li>
+        {if $my_goods.id}
+        <li>
+            <a class="btn1" href="index.php?app=my_goods&amp;act=add">{$lang.add}</a>
+        </li>
+        {else}
+        <li>
+            <span>{$lang.add}</span>
+        </li>
+        {/if}
+    </ul>
+</div>
+
+<div class="info">
+    <form method="post" onsubmit="return check();" id='my_form'>
+        <dl>
+            <dt>{$lang.store_name}:&nbsp;<input type=text name=keyword id=keyword /><a class="btn1 query_store" href="javascript:void(0);">{$lang.query}</a><input type="hidden" name="qstore_id" id="qstore_id"></dt>
+            <dd class="show_store_list">
+               
+            </dd>
+        </dl>
+        {foreach from=$goods_list item=goods}
+        <dl>
+            <dt>{$lang.goods_name}:&nbsp;{$goods.goods_name}</dt>
+            <dd>
+
+                <div class="clear"></div>
+                <ul>
+                    {foreach from=$goods._specs item=spec}
+                    <li  class='spec_th'>
+                        <span class="spec_column">{$lang.price}:</span>
+                        <span class="spec_info">{$spec.price}</span>
+                        <span class="spec_column">{$goods.spec_name_1}:</span>
+                        <span class="spec_info">{$spec.spec_1}</span>
+                        <span class="spec_column">{$goods.spec_name_2}:</span>
+                        <span class="spec_info">{$spec.spec_2}</span>
+                        <br>
+                        <span class="spec_column">{$lang.sku}:</span>
+                        <span class="spec_info">{$spec.sku}</span>
+                        <span class="spec_column">{$lang.stock}:</span>
+                        <span class="spec_info">{$spec.stock}</span>
+                        <span class="downnum">
+                            {$lang.download_num}
+                            <input type=text name="spec[{$goods.goods_id}][{$spec.spec_id}]" id="spec_{$spec.spec_id}" class="spec_num" maxnum="{$spec.stock}" />
+                            <br>
+                            <span class="num_desc">{$lang.num_desc}</span>
+                        </span>
+                    </li>
+                    {/foreach}
+                </ul>
+
+            </dd>
+        </dl>
+        {/foreach}
+        <div class="issuance">
+            <input class="formbtn" type="submit" name="Submit" value="提交"></div>
+
+    </form>
+</div>
+{include file="footer.html"}
